@@ -1,0 +1,3 @@
+[submodule "submodules/paella"]
+	path = submodules/paella
+	url = https://github.com/polimediaupv/paella.git
