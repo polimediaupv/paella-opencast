@@ -5,7 +5,7 @@
 		"usejsonp":false
 	},
 	"restServer":{
-		"url":"test/"
+		"url":"/"
 	},
 	"player":{
 		"defaultProfile": "full",
