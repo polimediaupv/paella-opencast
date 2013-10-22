@@ -8,7 +8,7 @@
 		"url":"/"
 	},
 	"player":{
-		"defaultProfile": "full",
+		"defaultProfile": "small",
 		"methods":[{"name":"streaming","enabled":true},
 				   {"name":"html","enabled":true},
 				   {"name":"flash","enabled":true}]
