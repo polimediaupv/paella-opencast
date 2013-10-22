@@ -61,8 +61,10 @@
 			parentNode.appendChild(paellaExtendedContainer);	
 		}		
 		function loadMHPaella(parentNodeName) {
-			createEngageHTMLPage(parentNodeName);
-			loadPaellaExtended('paellaExtendedContainer');
+			initPaellaMatterhornMe(function(){
+				createEngageHTMLPage(parentNodeName);
+				loadPaellaExtended('paellaExtendedContainer');
+			});
 		}
 		</script>
 	</head>

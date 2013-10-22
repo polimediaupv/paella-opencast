@@ -99,4 +99,7 @@
 	border-radius: 3px;
 	cursor: pointer;
 	display: block;
+	line-height: 28px;
+	font-size: 14px;
+	text-align: center;
 }

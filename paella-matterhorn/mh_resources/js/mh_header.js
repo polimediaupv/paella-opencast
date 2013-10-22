@@ -1,6 +1,6 @@
 function onHeaderSearch(){
 	var headerSearchInput = $('#paellaExtendedHeaderSearchInput')[0]
-	window.location.href="?q="+headerSearchInput.value;
+	window.location.href="index.html?q="+headerSearchInput.value;
 }
 
 function insertHeaderToDomNode(parentNodeName) {
@@ -61,8 +61,16 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeader.appendChild(paellaExtendedHeaderLogin);	
 	var paellaExtendedHeaderLoginButton = document.createElement('div');
 	paellaExtendedHeaderLoginButton.id = 'paellaExtendedHeaderLoginButton';
-	paellaExtendedHeaderLoginButton.innerHTML = "Login";
+	if (paella.matterhorn.me.username === "anonymous") {	
+		paellaExtendedHeaderLoginButton.innerHTML = "Login";
+		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="/login.html";});
+	}
+	else {
+		paellaExtendedHeaderLoginButton.innerHTML = "Logout";		
+		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="/j_spring_security_logout";});
+	}
 	paellaExtendedHeaderLogin.appendChild(paellaExtendedHeaderLoginButton);	
+
 
 
 
