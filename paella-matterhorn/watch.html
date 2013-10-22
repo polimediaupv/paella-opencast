@@ -13,8 +13,11 @@
 		<link rel="stylesheet" href="resources/style/extended.css" type="text/css" media="screen" charset="utf-8">
 		<link rel="stylesheet" href="resources/style/editor.css" type="text/css" media="screen" charset="utf-8">
 		<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.slate.min.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="mh_resources/style/mh_header.css" type="text/css" media="screen" charset="utf-8">
+		
 		
 		<script type="text/javascript" src="javascript/paella_matterhorn.js"></script>
+		<script type="text/javascript" src="mh_resources/js/mh_header.js"></script>
 		
 		<script type="text/javascript">
 		
@@ -22,7 +25,7 @@
 			getSubclass:function() { return 'test'; },
 
 			buildContent:function(domElement) {
-				domElement.innerHTML = "<h2>Hola</h2>";
+				domElement.innerHTML = "<h2>This is a RightBarPlugin Test</h2>";
 			},
 	
 			getName:function() {
@@ -42,15 +45,27 @@
 			},
 
 			buildContent:function(domElement) {
-				domElement.innerHTML = "<p>this is a Paella Extended tab bar plugin</p>";
+				domElement.innerHTML = "<p>This is a Paella Extended tab bar plugin</p>";
 			}
 		});
 		
 		paella.plugins.myTabBarPlugin = new paella.plugins.MyTabBarPlugin();
 		
+		function createEngageHTMLPage(parentNodeName) {
+			insertHeaderToDomNode(parentNodeName);	
+			var parentNode = document.getElementById(parentNodeName);
+			
+			var paellaExtendedContainer = document.createElement('div');
+			paellaExtendedContainer.id = 'paellaExtendedContainer';
+
+			parentNode.appendChild(paellaExtendedContainer);	
+		}		
+		function loadMHPaella(parentNodeName) {
+			createEngageHTMLPage(parentNodeName);
+			loadPaellaExtended('paellaExtendedContainer');
+		}
 		</script>
 	</head>
-	<body id="body" onload="loadPaellaExtended('paellaExtendedContainer')">
-		<div id="paellaExtendedContainer"></div>
+	<body id="body" onload="loadMHPaella('body');">
 	</body>
 </html>

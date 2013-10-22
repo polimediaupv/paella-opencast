@@ -118,7 +118,6 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		this.streams.push(presenter);
 		this.streams.push(presentation);
 	
-		console.log(presentation);	
 		// Callback
 		this.loadStatus = true;
 		onSuccess();
