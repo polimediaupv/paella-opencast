@@ -56,7 +56,7 @@ paella.plugins.UserTrackingCollectorPlugIn = Class.create(paella.EventDrivenPlug
 	},
 				
 	addEvent: function(eventType) {
-		var videoCurrentTime = paella.player.videoContainer.currentTime() + paella.player.videoContainer.trimStart();
+		var videoCurrentTime = parseInt(paella.player.videoContainer.currentTime() + paella.player.videoContainer.trimStart());
 			
 		var thisClass = this;
 		var playing = !paella.player.videoContainer.paused();
