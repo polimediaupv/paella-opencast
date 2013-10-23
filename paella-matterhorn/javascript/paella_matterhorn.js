@@ -1,6 +1,6 @@
 paella.matterhorn = {};
 
-paella.pluginList.push('usertracking.js');
+paella.pluginList.push('mh_usertracking.js');
 
 var MHAccessControl = Class.create(paella.AccessControl,{
 	checkAccess:function(onSuccess) {
@@ -115,8 +115,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			presentation.sources.image = imageSource;
 		}
 
-		this.streams.push(presenter);
-		this.streams.push(presentation);
+		if (presenter) { this.streams.push(presenter); }
+		if (presentation) { this.streams.push(presentation); }
 	
 		// Callback
 		this.loadStatus = true;
