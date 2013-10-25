@@ -312,6 +312,7 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 }
 
 
+
 function loadPaella(containerId) {
 	var initDelegate = new paella.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
 	var id = paella.utils.parameters.get('id');
@@ -324,6 +325,24 @@ function loadPaellaExtended(containerId) {
 	var id = paella.utils.parameters.get('id');
 
 	initPaellaMatterhorn(id, function() {initPaellaExtended({containerId:containerId,initDelegate:initDelegate});});
+}
+
+function loadPaellaEditor(containerId) {
+    var EditorInitDelegate = Class.create(paella.InitDelegate,{
+            loadConfig:function(onSuccess) {
+				this.parent(function(data) {
+					if (data.editor) {
+						data.editor.loadOnStartup = true;
+					}
+					if (onSuccess) { onSuccess(data); }
+				});
+            }
+    });
+
+	var initDelegate = new EditorInitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
+	var id = paella.utils.parameters.get('id');
+
+	initPaellaMatterhorn(id, function() {initPaellaEngage(containerId,initDelegate);});
 }
 
 
