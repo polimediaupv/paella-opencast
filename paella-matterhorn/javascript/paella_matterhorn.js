@@ -1,6 +1,7 @@
 paella.matterhorn = {};
 
 paella.pluginList.push('mh_usertracking.js');
+paella.pluginList.push('footprints.js');
 
 var MHAccessControl = Class.create(paella.AccessControl,{
 	checkAccess:function(onSuccess) {
@@ -127,14 +128,6 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 
 
 paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paella.DataDelegate,{
-	initialize:function() {
-	},
-
-	serializeKey:function(context,params) {
-		if (typeof(params)=='object') params = JSON.stringify(params);
-		return context + '|' + params;
-	},
-
 	read:function(context,params,onSuccess) {
 		var episodeId = paella.initDelegate.getId();
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
@@ -143,14 +136,14 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 				if (!(annotations instanceof Array)) { annotations = [annotations]; }
 				if (annotations.length > 0) {
 					if (annotations[0] && annotations[0].value) {
-						onSuccess(JSON.parse(annotations[0].value), true); 
+						if (onSuccess) onSuccess(JSON.parse(annotations[0].value), true); 
 					}
 					else{
-						onSuccess({}, true);
+						if (onSuccess) onSuccess({}, true);
 					}
 				}
 				else {
-					onSuccess(undefined, false);
+					if (onSuccess) onSuccess(undefined, false);
 				}
 			},
 			function(data, contentType, returnCode) { onSuccess(undefined, false); }
@@ -199,9 +192,9 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 					var annotationId = data.annotations.annotation.annotationId;
 					asyncLoader.addCallback(new paella.JSONLoader({url:'/annotation/'+annotationId}, "DELETE"));
 				}
-				asyncLoader.load(function(){ onSuccess({}, true); }, function() { onSuccess({}, false); });
+				asyncLoader.load(function(){ if (onSuccess) { onSuccess({}, true); } }, function() { onSuccess({}, false); });
 			},
-			function(data, contentType, returnCode) { onSuccess({}, false); }
+			function(data, contentType, returnCode) { if (onSuccess) { onSuccess({}, false); } }
 		);
 	}
 });
@@ -211,14 +204,14 @@ paella.dataDelegates.MHAnnotationServiceTrimmingDataDelegate = Class.create(pael
 		this.parent(context, params, function(data,success) {
 			if (success){
 				if (data.trimming) {
-					onSuccess(data.trimming, success);
+					if (onSuccess) { onSuccess(data.trimming, success); }
 				}
 				else{
-					onSuccess(data, success);
+					if (onSuccess) { onSuccess(data, success); }
 				}
 			}
 			else {
-				onSuccess(data, success);
+				if (onSuccess) { onSuccess(data, success); }
 			}
 		});
 	},
@@ -226,6 +219,53 @@ paella.dataDelegates.MHAnnotationServiceTrimmingDataDelegate = Class.create(pael
 		this.parent(context, params, {trimming: value}, onSuccess);
 	}
 });
+
+
+paella.dataDelegates.MHFootPrintsDataDelegate = Class.create(paella.DataDelegate,{
+	read:function(context,params,onSuccess) {
+		var episodeId = params.id;
+		
+		paella.ajax.get({url: '/usertracking/footprint.json', params: {id: episodeId}},	
+			function(data, contentType, returnCode) { 				
+				if ((returnCode == 200) && (contentType == 'application/json')) {
+					var footPrintsData = data.footprints.footprint;
+					if (data.footprints.total == "1"){
+						footPrintsData = [footPrintsData];
+					}
+					if (onSuccess) { onSuccess(footPrintsData, true); }
+				}
+				else{
+					if (onSuccess) { onSuccess({}, false); }					
+				}			
+			},
+			function(data, contentType, returnCode) {
+				if (onSuccess) { onSuccess({}, false); }
+			}
+		);
+	},
+
+	write:function(context,params,value,onSuccess) {
+		var thisClass = this;
+		var episodeId = params.id;
+		paella.ajax.get({url: '/usertracking/', params: {
+					_method: 'PUT',
+					id: episodeId,
+					type:'FOOTPRINT',
+					in:value.in,
+					out:value.out }
+			},	
+			function(data, contentType, returnCode) {
+				var ret = false;
+				if (returnCode == 201) { ret = true; }								
+				if (onSuccess) { onSuccess({}, ret); }
+			},
+			function(data, contentType, returnCode) {
+				if (onSuccess) { onSuccess({}, false); }
+			}
+		);
+	}   
+});
+
 
 function initPaellaMatterhornMe(onSuccess, onError) {
 
