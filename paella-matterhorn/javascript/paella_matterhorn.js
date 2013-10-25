@@ -1,7 +1,6 @@
 paella.matterhorn = {};
 
 paella.pluginList.push('mh_usertracking.js');
-paella.pluginList.push('footprints.js');
 
 var MHAccessControl = Class.create(paella.AccessControl,{
 	checkAccess:function(onSuccess) {
