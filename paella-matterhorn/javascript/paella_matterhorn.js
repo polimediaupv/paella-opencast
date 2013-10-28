@@ -1,6 +1,8 @@
 paella.matterhorn = {};
 
 paella.pluginList.push('mh_usertracking.js');
+paella.pluginList.push('mh_single_video_export.js');
+
 
 var MHAccessControl = Class.create(paella.AccessControl,{
 	checkAccess:function(onSuccess) {
