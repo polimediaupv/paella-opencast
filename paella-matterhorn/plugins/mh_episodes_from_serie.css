@@ -1,0 +1,53 @@
+.#episodesFromSerie  {
+	width:600px;
+/*	min-width: 600px; */
+}
+
+
+.episodesFromSerieTitle{
+	font-family: sans-serif;
+	font-size: 1.5em;
+	color: #2D8F8B;
+	margin-bottom: 5px;
+}
+
+.episodesFromSerieTitle_Bold{
+	font-weight: bold;
+}
+
+
+.episodesFromSerieListing .recordings_header {
+	display: none;
+}
+
+.episodesFromSerieListing .recordings_entry_preview_container{
+	width: 120px;
+	display: inline-block;
+}
+.episodesFromSerieListing .recordings_entry_text_container {
+	font-size: 12px;
+	display: inline-block;
+}
+
+.episodesFromSerieListing .recordings_entry {
+	min-height: 95px;
+}
+
+
+.episodesFromSerieListing .recordings_entry.even_entry {
+	background-color: rgb(239, 247, 249);
+}
+
+.episodesFromSerieListing .recordings_entry.odd_entry {
+	background-color: rgb(247, 251, 252);
+}
+
+.episodesFromSerieListing .recordings_entry.pendent.even_entry,
+.episodesFromSerieListing .recordings_entry.pendent.odd_entry {
+	background-color: rgb(255,204,102);
+}
+
+.episodesFromSerieListing .recordings_entry.unpublished.even_entry,
+.episodesFromSerieListing .recordings_entry.unpublished.odd_entry {
+	background-color: gb(255,165,161);
+}
