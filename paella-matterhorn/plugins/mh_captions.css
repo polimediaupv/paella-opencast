@@ -1,0 +1,48 @@
+.captionsButton_active {
+	background-size: 300%;
+	background-image:url(../resources/images/caption_icon.png);
+	background-repeat:no-repeat;
+	background-position-x: -80px;
+}
+
+.captionsButton {
+	background-size: 300%;
+	background-image:url(../resources/images/caption_icon.png);
+	background-repeat:no-repeat;
+}
+
+.captionsButton:hover {
+	background-position-x: -80px;
+}
+
+.captionsButton_noCaptions {
+	background-size: 300%;
+	background-image:url(../resources/images/caption_icon.png);
+	background-repeat:no-repeat;
+	background-position-x: -40px;
+}
+
+.captionsButton_noCaptions_active {
+	background-size: 300%;
+	background-image:url(../resources/images/caption_icon.png);
+	background-repeat:no-repeat;
+	background-position-x: -40px;
+}
+
+.CaptionsPlayerOverlayPlugin{
+	position:absolute;
+	left:0px;
+	right:0px;
+	bottom:40px;
+	text-align:center;
+	font-family:Helvetica, Arial, Verdana, sans-sherif;
+	font-size:20px;
+	text-shadow: -1px 0 black, 0 1px black,1px 0 black, 0 -1px black;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=black,direction=145,strength=2);
+	color:whiteSmoke;
+	z-index:90;	
+	width:90%;	
+	margin: auto;
+	z-index:10000;
+	display:none;
+}

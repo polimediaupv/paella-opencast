@@ -74,7 +74,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	getColor:function() {
-		return 'rgb(226, 228, 204)';
+		return 'rgb(141, 220, 245)';
 	},
 	
 	getTextColor:function() {

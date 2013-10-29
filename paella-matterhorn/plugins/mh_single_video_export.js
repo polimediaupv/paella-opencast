@@ -60,7 +60,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				}				
 				
 				var id = this.getTrackUniqueId();
-				var content = paella.dictionary.translate('Video 1');
+				var content = paella.dictionary.translate('Single video 1');
 				this.tracks.push({id:id,s:start,e:end,content:content,name:content});
 			}
 			else{
@@ -90,7 +90,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	getColor:function() {
-		return 'rgb(226, 228, 204)';
+		return 'rgb(176, 214, 118)';
 	},
 	
 	getTextColor:function() {
@@ -98,7 +98,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	onTrackChanged:function(id,start,end) {
-		var joinTracks = null;
+		var joinTracks = true;
 		paella.events.trigger(paella.events.documentChanged);
 		var item = this.getTrackItem(id);
 		if (item) {
