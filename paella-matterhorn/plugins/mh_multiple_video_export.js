@@ -122,6 +122,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		//	success(status);
 		//});
 		
+		success(true);
 	}
 });
 
