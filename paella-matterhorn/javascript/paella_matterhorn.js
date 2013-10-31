@@ -218,13 +218,13 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 			function(data, contentType, returnCode) { 
 				if (data.annotations.annotation) {
 					var annotationId = data.annotations.annotation.annotationId
-					paella.ajax.put({ url: '/anonation/'+ annotationId, params: { value: value }},	
+					paella.ajax.put({ url: '/annotation/'+ annotationId, params: { value: value }},	
 						function(data, contentType, returnCode) { onSuccess({}, true); },
 						function(data, contentType, returnCode) { onSuccess({}, false); }
 					);
 				}
 				else {
-					paella.ajax.put({ url: '/anonation/', 
+					paella.ajax.put({ url: '/annotation/', 
 						params: {
 							episode: episodeId, 
 							type: 'paella/' + context,
