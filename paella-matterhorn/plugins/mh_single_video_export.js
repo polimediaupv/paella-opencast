@@ -33,10 +33,19 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			paella.dictionary.addDictionary(esDict);
 		}
 		if (this.metadata == null) {
+			var creator = '';
+			var serie = '';
+			if (paella.matterhorn.episode.mediapackage.series) {
+				serie = paella.matterhorn.episode.mediapackage.series;
+			}
+			if ( (paella.matterhorn.episode.mediapackage.creators) &&(paella.matterhorn.episode.mediapackage.creators.creator) ) {
+				creator = paella.matterhorn.episode.mediapackage.creators.creator;
+			}
+			
 			this.metadata = {
 				title: paella.dictionary.translate('Single Video 1'),
-				presenter: paella.matterhorn.episode.mediapackage.creators.creator,
-				serie: paella.matterhorn.episode.mediapackage.series
+				presenter: creator,
+				serie: serie
 			
 			}				
 		}
