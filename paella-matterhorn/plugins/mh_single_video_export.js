@@ -27,8 +27,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				'Serie': 'Serie',
 				'Single Video 1': 'Video 1',
 				'Single Video Export': 'Exportar un video',
-				'Create a new track in the current position': 'Añade un track en el instante actual',
-				'Delete selected track': 'Borra el track seleccionado'
+				'Send': 'Enviar'
 			};
 			paella.dictionary.addDictionary(esDict);
 		}
@@ -138,7 +137,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		var titleInput = document.createElement('input');
 		titleInput.type = "text";
 		titleInput.value = defaultValue;
-		$(titleInput).keyup(function(event){console.log(event); callback(event.srcElement.value);});
+		$(titleInput).keyup(function(event){callback(event.srcElement.value);});
 		root.appendChild(titleInput);	
 		
 		return root;
@@ -167,11 +166,16 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		var sendDiv = document.createElement('div');
 		root.appendChild(sendDiv);
 		var sendButton = document.createElement('button');
-		sendButton.innerHTML = paella.dictionary.translate('Upload');
+		sendButton.innerHTML = paella.dictionary.translate('Send');
+		$(sendButton).click(function(event){thisClass.exportVideo();});
 		sendDiv.appendChild(sendButton);
 		
 		
 		tabContainer.appendChild(root);
+	},
+	
+	exportVideo:function(){
+		paella.messageBox.showMessage("TODO: Upload to matterhorn a new mediapackage!")
 	},
 	
 	getTrackUniqueId:function() {
