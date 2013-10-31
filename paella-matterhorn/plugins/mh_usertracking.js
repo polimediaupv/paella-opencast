@@ -64,11 +64,11 @@ paella.plugins.UserTrackingCollectorPlugIn = Class.create(paella.EventDrivenPlug
 		paella.ajax.get( { url: '/usertracking/', 
 				params: {
 					_method: 'PUT',
-					id: paella.player.videoIdentifier,
-					type: eventType,
-					in: videoCurrentTime,
-					out: videoCurrentTime,
-					playing: playing
+					'id': paella.player.videoIdentifier,
+					'type': eventType,
+					'in': videoCurrentTime,
+					'out': videoCurrentTime,
+					'playing': playing
 				}
 			}
 		);
