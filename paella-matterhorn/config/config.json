@@ -18,7 +18,7 @@
 	},
 	"defaultProfile":"slide_professor",
 	"trimming":{
-		"enabled":false
+		"enabled":true
 	},
 	"publish":{
 		"enabled":true
