@@ -1,18 +1,27 @@
 paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackPlugin,{
 	tracks:[],
 	selectedTrackItem:null,
+	videoCount: 1,
 	
 	checkEnabled:function(onSuccess) {
-		onSuccess(true);
+		var thisClass = this;
+		paella.data.read('MultipleVideoExport', {id:paella.initDelegate.getId()}, function(data, status) {
+			if (data && typeof(data)=='object') && (data.length>0) {
+				thisClass.tracks = data;
+			}
+			onSuccess(true);
+		});
 	},
 
 	setup:function() {
 		if (paella.utils.language()=="es") {
 			var esDict = {
-				'Breaks':'Descansos',
-				'Break':'Descanso',
-				'Create a new track in the current position': 'Añade un track en el instante actual',
-				'Delete selected track': 'Borra el track seleccionado'
+				'Video':'Video',
+				'Title':'Título',
+				'Presenter':'Ponente',
+				'Serie': 'Serie',				
+				'Multiple Video Export': 'Exportar multiples videos',
+				'Send': 'Enviar'				
 			};
 			paella.dictionary.addDictionary(esDict);
 		}
@@ -30,29 +39,100 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	onToolSelected:function(toolName) {
-		if (this.selectedTrackItem && toolName=='delete' && this.selectedTrackItem) {
-			paella.events.trigger(paella.events.documentChanged);
-			this.tracks.splice(this.tracks.indexOf(this.selectedTrackItem),1);
-			return true;
-		}
-		else if (toolName=='create') {
-			paella.events.trigger(paella.events.documentChanged);
-			var start = paella.player.videoContainer.currentTime();			
-			var end = start + 30;
-			if (end > paella.player.videoContainer.duration() ) { end = paella.player.videoContainer.duration(); }
-			for (var i=0; i<this.tracks.length; ++i) {
-				var track = this.tracks[i];
-				if ( (track.s>start) && (track.s<end) ) {
-					end = track.s;
+		switch (toolName) {
+			case 'delete':
+				if (this.selectedTrackItem) {
+					paella.events.trigger(paella.events.documentChanged);
+					this.tracks.splice(this.tracks.indexOf(this.selectedTrackItem),1);
+					return true;
 				}
-			}				
-			
-			var id = this.getTrackUniqueId();
-			var content = paella.dictionary.translate('Video 1');
-			this.tracks.push({id:id,s:start,e:end,content:content,name:content});
-			return true;
+				break;			
+			case 'create':
+				paella.events.trigger(paella.events.documentChanged);								
+				var start = paella.player.videoContainer.currentTime();
+				var itemDuration  = paella.player.videoContainer.duration()*0.1;
+				itemDuration = itemDuration*100/paella.editor.instance.bottomBar.timeline.zoom;
+				var end = start + itemDuration;
+				if (end > paella.player.videoContainer.duration() ) { end = paella.player.videoContainer.duration(); }
+				for (var i=0; i<this.tracks.length; ++i) {
+					var track = this.tracks[i];
+					if ( (track.s>start) && (track.s<end) ) {
+						end = track.s;
+					}
+				}				
+				
+				var id = this.getTrackUniqueId();
+				var creator = '';
+				var serie = '';
+				if (paella.matterhorn.episode.mediapackage.series) {
+					serie = paella.matterhorn.episode.mediapackage.series;
+				}
+				if ( (paella.matterhorn.episode.mediapackage.creators) && (paella.matterhorn.episode.mediapackage.creators.creator) ) {
+					creator = paella.matterhorn.episode.mediapackage.creators.creator;
+				}
+				
+				var metadata = {
+					title: paella.dictionary.translate('Video') + ' ' + + this.videoCount,
+					presenter: creator,
+					serie: serie
+				}
+				this.videoCount = this.videoCount +1;
+				this.tracks.push({id:id, s:start, e:end, name:metadata.title, metadata: metadata});
+				this.selectedTrackItem = this.getTrackItem(id);
+				return true;
+				break;
 		}
 	},
+	
+	createAInputEditor:function(label, defaultValue, callback){
+		var root = document.createElement('div');
+
+		var titleTxt = document.createElement('div');
+		titleTxt.innerHTML = label
+		root.appendChild(titleTxt);
+		var titleInput = document.createElement('input');
+		titleInput.type = "text";
+		titleInput.value = defaultValue;
+		$(titleInput).keyup(function(event){callback(event.srcElement.value);});
+		root.appendChild(titleInput);	
+		
+		return root;
+	},
+	
+	changeTitle:function(title) {
+		this.selectedTrackItem.metadata.title = title;
+		this.selectedTrackItem.name = title;
+		// TODO: Repaint
+	},
+	
+	buildToolTabContent:function(tabContainer) {
+		if (this.selectedTrackItem) {
+			var thisClass = this;
+			var root = document.createElement('div');
+			root.id = 'SingleVideoExportEditorTabBarRoot';
+			
+			var basicMetadata = document.createElement('div');
+			root.appendChild(basicMetadata);
+			basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.selectedTrackItem.metadata.title, function(value){thisClass.changeTitle(value);}));
+			basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.selectedTrackItem.metadata.presenter, function(value){thisClass.selectedTrackItem.metadata.presenter = value;}));
+			basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Serie'), this.selectedTrackItem.metadata.serie, function(value){thisClass.selectedTrackItem.metadata.serie = value;}));
+	
+	
+			var sendDiv = document.createElement('div');
+			root.appendChild(sendDiv);
+			var sendButton = document.createElement('button');
+			sendButton.innerHTML = paella.dictionary.translate('Send');
+			$(sendButton).click(function(event){thisClass.exportVideos();});
+			sendDiv.appendChild(sendButton);
+			
+			
+			tabContainer.appendChild(root);
+		}
+	},	
+	
+	exportVideos:function(){
+		paella.messageBox.showMessage("TODO: Upload to matterhorn a new mediapackage!")
+	},	
 	
 	getTrackUniqueId:function() {
 		var newId = -1;
@@ -70,7 +150,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	getTrackName:function() {
-		return paella.dictionary.translate("Multiple Video Export ");
+		return paella.dictionary.translate("Multiple Video Export");
 	},
 	
 	getColor:function() {
@@ -85,6 +165,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		var joinTracks = null;
 		paella.events.trigger(paella.events.documentChanged);
 		var item = this.getTrackItem(id);
+		this.selectedTrackItem = item;
 		if (item) {
 			if (start < 0) {start = 0;}
 			if (end > paella.player.videoContainer.duration() ) { end = paella.player.videoContainer.duration(); }
@@ -114,15 +195,9 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	onSave:function(success) {
-		var data = {
-			breaks:this.tracks
-		}
-		//paella.data.write('breaks',{id:paella.initDelegate.getId()},data,function(response,status) {
-		//	paella.plugins.breaksPlayerPlugin.breaks = data.breaks;
-		//	success(status);
-		//});
-		
-		success(true);
+		paella.data.write('MultipleVideoExport',{id:paella.initDelegate.getId()}, this.tracks, function(response,status) {
+			success(status);
+		});			
 	}
 });
 
