@@ -250,7 +250,7 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 				var asyncLoader = new paella.AsyncLoader();
 				for ( var i=0; i< annotations.length; ++i) {
 					var annotationId = data.annotations.annotation.annotationId;
-					asyncLoader.addCallback(new paella.JSONLoader({url:'/annotation/'+annotationId}, "DELETE"));
+					asyncLoader.addCallback(new paella.JSONCallback({url:'/annotation/'+annotationId}, "DELETE"));
 				}
 				asyncLoader.load(function(){ if (onSuccess) { onSuccess({}, true); } }, function() { onSuccess({}, false); });
 			},
@@ -349,8 +349,8 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 		
 					var serie = paella.matterhorn.episode.mediapackage.series;
 		
-					asyncLoader.addCallback(new paella.JSONLoader({url:'/series/'+serie+'.json'}), "serie");
-					asyncLoader.addCallback(new paella.JSONLoader({url:'/series/'+serie+'/acl.json'}), "acl");
+					asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'.json'}), "serie");
+					asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'/acl.json'}), "acl");
 		
 					asyncLoader.load(function() {
 							//Check for series

@@ -6,7 +6,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	checkEnabled:function(onSuccess) {
 		var thisClass = this;
 		paella.data.read('MultipleVideoExport', {id:paella.initDelegate.getId()}, function(data, status) {
-			if (data && typeof(data)=='object') && (data.length>0) {
+			if (data && typeof(data)=='object' && data.length>0) {
 				thisClass.tracks = data;
 			}
 			onSuccess(true);
@@ -131,8 +131,77 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},	
 	
 	exportVideos:function(){
+	
+		for (var i=0; i<this.tracks.length; ++i) {
+			paella.debug.log('Exporting track item ' + i.toString());
+			this.exportOneVideo(this.tracks[i]);
+		}
+	
+	
 		paella.messageBox.showMessage("TODO: Upload to matterhorn a new mediapackage!")
 	},	
+
+
+	exportOneVideo:function(trackitem) {
+	/*
+		var serieId = null;
+		var dc_serie = null;
+		var mediapackage = null;
+
+		var asyncLoader = new paella.AsyncLoader();		
+		
+		if (trackitem.metadata.serie) {
+			paella.debug.log('Serie ' + trackitem.metadata.serie);
+			serieId = trackitem.metadata.serie; //'17387ec5-f072-4161-a327-e452be846d0a';
+			
+			// 1.- Get the serie http://matterhorn.cc.upv.es:8080/series/17387ec5-f072-4161-a327-e452be846d0a.xml
+			var serieCB = new paella.AjaxCallback({url:'/series/'+serieId+'.xml'});
+			
+			serieCB.didLoadSuccess = function(callback) {
+				if (callback.statusCode == 200) {
+						dc_serie = callback.rawData;
+						paella.debug.log('Seie text: ' + dc_serie);
+				}
+				return true;
+			};
+			asyncLoader.addCallback(serieCB, 'serie');		
+		}
+		else {
+			paella.debug.log('No Serie');
+		}
+		
+		// Create the mediapackage
+		createMediaPackageCB = new paella.AjaxCallback({url:'/ingest/createMediaPackage'});
+		serieCB.didLoadSuccess = function(callback) {
+			
+			mediapackage = callback.rawData;
+		}
+		
+				
+		asyncLoader.addCallback(new paella.JSONLoader('/ingest/createMediaPackage', 'createMediaPackage')	
+		asyncLoader.addCallback(new paella.JSONLoader('/ingest/addDCCatalog', 'addSerie')
+		asyncLoader.addCallback(new paella.JSONLoader('/ingest/addDCCatalog'}, 'addEpisode')
+
+		asyncLoader.addCallback(new paella.JSONLoader({url:'/mediapackage/addTrack'}, "addTrack")
+
+
+
+		asyncLoader.getCallback("createMediaPackage").data
+
+
+		
+		http://matterhorn.cc.upv.es:8080/mediapackage/addTrack	
+		
+	
+		// 3.- Create the mediapackage http://matterhorn.cc.upv.es:8080/ingest/createMediaPackage
+	
+		
+		
+		
+		asyncLoader.load();
+	*/
+	},
+
 	
 	getTrackUniqueId:function() {
 		var newId = -1;
