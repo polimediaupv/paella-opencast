@@ -15,6 +15,98 @@ paella.AsyncLoaderCallback = Class.create({
 	}
 });
 
+paella.AjaxCallback = Class.create(paella.AsyncLoaderCallback,{
+	params:null,
+	type:'get',
+	
+	data:null,
+	mimeType:null,
+	statusCode:null,
+	rawData:null,
+	
+	getParams:function() {
+		return this.params;
+	},
+	
+	willLoad:function(callback) {
+		
+	},
+	
+	didLoadSuccess:function(callback) {
+		return true;
+	},
+	
+	didLoadFail:function(callback) {
+		return false;
+	},
+	
+	initialize:function(params,type) {
+		this.name = "ajaxCallback";
+		if (type) this.type = type;
+		if (typeof(params)=='string') this.params = {url:params}
+		else if (typeof(params)=='object') this.params = params;
+		else this.params = {}
+	},
+
+	load:function(onSuccess,onError) {
+		var This = this;
+		if (typeof(this.willLoad)=='function') this.willLoad(this);
+		paella.ajax.send(this.type,this.getParams(),
+			function(data,type,code,rawData) {
+				var status = true;
+				This.data = data;
+				This.mimeType = type;
+				This.statusCode = code;
+				This.rawData = rawData;
+				if (typeof(This.didLoadSuccess)=='function') status = This.didLoadSuccess(This);
+				if (status) onSuccess();
+				else onFail();
+			},
+			function(data,type,code,rawData) {
+				var status = false;
+				This.data = data;
+				This.mimeType = type;
+				This.statusCode = code;
+				This.rawData = rawData;
+				if (typeof(This.didLoadFail)=='function') status = This.didLoadFail(This);
+				if (status) onSuccess();
+				else onFail();
+			});
+	}
+});
+
+paella.JSONCallback = Class.create(paella.AjaxCallback,{
+	initialize:function(params,type) { this.parent(params,type); },
+	
+	didLoadSuccess:function(callback) {
+		if (typeof(callback.data)=='object') return true;
+		
+		try {
+			callback.data = JSON.parse(callback.data);
+			return true;
+		}
+		catch (e) {
+			callback.data = {error:"Unexpected data format",data:callback.data}
+			return false;
+		}
+	}
+});
+
+paella.DictionaryCallback = Class.create(paella.AjaxCallback,{
+	initialize:function(dictionaryUrl) { this.parent({url:dictionaryUrl}); },
+	
+	getParams:function() {
+		var lang = paella.utils.language();
+		this.params.url = this.params.url + '_' + lang + '.json';
+		return this.params;
+	},
+	
+	didLoadSuccess:function(callback) {
+		paella.dictionary.addDictionary(callback.data);
+		return true;
+	}
+})
+
 paella.AsyncLoader = Class.create({
 	firstCb:null,
 	lastCb:null,
@@ -65,76 +157,6 @@ paella.AsyncLoader = Class.create({
 	}
 });
 
-paella.JSONLoader = Class.create(paella.AsyncLoaderCallback,{
-	params:null,
-	type:'get',
-	
-	data:null,
-	mimeType:null,
-	statusCode:null,
-	
-	initialize:function(params,type) {
-		if (type) this.type = type;
-		if (typeof(params)=='string') this.params = {url:params}
-		else if (typeof(params)=='object') this.params = params;
-		else this.params = {}
-	},
-	
-	getParams:function() {
-		return this.params;
-	},
-	
-	load:function(onSuccess,onError) {
-		var This = this;
-		paella.ajax.send(this.type,this.getParams(),
-			function(data,type,code) {
-				This.data = data;
-				This.mimeType = type;
-				This.statusCode = code;
-				onSuccess();
-			},
-			function(data,type,returnCode) {
-				This.data = data;
-				This.mimeType = type;
-				This.statusCode = code;
-				onFail();
-			});
-	}
-});
-
-paella.DictionaryLoader = Class.create(paella.AsyncLoaderCallback,{
-	dictionaryUrl:'',
-
-	initialize:function(dictionaryUrl) {
-		this.parent("dictionaryLoader");
-		this.dictionaryUrl = dictionaryUrl;
-	},
-	
-	load:function(onSuccess,onError) {
-		var lang = paella.utils.language();
-		var params = {}
-		params.url = this.dictionaryUrl + '_' + lang + '.json';
-		paella.ajax.get(params,
-			function(data,type,returnCode) {
-				if (typeof(data)=='string') {
-					try {
-						data = JSON.parse(data);
-					}
-					catch (e) {
-						//onError();
-						onSuccess();
-					}
-				}
-				paella.dictionary.addDictionary(data);
-				onSuccess();
-			},
-			function(data,type,returnCode) {
-				//onError();
-				onSuccess();
-			});
-	}
-});
-
 paella.Dictionary = Class.create({
 	dictionary:{},
 
@@ -152,6 +174,8 @@ paella.Dictionary = Class.create({
 		var value = this.dictionary[key];
 		if (value) return value;
 		else return key;
+		
+		
 	}
 });
 

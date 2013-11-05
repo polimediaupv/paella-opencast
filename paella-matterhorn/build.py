@@ -77,8 +77,6 @@ cssOut.close()
 
 
 intermediateFiles = os.listdir(intermediatePath)
-intermediateFiles.sort()
-
 for file in intermediateFiles:
 	filePath = os.path.join(intermediatePath,file)
 	fileName, fileExtension = os.path.splitext(filePath)
