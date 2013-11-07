@@ -4,8 +4,8 @@ paella.pluginList.push('mh_usertracking.js');
 paella.pluginList.push('mh_single_video_export.js');
 paella.pluginList.push('mh_multiple_video_export.js');
 paella.pluginList.push('mh_episodes_from_serie.js');
-paella.pluginList.push('mh_quality.js');
 paella.pluginList.push('mh_downloads.js');
+//paella.pluginList.push('mh_quality.js');
 
 
 var MHAccessControl = Class.create(paella.AccessControl,{
