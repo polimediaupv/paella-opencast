@@ -28,7 +28,8 @@
 		"dataDelegates":{
 			"default":"MHAnnotationServiceDefaultDataDelegate",
 			"trimming": "MHAnnotationServiceTrimmingDataDelegate",
-			"footprints": "MHFootPrintsDataDelegate"
+			"footprints": "MHFootPrintsDataDelegate",
+			"captions": "MHCaptionsDataDelegate"
 		}
 	}
 }
