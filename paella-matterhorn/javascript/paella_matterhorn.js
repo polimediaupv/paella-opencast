@@ -56,70 +56,75 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 });
 
 var MHVideoLoader = Class.create(paella.VideoLoader, {
-	isStreaming:function(url) {
-		return /rtmp:\/\//.test(url);
+	isStreaming:function(track) {
+		return /rtmp:\/\//.test(track.url);
 	},
 
+	getStreamSource:function(track) {
+		var res = track.video.resolution.split('x');
+	
+		var source = {
+				src:  track.url,
+				type: track.mimetype,
+				res: {w:res[0], h:res[1]}
+			};
+			
+		return source;
+	},
+
+
+
 	loadVideo:function(videoId,onSuccess) {
-		var streamsQuality = {};
+		var streams = {};
 		var tracks = paella.matterhorn.episode.mediapackage.media.track;
 		var attachments = paella.matterhorn.episode.mediapackage.attachments.attachment;
 		if (!(tracks instanceof Array)) { tracks = [tracks]; }
 		if (!(attachments instanceof Array)) { attachments = [attachments]; }
+		this.frameList = {}
 
 
 		// Read the tracks!!
 		for (var i=0;i<tracks.length;++i) {
-			var quality = undefined;
-			// TODO: Search for quality tag
 			var currentTrack = tracks[i];
-			var currentQuality = streamsQuality[quality]
-			if (currentQuality == undefined) { streamsQuality[quality] = {}; currentQuality = {}; }
-			var currentStream = currentQuality[currentTrack.type];
-			if (currentStream == undefined) { currentStream = { sources:{} }; }
+			var currentStream = streams[currentTrack.type];
+			if (currentStream == undefined) { currentStream = { sources:{}, preview:'' }; }
 
-			if (this.isStreaming(currentTrack.url)) {
-				currentStream.sources.rtmp = {
-					src:  currentTrack.url,
-					type: currentTrack.mimetype
-				};
+			if (this.isStreaming(currentTrack)) {
+				if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
+					currentStream.sources['rtmp'] = [];
+				}
+				currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack))
 			}
 			else{
+				var videotype = null;
 				switch (currentTrack.mimetype) {
 					case 'video/mp4':
 					case 'video/ogg':
 					case 'video/webm':
-						var videotype = currentTrack.mimetype.split("/")[1];
-						currentStream.sources[videotype] = {
-							src:  currentTrack.url,
-							type: currentTrack.mimetype
-						};
+						videotype = currentTrack.mimetype.split("/")[1];
 						break;
 					case 'video/x-flv':
-						currentStream.sources.flv = {
-							src:  currentTrack.url,
-							type: currentTrack.mimetype
-						};
+						videotype = 'flv';
 						break;
 					dafault:
 						paella.debug.log('MHVideoLoader: MimeType ('+currentTrack.mimetype+') not recognized!');
 						break;
 				}
+				if (videotype){
+					if ( !(currentStream.sources[videotype]) || !(currentStream.sources[videotype] instanceof Array)){
+						currentStream.sources[videotype] = [];
+					}				
+					currentStream.sources[videotype].push(this.getStreamSource(currentTrack));
+				}
 			}
-			
-			currentQuality[currentTrack.type] = currentStream;
-			streamsQuality[quality] = currentQuality;
+			streams[currentTrack.type] = currentStream;
 		}
-		var qualities = Object.keys(streamsQuality);
-		paella.debug.log('MHVideoLoader: Found '+ qualities.length + ' quality/ies for this video: [' + qualities.toString() + ']');
 		
-		// Read the image stream and the preview images
-		var presentationPreview = undefined;
-		var presenterPreview = undefined;
-		var frameList = {}
-		var frameListHD = {}
-		var imageSource = {frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000)}
-		var imageSourceHD = {frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000)}
+		var presenter = streams["presenter/delivery"];
+		var presentation = streams["presentation/delivery"];		
+		var imageSource = {frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{}}
+		var imageSourceHD = {frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{}}
+		// Read the attachments
 		for (var i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
 
@@ -127,63 +132,43 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
 					imageSourceHD.frames["frame_"+time] = currentAttachment.url;
-                			frameListHD[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url};
+                	
+                	if (!(this.frameList[time])){
+	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
+                	}
+                	this.frameList[time].url = currentAttachment.url;
 				}
 			}
 			else if (currentAttachment.type == "presentation/segment+preview") {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
 					imageSourceHD.frames["frame_"+time] = currentAttachment.url;
-                			frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url};
+
+                	if (!(this.frameList[time])){
+	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
+                	}
+                	this.frameList[time].thumb = currentAttachment.url;
 				}
 			}
 			else if (currentAttachment.type == "presentation/player+preview") {
-				presentationPreview = currentAttachment.url;
+				presentation.preview = currentAttachment.url;
 			}
 			else if (currentAttachment.type == "presenter/player+preview") {
-				presenterPreview = currentAttachment.url;
+				presenter.preview = currentAttachment.url;
 			}
 		}
 
-		if (frameList != {}) {	this.frameList = frameList; } else { this.frameList = frameListHD; }
-
-		// Set the image stream to all qualities
-		for (var i=0; i<qualities.length; ++i){
+		// Set the image stream
+		if (imageSourceHD.frames != {}) { presentation.sources.image = imageSourceHD; }
+		else if (imageSource.frames != {}) { presentation.sources.image = imageSource; }		
 		
-			var presenter = streamsQuality[qualities[i]]["presenter/delivery"];
-			var presentation = streamsQuality[qualities[i]]["presentation/delivery"];
-			
-			if (imageSourceHD.frames != {}) {
-				presentation.sources.image = imageSourceHD;
-			}
-			else if (imageSource.frames != {}) {
-				presentation.sources.image = imageSource;
-			}
-			
-			if (presenter) {presenter.preview = presenterPreview;}
-			if (presentation) {presentation.preview = presentationPreview;}
-		}		
-
-
-		var qualitySelected = paella.utils.parameters.get('quality');
-		if (qualitySelected == undefined) { qualitySelected = 'undefined'; }
-		
-		
-		paella.debug.log('MHVideoLoader: Trying to use quality: ' + qualitySelected);
-		if (qualities.indexOf(qualitySelected) < 0) {
-			paella.messageBox.showError(paella.dictionary.translate("This recording can't be accessed with these parameters."));
-		}
-		else {
-			var presenter = streamsQuality[qualitySelected]["presenter/delivery"];
-			var presentation = streamsQuality[qualitySelected]["presentation/delivery"];
 	
-			if (presenter) { this.streams.push(presenter); }
-			if (presentation) { this.streams.push(presentation); }
+		if (presenter) { this.streams.push(presenter); }
+		if (presentation) { this.streams.push(presentation); }
 
-			// Callback
-			this.loadStatus = true;
-			onSuccess();			
-		}	
+		// Callback
+		this.loadStatus = true;
+		onSuccess();			
 	}
 });
 

@@ -75,6 +75,10 @@ paella.VideoContainerBase = Class.create(paella.DomNode,{
 	trimming:{enabled:false,start:0,end:0},
 	timeupdateEventTimer:null,
 	timeupdateInterval:250,
+	masterVideoData:null,
+	slaveVideoData:null,
+	currentMasterVideoData:null,
+	currentSlaveVideoData:null,
 
 	initialize:function(id) {
 		var style = {position:'absolute',left:'0px',right:'0px',top:'0px',bottom:'0px',overflow:'hidden'}
@@ -487,7 +491,8 @@ paella.VideoContainer = Class.create(paella.VideoContainerBase,{
 		
 		var thisClass = this;
 		this.sourceData.push(masterVideoData);
-		this.setupVideo(masterVideo,masterVideoData,type);
+		this.setupVideo(masterVideo,masterVideoData,type,'master');
+		this.masterVideoData = masterVideoData;
 		new Timer(function(timer) {
 			if (masterVideo.isReady()) {
 				thisClass.isMasterReady = true;
@@ -527,7 +532,8 @@ paella.VideoContainer = Class.create(paella.VideoContainerBase,{
 		
 		var thisClass = this;
 		this.sourceData.push(slaveVideoData);
-		this.setupVideo(slaveVideo,slaveVideoData,type);
+		this.setupVideo(slaveVideo,slaveVideoData,type,'slave');
+		this.slaveVideoData = slaveVideoData;
 		new Timer(function(timer) {
 			if (slaveVideo.isReady()) {
 				thisClass.isSlaveReady = true;
@@ -547,8 +553,27 @@ paella.VideoContainer = Class.create(paella.VideoContainerBase,{
 		this.isMonoStream = true;
 		this.isSlaveReady = true;
 	},
-	
-	setupVideo:function(videoNode,videoData,type) {
+
+	getVideoQuality:function(source,stream) {
+		if (source.length>0) {
+			var query = paella.utils.parameters.list['res' + stream];
+			var selected = source[0];
+			for (var i=0; i<source.length; ++i) {
+				var res = source[i].res;
+				if (res) {
+					res = res.w + "x" + res.h;
+					if (res==query) selected = source[i];
+					break;
+				}
+			}
+			return selected;
+		}
+		else {
+			return source;
+		}
+	},
+
+	setupVideo:function(videoNode,videoData,type,stream) {
 		if (videoNode && videoData) {
 			var mp4Source = videoData.sources.mp4;
 			var oggSource = videoData.sources.ogg;
@@ -557,29 +582,36 @@ paella.VideoContainer = Class.create(paella.VideoContainerBase,{
 			var rtmpSource = videoData.sources.rtmp;
 			var imageSource = videoData.sources.image;
 			
+			var selectedSource = null;
+			
 			if (type=="html") {
 				if (mp4Source) {
-					videoNode.addSource(mp4Source);
+					selectedSource = mp4Source;
 				}
 				if (oggSource) {
-					videoNode.addSource(oggSource);
+					selectedSource = oggSource;
 				}
 				if (webmSource) {
-					videoNode.addSource(webmSource);
+					selectedSource = webmSource;
 				}
 			}
 			else if (flvSource && type=="flash") {
-				videoNode.addSource(flvSource);
+				selectedSource = flvSource;
 			}
 			else if (mp4Source && type=="flash") {
-				videoNode.addSource(mp4Source);
+				selectedSource = mp4Source;
 			}
 			else if (rtmpSource && type=="streaming"){
-				videoNode.addSource(rtmpSource);
+				selectedSource = rtmpSource;
 			}
 			else if (imageSource && type=="image") {
-				videoNode.addSource(imageSource);
+				selectedSource = imageSource;
 			}
+			
+			selectedSource = this.getVideoQuality(selectedSource,stream);
+			if (stream=='master') this.currentMasterVideoData = selectedSource;
+			else if (stream=='slave') this.currentSlaveVideoData = selectedSource;
+			videoNode.addSource(selectedSource);
 		}
 	},
 	
