@@ -72,20 +72,6 @@ paella.plugins.FrameControlPlugin = Class.create(paella.ButtonPlugin,{
 		});
 		
 		paella.events.bind(paella.events.timeupdate,function(event,params) { This.onTimeUpdate(params.currentTime) });
-		
-		this.checkHighResFrames();
-	},
-	
-	checkHighResFrames:function() {
-		
-		var slidesStream = paella.initDelegate.initParams.videoLoader.streams.length>=2 ? paella.initDelegate.initParams.videoLoader.streams[1]:null;
-		if (slidesStream && slidesStream.sources.image) {
-			this.highResFrames = {};
-			for (var key in slidesStream.sources.image.frames) {
-				var src = slidesStream.sources.image.frames[key];
-				this.highResFrames[key] = src;
-			}
-		}
 	},
 	
 	showHiResFrame:function(url) {
@@ -155,7 +141,8 @@ paella.plugins.FrameControlPlugin = Class.create(paella.ButtonPlugin,{
 		if (frameData) {
 			frame.frameData = frameData;
 			frame.frameControl = this;
-			frame.innerHTML = '<img src="' + frameData.url + '" alt="" class="frameControlImage"></img>';
+			image = frameData.thumb ? frameData.thumb:frameData.url;
+			frame.innerHTML = '<img src="' + image + '" alt="" class="frameControlImage"></img>';
 			$(frame).mouseover(function(event) {
 				this.frameControl.onMouseOver(event,this.frameData);
 			});
@@ -170,11 +157,11 @@ paella.plugins.FrameControlPlugin = Class.create(paella.ButtonPlugin,{
 	},
 	
 	onMouseOver:function(event,frameData) {
-		if (this.highResFrames) {
-			var hRes = this.highResFrames['frame_' + frameData.time];
-			if (hRes) {
-				this.showHiResFrame(hRes);
-			}
+		var frames = paella.initDelegate.initParams.videoLoader.frameList;
+		var frame = frames[frameData.time];
+		if (frame) {
+			var image = frame.url;
+			this.showHiResFrame(image);
 		}
 	},
 	
