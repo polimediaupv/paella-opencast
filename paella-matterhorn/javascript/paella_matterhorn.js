@@ -143,7 +143,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			else if (currentAttachment.type == "presentation/segment+preview") {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
-					imageSourceHD.frames["frame_"+time] = currentAttachment.url;
+					imageSource.frames["frame_"+time] = currentAttachment.url;
 
                 	if (!(this.frameList[time])){
 	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
