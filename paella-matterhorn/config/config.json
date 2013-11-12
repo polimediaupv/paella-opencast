@@ -8,21 +8,16 @@
 		"url":"/"
 	},
 	"player":{
-		"defaultProfile": "small",
+		"defaultProfile": "full",
 		"methods":[{"name":"streaming","enabled":true},
 				   {"name":"html","enabled":true},
-				   {"name":"flash","enabled":true}]
+				   {"name":"flash","enabled":true},
+				   {"name":"image","enabled":true}]
 	},
 	"editor":{
 			"enabled":true
 	},
 	"defaultProfile":"slide_professor",
-	"trimming":{
-		"enabled":true
-	},
-	"publish":{
-		"enabled":true
-	},
 	"data":{
 		"enabled":true,
 		"dataDelegates":{
@@ -30,6 +25,14 @@
 			"trimming": "MHAnnotationServiceTrimmingDataDelegate",
 			"footprints": "MHFootPrintsDataDelegate",
 			"captions": "MHCaptionsDataDelegate"
+		}
+	},
+	"plugins":{
+		"defaultConfig":{"enabled":true},
+		"list":{
+			"es.upv.paella.ShowEditorPlugin":{"enabled":true,"alwaysVisible":true},
+			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":true},
+			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true}
 		}
 	}
 }
