@@ -37,7 +37,7 @@
 					createEngageHTMLPage(parentNodeName);
 
 					var q = paella.utils.parameters.get('q');
-					if (q !== "") {
+					if (q !== undefined) {
 						params.q = decodeURIComponent(q);
 						if (params.q == undefined) params.q ="";
 					}
