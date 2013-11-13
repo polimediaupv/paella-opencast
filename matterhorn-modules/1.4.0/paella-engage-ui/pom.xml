@@ -4,7 +4,7 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>2.0</version>
+	<version>3.0</version>
 	<properties>
 		<matterhorn.version>1.4.0</matterhorn.version>
 		<matterhorn.basedir>${project.basedir}/../..</matterhorn.basedir>
