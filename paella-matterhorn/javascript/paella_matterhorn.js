@@ -123,8 +123,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		
 		var presenter = streams["presenter/delivery"];
 		var presentation = streams["presentation/delivery"];		
-		var imageSource = {frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{}}
-		var imageSourceHD = {frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{}}
+		var imageSource =   {type:"image/jpeg", frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:320, h:180}}
+		var imageSourceHD = {type:"image/jpeg", frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:1280, h:720}}
 		// Read the attachments
 		for (var i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
@@ -160,8 +160,11 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		}
 
 		// Set the image stream
-		if (imageSourceHD.frames != {}) { presentation.sources.image = imageSourceHD; }
-		else if (imageSource.frames != {}) { presentation.sources.image = imageSource; }		
+		var imagesArray = [];
+		if (imageSourceHD.frames != {}) { imagesArray.push(imageSourceHD); }
+		if (imageSource.frames != {}) { imagesArray.push(imageSource); }
+		if (imagesArray != []) { presentation.sources.image	= imagesArray; }
+		
 		
 	
 		if (presenter) { this.streams.push(presenter); }

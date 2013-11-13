@@ -20,52 +20,21 @@
 		<script type="text/javascript" src="mh_resources/js/mh_header.js"></script>
 		
 		<script type="text/javascript">
-		
-		paella.plugins.MyRightBarPlugin = Class.create(paella.RightBarPlugin,{
-			getSubclass:function() { return 'test'; },
-
-			buildContent:function(domElement) {
-				domElement.innerHTML = "<h2>This is a RightBarPlugin Test</h2>";
-			},
-	
-			getName:function() {
-				return "es.upv.paella.test.MyRightBarPlugin";
-			}
-		});
-		
-		paella.plugins.myRightBarPlugin = new paella.plugins.MyRightBarPlugin();
-		
-		paella.plugins.MyTabBarPlugin = Class.create(paella.TabBarPlugin,{
-			getSubclass:function() { return "test"; },
-			getTabName:function() { return "Test"; },
-			getName:function() { return "es.upv.paella.test.MyTabBarPlugin"; },
-			
-			setup:function() {
+			function createEngageHTMLPage(parentNodeName) {
+				insertHeaderToDomNode(parentNodeName);	
+				var parentNode = document.getElementById(parentNodeName);
 				
-			},
-
-			buildContent:function(domElement) {
-				domElement.innerHTML = "<p>This is a Paella Extended tab bar plugin</p>";
+				var paellaExtendedContainer = document.createElement('div');
+				paellaExtendedContainer.id = 'paellaExtendedContainer';
+	
+				parentNode.appendChild(paellaExtendedContainer);	
+			}		
+			function loadMHPaella(parentNodeName) {
+				initPaellaMatterhornMe(function(){
+					createEngageHTMLPage(parentNodeName);
+					loadPaellaExtended('paellaExtendedContainer');
+				});
 			}
-		});
-		
-		paella.plugins.myTabBarPlugin = new paella.plugins.MyTabBarPlugin();
-		
-		function createEngageHTMLPage(parentNodeName) {
-			insertHeaderToDomNode(parentNodeName);	
-			var parentNode = document.getElementById(parentNodeName);
-			
-			var paellaExtendedContainer = document.createElement('div');
-			paellaExtendedContainer.id = 'paellaExtendedContainer';
-
-			parentNode.appendChild(paellaExtendedContainer);	
-		}		
-		function loadMHPaella(parentNodeName) {
-			initPaellaMatterhornMe(function(){
-				createEngageHTMLPage(parentNodeName);
-				loadPaellaExtended('paellaExtendedContainer');
-			});
-		}
 		</script>
 	</head>
 	<body id="body" onload="loadMHPaella('body');">
