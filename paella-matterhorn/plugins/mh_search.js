@@ -86,6 +86,9 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 		inputElement.type = "text";
 		inputElement.value = paella.dictionary.translate("Search in this recording");
 		inputElement.size = "30";
+		inputElement.dir = 'lrt';
+		inputElement.spellcheck = 'true';
+		inputElement.setAttribute('x-webkit-speech','');
 		inputElement.onfocus = function(){this.value=""; this.onfocus=undefined};
 		inputElement.onkeyup = function(){thisClass.doSearch(this.value);};	
 		
