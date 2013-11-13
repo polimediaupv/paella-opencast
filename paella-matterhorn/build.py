@@ -55,6 +55,7 @@ for file in paellaFiles:
 	outFile.close()
 
 pluginFiles = os.listdir(pluginDir);
+pluginFiles.sort();
 
 f = open(pluginDir + 'ignore.json')
 ignoreFiles = json.loads(f.read())
@@ -77,6 +78,8 @@ cssOut.close()
 
 
 intermediateFiles = os.listdir(intermediatePath)
+intermediateFiles.sort();
+
 for file in intermediateFiles:
 	filePath = os.path.join(intermediatePath,file)
 	fileName, fileExtension = os.path.splitext(filePath)
