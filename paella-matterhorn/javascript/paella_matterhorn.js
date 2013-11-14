@@ -6,6 +6,7 @@ paella.pluginList.push('mh_multiple_video_export.js');
 paella.pluginList.push('mh_episodes_from_serie.js');
 paella.pluginList.push('mh_downloads.js');
 paella.pluginList.push('mh_search.js');
+paella.pluginList.push('mh_description.js');
 //paella.pluginList.push('mh_quality.js');
 
 
