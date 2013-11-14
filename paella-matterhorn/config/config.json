@@ -32,7 +32,8 @@
 		"list":{
 			"es.upv.paella.ShowEditorPlugin":{"enabled":true,"alwaysVisible":true,"editorPage":"editor.html"},
 			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":true},
-			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true}
+			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
+			"es.upv.paella.descriptionPlugin": {"enabled":false}
 		}
 	}
 }
