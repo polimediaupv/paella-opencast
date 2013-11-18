@@ -459,22 +459,57 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 
 
 
+paella.matterhorn.InitDelegate = Class.create(paella.InitDelegate,{
+	loadConfig:function(onSuccess) {
+		var configUrl = this.initParams.configUrl;
+		var params = {};
+		params.url = configUrl;
+		paella.ajax.get(params,function(data, type, returnCode, responseRaw) {
+				if (typeof(data)=='string') {
+					try {
+						data = JSON.parse(data);
+					}
+					catch (e) {
+						onSuccess({});
+					}
+				}
+				onSuccess(data);
+			},
+			function(data, type,returnCode, responseRaw) {
+				if (returnCode == 200){
+					if (typeof(responseRaw)=='string') {
+						try {
+							data = JSON.parse(responseRaw);
+						}
+						catch (e) {
+							data = {};
+						}
+					}
+					onSuccess(data);
+				}
+				else{
+					onSuccess({});
+				}
+			});
+	}
+});
+
 function loadPaella(containerId) {
-	var initDelegate = new paella.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
+	var initDelegate = new paella.matterhorn.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
 	var id = paella.utils.parameters.get('id');
 
 	initPaellaMatterhorn(id, function() {initPaellaEngage(containerId,initDelegate);});
 }
 
 function loadPaellaExtended(containerId) {
-	var initDelegate = new paella.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
+	var initDelegate = new paella.matterhorn.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
 	var id = paella.utils.parameters.get('id');
 
 	initPaellaMatterhorn(id, function() {initPaellaExtended({containerId:containerId,initDelegate:initDelegate});});
 }
 
 function loadPaellaEditor(containerId) {
-    var EditorInitDelegate = Class.create(paella.InitDelegate,{
+    var EditorInitDelegate = Class.create(paella.matterhorn.InitDelegate,{
             loadConfig:function(onSuccess) {
 				this.parent(function(data) {
 					if (data.editor) {
