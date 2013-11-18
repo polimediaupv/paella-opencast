@@ -141,15 +141,38 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		paella.messageBox.showMessage("TODO: Upload to matterhorn a new mediapackage!")
 	},	
 
+	ConditionalCallback: Class.create(paella.AsyncLoaderCallback,{
+		loaderCallbaback: null,
+		conditionalFunc: null,
+		
+		initialize:function(loaderCallback, condifionalFunc) {
+			this.name = "conditionalCallback";
+			this.loaderCallback = loaderCallback;
+			this.condifionalFunc = condifionalFunc;
+		},
+		load:function(onSuccess,onError) {
+			var cond = true;
+			if (this.condifionalFunc && typeof(this.condifionalFunc)=='function') {
+				cond = this.condifionalFunc();
+			}
+			
+			if (cond) {
+				this.loaderCallback.load(onSuccess,onError);
+			}
+			else {
+				onSuccess();
+			}
+		}
+	}),
 
 	exportOneVideo:function(trackitem) {
-	/*
 		var serieId = null;
 		var dc_serie = null;
 		var mediapackage = null;
 
 		var asyncLoader = new paella.AsyncLoader();		
-		
+	
+		// Get the serie XML	
 		if (trackitem.metadata.serie) {
 			paella.debug.log('Serie ' + trackitem.metadata.serie);
 			serieId = trackitem.metadata.serie; //'17387ec5-f072-4161-a327-e452be846d0a';
@@ -170,36 +193,69 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			paella.debug.log('No Serie');
 		}
 		
+		
 		// Create the mediapackage
 		createMediaPackageCB = new paella.AjaxCallback({url:'/ingest/createMediaPackage'});
-		serieCB.didLoadSuccess = function(callback) {
-			
-			mediapackage = callback.rawData;
+		createMediaPackageCB.didLoadSuccess = function(callback) { mediapackage = callback.rawData; paella.debug.log('MP: ' + mediapackage); return true;}
+		asyncLoader.addCallback(createMediaPackageCB, 'createMediaPackage');	
+		
+		
+		// Add the Serie
+		var addSerieCB = new paella.AjaxCallback({},'POST');
+		addSerieCB.getParams = function(){
+			return {url:'/ingest/addDCCatalog', params: {
+				'mediaPackage': mediapackage,
+				'dublinCore': dc_serie,
+				'flavor': 'dublincore/serie'
+				}
+			};
 		}
+		addSerieCB.didLoadSuccess = function(callback) { mediapackage = callback.rawData; paella.debug.log('MP: ' + mediapackage); return true;}
+		var conditionalAddSerieCB = new this.ConditionalCallback(addSerieCB, function(){ return (dc_serie != null); });
+		asyncLoader.addCallback(conditionalAddSerieCB, 'addSerie');	
 		
-				
-		asyncLoader.addCallback(new paella.JSONLoader('/ingest/createMediaPackage', 'createMediaPackage')	
-		asyncLoader.addCallback(new paella.JSONLoader('/ingest/addDCCatalog', 'addSerie')
-		asyncLoader.addCallback(new paella.JSONLoader('/ingest/addDCCatalog'}, 'addEpisode')
 
-		asyncLoader.addCallback(new paella.JSONLoader({url:'/mediapackage/addTrack'}, "addTrack")
-
-
-
-		asyncLoader.getCallback("createMediaPackage").data
-
+		// Add the Episode
+		var dc_episode = "";
+		var addEpisodeCB = new paella.AjaxCallback({},'POST');
+		addEpisodeCB.getParams = function(){
+			return {url:'/ingest/addDCCatalog', params: {
+				'mediaPackage': mediapackage,
+				'dublinCore': dc_episode,
+				'flavor': 'dublincore/episode'
+				}
+			};
+		}
+		addEpisodeCB.didLoadSuccess = function(callback) { mediapackage = callback.rawData; paella.debug.log('MP: ' + mediapackage); return true;}
+		asyncLoader.addCallback(addEpisodeCB, 'addEpisode');	
 
 		
-		http://matterhorn.cc.upv.es:8080/mediapackage/addTrack	
+		// Add the tracks
+		var tracks = paella.matterhorn.episode.mediapackage.media.track;
+		for (var i=0; i<tracks.length; ++i) {
+			
+			var addTrackCB = new paella.AjaxCallback({url:'/ingest/addTrack', params:{
+					'mediaPackage': mediapackage, 
+					'url': paella.matterhorn.episode.mediapackage.media.track[i].url, 
+					'flavor': paella.matterhorn.episode.mediapackage.media.track[i].type}
+				}, 'POST');
+			addTrackCB.getParams = function(){
+				this.params.params.mediaPackage = mediapackage;
+				return this.params;
+			}
+			addTrackCB.didLoadSuccess = function(callback) { mediapackage = callback.rawData; paella.debug.log('MP: ' + mediapackage); return true;}
+			asyncLoader.addCallback(addTrackCB, 'addTrack'+i);			
+		}
+
 		
-	
-		// 3.- Create the mediapackage http://matterhorn.cc.upv.es:8080/ingest/createMediaPackage
-	
+		// Add the SMIL 
 		
 		
 		
+		// Make all operations
 		asyncLoader.load();
-	*/
+
+		//TODO: Ingest!!!
 	},
 
 	
