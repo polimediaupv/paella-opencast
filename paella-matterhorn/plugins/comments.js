@@ -57,7 +57,7 @@ paella.plugins.CommentsPlugin = Class.create(paella.TabBarPlugin,{
 		var divSil;
 		divSil = document.createElement('img');
 		divSil.className = "comments_entry_silhouette";
-		divSil.src = "plugins/silhouette32.png";
+		divSil.src = paella.initDelegate.initParams.accessControl.userData.avatar;
 		divSil.id = rootID+"_silhouette";
 		divEntry.appendChild(divSil);
 		
@@ -328,7 +328,7 @@ paella.plugins.CommentsPlugin = Class.create(paella.TabBarPlugin,{
 		divSil = document.createElement('img');
 		divSil.className = "comments_entry_silhouette";
 		divSil.id = rootID+"_silhouette";
-		divSil.src = "plugins/silhouette32.png";
+		divSil.src = paella.initDelegate.initParams.accessControl.userData.avatar;
 		divEntry.appendChild(divSil);
 		
 		var divCommentContainer;
@@ -365,7 +365,9 @@ paella.plugins.CommentsPlugin = Class.create(paella.TabBarPlugin,{
 		return divEntry;
 	}
 	
+
 });
   
 
 paella.plugins.commentsPlugin = new paella.plugins.CommentsPlugin();
+
