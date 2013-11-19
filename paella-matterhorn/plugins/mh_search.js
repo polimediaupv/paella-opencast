@@ -19,7 +19,11 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 	getIndex:function() { return 1008; },
 	
 	checkEnabled:function(onSuccess) {
-		onSuccess(true);
+		var ret = false;
+		if (paella.matterhorn && paella.matterhorn.episode && paella.matterhorn.episode.segments) {
+			ret = true;
+		}
+		onSuccess(ret);
 	},
 		
 	setup:function() {},
@@ -119,36 +123,21 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 	},
 		
 	loadSegmentText:function() {
-		var thisClass = this;
-
-		thisClass.setLoading(true);
+		this.setLoading(true);
 		this.divResults.innerHTML = "";
 				
-		paella.ajax.get({url:'/search/episode.json', params:{id:paella.matterhorn.episode.id, limit:1000}},
-			function(data, contentType, returnCode) {
-				paella.debug.log("Searching episode "+paella.matterhorn.episode.id);
-				paella.debug.log(data);
 				
-				
-				if ((data === undefined) || (data['search-results'] === undefined) ||
-					(data['search-results'].result === undefined) ||(data['search-results'].result.segments === undefined))
-				{
-					paella.debug.log("Segment Text data not available");
-				} 
-				else {
-					var segments = data['search-results'].result.segments;
-					for (var i =0; i < segments.segment.length; ++i ){
-						var segment = segments.segment[i];
-						thisClass.appendSegmentTextEntry(segment);
-					}
-				}				
-				thisClass.setLoading(false);				
-			},
-			function(data, contentType, returnCode) {
-				paella.debug.log("Error searching episode "+paella.matterhorn.episode.id);
-				thisClass.setLoading(false);
+		if (paella.matterhorn.episode.segments === undefined) {
+			paella.debug.log("Segment Text data not available");
+		} 
+		else {
+			var segments = paella.matterhorn.episode.segments;
+			for (var i =0; i < segments.segment.length; ++i ){
+				var segment = segments.segment[i];
+				this.appendSegmentTextEntry(segment);
 			}
-		);
+		}				
+		this.setLoading(false);
 	},		
 		
 	appendSegmentTextEntry:function(segment) {
