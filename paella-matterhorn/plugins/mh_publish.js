@@ -46,7 +46,7 @@ paella.plugins.PublishPlugin = Class.create(paella.EventDrivenPlugin,{
 			}
 		}
 		else {
-			if (data == false) {
+			if ((data == false) || (data == "undefined")){
 				if (paella.initDelegate.initParams.accessControl.permissions.isAnonymous == true) {
 					paella.player.unloadAll(paella.dictionary.translate("This video is not published. If you are the author, Log In to publish it."));						
 				}
