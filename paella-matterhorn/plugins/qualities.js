@@ -25,8 +25,6 @@ paella.plugins.MultipleQualitiesPlugin = Class.create(paella.ButtonPlugin,{
 		this.currentSlave = paella.player.videoContainer.currentSlaveVideoData;
 		
 		var allMasterSources = paella.player.videoContainer.masterVideoData.sources;
-		var allSlaveSources = paella.player.videoContainer.slaveVideoData.sources;
-		
 		for (key in allMasterSources){
 			for (var j =0; j < allMasterSources[key].length; ++j ){ 
 				if ((allMasterSources[key][j].type == this.currentMaster.type)){
@@ -34,11 +32,15 @@ paella.plugins.MultipleQualitiesPlugin = Class.create(paella.ButtonPlugin,{
 				}
 			}
 		}
+
 		
-		for (key in allSlaveSources){
-			for (var j =0; j < allSlaveSources[key].length; ++j ){
-				if ((allSlaveSources[key][j].type == this.currentSlave.type)){
-					this.availableSlaves.push(allSlaveSources[key][j]);
+		if (this.currentSlave){
+			var allSlaveSources = paella.player.videoContainer.slaveVideoData.sources;
+			for (key in allSlaveSources){
+				for (var j =0; j < allSlaveSources[key].length; ++j ){
+					if ((allSlaveSources[key][j].type == this.currentSlave.type)){
+						this.availableSlaves.push(allSlaveSources[key][j]);
+					}
 				}
 			}
 		}
@@ -91,7 +93,7 @@ paella.plugins.MultipleQualitiesPlugin = Class.create(paella.ButtonPlugin,{
 			thisClass.changeVideoStream(param1Q,comboS.id);
 		});
 			
-		if (this.availableSlaves.length > 1){
+		if (this.availableSlaves.length+1 > 1){
 			for (var j =0; j < this.availableSlaves.length; ++j ){
 				var w = this.availableSlaves[j].res.w;
 				var h = this.availableSlaves[j].res.h
