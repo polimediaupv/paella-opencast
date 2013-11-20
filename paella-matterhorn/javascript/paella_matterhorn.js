@@ -8,6 +8,7 @@ paella.pluginList.push('mh_downloads.js');
 paella.pluginList.push('mh_search.js');
 paella.pluginList.push('mh_description.js');
 paella.pluginList.push('mh_publish.js');
+paella.pluginList.push('videoload_test.js');
 
 
 
@@ -225,7 +226,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 
 paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paella.DataDelegate,{
 	read:function(context,params,onSuccess) {
-		var episodeId = paella.initDelegate.getId();
+		var episodeId = params.id;
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
 			function(data, contentType, returnCode) { 
  				var annotations = data.annotations.annotation;
@@ -247,7 +248,7 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 	},
 
 	write:function(context,params,value,onSuccess) {
-		var episodeId = paella.initDelegate.getId();
+		var episodeId = params.id;
 		if (typeof(value)=='object') value = JSON.stringify(value);
 
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
@@ -277,7 +278,7 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 	},
         
 	remove:function(context,params,onSuccess) {
-		var episodeId = paella.initDelegate.getId();
+		var episodeId = params.id;
 
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
 			function(data, contentType, returnCode) {
@@ -593,255 +594,241 @@ paella.matterhorn.SearchEpisode = Class.create({
 		load:function(onSuccess,onError) {
 			var thisClass = this;
 			
-			thisClass.recording.entry_published_class = "published";
-			onSuccess();
-/*
-			var loader = new paella.matterhorn.LoaderSaverInfo(thisClass.config);
-
-			loader.loadData(this.recording.id, "paella/publish", function(response) {
-
-				if (response == true){
-					thisClass.recording.entry_published_class = "published";
+			paella.data.read('publish',{id:this.recording.id},function(data,status) {
+				if (status == true) {
+					if (data == true){
+						thisClass.recording.entry_published_class = "published";
+					}
+					else if (data == false){
+						thisClass.recording.entry_published_class = "unpublished";
+					}
+					else if (data == "undefined"){
+						thisClass.recording.entry_published_class = "pendent";
+					}
+					else {
+						thisClass.recording.entry_published_class = "no_publish_info";
+					}
+					onSuccess();
 				}
-				else if (response == false){
-					thisClass.recording.entry_published_class = "unpublished";
+				else {
+					thisClass.recording.entry_published_class = "no_publish_info";
+					onSuccess();
 				}
-				else if (response == "undefined"){
-					thisClass.recording.entry_published_class = "pendent";
-				}
-
-				onSuccess();
-			}, function(){
-				thisClass.recording.entry_published_class = "no_publish_info";
-				onSuccess();
 			});
-*/
 		}
 	}),
 
-	initialize:function(config) {
-		this.config = config;
-		if (config.proxyLoader && config.proxyLoader.enabled) {
-			this.proxyUrl = config.proxyLoader.url;
-		}
-		this.useJsonp = config.proxyLoader.usejsonp;
+	createDOMElement:function(type, id, className) {
+		var elem = document.createElement(type);
+		elem.id = id;
+		elem.className = className;
+		return elem;
 	},
 
 	doSearch:function(params, domElement) {
 		var thisClass = this;
-		var divList = domElement; //document.getElementById(divListId);
-		divList.innerHTML = "";
-
 		this.recordingEntryID =	 domElement.id + "_entry_";
 
+
+		domElement.innerHTML = "";
 		// loading div
-		this.divLoading = document.createElement('div');
-		this.divLoading.id = thisClass.recordingEntryID + "_loading";
-		this.divLoading.className = "recordings_loading";
+		this.divLoading = this.createDOMElement('div', thisClass.recordingEntryID + "_loading", "recordings_loading");
 		this.divLoading.innerHTML = paella.dictionary.translate("Searching...");
-		divList.appendChild(this.divLoading);
+		domElement.appendChild(this.divLoading);
 
 		// header div
-		var divHeader = document.createElement('div');
-		divHeader.id = thisClass.recordingEntryID + "_header";
-		divHeader.className = "recordings_header";
-		divList.appendChild(divHeader);
-
-		this.divResults = document.createElement('div');
-		this.divResults.id = thisClass.recordingEntryID + "_header_results";
-		this.divResults.className = "recordings_header_results";
+		var divHeader = this.createDOMElement('div', thisClass.recordingEntryID + "_header", "recordings_header");
+		domElement.appendChild(divHeader);
+		this.divResults = this.createDOMElement('div', thisClass.recordingEntryID + "_header_results", "recordings_header_results");		
 		divHeader.appendChild(this.divResults);
-
-		var divNavigation = document.createElement('div');
-		divNavigation.id = thisClass.recordingEntryID + "_header_navigation";
-		divNavigation.className = "recordings_header_navigation";
-		divHeader.appendChild(divNavigation);
-
+		divHeader.appendChild(this.createDOMElement('div', thisClass.recordingEntryID + "_header_navigation", "recordings_header_navigation"));
 
 		// loading results
 		thisClass.setLoading(true);
-
-		paella.debug.log("Params offet: " + params.offset);
-		paella.debug.log("Params limit: " + params.limit);
-		paella.debug.log("Params q: " + params.q);
-
-		var resultsAvailable = true;
-		var restEndpoint = thisClass.config.restServer.url + "search/episode.json";
-
-		new paella.Ajax(restEndpoint, params, function(response) {
-			if (typeof(response)=="string") {
-				response = JSON.parse(response);
+		paella.ajax.get({url:'/search/episode.json', params:params},
+			function(data, contentType, returnCode, dataRaw) {
+				thisClass.processSearchResults(data, params, domElement);
+			},
+			function(data, contentType, returnCode) {
 			}
-
-			var resultsAvailable = (response !== undefined) &&
-				(response['search-results'] !== undefined) &&
-				(response['search-results'].total !== undefined);
-
-			if (resultsAvailable === false) {
-				paella.debug.log("Seach failed, respons:  " + response);
-				return;
-			}
-
-
-			var totalItems = parseInt(response['search-results'].total);
-
-			if (totalItems === 0) {
-				if (params.q === undefined) {
-					thisClass.setResults("No recordings");
-				} else {
-					thisClass.setResults("No recordings found: \"" + params.q + "\"");
-				}
-			} else {
-				var offset = parseInt(response['search-results'].offset);
-				var limit = parseInt(response['search-results'].limit);
-
-				var startItem = offset;
-				var endItem = offset + limit;
-				if (startItem < endItem) {
-				  startItem = startItem + 1;
-				}
-
-				if (params.q === undefined) {
-					thisClass.setResults("Results " + startItem + "-" + endItem + " of " + totalItems);
-				} else {
-					thisClass.setResults("Results " + startItem + "-" + endItem + " of " + totalItems + " for \"" + params.q + "\"");
-				}
-
-
-				// *******************************
-				// *******************************
-				// TODO
-				var asyncLoader = new paella.AsyncLoader();
-				var results = response['search-results'].result;
-				var restEndpointDeleteAnnotation = thisClass.config.restServer.url + "annotation/annotations.json";
-				//There are annotations of the desired type, deleting...
-				for (var i =0; i < results.length; ++i ){
-					asyncLoader.addCallback(new thisClass.AsyncLoaderPublishCallback(thisClass.config, results[i]));
-				}
-
-				asyncLoader.load(function() {
-					// create navigation div
-					if (results.length < totalItems) {
-						// current page
-						var currentPage = 1;
-						if (params.offset !== undefined) {
-							currentPage = (params.offset / params.limit) + 1;
-						}
-
-						// max page
-						var maxPage = parseInt(totalItems / params.limit);
-						if (totalItems % 10 != 0) maxPage += 1;
-						maxPage =  Math.max(1, maxPage);
-
-
-						// previous link
-						var divPrev = document.createElement('div');
-						divPrev.id = thisClass.recordingEntryID + "_header_navigation_prev";
-						divPrev.className = "recordings_header_navigation_prev";
-						if (currentPage > 1) {
-							var divPrevLink = document.createElement('a');
-							divPrevLink.param_offset = (currentPage - 2) * params.limit;
-							divPrevLink.param_limit	= params.limit;
-							divPrevLink.param_q = params.q;
-							$(divPrevLink).click(function(event) {
-								var params = {};
-								params.offset = this.param_offset;
-								params.limit = this.param_limit;
-								params.q = this.param_q;
-								thisClass.doSearch(params, divList);
-							});
-							divPrevLink.innerHTML = paella.dictionary.translate("Previous");
-							divPrev.appendChild(divPrevLink);
-						} else {
-							divPrev.innerHTML = paella.dictionary.translate("Previous");
-						}
-						divNavigation.appendChild(divPrev);
-
-						var divPage = document.createElement('div');
-						divPage.id = thisClass.recordingEntryID + "_header_navigation_page";
-						divPage.className = "recordings_header_navigation_page";
-						divPage.innerHTML = paella.dictionary.translate("Page:");
-						divNavigation.appendChild(divPage);
-
-						// take care for the page buttons
-						var spanBeforeSet = false;
-						var spanAfterSet = false;
-						var offsetPages = 2;
-						for (var i = 1; i <= maxPage; i++)	{
-							var divPageId = document.createElement('div');
-							divPageId.id = thisClass.recordingEntryID + "_header_navigation_pageid_"+i;
-							divPageId.className = "recordings_header_navigation_pageid";
-
-							if (!spanBeforeSet && currentPage >= 5 && i > 1 && (currentPage - (offsetPages + 2) != 1)) {
-								divPageId.innerHTML = "..."
-								i = currentPage - (offsetPages + 1);
-								spanBeforeSet = true;
-							}
-							else if (!spanAfterSet && (i - offsetPages) > currentPage && maxPage - 1 > i && i > 4) {
-								divPageId.innerHTML = "..."
-								i = maxPage - 1;
-								spanAfterSet = true;
-							}
-							else {
-								if (i !== currentPage) {
-									var divPageIdLink = document.createElement('a');
-									divPageIdLink.param_offset = (i -1) * params.limit;
-									divPageIdLink.param_limit = params.limit;
-									divPageIdLink.param_q = params.q;
-									$(divPageIdLink).click(function(event) {
-										var params = {};
-										params.offset = this.param_offset;
-										params.limit = this.param_limit;
-										params.q = this.param_q;
-										thisClass.doSearch(params, divList);
-									});
-									divPageIdLink.innerHTML = i
-									divPageId.appendChild(divPageIdLink);
-								} else {
-									divPageId.innerHTML = i
-								}
-							}
-							divNavigation.appendChild(divPageId);
-						}
-
-						// next link
-						var divNext = document.createElement('div');
-						divNext.id = thisClass.recordingEntryID + "_header_navigation_next";
-						divNext.className = "recordings_header_navigation_next";
-						if (currentPage < maxPage) {
-							var divNextLink = document.createElement('a');
-							divNextLink.param_offset = currentPage * params.limit;
-							divNextLink.param_limit	= params.limit;
-							divNextLink.param_q = params.q;
-							$(divNextLink).click(function(event) {
-								var params = {};
-								params.offset = this.param_offset;
-								params.limit = this.param_limit;
-								params.q = this.param_q;
-								thisClass.doSearch(params, divList);
-							});
-							divNextLink.innerHTML = paella.dictionary.translate("Next");
-							divNext.appendChild(divNextLink);
-						} else {
-							divNext.innerHTML = paella.dictionary.translate("Next");
-						}
-						divNavigation.appendChild(divNext);
-
-					}
-
-					// create recording divs
-					for (var i =0; i < results.length; ++i ){
-						var recording = results[i];
-
-						var divRecording = thisClass.createRecordingEntry(i, recording);
-						divList.appendChild(divRecording);
-					}
-				}, null);
-			}
-			// finished loading
-			thisClass.setLoading(false);
-		}, this.proxyUrl, this.useJsonp);
+		);
 	},
+
+
+	processSearchResults:function(response, params, divList) {
+		var thisClass = this;
+		if (typeof(response)=="string") {
+			response = JSON.parse(response);
+		}
+
+		var resultsAvailable = (response !== undefined) &&
+			(response['search-results'] !== undefined) &&
+			(response['search-results'].total !== undefined);
+
+		if (resultsAvailable === false) {
+			paella.debug.log("Seach failed, respons:  " + response);
+			return;
+		}
+
+
+		var totalItems = parseInt(response['search-results'].total);
+
+		if (totalItems === 0) {
+			if (params.q === undefined) {
+				thisClass.setResults("No recordings");
+			} else {
+				thisClass.setResults("No recordings found: \"" + params.q + "\"");
+			}
+		} else {
+			var offset = parseInt(response['search-results'].offset);
+			var limit = parseInt(response['search-results'].limit);
+
+			var startItem = offset;
+			var endItem = offset + limit;
+			if (startItem < endItem) {
+			  startItem = startItem + 1;
+			}
+
+			if (params.q === undefined) {
+				thisClass.setResults("Results " + startItem + "-" + endItem + " of " + totalItems);
+			} else {
+				thisClass.setResults("Results " + startItem + "-" + endItem + " of " + totalItems + " for \"" + params.q + "\"");
+			}
+
+
+			// *******************************
+			// *******************************
+			// TODO
+			var asyncLoader = new paella.AsyncLoader();
+			var results = response['search-results'].result;
+			//There are annotations of the desired type, deleting...
+			for (var i =0; i < results.length; ++i ){
+				asyncLoader.addCallback(new thisClass.AsyncLoaderPublishCallback(thisClass.config, results[i]));
+			}
+
+			asyncLoader.load(function() {
+				// create navigation div
+				if (results.length < totalItems) {
+					// current page
+					var currentPage = 1;
+					if (params.offset !== undefined) {
+						currentPage = (params.offset / params.limit) + 1;
+					}
+
+					// max page
+					var maxPage = parseInt(totalItems / params.limit);
+					if (totalItems % 10 != 0) maxPage += 1;
+					maxPage =  Math.max(1, maxPage);
+
+
+					// previous link
+					var divPrev = document.createElement('div');
+					divPrev.id = thisClass.recordingEntryID + "_header_navigation_prev";
+					divPrev.className = "recordings_header_navigation_prev";
+					if (currentPage > 1) {
+						var divPrevLink = document.createElement('a');
+						divPrevLink.param_offset = (currentPage - 2) * params.limit;
+						divPrevLink.param_limit	= params.limit;
+						divPrevLink.param_q = params.q;
+						$(divPrevLink).click(function(event) {
+							var params = {};
+							params.offset = this.param_offset;
+							params.limit = this.param_limit;
+							params.q = this.param_q;
+							thisClass.doSearch(params, divList);
+						});
+						divPrevLink.innerHTML = paella.dictionary.translate("Previous");
+						divPrev.appendChild(divPrevLink);
+					} else {
+						divPrev.innerHTML = paella.dictionary.translate("Previous");
+					}
+					divNavigation.appendChild(divPrev);
+
+					var divPage = document.createElement('div');
+					divPage.id = thisClass.recordingEntryID + "_header_navigation_page";
+					divPage.className = "recordings_header_navigation_page";
+					divPage.innerHTML = paella.dictionary.translate("Page:");
+					divNavigation.appendChild(divPage);
+
+					// take care for the page buttons
+					var spanBeforeSet = false;
+					var spanAfterSet = false;
+					var offsetPages = 2;
+					for (var i = 1; i <= maxPage; i++)	{
+						var divPageId = document.createElement('div');
+						divPageId.id = thisClass.recordingEntryID + "_header_navigation_pageid_"+i;
+						divPageId.className = "recordings_header_navigation_pageid";
+
+						if (!spanBeforeSet && currentPage >= 5 && i > 1 && (currentPage - (offsetPages + 2) != 1)) {
+							divPageId.innerHTML = "..."
+							i = currentPage - (offsetPages + 1);
+							spanBeforeSet = true;
+						}
+						else if (!spanAfterSet && (i - offsetPages) > currentPage && maxPage - 1 > i && i > 4) {
+							divPageId.innerHTML = "..."
+							i = maxPage - 1;
+							spanAfterSet = true;
+						}
+						else {
+							if (i !== currentPage) {
+								var divPageIdLink = document.createElement('a');
+								divPageIdLink.param_offset = (i -1) * params.limit;
+								divPageIdLink.param_limit = params.limit;
+								divPageIdLink.param_q = params.q;
+								$(divPageIdLink).click(function(event) {
+									var params = {};
+									params.offset = this.param_offset;
+									params.limit = this.param_limit;
+									params.q = this.param_q;
+									thisClass.doSearch(params, divList);
+								});
+								divPageIdLink.innerHTML = i
+								divPageId.appendChild(divPageIdLink);
+							} else {
+								divPageId.innerHTML = i
+							}
+						}
+						divNavigation.appendChild(divPageId);
+					}
+
+					// next link
+					var divNext = document.createElement('div');
+					divNext.id = thisClass.recordingEntryID + "_header_navigation_next";
+					divNext.className = "recordings_header_navigation_next";
+					if (currentPage < maxPage) {
+						var divNextLink = document.createElement('a');
+						divNextLink.param_offset = currentPage * params.limit;
+						divNextLink.param_limit	= params.limit;
+						divNextLink.param_q = params.q;
+						$(divNextLink).click(function(event) {
+							var params = {};
+							params.offset = this.param_offset;
+							params.limit = this.param_limit;
+							params.q = this.param_q;
+							thisClass.doSearch(params, divList);
+						});
+						divNextLink.innerHTML = paella.dictionary.translate("Next");
+						divNext.appendChild(divNextLink);
+					} else {
+						divNext.innerHTML = paella.dictionary.translate("Next");
+					}
+					divNavigation.appendChild(divNext);
+
+				}
+
+				// create recording divs
+				for (var i =0; i < results.length; ++i ){
+					var recording = results[i];
+
+					var divRecording = thisClass.createRecordingEntry(i, recording);
+					divList.appendChild(divRecording);
+				}
+			}, null);
+		}
+		// finished loading
+		thisClass.setLoading(false);	
+	},
+
 
 	setLoading:function(loading) {
 		if (loading == true) {
@@ -852,7 +839,6 @@ paella.matterhorn.SearchEpisode = Class.create({
 	},
 
 	setResults:function(results) {
-		//var divResults = document.getElementById(this.recordingEntryID + "_header_results");
 		this.divResults.innerHTML = results;
 	},
 
@@ -868,8 +854,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 	},
 
 	createRecordingEntry:function(index, recording) {
-		var thisClass = this;
-		var rootID = thisClass.recordingEntryID + index;
+		var rootID = this.recordingEntryID + index;
 
 
 		var divEntry = document.createElement('div');
@@ -883,7 +868,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 			divEntry.className=divEntry.className+" even_entry";
 		}
 
-		var previewUrl = thisClass.getUrlOfAttachmentWithType(recording, "presentation/search+preview");
+		var previewUrl = this.getUrlOfAttachmentWithType(recording, "presentation/search+preview");
 
 		var divPreview = document.createElement('div');
 		divPreview.id = rootID+"_preview_container";

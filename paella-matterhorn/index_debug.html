@@ -88,6 +88,7 @@
 					
 					var initDelegate = new paella.matterhorn.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
 					initDelegate.loadConfig(function(config){
+						paella.data = new paella.Data(config);
 						var mySearch = new paella.matterhorn.SearchEpisode(config, params);
 						mySearch.doSearch(params, document.getElementById('listContainer'));
 					});
