@@ -30,15 +30,18 @@
 	"plugins":{
 		"defaultConfig":{"enabled":true},
 		"list":{
+			"es.upv.paella.test.videoLoadPlugin": {"enabled": true},
+
 			"es.upv.paella.ShowEditorPlugin":{"enabled":true,"alwaysVisible":true,"editorPage":"editor.html"},
 			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":true},
 			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
 			"es.upv.paella.descriptionPlugin": {"enabled":false},
 			"es.upv.paella.editor.trackCaptions": {"enabled":false},
+			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
+			
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
-			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
-			"es.upv.paella.matterhorn.publishPlugin": {"enabled": true, "defaultValue":true}
+			"es.upv.paella.matterhorn.publishPlugin": {"enabled": true, "defaultValue":true}			
 		}
 	}
 }
