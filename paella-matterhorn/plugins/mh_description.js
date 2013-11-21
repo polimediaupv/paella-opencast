@@ -7,6 +7,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 	getName:function() { return "es.upv.paella.matterhorn.descriptionPlugin"; },
 	getTabName:function() { return paella.dictionary.translate("Description"); },
 	getIndex:function() { return 10; },
+	getDefaultToolTip:function() { return paella.dictionary.translate("Description"); },	
 	
 
 	buildContent:function(domElement) {

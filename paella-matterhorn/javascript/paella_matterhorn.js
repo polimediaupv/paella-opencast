@@ -874,10 +874,14 @@ paella.matterhorn.SearchEpisode = Class.create({
 		divPreview.id = rootID+"_preview_container";
 		divPreview.className = "recordings_entry_preview_container";
 		var imgLink = document.createElement('a');
+		imgLink.setAttribute("tabindex", "-1");
 		imgLink.id = rootID+"_preview_link";
 		imgLink.className = "recordings_entry_preview_link";
 		imgLink.href = "watch.html?id=" + recording.id;
 		var imgPreview = document.createElement('img');
+		imgPreview.setAttribute('alt', '');
+		imgPreview.setAttribute('title', recording.dcTitle);
+		imgPreview.setAttribute('aria-label', recording.dcTitle);
 		imgPreview.id = rootID+"_preview";
 		imgPreview.src = previewUrl;
 		imgPreview.className = "recordings_entry_preview";
@@ -895,6 +899,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 		divResultTitleText.id = rootID+"_text_title_container";
 		divResultTitleText.className = "recordings_entry_text_title_container";
 		var titleResultText = document.createElement('a');
+		titleResultText.setAttribute("tabindex", "-1");
 		titleResultText.id = rootID+"_text_title";
 		titleResultText.innerHTML = recording.dcTitle;
 		titleResultText.className = "recordings_entry_text_title";
@@ -914,6 +919,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 		divResultAuthorText.id = rootID+"_text_author_container";
 		divResultAuthorText.className = "recordings_entry_text_author_container";
 		var authorResultText = document.createElement('a');
+		authorResultText.setAttribute("tabindex", "-1");		
 		authorResultText.id = rootID+"_text_title";
 		authorResultText.innerHTML = author;
 		authorResultText.className = "recordings_entry_text_title";
@@ -955,6 +961,15 @@ paella.matterhorn.SearchEpisode = Class.create({
 
 		divEntry.appendChild(divResultText);
 
+		divEntry.setAttribute("tabindex","10000");
+		$(divEntry).keyup(function(event) {
+			if (event.keyCode == 13) { window.location.href="watch.html?id=" + recording.id; }
+		});
+		
+		divEntry.setAttribute('alt', "");
+		divEntry.setAttribute('title', recording.dcTitle);
+		divEntry.setAttribute('aria-label', recording.dcTitle);
+		
 		return divEntry;
 	}
 

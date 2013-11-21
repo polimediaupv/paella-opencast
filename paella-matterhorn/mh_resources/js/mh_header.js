@@ -15,6 +15,7 @@ function insertHeaderToDomNode(parentNodeName) {
 	var paellaExtendedHeaderLogo = document.createElement('a');
 	paellaExtendedHeaderLogo.id = 'paellaExtendedHeaderLogo';
 	paellaExtendedHeaderLogo.title = '';
+	paellaExtendedHeaderLogo.setAttribute("tabindex", "-1");
 	paellaExtendedHeaderLogo.href = 'index.html';
 	paellaExtendedHeaderLogoDiv.appendChild(paellaExtendedHeaderLogo);	
 	var paellaExtendedHeaderLogoImg = document.createElement('img');
@@ -37,6 +38,7 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeaderSearchForm.appendChild(paellaExtendedHeaderSearchInputDiv);	
 	var paellaExtendedHeaderSearchInput = document.createElement('input');
 	paellaExtendedHeaderSearchInput.id = 'paellaExtendedHeaderSearchInput';
+	paellaExtendedHeaderSearchInput.setAttribute("tabindex", "100");
 	paellaExtendedHeaderSearchInput.type = 'text';
 	paellaExtendedHeaderSearchInput.tabIndex = 1;
 	paellaExtendedHeaderSearchInput.title = 'Search';
@@ -53,6 +55,7 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeaderSearchButton.id = 'paellaExtendedHeaderSearchButton';
 	paellaExtendedHeaderSearchButton.type = 'submit';
 	paellaExtendedHeaderSearchButton.value = 'Search';
+	paellaExtendedHeaderSearchButton.setAttribute("tabindex", "101");	
 	paellaExtendedHeaderSearchButtonDiv.appendChild(paellaExtendedHeaderSearchButton);	
 
 
@@ -60,14 +63,21 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeaderLogin.id = 'paellaExtendedHeaderLogin';
 	paellaExtendedHeader.appendChild(paellaExtendedHeaderLogin);	
 	var paellaExtendedHeaderLoginButton = document.createElement('div');
+	paellaExtendedHeaderLoginButton.setAttribute("tabindex", "102");	
 	paellaExtendedHeaderLoginButton.id = 'paellaExtendedHeaderLoginButton';
 	if (paella.matterhorn.me.username === "anonymous") {	
 		paellaExtendedHeaderLoginButton.innerHTML = "Login";
 		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="/login.html";});
+		$(paellaExtendedHeaderLogin).keyup(function(event) {
+			if (event.keyCode == 13) { window.location.href="/login.html"; }
+		});
 	}
 	else {
 		paellaExtendedHeaderLoginButton.innerHTML = "Logout";		
 		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="/j_spring_security_logout";});
+		$(paellaExtendedHeaderLogin).keyup(function(event) {
+			if (event.keyCode == 13) { window.location.href="/j_spring_security_logout"; } 
+		});
 	}
 	paellaExtendedHeaderLogin.appendChild(paellaExtendedHeaderLoginButton);	
 

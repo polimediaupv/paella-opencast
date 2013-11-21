@@ -2,6 +2,9 @@ paella.plugins.DownloadsPlugin = Class.create(paella.TabBarPlugin,{
 	getSubclass:function() { return 'downloadsTabBar'; },
 	getName:function() { return 'es.upv.paella.matterhorn.descriptionPlugin'; },
 	getTabName:function() { return paella.dictionary.translate('Downloads'); },
+	getIndex:function() { return 30; },
+	getDefaultToolTip:function() { return paella.dictionary.translate('Downloads'); },	
+	
 			
 	domElement:null,
 			

@@ -16,7 +16,8 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 	getSubclass:function() { return "searchTabBar"; },
 	getName:function() { return 'es.upv.paella.matterhorn.searchPlugin'; },
 	getTabName:function() { return paella.dictionary.translate('Search'); },
-	getIndex:function() { return 1008; },
+	getIndex:function() { return 20; },
+	getDefaultToolTip:function() { return paella.dictionary.translate("Search"); },		
 	
 	checkEnabled:function(onSuccess) {
 		var ret = false;
