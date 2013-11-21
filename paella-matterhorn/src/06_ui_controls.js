@@ -26,6 +26,7 @@ paella.TimeControl = Class.create(paella.DomNode,{
 		var minutes = Math.floor((sec_numb - (hours * 3600)) / 60);
 		var seconds = sec_numb - (hours * 3600) - (minutes * 60);
 		
+		if (hours < 10) {hours = "0"+hours;}
 		if (minutes < 10) {minutes = "0"+minutes;}
 		if (seconds < 10) {seconds = "0"+seconds;}
 		return hours + ':' + minutes + ':' + seconds;
@@ -41,6 +42,29 @@ paella.PlaybackBar = Class.create(paella.DomNode,{
 		var style = {};
 		this.parent('div',id,style);
 		this.domElement.className = "playbackBar";
+		this.domElement.setAttribute("alt", "");
+		this.domElement.setAttribute("title", "Timeline Slider");
+		this.domElement.setAttribute("aria-label", "Timeline Slider");
+		this.domElement.setAttribute("role", "slider");
+		this.domElement.setAttribute("aria-valuemin", "0");
+		this.domElement.setAttribute("aria-valuemax", "100");
+		this.domElement.setAttribute("aria-valuenow", "0");			
+		this.domElement.setAttribute("tabindex", "1100");
+		$(this.domElement).keyup(function(event){
+			switch(event.keyCode) {
+				case 37: //Left
+					var curr = 100*paella.player.videoContainer.currentTime()/paella.player.videoContainer.duration();
+					var selectedPosition = curr - 5;
+					paella.events.trigger(paella.events.seekTo,{ newPositionPercent:selectedPosition });
+					break;
+				case 39: //Right
+					var curr = 100*paella.player.videoContainer.currentTime()/paella.player.videoContainer.duration();
+					var selectedPosition = curr + 5;
+					paella.events.trigger(paella.events.seekTo,{ newPositionPercent:selectedPosition });
+					break;
+			}
+		});
+		
 		this.playbackFullId = id + "_full";
 		this.timeControlId = id + "_timeControl";
 		var playbackFull = new paella.DomNode('div',this.playbackFullId,{width:'0%'});
@@ -176,6 +200,7 @@ paella.PlaybackControl = Class.create(paella.DomNode,{
 		var thisClass = this;
 		this.pluginsContainer = new paella.DomNode('div',id + '_playbackBarPlugins');
 		this.pluginsContainer.domElement.className = 'playbackBarPlugins';
+		this.pluginsContainer.domElement.setAttribute("role", "toolbar");		
 		this.addNode(this.pluginsContainer);
 
 		this.popUpPluginContainer = new paella.PopUpContainer(id + '_popUpPluginContainer','popUpPluginContainer');
@@ -230,7 +255,7 @@ paella.ControlsContainer = Class.create(paella.DomNode,{
 		var id = 'videoOverlayButtonPlugin' + this.buttonPlugins.length;
 		this.buttonPlugins.push(plugin);
 		var button = paella.ButtonPlugin.buildPluginButton(plugin,id);
-		this.videoOverlayButtons.domElement.appendChild(button);
+		this.videoOverlayButtons.domElement.appendChild(button);		
 		plugin.button = button;
 		$(button).hide();
 		plugin.checkEnabled(function(isEnabled) {
@@ -258,6 +283,7 @@ paella.ControlsContainer = Class.create(paella.DomNode,{
 		
 		this.videoOverlayButtons = new paella.DomNode('div',id + '_videoOverlayButtonPlugins');
 		this.videoOverlayButtons.domElement.className = 'videoOverlayButtonPlugins';
+		this.videoOverlayButtons.domElement.setAttribute("role", "toolbar");
 		this.addNode(this.videoOverlayButtons);
 		
 		paella.pluginManager.setTarget('videoOverlayButton',this);
