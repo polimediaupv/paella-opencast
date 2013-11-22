@@ -25,16 +25,17 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		if (paella.matterhorn.episode.dcContributor) { this.desc.contributor = paella.matterhorn.episode.dcContributor; }
 		if (paella.matterhorn.episode.dcDescription) { this.desc.description = paella.matterhorn.episode.dcDescription; }
 		if (paella.matterhorn.episode.dcLanguage) { this.desc.language = paella.matterhorn.episode.dcLanguage; }
-		if (paella.matterhorn.episode.dcSubject) { this.desc.subject = paella.matterhorn.episode.dcSubject; }		
-		paella.matterhorn.serie['http://purl.org/dc/terms/']
+		if (paella.matterhorn.episode.dcSubject) { this.desc.subject = paella.matterhorn.episode.dcSubject; }
 		if (paella.matterhorn.serie) {
-			var serie = paella.matterhorn.serie['http://purl.org/dc/terms/'];
-			if (serie) { 
-				this.desc.serie = serie.title[0].value; 
-				this.desc.serieId = serie.identifier[0].value; 
+			paella.matterhorn.serie['http://purl.org/dc/terms/']
+			if (paella.matterhorn.serie) {
+				var serie = paella.matterhorn.serie['http://purl.org/dc/terms/'];
+				if (serie) { 
+					this.desc.serie = serie.title[0].value; 
+					this.desc.serieId = serie.identifier[0].value; 
+				}
 			}
 		}
-
 		this.desc.date = "n.a."
 		var dcCreated = paella.matterhorn.episode.dcCreated;
 		if (dcCreated) {			

@@ -57,7 +57,7 @@
 						<Bundle-SymbolicName> ${project.artifactId} </Bundle-SymbolicName>
 						<Import-Package> org.opencastproject.rest;version=${matterhorn.version}</Import-Package>
 						<Private-Package>ui.*</Private-Package>
-						<Http-Alias>/paella3.0-dp1/ui</Http-Alias>
+						<Http-Alias>/paella3.0/ui</Http-Alias>
 						<Http-Classpath>/ui</Http-Classpath>
 						<Http-Welcome>index.html</Http-Welcome>
 					</instructions>

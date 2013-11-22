@@ -7,7 +7,7 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.RightBarPlugin,{
 
 	buildContent:function(domElement) {
 	
-		var serieId = null; //paella.matterhorn.episode.mediapackage.series;
+		var serieId = paella.matterhorn.episode.mediapackage.series;
 		var serieTitle = paella.matterhorn.episode.mediapackage.seriestitle;
 
 
@@ -15,7 +15,12 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.RightBarPlugin,{
 		var episodesFromSerieTitle = document.createElement('div');
 		episodesFromSerieTitle.id = 'episodesFromSerieTitle';
 		episodesFromSerieTitle.className = 'episodesFromSerieTitle';
-		episodesFromSerieTitle.innerHTML = "<span class='episodesFromSerieTitle_Bold'>" +paella.dictionary.translate("Videos in this serie:")+"</span> " + serieTitle;
+		if (serieId) {
+			episodesFromSerieTitle.innerHTML = "<span class='episodesFromSerieTitle_Bold'>" +paella.dictionary.translate("Videos in this serie:")+"</span> " + serieTitle;
+		}
+		else {
+			episodesFromSerieTitle.innerHTML = "<span class='episodesFromSerieTitle_Bold'>" +paella.dictionary.translate("Available videos:")+"</span>";			
+		}
 
 		var episodesFromSerieListing = document.createElement('div');
 		episodesFromSerieListing.id = 'episodesFromSerieListing';
@@ -26,7 +31,7 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.RightBarPlugin,{
 		domElement.appendChild(episodesFromSerieListing);
 
 
-		var params = {limit:10, page:0};
+		var params = {limit:10, page:0, sid:serieId};
 		var mySearch = new paella.matterhorn.SearchEpisode(paella.player.config, params);
 		mySearch.doSearch(params, document.getElementById('episodesFromSerieListing'));
 	}

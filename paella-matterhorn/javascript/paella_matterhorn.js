@@ -8,7 +8,6 @@ paella.pluginList.push('mh_downloads.js');
 paella.pluginList.push('mh_search.js');
 paella.pluginList.push('mh_description.js');
 paella.pluginList.push('mh_publish.js');
-paella.pluginList.push('videoload_test.js');
 
 
 
@@ -60,42 +59,47 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 		this.permissions.canRead = false;
 		this.permissions.canWrite = false;
 		this.permissions.canContribute = false;
-		this.permissions.loadError = false;
+		this.permissions.loadError = true;
 		this.permissions.isAnonymous = false;
 
-		if ( (paella.matterhorn) && (paella.matterhorn.me) && (paella.matterhorn.acl) ) {
-			var roles = paella.matterhorn.me.roles;
-			var aces = paella.matterhorn.acl.acl.ace;
-			var adminRole = paella.matterhorn.me.org.adminRole;
-			var anonymousRole = paella.matterhorn.me.org.anonymousRole;
+		if (paella.matterhorn) {	
+			if (paella.matterhorn.me) {
+				this.permissions.loadError = false;
+				var roles = paella.matterhorn.me.roles;
+				var adminRole = paella.matterhorn.me.org.adminRole;
+				var anonymousRole = paella.matterhorn.me.org.anonymousRole;
+	
+				if (!(roles instanceof Array)) { roles = [roles]; }
+	
+				if (paella.matterhorn.acl) {
+					var aces = paella.matterhorn.acl.acl.ace;
+					if (!(aces instanceof Array)) { aces = [aces]; }
 
-			if (!(roles instanceof Array)) { roles = [roles]; }
-			if (!(aces instanceof Array)) { aces = [aces]; }
-
-			for (var role_i=0; role_i<roles.length; ++role_i) {
-				var currentRole = roles[role_i];
-				if (currentRole == anonymousRole) {
-					this.permissions.isAnonymous = true;
-				}
-				if (currentRole == adminRole) {
-					this.permissions.canRead = true;
-					this.permissions.canWrite = true;
-					this.permissions.canContribute = true;
-					break;
-				}
-				else{
-					for(var ace_i=0; ace_i<aces.length; ++ace_i) {
-						var currentAce = aces[ace_i];
-						if (currentRole == currentAce.role) {
-							if (currentAce.action == "read") {this.permissions.canRead = true;}
-							if (currentAce.action == "write") {this.permissions.canWrite = true;}
+					for (var role_i=0; role_i<roles.length; ++role_i) {
+						var currentRole = roles[role_i];
+						for(var ace_i=0; ace_i<aces.length; ++ace_i) {
+							var currentAce = aces[ace_i];
+							if (currentRole == currentAce.role) {
+								if (currentAce.action == "read") {this.permissions.canRead = true;}
+								if (currentAce.action == "write") {this.permissions.canWrite = true;}
+							}
 						}
 					}
 				}
-			}	
-		}
-		else {
-			this.permissions.loadError = true;
+				// Chek for admin!
+				for (var role_i=0; role_i<roles.length; ++role_i) {
+					var currentRole = roles[role_i];
+					if (currentRole == anonymousRole) {
+						this.permissions.isAnonymous = true;
+					}
+					if (currentRole == adminRole) {
+						this.permissions.canRead = true;
+						this.permissions.canWrite = true;
+						this.permissions.canContribute = true;
+						break;
+					}
+				}	
+			}
 		}
 
 		onSuccess(this.permissions);
@@ -169,8 +173,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		
 		var presenter = streams["presenter/delivery"];
 		var presentation = streams["presentation/delivery"];		
-		var imageSource =   {type:"image/jpeg", frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:320, h:180}}
-		var imageSourceHD = {type:"image/jpeg", frames:{}, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:1280, h:720}}
+		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:320, h:180}}
+		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:1280, h:720}}
 		// Read the attachments
 		for (var i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
@@ -179,6 +183,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
 					imageSourceHD.frames["frame_"+time] = currentAttachment.url;
+					imageSourceHD.count = imageSourceHD.count +1;
                 	
                 	if (!(this.frameList[time])){
 	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
@@ -190,7 +195,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
 					imageSource.frames["frame_"+time] = currentAttachment.url;
-
+					imageSource.count = imageSource.count +1;
+					
                 	if (!(this.frameList[time])){
 	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
                 	}
@@ -207,9 +213,11 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 
 		// Set the image stream
 		var imagesArray = [];
-		if (imageSourceHD.frames != {}) { imagesArray.push(imageSourceHD); }
-		if (imageSource.frames != {}) { imagesArray.push(imageSource); }
-		if (imagesArray != []) { presentation.sources.image	= imagesArray; }
+		if (imageSourceHD.count > 0) { imagesArray.push(imageSourceHD); }
+		if (imageSource.count > 0) { imagesArray.push(imageSource); }
+		if ( (imagesArray.length > 0) && (presentation != undefined) ){
+			presentation.sources.image = imagesArray; 
+		}
 		
 		
 	
@@ -479,21 +487,26 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 					var asyncLoader = new paella.AsyncLoader();
 		
 					var serie = paella.matterhorn.episode.mediapackage.series;
-		
-					asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'.json'}), "serie");
-					asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'/acl.json'}), "acl");
-		
-					asyncLoader.load(function() {
-							//Check for series
-							paella.matterhorn.serie = asyncLoader.getCallback("serie").data;
-							//Check for acl
-							paella.matterhorn.acl = asyncLoader.getCallback("acl").data;
-							if (onSuccess) onSuccess();
-						},
-						function() {
-							if (onError) onError();
-						}
-					);
+					
+					if (serie != undefined) {
+						asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'.json'}), "serie");
+						asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'/acl.json'}), "acl");
+					
+						asyncLoader.load(function() {
+								//Check for series
+								paella.matterhorn.serie = asyncLoader.getCallback("serie").data;
+								//Check for acl
+								paella.matterhorn.acl = asyncLoader.getCallback("acl").data;
+								if (onSuccess) onSuccess();
+							},
+							function() {
+								if (onError) onError();
+							}
+						);
+					}
+					else {
+						if (onSuccess) onSuccess();						
+					}
 				},
 				function(data,contentType,code) { if (onError) onError(); }
 			);
