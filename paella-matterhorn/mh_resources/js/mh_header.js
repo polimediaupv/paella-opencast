@@ -67,7 +67,8 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeaderLoginButton.id = 'paellaExtendedHeaderLoginButton';
 	if (paella.matterhorn.me.username === "anonymous") {	
 		paellaExtendedHeaderLoginButton.innerHTML = "Login";
-		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="/login.html";});
+		var loginURL = "/login.html";
+		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="auth.html?redirect="+encodeURIComponent(loginURL);});
 		$(paellaExtendedHeaderLogin).keyup(function(event) {
 			if (event.keyCode == 13) { window.location.href="/login.html"; }
 		});

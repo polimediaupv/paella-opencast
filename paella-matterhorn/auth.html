@@ -17,10 +17,10 @@
 			function onLoad() {
 				var redirect = paella.utils.parameters.list['redirect'];
 				if (redirect == undefined) {
-					paella.messageBox.showError("Error: redirect param not defined!");
+					window.location.href = "index.html";
 				}
 				else {
-					window.location.href=redirect;
+					window.location.href = decodeURIComponent(redirect);
 				}
 			}
 		</script>
