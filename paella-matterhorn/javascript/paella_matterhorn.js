@@ -86,6 +86,9 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 						}
 					}
 				}
+				else {
+					this.permissions.canRead = true;
+				}				
 				// Chek for admin!
 				for (var role_i=0; role_i<roles.length; ++role_i) {
 					var currentRole = roles[role_i];
@@ -101,7 +104,6 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 				}	
 			}
 		}
-
 		onSuccess(this.permissions);
 	}
 });
@@ -654,13 +656,14 @@ paella.matterhorn.SearchEpisode = Class.create({
 		domElement.appendChild(divHeader);
 		this.divResults = this.createDOMElement('div', thisClass.recordingEntryID + "_header_results", "recordings_header_results");		
 		divHeader.appendChild(this.divResults);
-		divHeader.appendChild(this.createDOMElement('div', thisClass.recordingEntryID + "_header_navigation", "recordings_header_navigation"));
+		var divNavigation = this.createDOMElement('div', thisClass.recordingEntryID + "_header_navigation", "recordings_header_navigation")
+		divHeader.appendChild(divNavigation);
 
 		// loading results
 		thisClass.setLoading(true);
 		paella.ajax.get({url:'/search/episode.json', params:params},
 			function(data, contentType, returnCode, dataRaw) {
-				thisClass.processSearchResults(data, params, domElement);
+				thisClass.processSearchResults(data, params, domElement, divNavigation);
 			},
 			function(data, contentType, returnCode) {
 			}
@@ -668,7 +671,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 	},
 
 
-	processSearchResults:function(response, params, divList) {
+	processSearchResults:function(response, params, divList, divNavigation) {
 		var thisClass = this;
 		if (typeof(response)=="string") {
 			response = JSON.parse(response);
