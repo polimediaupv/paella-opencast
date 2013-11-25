@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8;">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Paella Auth</title>
+
+		<link rel="stylesheet" href="resources/style/controls.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="resources/style/index.css" type="text/css" media="screen" charset="utf-8">		
+
+		<script type="text/javascript" src="javascript/base.js"></script>
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="javascript/paella_player.js"></script>
+		
+		<script type="text/javascript">
+			function onLoad() {
+				var redirect = paella.utils.parameters.list['redirect'];
+				if (redirect == undefined) {
+					paella.messageBox.showError("Error: redirect param not defined!");
+				}
+				else {
+					window.location.href=redirect;
+				}
+			}
+		</script>
+	</head>
+	<body id="body" onload="onLoad();">
+	</body>
+</html>
