@@ -7,7 +7,7 @@
 	color: black;
 }
 
-
+.downloadsLinkItem:focus,
 .downloadsLinkItem:hover {
 	color: black;
 }
