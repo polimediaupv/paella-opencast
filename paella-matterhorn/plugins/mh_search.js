@@ -94,6 +94,7 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 		inputElement.dir = 'lrt';
 		inputElement.spellcheck = 'true';
 		inputElement.setAttribute('x-webkit-speech','');
+		inputElement.setAttribute('tabindex','4000');
 		inputElement.onfocus = function(){this.value=""; this.onfocus=undefined};
 		inputElement.onkeyup = function(){thisClass.doSearch(this.value);};	
 		
@@ -147,10 +148,15 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 		
 				
 		var divEntry = document.createElement('div');
-		divEntry.onclick = function(){ $(document).trigger( paella.events.seekToTime, {time: segment.time/1000}) };
 		divEntry.className="searchTabBarResultEntry";
 		divEntry.id="searchTabBarResultEntry_" + segment.index;
-
+		divEntry.setAttribute('tabindex', 4100 + parseInt(segment.index));
+		$(divEntry).click(function(event){ 
+			$(document).trigger( paella.events.seekToTime, {time: segment.time/1000});
+		});
+		$(divEntry).keyup(function(event) {
+			if (event.keyCode == 13) { $(document).trigger( paella.events.seekToTime, {time: segment.time/1000}); }
+		});		
 
 		var divPreview = document.createElement('div'); 
 		divPreview.className = "searchTabBarResultEntryPreview";

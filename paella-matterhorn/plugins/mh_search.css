@@ -52,6 +52,10 @@
     background-color: rgb(243, 222, 168);
     cursor: pointer;
 }
+.searchTabBarResultEntry:focus {
+    background-color: rgb(243, 222, 168);
+    cursor: pointer;
+}
 
 .searchTabBarResultEntryPreview {
 	display: inline-block;
