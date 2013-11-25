@@ -50,17 +50,18 @@ paella.plugins.DownloadsPlugin = Class.create(paella.TabBarPlugin,{
 		for (var i=0; i<tracks.length; ++i) {
 			var track = tracks[i];
 			paella.debug.log(track.type);
-			container.appendChild(this.createLink(track));
+			container.appendChild(this.createLink(track, i));
 		}
 		this.domElement.appendChild(container);
 	},
 	
-	createLink:function(track) {
+	createLink:function(track, tabindexcount) {
 		var elem = document.createElement('div');
 		elem.className = 'downloadsLinkContainer';
 		var link = document.createElement('a');
 		link.className = 'downloadsLinkItem';
 		link.innerHTML = this.getTextInfo(track);
+		link.setAttribute('tabindex', 4000+tabindexcount);
 		link.href = track.url;
 		
 		elem.appendChild(link);
