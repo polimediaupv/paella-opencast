@@ -48,7 +48,8 @@ paella.plugins.PublishPlugin = Class.create(paella.EventDrivenPlugin,{
 		else {
 			if ((data == false) || (data == "undefined")){
 				if (paella.initDelegate.initParams.accessControl.permissions.isAnonymous == true) {
-					paella.player.unloadAll(paella.dictionary.translate("This video is not published. If you are the author, Log In to publish it."));						
+					paella.player.unloadAll(paella.dictionary.translate("This video is not published. If you are the author, Log In to publish it."));
+					window.href = "auth.html?redirect="+encodeURIComponent(window.href);
 				}
 				else {					
 					paella.player.unloadAll(paella.dictionary.translate("This video is not published."));
