@@ -45,11 +45,13 @@
 				paellaExtendedContainer.id = 'paellaExtendedContainer';
 	
 				parentNode.appendChild(paellaExtendedContainer);	
-			}		
+			}
+			
 			function loadMHPaella(parentNodeName) {
 				initPaellaMatterhornMe(function(){
-					createEngageHTMLPage(parentNodeName);
-					loadPaellaExtended('paellaExtendedContainer');
+					loadPaellaExtended(parentNodeName, function() {
+						createEngageHTMLPage('playerHeader');
+					});					
 				});
 			}
 		</script>				
