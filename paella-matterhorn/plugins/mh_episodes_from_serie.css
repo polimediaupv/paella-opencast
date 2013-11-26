@@ -15,6 +15,10 @@
 	font-weight: bold;
 }
 
+.episodesFromSerieListing {
+	padding-left: 3px;
+	padding-right: 3px;
+}
 
 .episodesFromSerieListing .recordings_header {
 	display: none;
@@ -49,5 +53,15 @@
 
 .episodesFromSerieListing .recordings_entry.unpublished.even_entry,
 .episodesFromSerieListing .recordings_entry.unpublished.odd_entry {
-	background-color: gb(255,165,161);
+	background-color: rgb(255,165,161);
 }
+
+.episodesFromSerieListing .recordings_entry:hover{
+    background-color: rgb(243, 222, 168);
+    cursor: pointer;
+}
+.episodesFromSerieListing .recordings_entry:focus{
+    background-color: rgb(243, 222, 168);
+}
+
+
