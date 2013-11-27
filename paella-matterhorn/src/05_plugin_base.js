@@ -110,11 +110,11 @@ paella.Plugin = Class.create({
 	checkEnabled:function(onSuccess) {
 		onSuccess(true);
 	},
-	
+
 	setup:function() {
 		
 	},
-	
+
 	getIndex:function() {
 		return 0;
 	},
@@ -314,12 +314,12 @@ paella.ButtonPlugin = Class.create(paella.Plugin,{
 	},
 	
 	hideButton:function() {
-		$(this.button).setAttribute('aria-hidden', 'false');
+		this.button.setAttribute('aria-hidden', 'false');
 		$(this.button).hide();
 	},
 	
 	showButton:function() {
-		$(this.button).setAttribute('aria-hidden', 'true');
+		this.button.setAttribute('aria-hidden', 'true');
 		$(this.button).show();
 	},
 	
