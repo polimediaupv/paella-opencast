@@ -891,6 +891,9 @@ paella.matterhorn.SearchEpisode = Class.create({
 		}
 
 		var previewUrl = this.getUrlOfAttachmentWithType(recording, "presentation/search+preview");
+		if (previewUrl == "") {
+			previewUrl = this.getUrlOfAttachmentWithType(recording, "presenter/search+preview");
+		}
 
 		var divPreview = document.createElement('div');
 		divPreview.id = rootID+"_preview_container";
