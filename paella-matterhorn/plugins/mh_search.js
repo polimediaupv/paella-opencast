@@ -90,9 +90,9 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 		var inputElement = document.createElement('input');
 		inputElement.type = "text";
 		inputElement.value = paella.dictionary.translate("Search in this recording");
-		inputElement.size = "30";
-		inputElement.dir = 'lrt';
-		inputElement.spellcheck = 'true';
+		inputElement.setAttribute('size', '30');
+		inputElement.setAttribute('dir','lrt');
+		inputElement.setAttribute('spellcheck','true');
 		inputElement.setAttribute('x-webkit-speech','');
 		inputElement.setAttribute('tabindex','4000');
 		inputElement.onfocus = function(){this.value=""; this.onfocus=undefined};

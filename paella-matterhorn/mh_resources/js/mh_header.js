@@ -42,7 +42,7 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeaderSearchInput.type = 'text';
 	paellaExtendedHeaderSearchInput.tabIndex = 1;
 	paellaExtendedHeaderSearchInput.title = 'Search';
-	paellaExtendedHeaderSearchInput.dir = 'lrt';
+	paellaExtendedHeaderSearchInput.setAttribute('dir','lrt');
 	paellaExtendedHeaderSearchInput.spellcheck = 'false';
 	paellaExtendedHeaderSearchInput.setAttribute('x-webkit-speech','');
 	paellaExtendedHeaderSearchInputDiv.appendChild(paellaExtendedHeaderSearchInput);	
