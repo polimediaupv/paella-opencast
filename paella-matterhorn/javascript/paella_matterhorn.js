@@ -356,11 +356,19 @@ paella.matterhorn.DFXPParser = Class.create({
 	},
 	
 	parseTimeTextToSeg:function(ttime){
-		var split = ttime.split(":");
-		var h = parseInt(split[0]);
-		var m = parseInt(split[1]);
-		var s = parseInt(split[2]);
-		return s+(m*60)+(h*60*60);
+		var nseg = 0;
+		var segtime = /^([0-9]*([.,][0-9]*)?)s/.test(ttime);
+		if (segtime){
+			nseg = parseFloat(RegExp.$1);
+		}
+		else {
+			var split = ttime.split(":");
+			var h = parseInt(split[0]);
+			var m = parseInt(split[1]);
+			var s = parseInt(split[2]);
+			nseg = s+(m*60)+(h*60*60);
+		}
+		return nseg;
 	},
 	
 	captionsToDxfp:function(captions){
