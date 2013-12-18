@@ -141,7 +141,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			var currentTrack = tracks[i];
 			var currentStream = streams[currentTrack.type];
 			if (currentStream == undefined) { currentStream = { sources:{}, preview:'' }; }
-
+			
+			
 			if (this.isStreaming(currentTrack)) {
 				if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
 					currentStream.sources['rtmp'] = [];
@@ -170,6 +171,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 					currentStream.sources[videotype].push(this.getStreamSource(currentTrack));
 				}
 			}
+
 			streams[currentTrack.type] = currentStream;
 		}
 		
