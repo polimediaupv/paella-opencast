@@ -510,6 +510,7 @@ paella.dataDelegates.CookieDataDelegate = Class.create(paella.DataDelegate,{
 		var key = this.serializeKey(context,params);
 		var value = paella.utils.cookies.get(key);
 		try {
+			value = unescape(value);
 			value = JSON.parse(value);
 		}
 		catch (e) {}
@@ -521,6 +522,7 @@ paella.dataDelegates.CookieDataDelegate = Class.create(paella.DataDelegate,{
 	write:function(context,params,value,onSuccess) {
 		var key = this.serializeKey(context,params);
 		if (typeof(value)=='object') value = JSON.stringify(value);
+		value = escape(value);
 		paella.utils.cookies.set(key,value);
 		if(typeof(onSuccess)=='function') {
 			onSuccess({},true);
@@ -829,3 +831,23 @@ paella.MessageBox = Class.create({
 });
 
 paella.messageBox = new paella.MessageBox();
+
+paella.AntiXSS = {
+	htmlEscape: function (str) {
+		return String(str)
+    		.replace(/&/g, '&amp;')
+    		.replace(/"/g, '&quot;')
+    		.replace(/'/g, '&#39;')
+    		.replace(/</g, '&lt;')
+    		.replace(/>/g, '&gt;');
+    	},
+
+    htmlUnescape: function (value){
+		return String(value)
+			.replace(/&quot;/g, '"')
+			.replace(/&#39;/g, "'")
+			.replace(/&lt;/g, '<')
+			.replace(/&gt;/g, '>')
+			.replace(/&amp;/g, '&');
+	}
+};
