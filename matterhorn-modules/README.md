@@ -1,7 +1,7 @@
-DEVELOPER PREVIEW 2
+DEVELOPER PREVIEW 3
 ===================
 
-This is the Paella Player 3.0 for Matterhorn (Developer Preview 2).
+This is the Paella Player 3.0 for Matterhorn (Developer Preview 3).
 Use this version only in your development/testing environment. This version is not prepared for use in a production environment.
 
 
