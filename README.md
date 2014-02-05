@@ -1,6 +1,6 @@
 Paella Player
 =============
-The Paella (pronounce “paeja”) Engage Player is a HTML5 multistream video player capable of playing multiple audio & video streams synchronously and supporting a number of user plugins. It is specially designed for lecture recordings, like Matterhorn Lectures or Polimedia pills.
+The Paella (pronounce “paeja”) Player is a HTML5 multistream video player capable of playing multiple audio & video streams synchronously and supporting a number of user plugins. It is specially designed for lecture recordings, like Matterhorn Lectures or Polimedia pills.
 
 By using Paella students can view both the lecture hall and the teacher's screen, get info about the lecture (slides, OCR, series videos, footprints) and interact with the lecture (views, comments). Teachers can also soft edit the lecture to set the start and end point or make breaks in the recording. 
 
@@ -27,3 +27,8 @@ Main characteristics
 - Soft Editing features: Trimming and breaks
 - Support of Chrome, Firefox, Safari and Internet Explorer 9 an 10 browsers
 - Compatible with Opencast Matterhorn 1.4
+
+
+Installation
+============
+Go to matterhorn-modules folder and read de README file
