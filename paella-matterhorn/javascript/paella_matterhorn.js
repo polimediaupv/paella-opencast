@@ -11,7 +11,6 @@ paella.pluginList.push('mh_publish.js');
 
 
 
-
 // Patch to work with MH jetty server. 
 base.ajax.send = function(type,params,onSuccess,onFail) {
 	this.assertParams(params);

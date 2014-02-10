@@ -38,6 +38,7 @@
 			"es.upv.paella.descriptionPlugin": {"enabled":false},
 			"es.upv.paella.editor.trackCaptions": {"enabled":false},
 			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
+			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": true},
 			
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
