@@ -380,6 +380,11 @@ paella.editor.Timeline = Class.create({
 	onresize:function() {
 		this.buildTimeMarks();
 		var height = $(this.tracks).outerHeight();
+		if (paella.utils.userAgent.system.Windows) {
+			var padding = $(this.tracks).outerHeight() - $(this.tracks).height();
+			height = height + padding - 3; 
+		}
+
 		$(this.container).css('height',height + 'px');
 	},
 	

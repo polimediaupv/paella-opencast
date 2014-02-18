@@ -42,7 +42,8 @@
 			
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
-			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":true}			
+			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":true},
+			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":true}			
 		}
 	}
 }
