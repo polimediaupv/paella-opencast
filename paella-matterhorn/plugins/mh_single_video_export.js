@@ -25,28 +25,33 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				'Title':'Título',
 				'Presenter':'Ponente',
 				'Serie': 'Serie',
+				'Join Tracks?': '¿Unir los tracks?',
 				'Single Video 1': 'Video 1',
 				'Single Video Export': 'Exportar un video',
+				'Can not create a new video segment inside a segment': 'No se puede crear un nuevo segmento de video dentro de un segmento',
 				'Send': 'Enviar'
 			};
 			paella.dictionary.addDictionary(esDict);
 		}
 		if (this.metadata == null) {
 			var creator = '';
-			var serie = '';
+			var serieId = '';
+			var serieTitle = '';
+			
 			if (paella.matterhorn.episode.mediapackage.series) {
-				serie = paella.matterhorn.episode.mediapackage.series;
+				serieId = paella.matterhorn.episode.mediapackage.series;
+				serieTitle = "TITLE: " + serieId;
 			}
-			if ( (paella.matterhorn.episode.mediapackage.creators) &&(paella.matterhorn.episode.mediapackage.creators.creator) ) {
+			if ( (paella.matterhorn.episode.mediapackage.creators) && (paella.matterhorn.episode.mediapackage.creators.creator) ) {
 				creator = paella.matterhorn.episode.mediapackage.creators.creator;
 			}
 			
 			this.metadata = {
 				title: paella.dictionary.translate('Single Video 1'),
 				presenter: creator,
-				serie: serie
-			
-			}				
+				serieId: serieId,
+				serieTitle: serieTitle				
+			}
 		}
 	},
 
@@ -121,27 +126,113 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 					this.tracks.push({id:id, s:start, e:end, name:content});
 				}
 				else{
-					alert ("Can not create a track item.");
+					alert (paella.dictionary.translate("Can not create a new video segment inside a segment"));
 				}
 				return true;
 				break;
 		}
 	},
 	
+	createALabel: function(label) {
+		var root = document.createElement('div');
+		root.innerHTML = label
+		return root;		
+	},
 	createAInputEditor:function(label, defaultValue, callback){
 		var root = document.createElement('div');
-
-		var titleTxt = document.createElement('div');
-		titleTxt.innerHTML = label
-		root.appendChild(titleTxt);
+		var lab = this.createALabel(label);
 		var titleInput = document.createElement('input');
 		titleInput.type = "text";
 		titleInput.value = defaultValue;
-		$(titleInput).keyup(function(event){callback(event.srcElement.value);});
-		root.appendChild(titleInput);	
+		if (callback) {
+			$(titleInput).keyup(function(event){callback(event.srcElement.value);});
+		}
+		root.appendChild(lab);
+		root.appendChild(titleInput);
 		
 		return root;
+	},	
+	createASelectSerie: function(label, defaultValue, callback) {		
+		var root = document.createElement('div');
+		var lab = this.createALabel(label);		
+
+
+		var typeaheadDiv = document.createElement('div');
+		var typeaheadInput = document.createElement('input');
+		typeaheadInput.className = "typehead";
+		typeaheadInput.type = "text";
+		typeaheadInput.value = defaultValue.serieTitle;
+		typeaheadInput.setAttribute('serieId',defaultValue.serieId);
+		typeaheadInput.setAttribute('serieTitle',defaultValue.serieTitle);
+		//typeaheadInput.placeholder = "";
+
+
+		typeaheadDiv.appendChild(typeaheadInput);
+
+		this.numbers = new Bloodhound({
+			datumTokenizer: function(d) {return Bloodhound.tokenizers.whitespace(d.num); },
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: 'http://matterhorn.cc.upv.es:8080/series/series.json?q=%QUERY',
+				filter: function(parsedResponse) {
+					return jQuery.map(parsedResponse.catalogs, function (serie){
+						var serieId = serie['http://purl.org/dc/terms/'].identifier[0].value;
+						var title = "TITLE: " + serie['http://purl.org/dc/terms/'].title[0].value;						
+						return {identifier: serieId, title:title};
+					});
+				}
+			}
+		});
+		
+		this.numbers.initialize();
+		
+		$(typeaheadInput).typeahead({
+			minLength: 2,
+			limit: 5,
+			highlight: true,
+		}, {
+			displayKey: 'title',
+			source: this.numbers.ttAdapter()
+		});
+
+
+		$(typeaheadInput).change(function(event){
+			if (callback) {
+				callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"))
+			}
+		});
+		
+		$(typeaheadInput).keyup(function(event){
+			if (event.currentTarget.getAttribute("typeaheadOpened") == "1"){	
+				event.currentTarget.setAttribute("serieId", "");
+				event.currentTarget.setAttribute("serieTitle", event.currentTarget.value);
+			}
+		});
+		$(typeaheadInput).bind('typeahead:opened', function(event) {
+			event.currentTarget.setAttribute("typeaheadOpened", "1");
+	    });
+		$(typeaheadInput).bind('typeahead:closed', function(event) {      
+			event.currentTarget.setAttribute("typeaheadOpened", "");
+	    });
+
+		$(typeaheadInput).bind('typeahead:selected', function(event, datum, name) {
+			event.currentTarget.setAttribute("serieId", datum.identifier);
+			event.currentTarget.setAttribute("serieTitle", datum.title);
+			event.currentTarget.value = datum.title;
+			
+			if (callback) {
+	   			callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"))
+	   		}
+	    });
+
+		
+		root.appendChild(lab);
+		root.appendChild(typeaheadDiv);		
+		return root;
 	},
+	
+	
+	
 	
 	changeTitle:function(title) {
 		this.metadata.title = title;
@@ -160,9 +251,14 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		root.appendChild(basicMetadata);
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.metadata.title, function(value){thisClass.changeTitle(value);}));
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.metadata.presenter, function(value){thisClass.metadata.presenter = value;}));
-		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Serie'), this.metadata.serie, function(value){thisClass.metadata.serie = value;}));
+		basicMetadata.appendChild(this.createASelectSerie(paella.dictionary.translate('Serie'), this.metadata, function(serieId, serieTitle){
+			thisClass.metadata.serieId = serieId;
+			thisClass.metadata.serieTitle = serieTitle;
+		}));
+		
 
-
+		
+		
 		var sendDiv = document.createElement('div');
 		root.appendChild(sendDiv);
 		var sendButton = document.createElement('button');
@@ -231,7 +327,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				if (this.tracks[i].id != id) {
 					if ( (this.tracks[i].s < start) && (this.tracks[i].e > start) ){
 						if (joinTracks == null) {
-							joinTracks = confirm ("Join Tracks?");
+							joinTracks = confirm (paella.dictionary.translate("Join Tracks?"));
 						}
 						if (joinTracks){
 							this.tracks[i].e = end;
@@ -244,7 +340,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 					}
 					if ( (this.tracks[i].s < end) && (this.tracks[i].e > end) ){
 						if (joinTracks == null) {
-							joinTracks = confirm ("Join Tracks?");
+							joinTracks = confirm (paella.dictionary.translate("Join Tracks?"));
 						}
 						if (joinTracks){
 							this.tracks[i].s = start;
@@ -275,10 +371,10 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	
 	contextHelpString:function() {
 		if (paella.utils.language()=="es") {
-			return "Utiliza esta herramienta para crear, borrar y editar descansos. Para crear un descanso, selecciona el instante de tiempo haciendo clic en el fondo de la línea de tiempo, y pulsa el botón 'Crear'. Utiliza esta pestaña para editar el texto de los descansos";
+			return "";
 		}
 		else {
-			return "Use this tool to create, delete and edit breaks. To create a break, select the time instant clicking the timeline's background and press 'create' button. Use this tab to edit the break text.";
+			return "";
 		}
 	},
 	
