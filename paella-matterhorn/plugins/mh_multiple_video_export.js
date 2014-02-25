@@ -351,24 +351,26 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 	buildToolTabContentInProgress:function(tabContainer) {
 		var thisClass = this;
 		var root = document.createElement('div');
-		root.id = 'SingleVideoExportEditorTabBarRoot';
+		root.id = 'MultipleVideoExportEditorTabBarRoot';
 
 		var info = document.createElement('div');
-		info.id = "SingleVideoExportEditorTabBarRoot_InProgress";
+		info.id = "MultipleVideoExportEditorTabBarRoot_InProgress";
 		
 		var text = document.createElement('p');
 		text.innerText = paella.dictionary.translate(this.strings.InProgress1);
 
-		var link = "watch.html?id=" + this.inprogress.id;
-		var videoLink = document.createElement('a');
-		videoLink.href = link;
-		videoLink.innerText = this.inprogress.title;
-
 		var list = document.createElement('ul');
-		var elist = document.createElement('li');
 
-		list.appendChild(elist);
-		elist.appendChild(videoLink);
+		for (var i =0 ; i < this.inprogress.length; ++i) {
+			var link = "watch.html?id=" + this.inprogress[i].id;
+			var videoLink = document.createElement('a');
+			videoLink.href = link;
+			videoLink.innerText = this.inprogress[i].title;
+
+			var elist = document.createElement('li');
+			list.appendChild(elist);
+			elist.appendChild(videoLink);
+		}
 
 		var text2 = document.createElement('p');
 		text2.innerText = paella.dictionary.translate(this.strings.InProgress2);
@@ -503,7 +505,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					thisClass.inprogress = data.inprogress;
 				}
 			}			
-			
+						
 			onComplete(true);
 		});
 	},	
