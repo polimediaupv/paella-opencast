@@ -25,7 +25,8 @@
 			"trimming": "MHAnnotationServiceTrimmingDataDelegate",
 			"footprints": "MHFootPrintsDataDelegate",
 			"captions": "MHCaptionsDataDelegate",
-			"SingleVideoExport": "MHAnnotationServiceVideoExportDelegate"
+			"SingleVideoExport": "MHAnnotationServiceVideoExportDelegate",
+			"MultipleVideoExport": "MHAnnotationServiceVideoExportDelegate"
 		}
 	},
 	"plugins":{

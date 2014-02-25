@@ -1,4 +1,4 @@
-paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackPlugin,{
+paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.TrackPlugin,{
 	tracks:[],
 	sent: null,
 	inprogress: null,
@@ -26,16 +26,19 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		this.onRead(function(){onSuccess(true);});	
 	},
 
-
 	setup:function() {
 		if (paella.utils.language()=="es") {
 			var esDict = {
-				'Video':'Video',
 				'Title':'Título',
 				'Presenter':'Ponente',
-				'Serie': 'Serie',				
+				'Serie': 'Serie',
+				'Video':'Video',
 				'Multiple Video Export': 'Exportar multiples videos',
-				'Send': 'Enviar'				
+				'Can not create a new video segment inside a segment': 'No se puede crear un nuevo segmento de video dentro de un segmento',
+				'Send': 'Enviar',
+				'Cancel': 'Cancelar',
+				'New Video Export': 'Nueva exportación',
+				'An error has occurred': 'Ha ocurrido un error'						
 			};
 			
 			esDict[this.strings.SentToProcess1] = 'Ha solicitado exportar nuevos videos a partir de este. Su petición se atendrá lo más pronto posible.';
@@ -518,6 +521,6 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	}
 });
 
-paella.plugins.singleVideoExportEditorPlugin = new paella.plugins.SingleVideoExportEditorPlugin();
+paella.plugins.multipleVideoExportEditorPlugin = new paella.plugins.MultipleVideoExportEditorPlugin();
 
 
