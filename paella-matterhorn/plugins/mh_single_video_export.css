@@ -72,6 +72,10 @@
 	background-color: #fff;
 }
 
-#SingleVideoExportEditorTabBarRoot button {
-	color: #000;
+#SingleVideoExportEditorTabBarRoot,
+#SingleVideoExportEditorTabBarRoot_InProgress,
+#SingleVideoExportEditorTabBarRoot_ToProcess {
+	margin-right: 5px;
+	margin-top: 20px;
+	line-height: 16px;
 }

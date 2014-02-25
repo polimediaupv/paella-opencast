@@ -1,25 +1,35 @@
 paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackPlugin,{
 	tracks:[],
 	metadata: null,
+	sent: null,
+	inprogress: null,
+	tabContainer: null,
+	
 	selectedTrackItem:null,
 	
+	
+	strings: {
+		SentToProcess1: 'You have requested to export a new video from this. Your request will comply as soon as possible.',
+		SentToProcess2: 'If you wish, you can cancel this video export.',
+		
+		InProgress1: "The video was sent to be processed. When finished you can display the processed video on the following link.",
+		InProgress2: "If you want, you can start a new video export."
+	},
+	
+	isSentToProccess: function() {
+		return this.sent != null;
+	},
+	isInProgress: function() {
+		return this.inprogress != null;
+	},
+	
+	
 	checkEnabled:function(onSuccess) {
-		var thisClass = this;
-		paella.data.read('SingleVideoExport', {id:paella.initDelegate.getId()}, function(data, status) {
-			if (data && typeof(data)=='object') {
-				
-				if(data.trackItems && data.trackItems.length>0) {
-					thisClass.tracks = data.trackItems;
-				}
-				if(data.metadata) {
-					thisClass.metadata = data.metadata;
-				}
-			}
-			onSuccess(true);
-		});
+		this.onRead(function(){onSuccess(true);});		
 	},
 
 	setup:function() {
+		var thisClass = this;
 		if (paella.utils.language()=="es") {
 			var esDict = {
 				'Title':'Título',
@@ -29,8 +39,17 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				'Single Video 1': 'Video 1',
 				'Single Video Export': 'Exportar un video',
 				'Can not create a new video segment inside a segment': 'No se puede crear un nuevo segmento de video dentro de un segmento',
-				'Send': 'Enviar'
+				'Send': 'Enviar',
+				'Cancel': 'Cancelar',
+				'New Video Export': 'Nueva exportación',
+				'An error has occurred': 'Ha ocurrido un error'
 			};
+			
+			esDict[thisClass.strings.SentToProcess1] = 'Ha solicitado exportar un nuevo video a partir de este. Su petición se atendrá lo más pronto posible.';
+			esDict[thisClass.strings.SentToProcess2] = 'Si lo desea puede cancelar la exportación.';
+			esDict[thisClass.strings.InProgress1] = 'El video se envió a procesar. Cuando termine de procesarse podrá visualizarlo en el siguiente enlace.';
+			esDict[thisClass.strings.InProgress2] = 'Si lo desea puede empezar una nueva exportación.';
+			
 			paella.dictionary.addDictionary(esDict);
 		}
 		if (this.metadata == null) {
@@ -40,7 +59,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			
 			if (paella.matterhorn.episode.mediapackage.series) {
 				serieId = paella.matterhorn.episode.mediapackage.series;
-				serieTitle = "TITLE: " + serieId;
+				serieTitle = "TITLE_TODO: " + serieId;
 			}
 			if ( (paella.matterhorn.episode.mediapackage.creators) && (paella.matterhorn.episode.mediapackage.creators.creator) ) {
 				creator = paella.matterhorn.episode.mediapackage.creators.creator;
@@ -66,6 +85,51 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		];
 	},
 	
+	onToolSelected:function(toolName) {
+		if (this.isSentToProccess()){
+			alert(paella.dictionary.translate('You can not modify the video export settings'));		
+		}
+		else if (this.isInProgress()){
+			alert(paella.dictionary.translate('You can not modify the video export settings'));		
+		}
+		else{
+			switch (toolName) {
+				case 'delete':
+					if (this.selectedTrackItem) {
+						this.tracks.splice(this.tracks.indexOf(this.selectedTrackItem),1);
+						paella.events.trigger(paella.events.documentChanged);
+						return true;
+					}
+					break;
+					
+				case 'create':
+					paella.events.trigger(paella.events.documentChanged);								
+					if (this.isCurrentPositionInsideATrackItem() == false) {
+						var start = paella.player.videoContainer.currentTime();
+						var itemDuration  = paella.player.videoContainer.duration()*0.1;
+						itemDuration = itemDuration*100/paella.editor.instance.bottomBar.timeline.zoom;
+						var end = start + itemDuration; //paella.editor.instance.bottomBar.timeline.zoom
+						if (end > paella.player.videoContainer.duration() ) { end = paella.player.videoContainer.duration(); }
+						for (var i=0; i<this.tracks.length; ++i) {
+							var track = this.tracks[i];
+							if ( (track.s>start) && (track.s<end) ) {
+								end = track.s;
+							}
+						}				
+						
+						var id = this.getTrackUniqueId();
+						var content = this.metadata.title;
+						this.tracks.push({id:id, s:start, e:end, name:content});
+					}
+					else{
+						alert (paella.dictionary.translate("Can not create a new video segment inside a segment"));
+					}
+					return true;
+					break;
+			}
+		}
+	},
+		
 	isCurrentPositionInsideATrackItem: function(){
 		var start = paella.player.videoContainer.currentTime();
 		var startInsideTrackItem = false;
@@ -94,43 +158,6 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				return true;
 		}
 		return false;		
-	},
-	
-	onToolSelected:function(toolName) {
-		switch (toolName) {
-			case 'delete':
-				if (this.selectedTrackItem) {
-					paella.events.trigger(paella.events.documentChanged);
-					this.tracks.splice(this.tracks.indexOf(this.selectedTrackItem),1);
-					return true;
-				}
-				break;
-				
-			case 'create':
-				paella.events.trigger(paella.events.documentChanged);								
-				if (this.isCurrentPositionInsideATrackItem() == false) {
-					var start = paella.player.videoContainer.currentTime();
-					var itemDuration  = paella.player.videoContainer.duration()*0.1;
-					itemDuration = itemDuration*100/paella.editor.instance.bottomBar.timeline.zoom;
-					var end = start + itemDuration; //paella.editor.instance.bottomBar.timeline.zoom
-					if (end > paella.player.videoContainer.duration() ) { end = paella.player.videoContainer.duration(); }
-					for (var i=0; i<this.tracks.length; ++i) {
-						var track = this.tracks[i];
-						if ( (track.s>start) && (track.s<end) ) {
-							end = track.s;
-						}
-					}				
-					
-					var id = this.getTrackUniqueId();
-					var content = this.metadata.title;
-					this.tracks.push({id:id, s:start, e:end, name:content});
-				}
-				else{
-					alert (paella.dictionary.translate("Can not create a new video segment inside a segment"));
-				}
-				return true;
-				break;
-		}
 	},
 	
 	createALabel: function(label) {
@@ -177,7 +204,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				filter: function(parsedResponse) {
 					return jQuery.map(parsedResponse.catalogs, function (serie){
 						var serieId = serie['http://purl.org/dc/terms/'].identifier[0].value;
-						var title = "TITLE: " + serie['http://purl.org/dc/terms/'].title[0].value;						
+						var title = serie['http://purl.org/dc/terms/'].title[0].value;						
 						return {identifier: serieId, title:title};
 					});
 				}
@@ -242,7 +269,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		// TODO: Repaint
 	},
 	
-	buildToolTabContent:function(tabContainer) {
+	buildToolTabContentToEdit:function(tabContainer) {
 		var thisClass = this;
 		var root = document.createElement('div');
 		root.id = 'SingleVideoExportEditorTabBarRoot';
@@ -260,18 +287,158 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		
 		
 		var sendDiv = document.createElement('div');
+		sendDiv.className = "btn-group";
 		root.appendChild(sendDiv);
 		var sendButton = document.createElement('button');
+		sendButton.className = "btn";
 		sendButton.innerHTML = paella.dictionary.translate('Send');
-		$(sendButton).click(function(event){thisClass.exportVideo();});
+		$(sendButton).click(function(event){
+			while (thisClass.tabContainer.firstChild) {
+				thisClass.tabContainer.removeChild(thisClass.tabContainer.firstChild);
+			}
+
+			thisClass.sent = true;
+			thisClass.onSave(function(success){
+				if (success == true){
+					thisClass.buildToolTabContent(thisClass.tabContainer);
+				}
+				else {
+					thisClass.sent = null;
+					alert(paella.dictionary.translate('An error has occurred'));
+				}			
+			})
+
+		});
 		sendDiv.appendChild(sendButton);
 		
 		
 		tabContainer.appendChild(root);
 	},
+
+	buildToolTabContentSentToProcess:function(tabContainer) {
+		var thisClass = this;
+		var root = document.createElement('div');
+		root.id = 'SingleVideoExportEditorTabBarRoot';
+
+		var info = document.createElement('div');
+		info.id = "SingleVideoExportEditorTabBarRoot_ToProcess";
+		
+		var text = document.createElement('p');
+		text.innerText = paella.dictionary.translate(this.strings.SentToProcess1);
+
+		var text2 = document.createElement('p');
+		text2.innerText = paella.dictionary.translate(this.strings.SentToProcess2);
+
+
+		var buttonBar = document.createElement('div');
+		buttonBar.className = "btn-group";
+		
+		var cancelButton = document.createElement('button');
+		cancelButton.className = "btn";
+		cancelButton.innerHTML = paella.dictionary.translate('Cancel');
+		$(cancelButton).click(function(event){
+			while (thisClass.tabContainer.firstChild) {
+				thisClass.tabContainer.removeChild(thisClass.tabContainer.firstChild);
+			}
+			var oldSent = thisClass.sent;
+			thisClass.sent = null;
+			thisClass.onSave(function(success){
+				if (success == true){
+					thisClass.buildToolTabContent(thisClass.tabContainer);
+				}
+				else {
+					thisClass.sent = oldSent;
+					alert(paella.dictionary.translate('An error has occurred'));
+				}
+			})
+		});
+
+		
+		info.appendChild(text);
+		info.appendChild(text2);
+		info.appendChild(buttonBar);
+		buttonBar.appendChild(cancelButton);
+		
+		root.appendChild(info);
+		tabContainer.appendChild(root);
+
+	},
 	
-	exportVideo:function(){
-		paella.messageBox.showMessage("TODO: Upload to matterhorn a new mediapackage!")
+	buildToolTabContentInProgress:function(tabContainer) {
+		var thisClass = this;
+		var root = document.createElement('div');
+		root.id = 'SingleVideoExportEditorTabBarRoot';
+
+		var info = document.createElement('div');
+		info.id = "SingleVideoExportEditorTabBarRoot_InProgress";
+		
+		var text = document.createElement('p');
+		text.innerText = paella.dictionary.translate(this.strings.InProgress1);
+
+		var link = "watch.html?id=" + this.inprogress.id;
+		var videoLink = document.createElement('a');
+		videoLink.href = link;
+		videoLink.innerText = this.inprogress.title;
+
+		var list = document.createElement('ul');
+		var elist = document.createElement('li');
+
+		list.appendChild(elist);
+		elist.appendChild(videoLink);
+
+		var text2 = document.createElement('p');
+		text2.innerText = paella.dictionary.translate(this.strings.InProgress2);
+
+		var buttonBar = document.createElement('div');
+		buttonBar.className = "btn-group";
+
+		var cancelButton = document.createElement('button');
+		cancelButton.className = "btn";		
+		cancelButton.innerHTML = paella.dictionary.translate('New Video Export');
+		$(cancelButton).click(function(event){
+			while (thisClass.tabContainer.firstChild) {
+				thisClass.tabContainer.removeChild(thisClass.tabContainer.firstChild);
+			}
+			var olsInprogress = thisClass.inprogress;
+			thisClass.inprogress = null;
+			thisClass.onSave(function(success){
+				if (success == true){
+					thisClass.tracks = [];
+					paella.events.trigger(paella.events.documentChanged);
+					paella.editor.instance.bottomBar.timeline.rebuildTrack(thisClass.getName());
+					paella.editor.pluginManager.onTrackChanged(this);
+					paella.editor.instance.rightBar.updateCurrentTab();					
+				}
+				else {
+					thisClass.inprogress = oldInprogress;
+					alert(paella.dictionary.translate('An error has occurred'));
+				}			
+			})
+		});
+
+		
+		info.appendChild(text);
+		info.appendChild(list);
+		info.appendChild(text2);
+		info.appendChild(buttonBar);
+		buttonBar.appendChild(cancelButton);
+		
+		root.appendChild(info);
+		tabContainer.appendChild(root);
+	},
+	
+	buildToolTabContent:function(tabContainer) {
+		this.tabContainer = tabContainer;
+		
+		if (this.isSentToProccess()){
+			this.buildToolTabContentSentToProcess(tabContainer);
+		}
+		else if (this.isInProgress()){
+			this.buildToolTabContentInProgress(tabContainer);
+		}
+		else{	
+			this.buildToolTabContentToEdit(tabContainer);
+		}
 	},
 	
 	getTrackUniqueId:function() {
@@ -302,6 +469,10 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	},
 	
 	onTrackChanged:function(id,start,end) {
+		if (this.isSentToProccess() || this.isInProgress()){
+			return;
+		}
+	
 		var joinTracks = true;
 		paella.events.trigger(paella.events.documentChanged);
 		var item = this.getTrackItem(id);
@@ -378,15 +549,42 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		}
 	},
 	
-	onSave:function(success) {
+	onRead:function(onComplete) {
+		var thisClass = this;
+		paella.data.read('SingleVideoExport', {id:paella.initDelegate.getId()}, function(data, status) {
+			if (data && typeof(data)=='object') {
+				
+				if(data.trackItems && data.trackItems.length>0) {
+					thisClass.tracks = data.trackItems;
+				}
+				if(data.metadata) {
+					thisClass.metadata = data.metadata;
+				}
+				if(data.sent) {
+					thisClass.sent = data.sent;
+				}
+				if(data.inprogress) {
+					thisClass.inprogress = data.inprogress;
+				}
+			}			
+			
+			onComplete(true);
+		});
+
+	},
+	
+	onSave:function(onComplete) {
 		var data = {
 			trackItems:this.tracks,
-			metadata: this.metadata
+			metadata: this.metadata,
+			sent: this.sent,
+			inprogress: this.inprogress
 		};
 		paella.data.write('SingleVideoExport',{id:paella.initDelegate.getId()}, data, function(response,status) {
-			success(status);
+			onComplete(status);
 		});		
 	}
+
 });
 
 paella.plugins.singleVideoExportEditorPlugin = new paella.plugins.SingleVideoExportEditorPlugin();

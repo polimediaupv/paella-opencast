@@ -259,20 +259,16 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 	},
 
 	write:function(context,params,value,onSuccess) {
+		var thisClass = this;
 		var episodeId = params.id;
 		if (typeof(value)=='object') value = JSON.stringify(value);
 
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
 			function(data, contentType, returnCode) { 
-				if (data.annotations.annotation) {
-					var annotationId = data.annotations.annotation.annotationId
-					paella.ajax.put({ url: '/annotation/'+ annotationId, params: { value: value }},	
-						function(data, contentType, returnCode) { onSuccess({}, true); },
-						function(data, contentType, returnCode) { onSuccess({}, false); }
-					);
-				}
-				else {
-					paella.ajax.put({ url: '/annotation/', 
+				var annotations = data.annotations.annotation;
+				if (!(annotations instanceof Array)) { annotations = [annotations]; }
+				if (annotations.length == 0 ) {
+					paella.ajax.put({ url: '/annotation/',
 						params: {
 							episode: episodeId, 
 							type: 'paella/' + context,
@@ -281,7 +277,24 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 						}},	
 						function(data, contentType, returnCode) { onSuccess({}, true); },
 						function(data, contentType, returnCode) { onSuccess({}, false); }
+					);				
+				}
+				else if (annotations.length == 1 ) {
+					var annotationId = annotations[0].annotationId
+					paella.ajax.put({ url: '/annotation/'+ annotationId, params: { value: value }},	
+						function(data, contentType, returnCode) { onSuccess({}, true); },
+						function(data, contentType, returnCode) { onSuccess({}, false); }
 					);
+				}
+				else if (annotations.length > 1 ) {
+					thisClass.remove(context, params, function(notUsed, removeOk){
+						if (removeOk){
+							thisClass.write(context, params, value, onSuccess);
+						}
+						else{
+							onSuccess({}, false);
+						}
+					});
 				}
 			},
 			function(data, contentType, returnCode) { onSuccess({}, false); }
@@ -327,6 +340,84 @@ paella.dataDelegates.MHAnnotationServiceTrimmingDataDelegate = Class.create(pael
 		this.parent(context, params, {trimming: value}, onSuccess);
 	}
 });
+
+
+paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate,{
+	read:function(context, params, onSuccess) {
+		var ret = {};
+		var thisParent = this.parent;
+		
+		thisParent(context, params, function(data, success) {
+			if (success){
+				ret.trackItems = data.trackItems;
+				ret.metadata = data.metadata;
+				
+				thisParent(context+"#sent", params, function(dataSent, successSent) {
+				
+					if (successSent){
+						ret.sent = dataSent.sent;
+					}
+					thisParent(context+"#inprogress", params, function(dataInProgress, successInProgress) {
+						if (successInProgress) {
+							ret.inprogress = dataInProgress.inprogress;
+						}							
+						
+						if (onSuccess) { onSuccess(ret, true); }
+					});
+				});
+			}
+			else {
+				if (onSuccess) { onSuccess({}, false); }
+			}
+		});
+	},
+	
+	write:function(context, params, value, onSuccess) {
+		var thisParent = this.parent;
+	
+		var val = { trackItems:value.trackItems, metadata: value.metadata };
+		var valSent = { sent: value.sent };
+		var valInprogress = { inprogress: value.inprogres };
+		thisParent(context, params, val, function(data, success) {
+			if (success) {
+				thisParent(context+"#sent", params, valSent, function(dataSent, successSent) {
+					if (successSent) {
+						thisParent(context+"#inprogress", params, valInprogress, function(dataInProgress, successInProgress) {
+							if (successInProgress) {
+								if (onSuccess) { onSuccess({}, true); }
+							}
+							else { if (onSuccess) { onSuccess({}, false); } }	
+						});
+					}
+					else { if (onSuccess) { onSuccess({}, false); } }	
+				});				
+			}
+			else { if (onSuccess) { onSuccess({}, false); } }	
+		});
+	},
+	
+	remove:function(context, params, onSuccess) {
+		var thisParent = this.parent;
+	
+		thisParent(context, params, function(data, success) {
+			if (success) {
+				thisParent(context+"#sent", params, function(dataSent, successSent) {
+					if (successSent) {
+						thisParent(context+"#inprogress", params, function(dataInProgress, successInProgress) {
+							if (successInProgress) {
+								if (onSuccess) { onSuccess({}, true); }
+							}
+							else { if (onSuccess) { onSuccess({}, false); } }	
+						});
+					}
+					else { if (onSuccess) { onSuccess({}, false); } }	
+				});	
+			}
+			else { if (onSuccess) { onSuccess({}, false); } }	
+		});
+	}	
+});
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,31 +485,33 @@ paella.dataDelegates.MHCaptionsDataDelegate = Class.create(paella.DataDelegate,{
 			catalogs = [catalogs];
 		}
 		
-		for (var i=0; i<catalogs.length; ++i) {
+		var captionsFound = false;
+		
+		for (var i=0; ((i<catalogs.length) && (captionsFound == false)); ++i) {
 			var catalog = catalogs[i];
 			
 			if (catalog.type == 'captions/timedtext') {
+				captionsFound = true;
+				
 				// Load Captions!
 				paella.ajax.get({url: catalog.url},	
 					function(data, contentType, returnCode, dataRaw) {
-					
 					
 						var parser = new paella.matterhorn.DFXPParser();
 						var captions = parser.parseCaptions(data);						
 						if (onSuccess) onSuccess({captions:captions}, true);
 											
-
 					},
 					function(data, contentType, returnCode) {
 						if (onSuccess) { onSuccess({}, false); }
 					}
-				);				
-				
-				return;
+				);								
 			}
 		}
 		
-		if (onSuccess) { onSuccess({}, false); }
+		if (captionsFound == false){
+			if (onSuccess) { onSuccess({}, false); }
+		}
 	},
 	
 	write:function(context,params,value,onSuccess) {
