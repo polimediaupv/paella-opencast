@@ -266,7 +266,9 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
 			function(data, contentType, returnCode) { 
 				var annotations = data.annotations.annotation;
+				if (annotations == undefined) {annotations = [];}
 				if (!(annotations instanceof Array)) { annotations = [annotations]; }
+				
 				if (annotations.length == 0 ) {
 					paella.ajax.put({ url: '/annotation/',
 						params: {
