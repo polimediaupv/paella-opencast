@@ -433,6 +433,23 @@ paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paell
 });
 
 
+paella.dataDelegates.UserDataDelegate = Class.create(paella.DataDelegate,{
+    initialize:function() {
+    },
+
+    read:function(context, params, onSuccess) {
+    	var value = {
+			userName: params.username,
+			name: params.username,
+			lastname: '',
+			avatar:"plugins/silhouette32.png"
+		};
+		
+        if (typeof(onSuccess)=='function') { onSuccess(value,true); }
+    }
+
+});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Captions Loader
