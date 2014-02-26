@@ -61,8 +61,15 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 		this.permissions.loadError = true;
 		this.permissions.isAnonymous = false;
 
+		this.userData.username = 'anonymous';
+		this.userData.name = 'Anonymous';
+		this.userData.avatar = 'resources/images/default_avatar.png';
+
 		if (paella.matterhorn) {	
 			if (paella.matterhorn.me) {
+				this.userData.username = paella.matterhorn.me.username;
+				this.userData.name = paella.matterhorn.me.username;
+				
 				this.permissions.loadError = false;
 				var roles = paella.matterhorn.me.roles;
 				var adminRole = paella.matterhorn.me.org.adminRole;
