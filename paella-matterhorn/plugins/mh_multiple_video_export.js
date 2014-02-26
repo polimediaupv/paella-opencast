@@ -7,6 +7,9 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 	videoCount: 1,
 	
 	strings: {
+		ToEditHeader1: 'This tool exports new videos. It is required that you set the new Title, the Author and the Series in which those videos will be located.',
+		ToEditHeader2: 'Please select the area you want to export by clicking on the Create button. You can select multiple parts of the video. Each part will be exported as a new Video.',
+	
 		SentToProcess1: 'You have requested to export new videos from this. Your request will comply as soon as possible.',
 		SentToProcess2: 'If you wish, you can cancel this video exports.',
 		
@@ -41,6 +44,8 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 				'An error has occurred': 'Ha ocurrido un error'						
 			};
 			
+			esDict[this.strings.ToEditHeader1] = 'Esta herramienta puede exportar nuevos videos. Es necesario que especifiques el nuevo titulo, autor y la serie de cada uno de estos videos.';			
+			esDict[this.strings.ToEditHeader2] = 'Por favor, selecciona el area que quieras exportar pulsando el boton de "Crear". Puedes seleccionar multiples partes del video. Cada una de estas partes se exportarán como un nuevo video.';			
 			esDict[this.strings.SentToProcess1] = 'Ha solicitado exportar nuevos videos a partir de este. Su petición se atendrá lo más pronto posible.';
 			esDict[this.strings.SentToProcess2] = 'Si lo desea puede cancelar la exportación de videos.';
 			esDict[this.strings.InProgress1] = 'Los videos se han enviado a procesar. Cuando terminen de procesarse podrá visualizarlos en los siguiente enlaces.';
@@ -96,9 +101,9 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					var serieId = '';
 					var serieTitle = '';
 
-					if (paella.matterhorn.episode.mediapackage.series) {
-						serieId = paella.matterhorn.episode.mediapackage.series;
-						serieTitle = "TITLE_TODO: " + serieId
+					if (paella.matterhorn.serie) {					
+						serieId = paella.matterhorn.serie['http://purl.org/dc/terms/'].identifier[0].value;
+						serieTitle = paella.matterhorn.serie['http://purl.org/dc/terms/'].identifier[0].value;
 					}
 					if ( (paella.matterhorn.episode.mediapackage.creators) && (paella.matterhorn.episode.mediapackage.creators.creator) ) {
 						creator = paella.matterhorn.episode.mediapackage.creators.creator;
@@ -189,7 +194,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 			datumTokenizer: function(d) {return Bloodhound.tokenizers.whitespace(d.num); },
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
 			remote: {
-				url: 'http://matterhorn.cc.upv.es:8080/series/series.json?q=%QUERY',
+				url: '/series/series.json?q=%QUERY',
 				filter: function(parsedResponse) {
 					return jQuery.map(parsedResponse.catalogs, function (serie){
 						var serieId = serie['http://purl.org/dc/terms/'].identifier[0].value;
@@ -260,6 +265,17 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 		var root = document.createElement('div');
 		root.id = 'MultipleVideoExportEditorTabBarRoot';
 		
+		
+		var header = document.createElement('div');
+		var header1 = document.createElement('p');
+		var header2 = document.createElement('p');
+		header1.innerText = paella.dictionary.translate(this.strings.ToEditHeader1);
+		header2.innerText = paella.dictionary.translate(this.strings.ToEditHeader2);
+		header.appendChild(header1);
+		header.appendChild(header2);		
+		root.appendChild(header);
+		
+
 		var basicMetadata = document.createElement('div');
 		root.appendChild(basicMetadata);
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.selectedTrackItem.metadata.title, function(value){thisClass.changeTitle(value);}));
@@ -416,17 +432,17 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 	buildToolTabContent:function(tabContainer) {
 		this.tabContainer = tabContainer;
 		
-		
-		if (this.isSentToProccess()){
-			this.buildToolTabContentSentToProcess(tabContainer);
-		}
-		else if (this.isInProgress()){
-			this.buildToolTabContentInProgress(tabContainer);
-		}
-		else{	
-			this.buildToolTabContentToEdit(tabContainer);
-		}
-		
+		if (this.selectedTrackItem){
+			if (this.isSentToProccess()){
+				this.buildToolTabContentSentToProcess(tabContainer);
+			}
+			else if (this.isInProgress()){
+				this.buildToolTabContentInProgress(tabContainer);
+			}
+			else{	
+				this.buildToolTabContentToEdit(tabContainer);
+			}
+		}		
 	},	
 
 	

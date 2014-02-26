@@ -9,6 +9,9 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	
 	
 	strings: {
+		ToEditHeader1: 'This tool exports a new video. It is required that you set the new Title, the Author and the Series in which that video will be located.',
+		ToEditHeader2: 'Please select the area you want to export by clicking on the Create button. You can select multiple parts of the video.',
+		
 		SentToProcess1: 'You have requested to export a new video from this. Your request will comply as soon as possible.',
 		SentToProcess2: 'If you wish, you can cancel this video export.',
 		
@@ -45,6 +48,8 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				'An error has occurred': 'Ha ocurrido un error'
 			};
 			
+			esDict[thisClass.strings.ToEditHeader1] = 'Esta herramienta puede exportar nuevos videos. Es necesario que especifiques el nuevo titulo, autor y la serie.';			
+			esDict[thisClass.strings.ToEditHeader2] = 'Por favor, selecciona el area que quieras exportar pulsando el boton de "Crear". Puedes seleccionar multiples partes del video.';
 			esDict[thisClass.strings.SentToProcess1] = 'Ha solicitado exportar un nuevo video a partir de este. Su petición se atendrá lo más pronto posible.';
 			esDict[thisClass.strings.SentToProcess2] = 'Si lo desea puede cancelar la exportación.';
 			esDict[thisClass.strings.InProgress1] = 'El video se envió a procesar. Cuando termine de procesarse podrá visualizarlo en el siguiente enlace.';
@@ -57,9 +62,9 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			var serieId = '';
 			var serieTitle = '';
 			
-			if (paella.matterhorn.episode.mediapackage.series) {
-				serieId = paella.matterhorn.episode.mediapackage.series;
-				serieTitle = "TITLE_TODO: " + serieId;
+			if (paella.matterhorn.serie) {					
+				serieId = paella.matterhorn.serie['http://purl.org/dc/terms/'].identifier[0].value;
+				serieTitle = paella.matterhorn.serie['http://purl.org/dc/terms/'].identifier[0].value;
 			}
 			if ( (paella.matterhorn.episode.mediapackage.creators) && (paella.matterhorn.episode.mediapackage.creators.creator) ) {
 				creator = paella.matterhorn.episode.mediapackage.creators.creator;
@@ -200,7 +205,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			datumTokenizer: function(d) {return Bloodhound.tokenizers.whitespace(d.num); },
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
 			remote: {
-				url: 'http://matterhorn.cc.upv.es:8080/series/series.json?q=%QUERY',
+				url: '/series/series.json?q=%QUERY',
 				filter: function(parsedResponse) {
 					return jQuery.map(parsedResponse.catalogs, function (serie){
 						var serieId = serie['http://purl.org/dc/terms/'].identifier[0].value;
@@ -275,6 +280,17 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		root.id = 'SingleVideoExportEditorTabBarRoot';
 		
 		var basicMetadata = document.createElement('div');
+		
+		var header = document.createElement('div');
+		var header1 = document.createElement('p');
+		var header2 = document.createElement('p');
+		header1.innerText = paella.dictionary.translate(this.strings.ToEditHeader1);
+		header2.innerText = paella.dictionary.translate(this.strings.ToEditHeader2);
+		header.appendChild(header1);
+		header.appendChild(header2);
+		
+		
+		root.appendChild(header);
 		root.appendChild(basicMetadata);
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.metadata.title, function(value){thisClass.changeTitle(value);}));
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.metadata.presenter, function(value){thisClass.metadata.presenter = value;}));
@@ -282,8 +298,6 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			thisClass.metadata.serieId = serieId;
 			thisClass.metadata.serieTitle = serieTitle;
 		}));
-		
-
 		
 		
 		var sendDiv = document.createElement('div');
