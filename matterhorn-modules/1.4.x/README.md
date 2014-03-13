@@ -7,7 +7,7 @@ NOTE: In the following instructions, `$MH_HOME` represents the path where the Ma
 PLEASE READ BEFORE INSTALLING
 -----------------------------
 
-- This bundle is only for Matterhorn 1.4.0
+- This bundle is only for Matterhorn 1.4.x
 - In multi-machine installations, the player must be installed in the 'engage' server only.
 - Paella Player requires a browser with HTML5 support and compatible with the format of the distributed videos. Please refer to your browser's documentation to see the formats it supports.
 - By default, Matterhorn does NOT encode and distribute videos in a format suitable for HTML5 --specific workflow and encoding profiles are required. The Paella source package includes suitable workflow definitions and encoding profiles in the resources folder. Please note that:
@@ -31,16 +31,24 @@ INSTALLATION INSTRUCTIONS
 
     `$ grep -m 1 '<version>' $MH_HOME/pom.xml`
 
-2. Copy the bundle to your matterhorn installation.
+2. Go to 'paella-engage-ui' folder.
 
-    `$ cp -r $MH_VERSION/paella-engage-ui $MH_HOME/modules`
+    `$ cd $PAELLA_HOME/matterhorn-modules/1.4.x/paella-engage-ui`
 
-3. Go to 'paella-engage-ui' folder.
+3. Copy pom-$MH_VERSION.xml to pom.xml
 
-    `$ cd $MH_HOME/modules/paella-engage-ui`
+    `$ cp pom-$MH_VERSION.xml pom.xml`
 
 4. Build the 'paella-engage-ui' bundle by running the following command:
 
-    `$ mvn clean install -DdeployTo=$MH_HOME`
+    `$ mvn clean install`
 
-5. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella/ui
+5. Copy the paella-engage-ui module to your Matterhorn Installation
+
+    `$ cp target/paella-engage-ui-3.0.jar $MH_HOME/lib/matterhorn`
+
+6 By default paella is installed in /paella3.0/ui URL in your server. You need to enable address to that URL. Edit the ${MH_HOME}/etc/security/mh_default_org.xml file and add this line:
+
+    `<sec:intercept-url pattern="/paella3.0/ui/**" access="ROLE_ANONYMOUS" />`
+
+7. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella3.0/ui

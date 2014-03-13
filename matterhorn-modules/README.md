@@ -1,8 +1,7 @@
-DEVELOPER PREVIEW 3
-===================
+Paella Plaffer 3.0 for Matterhorn
+=================================
 
-This is the Paella Player 3.0 for Matterhorn (Developer Preview 3).
-Use this version only in your development/testing environment. This version is not prepared for use in a production environment.
+This is the Paella Player 3.0 for Matterhorn.
 
 
 Paella Player Matterhorn bundle
