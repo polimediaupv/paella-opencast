@@ -625,26 +625,31 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 					paella.matterhorn.episode = data['search-results'].result;
 					var asyncLoader = new paella.AsyncLoader();
 		
-					var serie = paella.matterhorn.episode.mediapackage.series;
-					
-					if (serie != undefined) {
-						asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'.json'}), "serie");
-						asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'/acl.json'}), "acl");
-					
-						asyncLoader.load(function() {
-								//Check for series
-								paella.matterhorn.serie = asyncLoader.getCallback("serie").data;
-								//Check for acl
-								paella.matterhorn.acl = asyncLoader.getCallback("acl").data;
-								if (onSuccess) onSuccess();
-							},
-							function() {
-								if (onError) onError();
-							}
-						);
+					if (paella.matterhorn.episode) {
+						var serie = paella.matterhorn.episode.mediapackage.series;
+						
+						if (serie != undefined) {
+							asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'.json'}), "serie");
+							asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'/acl.json'}), "acl");
+						
+							asyncLoader.load(function() {
+									//Check for series
+									paella.matterhorn.serie = asyncLoader.getCallback("serie").data;
+									//Check for acl
+									paella.matterhorn.acl = asyncLoader.getCallback("acl").data;
+									if (onSuccess) onSuccess();
+								},
+								function() {
+									if (onError) onError();
+								}
+							);
+						}
+						else {
+							if (onSuccess) onSuccess();						
+						}
 					}
 					else {
-						if (onSuccess) onSuccess();						
+						if (onError) onError();
 					}
 				},
 				function(data,contentType,code) { if (onError) onError(); }
@@ -695,20 +700,30 @@ function loadPaella(containerId, onSuccess) {
 	var initDelegate = new paella.matterhorn.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
 	var id = paella.utils.parameters.get('id');
 
-	initPaellaMatterhorn(id, function() {
-		initPaellaEngage(containerId,initDelegate);
-		if (onSuccess) onSuccess();
-	});
+	initPaellaMatterhorn(id,
+		function() {
+			initPaellaEngage(containerId,initDelegate);
+			if (onSuccess) onSuccess();
+		},
+		function() {
+			paella.messageBox.showError("Error loading video " + id);
+		}
+	);
 }
 
 function loadPaellaExtended(containerId, onSuccess) {
 	var initDelegate = new paella.matterhorn.InitDelegate({accessControl:new MHAccessControl(),videoLoader:new MHVideoLoader()});
 	var id = paella.utils.parameters.get('id');
 
-	initPaellaMatterhorn(id, function() {
-		initPaellaExtended({containerId:containerId,initDelegate:initDelegate});
-		if (onSuccess) onSuccess();
-	});
+	initPaellaMatterhorn(id,
+		function() {
+			initPaellaExtended({containerId:containerId,initDelegate:initDelegate});
+			if (onSuccess) onSuccess();
+		},
+		function() {
+			paella.messageBox.showError("Error loading video " + id);
+		}
+	);
 }
 
 function loadPaellaEditor(containerId) {
