@@ -34,7 +34,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 			var esDict = {
 				'Title':'Título',
 				'Presenter':'Ponente',
-				'Serie': 'Serie',
+				'Series': 'Serie',
 				'Video':'Video',
 				'Multiple Video Export': 'Exportar multiples videos',
 				'Can not create a new video segment inside a segment': 'No se puede crear un nuevo segmento de video dentro de un segmento',
@@ -280,7 +280,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 		root.appendChild(basicMetadata);
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.selectedTrackItem.metadata.title, function(value){thisClass.changeTitle(value);}));
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.selectedTrackItem.metadata.presenter, function(value){thisClass.metadata.presenter = value;}));
-		basicMetadata.appendChild(this.createASelectSerie(paella.dictionary.translate('Serie'), this.selectedTrackItem.metadata, function(serieId, serieTitle){
+		basicMetadata.appendChild(this.createASelectSerie(paella.dictionary.translate('Series'), this.selectedTrackItem.metadata, function(serieId, serieTitle){
 			thisClass.selectedTrackItem.metadata.serieId = serieId;
 			thisClass.selectedTrackItem.metadata.serieTitle = serieTitle;
 		}));

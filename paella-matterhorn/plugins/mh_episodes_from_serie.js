@@ -16,7 +16,7 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.RightBarPlugin,{
 		episodesFromSerieTitle.id = 'episodesFromSerieTitle';
 		episodesFromSerieTitle.className = 'episodesFromSerieTitle';
 		if (serieId) {
-			episodesFromSerieTitle.innerHTML = "<span class='episodesFromSerieTitle_Bold'>" +paella.dictionary.translate("Videos in this serie:")+"</span> " + serieTitle;
+			episodesFromSerieTitle.innerHTML = "<span class='episodesFromSerieTitle_Bold'>" +paella.dictionary.translate("Videos in this series:")+"</span> " + serieTitle;
 		}
 		else {
 			episodesFromSerieTitle.innerHTML = "<span class='episodesFromSerieTitle_Bold'>" +paella.dictionary.translate("Available videos:")+"</span>";			

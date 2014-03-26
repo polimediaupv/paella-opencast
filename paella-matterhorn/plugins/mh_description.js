@@ -77,7 +77,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		divTitle.innerHTML = paella.dictionary.translate("Title:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.title+'</span>';
 		divSubject.innerHTML = paella.dictionary.translate("Subject:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.subject+'</span>';
 		divPresenter.innerHTML = paella.dictionary.translate("Presenter:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4001" href="' + paella.player.config.restServer.url + 'engage/ui/index.html?q='+this.desc.presenter+'">'+this.desc.presenter+'</a></span>';
-		divSeries.innerHTML = paella.dictionary.translate("Serie:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4002" href="' + paella.player.config.restServer.url + 'engage/ui/index.html?series='+this.desc.serieId+'">'+this.desc.serie+'</a></span>';
+		divSeries.innerHTML = paella.dictionary.translate("Series:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4002" href="' + paella.player.config.restServer.url + 'engage/ui/index.html?series='+this.desc.serieId+'">'+this.desc.serie+'</a></span>';
 		divDescription.innerHTML = paella.dictionary.translate("Description:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.description+'</span>';
 
 		//---------------------------//			

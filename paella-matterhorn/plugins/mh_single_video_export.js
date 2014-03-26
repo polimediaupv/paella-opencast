@@ -37,7 +37,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			var esDict = {
 				'Title':'Título',
 				'Presenter':'Ponente',
-				'Serie': 'Serie',
+				'Series': 'Serie',
 				'Join Tracks?': '¿Unir los tracks?',
 				'Single Video 1': 'Video 1',
 				'Single Video Export': 'Exportar un video',
@@ -294,7 +294,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		root.appendChild(basicMetadata);
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.metadata.title, function(value){thisClass.changeTitle(value);}));
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.metadata.presenter, function(value){thisClass.metadata.presenter = value;}));
-		basicMetadata.appendChild(this.createASelectSerie(paella.dictionary.translate('Serie'), this.metadata, function(serieId, serieTitle){
+		basicMetadata.appendChild(this.createASelectSerie(paella.dictionary.translate('Series'), this.metadata, function(serieId, serieTitle){
 			thisClass.metadata.serieId = serieId;
 			thisClass.metadata.serieTitle = serieTitle;
 		}));
