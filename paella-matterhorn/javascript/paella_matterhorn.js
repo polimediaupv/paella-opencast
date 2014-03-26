@@ -120,14 +120,18 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 	},
 
 	getStreamSource:function(track) {
-		var res = track.video.resolution.split('x');
-	
+        if(track.video instanceof Object) {
+		    var res = track.video.resolution.split('x');
+        } else {
+            var res = new Array(0,0);
+        }
+
 		var source = {
 				src:  track.url,
 				type: track.mimetype,
 				res: {w:res[0], h:res[1]}
 			};
-			
+
 		return source;
 	},
 
