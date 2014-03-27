@@ -33,24 +33,26 @@
 	"plugins":{
 		"defaultConfig":{"enabled":true},
 		"list":{
-			"es.upv.paella.editor.TrackConsolidate": {"enabled": false},
-			"es.upv.paella.editor.consolidatePlugin": {"enabled": false}, 
 			"es.upv.paella.test.videoLoadPlugin": {"enabled": false},
-
+			
 			"es.upv.paella.ShowEditorPlugin":{"enabled":true,"alwaysVisible":true,"editorPage":"editor.html"},
 			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":true},
-			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
-			"es.upv.paella.descriptionPlugin": {"enabled":false},
-			"es.upv.paella.editor.trackCaptions": {"enabled":false},
 			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
+			"es.upv.paella.FootPrintsPlugin": {"enabled": true, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"},
+			"es.upv.paella.descriptionPlugin": {"enabled":false},
+			"es.upv.paella.commentsPlugin": {"enabled": false },
+			
+			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
 			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": true},
+			"es.upv.paella.editor.trackCaptions": {"enabled":false},
+			
 			
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":true},
 			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":true},
+			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": false }
 			
-			"es.upv.paella.FootPrintsPlugin": {"enabled": true, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"}
 		}
 	}
 }
