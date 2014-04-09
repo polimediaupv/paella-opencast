@@ -325,13 +325,18 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 		paella.ajax.get({url: '/annotation/annotations.json', params: {episode: episodeId, type: "paella/"+context}},	
 			function(data, contentType, returnCode) {
  				var annotations = data.annotations.annotation;
-				if (!(annotations instanceof Array)) { annotations = [annotations]; }
-				var asyncLoader = new paella.AsyncLoader();
-				for ( var i=0; i< annotations.length; ++i) {
-					var annotationId = data.annotations.annotation.annotationId;
-					asyncLoader.addCallback(new paella.JSONCallback({url:'/annotation/'+annotationId}, "DELETE"));
+ 				if(annotations) {
+					if (!(annotations instanceof Array)) { annotations = [annotations]; }
+					var asyncLoader = new paella.AsyncLoader();
+					for ( var i=0; i< annotations.length; ++i) {
+						var annotationId = data.annotations.annotation.annotationId;
+						asyncLoader.addCallback(new paella.JSONCallback({url:'/annotation/'+annotationId}, "DELETE"));
+					}
+					asyncLoader.load(function(){ if (onSuccess) { onSuccess({}, true); } }, function() { onSuccess({}, false); });
 				}
-				asyncLoader.load(function(){ if (onSuccess) { onSuccess({}, true); } }, function() { onSuccess({}, false); });
+				else {
+					if (onSuccess) { onSuccess({}, true); }
+				}				
 			},
 			function(data, contentType, returnCode) { if (onSuccess) { onSuccess({}, false); } }
 		);
@@ -371,7 +376,6 @@ paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paell
 				ret.metadata = data.metadata;
 				
 				thisParent(context+"#sent", params, function(dataSent, successSent) {
-				
 					if (successSent){
 						ret.sent = dataSent.sent;
 					}
@@ -396,22 +400,29 @@ paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paell
 		var valInprogress = { inprogress: value.inprogres };
 		var valSent = { sent: value.sent };	
 		var val = { trackItems:value.trackItems, metadata: value.metadata };
-		thisParent(context, params, val, function(data, success) {
-			if (success) {			
-				if (valSent.sent) {			
-					thisParent(context+"#sent", params, valSent, function(dataSent, successSent) {
-						if (successSent) {						
-							if (onSuccess) { onSuccess({}, true); }
-						}
-						else { if (onSuccess) { onSuccess({}, false); } }	
-					});
+		if (val.trackItems.length > 0) {
+			thisParent(context, params, val, function(data, success) {
+				if (success) {			
+					if (valSent.sent) {			
+						thisParent(context+"#sent", params, valSent, function(dataSent, successSent) {
+							if (successSent) {						
+								if (onSuccess) { onSuccess({}, true); }
+							}
+							else { if (onSuccess) { onSuccess({}, false); } }	
+						});
+					}
+					else {
+						if (onSuccess) { onSuccess({}, true); }				
+					}
 				}
-				else {
-					if (onSuccess) { onSuccess({}, true); }				
-				}
-			}
-			else { if (onSuccess) { onSuccess({}, false); } }	
-		});
+				else { if (onSuccess) { onSuccess({}, false); } }	
+			});
+		}
+		else {
+			this.remove(context, params, function(data, success){
+				if (onSuccess) { onSuccess({}, success); }
+			});
+		}
 	},
 	
 	remove:function(context, params, onSuccess) {

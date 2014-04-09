@@ -420,7 +420,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 					thisClass.tracks = [];
 					paella.events.trigger(paella.events.documentChanged);
 					paella.editor.instance.bottomBar.timeline.rebuildTrack(thisClass.getName());
-					paella.editor.pluginManager.onTrackChanged(this);
+					paella.editor.pluginManager.onTrackChanged(thisClass);
 					paella.editor.instance.rightBar.updateCurrentTab();					
 				}
 				else {

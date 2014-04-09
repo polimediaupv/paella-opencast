@@ -279,7 +279,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 		var basicMetadata = document.createElement('div');
 		root.appendChild(basicMetadata);
 		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Title'), this.selectedTrackItem.metadata.title, function(value){thisClass.changeTitle(value);}));
-		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.selectedTrackItem.metadata.presenter, function(value){thisClass.metadata.presenter = value;}));
+		basicMetadata.appendChild(this.createAInputEditor(paella.dictionary.translate('Presenter'), this.selectedTrackItem.metadata.presenter, function(value){ thisClass.selectedTrackItem.metadata.presenter = value; }));
 		basicMetadata.appendChild(this.createASelectSerie(paella.dictionary.translate('Series'), this.selectedTrackItem.metadata, function(serieId, serieTitle){
 			thisClass.selectedTrackItem.metadata.serieId = serieId;
 			thisClass.selectedTrackItem.metadata.serieTitle = serieTitle;
@@ -408,7 +408,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					thisClass.tracks = [];
 					paella.events.trigger(paella.events.documentChanged);
 					paella.editor.instance.bottomBar.timeline.rebuildTrack(thisClass.getName());
-					paella.editor.pluginManager.onTrackChanged(this);
+					paella.editor.pluginManager.onTrackChanged(thisClass);
 					paella.editor.instance.rightBar.updateCurrentTab();					
 				}
 				else {
