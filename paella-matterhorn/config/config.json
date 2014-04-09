@@ -36,7 +36,9 @@
 		"defaultConfig":{"enabled":true},
 		"list":{
 			"es.upv.paella.test.videoLoadPlugin": {"enabled": false},
-			
+
+			"es.upv.paella.userTrackingCollectorPlugIn": {"enabled": true, "heartBeatTime": 30000},
+			"es.upv.paella.userTrackingGoogleAnalyticsSaverPlugIn": {"enabled":true, "trackingID": "UA-26470475-8", "trackingEvents": false},
 			"es.upv.paella.ShowEditorPlugin":{"enabled":true,"alwaysVisible":true,"editorPage":"editor.html"},
 			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":true},
 			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
@@ -53,7 +55,10 @@
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":true},
 			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":true},
+			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
 			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": false }
+			
+			
 			
 		}
 	}

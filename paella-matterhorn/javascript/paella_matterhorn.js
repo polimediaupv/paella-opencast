@@ -1,6 +1,6 @@
 paella.matterhorn = {};
 
-paella.pluginList.push('mh_usertracking.js');
+paella.pluginList.push('mh_usertracking_saver.js');
 paella.pluginList.push('mh_single_video_export.js');
 paella.pluginList.push('mh_multiple_video_export.js');
 paella.pluginList.push('mh_episodes_from_serie.js');
