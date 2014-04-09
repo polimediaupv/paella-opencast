@@ -396,7 +396,8 @@ paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paell
 	
 	write:function(context, params, value, onSuccess) {
 		var thisParent = this.parent;
-
+		var thisClass = this;
+		
 		var valInprogress = { inprogress: value.inprogres };
 		var valSent = { sent: value.sent };	
 		var val = { trackItems:value.trackItems, metadata: value.metadata };
@@ -412,7 +413,10 @@ paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paell
 						});
 					}
 					else {
-						if (onSuccess) { onSuccess({}, true); }				
+						//if (onSuccess) { onSuccess({}, true); }
+						thisClass.remove(context+"#sent", params, function(data, success){
+							if (onSuccess) { onSuccess({}, success); }
+						});
 					}
 				}
 				else { if (onSuccess) { onSuccess({}, false); } }	
