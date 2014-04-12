@@ -444,31 +444,18 @@
       </configurations>
     </operation>
 
-    <!-- Distribute to download server -->
-    
-    <operation
-      id="distribute-download"
-      max-attempts="2"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Distributing to progressive downloads">
-      <configurations>
-        <configuration key="check-availability">true</configuration>
-        <configuration key="source-tags">engage,atom,rss,-publish</configuration>
-        <configuration key="target-tags">publish</configuration>
-      </configurations>
-    </operation>
+    <!-- Distribute and publish to engage player -->   
 
     <operation
-      id="distribute-streaming"
+      id="publish-engage"
       max-attempts="2"
       fail-on-error="true"
-      if="${org.opencastproject.streaming.url}"
       exception-handler-workflow="error"
-      description="Distributing to streaming server">
+      description="Distribute and publish to engage player">
       <configurations>
-        <configuration key="source-tags">engage,-publish</configuration>
-        <configuration key="target-tags">publish</configuration>
+        <configuration key="download-source-tags">engage,atom,rss</configuration>
+        <configuration key="streaming-source-tags">engage</configuration>
+        <configuration key="check-availability">true</configuration>
       </configurations>
     </operation>
 
@@ -496,19 +483,7 @@
       </configurations>
     </operation>
  
-    <!-- Publish to engage search index -->
-
-    <operation
-      id="publish"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Publishing">
-      <configurations>
-        <configuration key="source-tags">publish</configuration>
-      </configurations>
-    </operation>
- 
-    <!-- Cleanup the working file repository -->
+   <!-- Cleanup the working file repository -->
  
     <operation
       id="cleanup"
