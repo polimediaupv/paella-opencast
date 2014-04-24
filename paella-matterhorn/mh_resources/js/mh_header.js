@@ -54,7 +54,7 @@ function insertHeaderToDomNode(parentNodeName) {
 	var paellaExtendedHeaderSearchButton = document.createElement('input');
 	paellaExtendedHeaderSearchButton.id = 'paellaExtendedHeaderSearchButton';
 	paellaExtendedHeaderSearchButton.type = 'submit';
-	paellaExtendedHeaderSearchButton.value = 'Search';
+	paellaExtendedHeaderSearchButton.value = paella.dictionary.translate('Search');
 	paellaExtendedHeaderSearchButton.setAttribute("tabindex", "101");	
 	paellaExtendedHeaderSearchButtonDiv.appendChild(paellaExtendedHeaderSearchButton);	
 
@@ -66,15 +66,15 @@ function insertHeaderToDomNode(parentNodeName) {
 	paellaExtendedHeaderLoginButton.setAttribute("tabindex", "102");	
 	paellaExtendedHeaderLoginButton.id = 'paellaExtendedHeaderLoginButton';
 	if (paella.matterhorn.me.username === "anonymous") {	
-		paellaExtendedHeaderLoginButton.innerHTML = "Login";
-		var loginURL = "/login.html";
-		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="auth.html?redirect="+encodeURIComponent(loginURL);});
+		paellaExtendedHeaderLoginButton.innerHTML = paella.dictionary.translate("Login");
+		var redirectTo = window.location.href;
+		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="auth.html?redirect="+encodeURIComponent(redirectTo);});
 		$(paellaExtendedHeaderLogin).keyup(function(event) {
 			if (event.keyCode == 13) { window.location.href="/login.html"; }
 		});
 	}
 	else {
-		paellaExtendedHeaderLoginButton.innerHTML = "Logout";		
+		paellaExtendedHeaderLoginButton.innerHTML = paella.dictionary.translate("Logout");
 		$(paellaExtendedHeaderLogin).click(function(event) {window.location.href="/j_spring_security_logout";});
 		$(paellaExtendedHeaderLogin).keyup(function(event) {
 			if (event.keyCode == 13) { window.location.href="/j_spring_security_logout"; } 
