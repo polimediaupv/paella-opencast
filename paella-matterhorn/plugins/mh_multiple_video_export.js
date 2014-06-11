@@ -46,7 +46,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 			
 			esDict[this.strings.ToEditHeader1] = 'Esta herramienta puede exportar nuevos videos. Es necesario que especifiques el nuevo titulo, autor y la serie de cada uno de estos videos.';			
 			esDict[this.strings.ToEditHeader2] = 'Por favor, selecciona el area que quieras exportar pulsando el boton de "Crear". Puedes seleccionar multiples partes del video. Cada una de estas partes se exportarán como un nuevo video.';			
-			esDict[this.strings.SentToProcess1] = 'Ha solicitado exportar nuevos videos a partir de este. Su petición se atendrá lo más pronto posible.';
+			esDict[this.strings.SentToProcess1] = 'Ha solicitado exportar nuevos videos a partir de este. Las direcciones de estos videos las tendrá disponibles en un periodo de 24h en esta misma pantalla.';
 			esDict[this.strings.SentToProcess2] = 'Si lo desea puede cancelar la exportación de videos.';
 			esDict[this.strings.InProgress1] = 'Los videos se han enviado a procesar. Cuando terminen de procesarse podrá visualizarlos en los siguiente enlaces.';
 			esDict[this.strings.InProgress2] = 'Si lo desea puede empezar una nueva exportación.';

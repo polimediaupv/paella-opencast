@@ -50,7 +50,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			
 			esDict[thisClass.strings.ToEditHeader1] = 'Esta herramienta puede exportar nuevos videos. Es necesario que especifiques el nuevo titulo, autor y la serie.';			
 			esDict[thisClass.strings.ToEditHeader2] = 'Por favor, selecciona el area que quieras exportar pulsando el boton de "Crear". Puedes seleccionar multiples partes del video.';
-			esDict[thisClass.strings.SentToProcess1] = 'Ha solicitado exportar un nuevo video a partir de este. Su petición se atendrá lo más pronto posible.';
+			esDict[thisClass.strings.SentToProcess1] = 'Ha solicitado exportar un nuevo video a partir de este. La direccion de este video la tendrá disponible en un periodo de 24h en esta misma pantalla.';
 			esDict[thisClass.strings.SentToProcess2] = 'Si lo desea puede cancelar la exportación.';
 			esDict[thisClass.strings.InProgress1] = 'El video se envió a procesar. Cuando termine de procesarse podrá visualizarlo en el siguiente enlace.';
 			esDict[thisClass.strings.InProgress2] = 'Si lo desea puede empezar una nueva exportación.';
