@@ -24,7 +24,7 @@ base.ajax.send = function(type,params,onSuccess,onFail) {
 	
 	if (typeof(onSuccess)=='function') {
 		ajaxObj.done(function(data,textStatus,jqXHR) {
-			var contentType = jqXHR.getResponseHeader('content-type')
+			var contentType = jqXHR.getResponseHeader('content-type');
 			onSuccess(data,contentType,jqXHR.status,jqXHR.responseText);
 		});
 	}
@@ -32,7 +32,7 @@ base.ajax.send = function(type,params,onSuccess,onFail) {
 	if (typeof(onFail)=='function') {
 		ajaxObj.fail(function(jqXHR,textStatus,error) {
 			var data = jqXHR.responseText;
-			var contentType = jqXHR.getResponseHeader('content-type')
+			var contentType = jqXHR.getResponseHeader('content-type');
 			if ( (jqXHR.status == 200) && (typeof(jqXHR.responseText)=='string') ) {
 				try {
 					data = JSON.parse(jqXHR.responseText);
@@ -47,7 +47,7 @@ base.ajax.send = function(type,params,onSuccess,onFail) {
 			}		
 		});
 	}
-}
+};
 
 
 //
@@ -67,6 +67,7 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 
 		if (paella.matterhorn) {	
 			if (paella.matterhorn.me) {
+				var role_i, currentRole;
 				this.userData.username = paella.matterhorn.me.username;
 				this.userData.name = paella.matterhorn.me.username;
 				
@@ -81,8 +82,8 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 					var aces = paella.matterhorn.acl.acl.ace;
 					if (!(aces instanceof Array)) { aces = [aces]; }
 
-					for (var role_i=0; role_i<roles.length; ++role_i) {
-						var currentRole = roles[role_i];
+					for (role_i=0; role_i<roles.length; ++role_i) {
+						currentRole = roles[role_i];
 						for(var ace_i=0; ace_i<aces.length; ++ace_i) {
 							var currentAce = aces[ace_i];
 							if (currentRole == currentAce.role) {
@@ -96,8 +97,8 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 					this.permissions.canRead = true;
 				}				
 				// Chek for admin!
-				for (var role_i=0; role_i<roles.length; ++role_i) {
-					var currentRole = roles[role_i];
+				for (role_i=0; role_i<roles.length; ++role_i) {
+					currentRole = roles[role_i];
 					if (currentRole == anonymousRole) {
 						this.permissions.isAnonymous = true;
 					}
@@ -120,17 +121,16 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 	},
 
 	getStreamSource:function(track) {
-        if(track.video instanceof Object) {
-		    var res = track.video.resolution.split('x');
-        } else {
-            var res = new Array(0,0);
+		var res = new Array(0,0);
+        if (track.video instanceof Object) {
+		    res = track.video.resolution.split('x');
         }
 
 		var source = {
-				src:  track.url,
-				type: track.mimetype,
-				res: {w:res[0], h:res[1]}
-			};
+			src:  track.url,
+			type: track.mimetype,
+			res: {w:res[0], h:res[1]}
+		};
 
 		return source;
 	},
@@ -138,16 +138,17 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 
 
 	loadVideo:function(videoId,onSuccess) {
+		var i;
 		var streams = {};
 		var tracks = paella.matterhorn.episode.mediapackage.media.track;
 		var attachments = paella.matterhorn.episode.mediapackage.attachments.attachment;
 		if (!(tracks instanceof Array)) { tracks = [tracks]; }
 		if (!(attachments instanceof Array)) { attachments = [attachments]; }
-		this.frameList = {}
+		this.frameList = {};
 
 
 		// Read the tracks!!
-		for (var i=0;i<tracks.length;++i) {
+		for (i=0;i<tracks.length;++i) {
 			var currentTrack = tracks[i];
 			var currentStream = streams[currentTrack.type];
 			if (currentStream == undefined) { currentStream = { sources:{}, preview:'' }; }
@@ -157,7 +158,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 				if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
 					currentStream.sources['rtmp'] = [];
 				}
-				currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack))
+				currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack));
 			}
 			else{
 				var videotype = null;
@@ -170,7 +171,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 					case 'video/x-flv':
 						videotype = 'flv';
 						break;
-					dafault:
+					default:
 						paella.debug.log('MHVideoLoader: MimeType ('+currentTrack.mimetype+') not recognized!');
 						break;
 				}
@@ -187,10 +188,10 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		
 		var presenter = streams["presenter/delivery"];
 		var presentation = streams["presentation/delivery"];		
-		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:320, h:180}}
-		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:1280, h:720}}
+		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:320, h:180}};
+		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:1280, h:720}};
 		// Read the attachments
-		for (var i=0;i<attachments.length;++i) {
+		for (i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
 
 			if (currentAttachment.type == "presentation/segment+preview+hires") {
@@ -255,7 +256,7 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 				if (!(annotations instanceof Array)) { annotations = [annotations]; }
 				if (annotations.length > 0) {
 					if (annotations[0] && annotations[0].value) {
-						var value = undefined;
+						var value;
 						try {
 							value = JSON.parse(annotations[0].value);
 						}
@@ -298,7 +299,7 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 					);				
 				}
 				else if (annotations.length == 1 ) {
-					var annotationId = annotations[0].annotationId
+					var annotationId = annotations[0].annotationId;
 					paella.ajax.put({ url: '/annotation/'+ annotationId, params: { value: value }},	
 						function(data, contentType, returnCode) { onSuccess({}, true); },
 						function(data, contentType, returnCode) { onSuccess({}, false); }
@@ -829,7 +830,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 		domElement.appendChild(divHeader);
 		this.divResults = this.createDOMElement('div', thisClass.recordingEntryID + "_header_results", "recordings_header_results");		
 		divHeader.appendChild(this.divResults);
-		var divNavigation = this.createDOMElement('div', thisClass.recordingEntryID + "_header_navigation", "recordings_header_navigation")
+		var divNavigation = this.createDOMElement('div', thisClass.recordingEntryID + "_header_navigation", "recordings_header_navigation");
 		divHeader.appendChild(divNavigation);
 
 		// loading results
@@ -896,6 +897,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 			}
 
 			asyncLoader.load(function() {
+				var i;
 				// create navigation div
 				if (results.length < totalItems) {
 					// current page
@@ -943,18 +945,18 @@ paella.matterhorn.SearchEpisode = Class.create({
 					var spanBeforeSet = false;
 					var spanAfterSet = false;
 					var offsetPages = 2;
-					for (var i = 1; i <= maxPage; i++)	{
+					for (i = 1; i <= maxPage; i++)	{
 						var divPageId = document.createElement('div');
 						divPageId.id = thisClass.recordingEntryID + "_header_navigation_pageid_"+i;
 						divPageId.className = "recordings_header_navigation_pageid";
 
 						if (!spanBeforeSet && currentPage >= 5 && i > 1 && (currentPage - (offsetPages + 2) != 1)) {
-							divPageId.innerHTML = "..."
+							divPageId.innerHTML = "...";
 							i = currentPage - (offsetPages + 1);
 							spanBeforeSet = true;
 						}
 						else if (!spanAfterSet && (i - offsetPages) > currentPage && maxPage - 1 > i && i > 4) {
-							divPageId.innerHTML = "..."
+							divPageId.innerHTML = "...";
 							i = maxPage - 1;
 							spanAfterSet = true;
 						}
@@ -971,10 +973,10 @@ paella.matterhorn.SearchEpisode = Class.create({
 									params.q = this.param_q;
 									thisClass.doSearch(params, divList);
 								});
-								divPageIdLink.innerHTML = i
+								divPageIdLink.innerHTML = i;
 								divPageId.appendChild(divPageIdLink);
 							} else {
-								divPageId.innerHTML = i
+								divPageId.innerHTML = i;
 							}
 						}
 						divNavigation.appendChild(divPageId);
@@ -1006,7 +1008,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 				}
 
 				// create recording divs
-				for (var i =0; i < results.length; ++i ){
+				for (i=0; i < results.length; ++i ){
 					var recording = results[i];
 
 					var divRecording = thisClass.createRecordingEntry(i, recording);
@@ -1021,9 +1023,9 @@ paella.matterhorn.SearchEpisode = Class.create({
 
 	setLoading:function(loading) {
 		if (loading == true) {
-			this.divLoading.style.display="block"
+			this.divLoading.style.display="block";
 		} else {
-			this.divLoading.style.display="none"
+			this.divLoading.style.display="none";
 		}
 	},
 
@@ -1141,7 +1143,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 			sd.setUTCSeconds(parseInt(timeDate.substring(17, 19), 10));
 			timeDate = sd.toLocaleString();
 		} else {
-			timeDate = "n.a."
+			timeDate = "n.a.";
 		}
 
 

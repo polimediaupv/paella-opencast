@@ -27,7 +27,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		if (paella.matterhorn.episode.dcLanguage) { this.desc.language = paella.matterhorn.episode.dcLanguage; }
 		if (paella.matterhorn.episode.dcSubject) { this.desc.subject = paella.matterhorn.episode.dcSubject; }
 		if (paella.matterhorn.serie) {
-			paella.matterhorn.serie['http://purl.org/dc/terms/']
+			// paella.matterhorn.serie['http://purl.org/dc/terms/'];
 			if (paella.matterhorn.serie) {
 				var serie = paella.matterhorn.serie['http://purl.org/dc/terms/'];
 				if (serie) { 
@@ -36,7 +36,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 				}
 			}
 		}
-		this.desc.date = "n.a."
+		this.desc.date = "n.a.";
 		var dcCreated = paella.matterhorn.episode.dcCreated;
 		if (dcCreated) {			
 			var sd = new Date();

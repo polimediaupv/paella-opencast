@@ -110,16 +110,15 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					}
 					
 					var metadata = {
-						title: paella.dictionary.translate('Video') + ' ' + + this.videoCount,
+						title: paella.dictionary.translate('Video') + ' ' + this.videoCount,
 						presenter: creator,
 						serieId: serieId,
 						serieTitle: serieTitle
-					}
+					};
 					this.videoCount = this.videoCount +1;
 					this.tracks.push({id:id, s:start, e:end, name:metadata.title, metadata: metadata});
 					this.selectedTrackItem = this.getTrackItem(id);
 					return true;
-					break;
 			}
 		}
 	},
@@ -141,7 +140,6 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 		switch (toolName) {
 			case 'create': 
 				return (this.isCurrentPositionInsideATrackItem() == false); 
-				break;
 				
 			case 'delete': 
 				if (this.selectedTrackItem)
@@ -156,7 +154,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 	
 	createALabel: function(label) {
 		var root = document.createElement('div');
-		root.innerHTML = label
+		root.innerHTML = label;
 		return root;		
 	},
 	createAInputEditor:function(label, defaultValue, callback){
@@ -219,7 +217,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 
 		$(typeaheadInput).change(function(event){
 			if (callback) {
-				callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"))
+				callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"));
 			}
 		});
 		
@@ -242,7 +240,7 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 			event.currentTarget.value = datum.title;
 			
 			if (callback) {
-	   			callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"))
+	   			callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"));
 	   		}
 	    });
 
@@ -306,11 +304,9 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					thisClass.sent = null;
 					alert(paella.dictionary.translate('An error has occurred'));
 				}			
-			})
-
+			});
 		});
-		sendDiv.appendChild(sendButton);
-		
+		sendDiv.appendChild(sendButton);		
 		
 		tabContainer.appendChild(root);
 	},	
@@ -350,9 +346,8 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					thisClass.sent = oldSent;
 					alert(paella.dictionary.translate('An error has occurred'));
 				}
-			})
+			});
 		});
-
 		
 		info.appendChild(text);
 		info.appendChild(text2);
@@ -415,9 +410,8 @@ paella.plugins.MultipleVideoExportEditorPlugin = Class.create(paella.editor.Trac
 					thisClass.inprogress = oldInprogress;
 					alert(paella.dictionary.translate('An error has occurred'));
 				}			
-			})
+			});
 		});
-
 		
 		info.appendChild(text);
 		info.appendChild(list);

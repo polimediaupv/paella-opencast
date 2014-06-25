@@ -75,7 +75,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 				presenter: creator,
 				serieId: serieId,
 				serieTitle: serieTitle				
-			}
+			};
 		}
 	},
 
@@ -130,7 +130,6 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 						alert (paella.dictionary.translate("Can not create a new video segment inside a segment"));
 					}
 					return true;
-					break;
 			}
 		}
 	},
@@ -152,7 +151,6 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		switch (toolName) {
 			case 'create': 
 				return (this.isCurrentPositionInsideATrackItem() == false); 
-				break;
 				
 			case 'delete': 
 				if (this.selectedTrackItem)
@@ -167,7 +165,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 	
 	createALabel: function(label) {
 		var root = document.createElement('div');
-		root.innerHTML = label
+		root.innerHTML = label;
 		return root;		
 	},
 	createAInputEditor:function(label, defaultValue, callback){
@@ -230,7 +228,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 
 		$(typeaheadInput).change(function(event){
 			if (callback) {
-				callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"))
+				callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"));
 			}
 		});
 		
@@ -253,7 +251,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			event.currentTarget.value = datum.title;
 			
 			if (callback) {
-	   			callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"))
+	   			callback(event.currentTarget.getAttribute("serieId"), event.currentTarget.getAttribute("serieTitle"));
 	   		}
 	    });
 
@@ -320,11 +318,9 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 					thisClass.sent = null;
 					alert(paella.dictionary.translate('An error has occurred'));
 				}			
-			})
-
+			});
 		});
-		sendDiv.appendChild(sendButton);
-		
+		sendDiv.appendChild(sendButton);		
 		
 		tabContainer.appendChild(root);
 	},
@@ -364,7 +360,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 					thisClass.sent = oldSent;
 					alert(paella.dictionary.translate('An error has occurred'));
 				}
-			})
+			});
 		});
 
 		
@@ -427,7 +423,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 					thisClass.inprogress = oldInprogress;
 					alert(paella.dictionary.translate('An error has occurred'));
 				}			
-			})
+			});
 		});
 
 		
@@ -492,11 +488,12 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 		var item = this.getTrackItem(id);
 		this.selectedTrackItem = item;
 		if (item) {
+			var i;
 			if (start < 0) {start = 0;}
 			if (end > paella.player.videoContainer.duration() ) { end = paella.player.videoContainer.duration(); }
 			
 			//check for cancel
-			for (var i=0; i<this.tracks.length; ++i) {
+			for (i=0; i<this.tracks.length; ++i) {
 				if (this.tracks[i].id != id) {
 					if ( (this.tracks[i].s <= start) && (this.tracks[i].e >= end) ){
 						return;
@@ -508,7 +505,7 @@ paella.plugins.SingleVideoExportEditorPlugin = Class.create(paella.editor.TrackP
 			}
 
 			// check for overlap
-			for (var i=0; i<this.tracks.length; ++i) {
+			for (i=0; i<this.tracks.length; ++i) {
 				if (this.tracks[i].id != id) {
 					if ( (this.tracks[i].s < start) && (this.tracks[i].e > start) ){
 						if (joinTracks == null) {

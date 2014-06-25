@@ -83,7 +83,7 @@ paella.plugins.DownloadsPlugin = Class.create(paella.TabBarPlugin,{
 		var trackText= '<span class="downloadLinkText Track">' + track.type + '</span>';
 		
 		// Resolution
-		var resolution = ''
+		var resolution = '';
 		if (track.video) {
 			if ( track.video.resolution){
 				resolution = track.video.resolution;
@@ -94,7 +94,7 @@ paella.plugins.DownloadsPlugin = Class.create(paella.TabBarPlugin,{
 		}
 		
 		// mimetype
-		var mimetype = ''
+		var mimetype = '';
 		if (track.mimetype) {
 			mimetype = track.mimetype;
 		}
@@ -153,7 +153,7 @@ paella.plugins.DownloadsEditorPlugin = Class.create(paella.editor.RightBarPlugin
 		
 	getContent:function() {	
 		var root = document.createElement('div');
-		root.className = "downloadsEditorTabBarContainer"
+		root.className = "downloadsEditorTabBarContainer";
 
 		var container = document.createElement('div');
 		container.className = 'downloadsTabBarContainer';
@@ -198,7 +198,7 @@ paella.plugins.DownloadsEditorPlugin = Class.create(paella.editor.RightBarPlugin
 		var trackText= '<span class="downloadLinkText Track">' + track.type + '</span>';
 		
 		// Resolution
-		var resolution = ''
+		var resolution = '';
 		if (track.video) {
 			if ( track.video.resolution){
 				resolution = track.video.resolution;
@@ -209,7 +209,7 @@ paella.plugins.DownloadsEditorPlugin = Class.create(paella.editor.RightBarPlugin
 		}
 		
 		// mimetype
-		var mimetype = ''
+		var mimetype = '';
 		if (track.mimetype) {
 			mimetype = track.mimetype;
 		}

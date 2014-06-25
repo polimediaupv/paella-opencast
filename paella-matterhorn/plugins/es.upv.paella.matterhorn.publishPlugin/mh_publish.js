@@ -164,13 +164,13 @@ paella.plugins.PublishEditorPlugin = Class.create(paella.editor.EditorToolbarPlu
 		
 		if (this.status != "-") {
 			if (this.status == "Publish"){
-				value = "true"
+				value = "true";
 			}
 			else if (this.status == "Publish automatically"){
-				value = "undefined"
+				value = "undefined";
 			}
 			else if (this.status == "Do not publish"){
-				value = "false"			
+				value = "false";
 			}
 		}	
 

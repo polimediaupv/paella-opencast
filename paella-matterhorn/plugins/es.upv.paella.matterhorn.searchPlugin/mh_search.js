@@ -95,7 +95,7 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 		inputElement.setAttribute('spellcheck','true');
 		inputElement.setAttribute('x-webkit-speech','');
 		inputElement.setAttribute('tabindex','4000');
-		inputElement.onfocus = function(){this.value=""; this.onfocus=undefined};
+		inputElement.onfocus = function(){this.value=""; this.onfocus=undefined;};
 		inputElement.onkeyup = function(){thisClass.doSearch(this.value);};	
 		
 		divSearchBarLeft.appendChild(inputElement);
@@ -205,18 +205,19 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
                     (data['search-results'].result.segments.segment.length > 0);
 				
                 if (value === '') {
-                  thisClass.setNotSearch()
+                  thisClass.setNotSearch();
                 } 
                 else { 
                   thisClass.setResultAvailable(value);
                 }				
 				
 				if (segmentsAvailable) {
-					var segments = data['search-results'].result.segments;
-					
+					var segments = data['search-results'].result.segments;					
 					var maxRelevance = 0;
-					for (var i =0; i < segments.segment.length; ++i ){
-						var segment = segments.segment[i];
+					var i, segment;
+
+					for (i =0; i < segments.segment.length; ++i ){
+						segment = segments.segment[i];
 						if (maxRelevance < parseInt(segment.relevance)) {
 							maxRelevance = parseInt(segment.relevance);
 						}
@@ -224,24 +225,24 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 					paella.debug.log("Search Max Revelance " + maxRelevance);
 
 
-					for (var i =0; i < segments.segment.length; ++i ){
-						var segment = segments.segment[i];
+					for (i =0; i < segments.segment.length; ++i ){
+						segment = segments.segment[i];
 						var relevance = parseInt(segment.relevance);
 						
-						var relevanceClass = ''
+						var relevanceClass = '';
 						if (value !== '') {
 							if (relevance <= 0) {
-								relevanceClass = 'none_relevance'
+								relevanceClass = 'none_relevance';
 							} else if (relevance <  Math.round(maxRelevance * 30 / 100)) {
-								relevanceClass = 'low_relevance'
+								relevanceClass = 'low_relevance';
 							} else if (relevance < Math.round(maxRelevance * 70 / 100)) {
-								relevanceClass = 'medium_relevance'
+								relevanceClass = 'medium_relevance';
 							} else {
-								relevanceClass = 'high_relevance'
+								relevanceClass = 'high_relevance';
 							}
 						}
 						
-						var divEntry = $('#searchTabBarResultEntry_'+segment.index)
+						var divEntry = $('#searchTabBarResultEntry_'+segment.index);
 						divEntry[0].className = 'searchTabBarResultEntry ' + relevanceClass;
 					}
 
