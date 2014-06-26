@@ -4,6 +4,10 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		
+		
+		clean: {
+			build: ["build"],
+		},				
 		subgrunt: {
 			paella: {
 				projects: {
@@ -90,14 +94,23 @@ module.exports = function(grunt) {
 		},
 		
 		watch: {
-			 dist: {
+			 debug: {
 				 files: [
 				 	'paella-matterhorn/ui/**',
 				 	'paella-matterhorn/javascript/*.js',
 				 	'paella-matterhorn/plugins/*/*.js',
 				 	'paella-matterhorn/plugins/*/*.css'
 				 ],
-				 tasks: ['build']
+				 tasks: ['build.debug']
+			},
+			release: {
+				 files: [
+				 	'paella-matterhorn/ui/**',
+				 	'paella-matterhorn/javascript/*.js',
+				 	'paella-matterhorn/plugins/*/*.js',
+				 	'paella-matterhorn/plugins/*/*.css'
+				 ],
+				 tasks: ['build.release']
 			}
 		},		
 		express: {
@@ -120,12 +133,17 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-express');	
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-express');
 	
 	
 	grunt.registerTask('default', ['dist']);
 	grunt.registerTask('checksyntax', ['jshint', 'csslint']);
 	
-	grunt.registerTask('build', ['subgrunt:paella', 'copy:paella', 'concat:dist.js', 'concat:dist.css', 'uglify:dist', 'cssmin:dist']);	
-	grunt.registerTask('server', ['build', 'express', 'watch:dist']);		
+	grunt.registerTask('build.common', ['subgrunt:paella', 'copy:paella', 'concat:dist.js', 'concat:dist.css']);
+	grunt.registerTask('build.release', ['build.common', 'uglify:dist', 'cssmin:dist']);
+	grunt.registerTask('build.debug', ['build.common', 'uglify:dist', 'cssmin:dist']);
+	
+	grunt.registerTask('server.release', ['build.release', 'express', 'watch:release']);		
+	grunt.registerTask('server.debug', ['build.debug', 'express', 'watch:debug']);		
 };
