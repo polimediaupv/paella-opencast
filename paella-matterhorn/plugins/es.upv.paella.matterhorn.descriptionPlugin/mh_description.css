@@ -2,8 +2,8 @@
 .showMHDescriptionTabBarLeft {
 	display: inline-block;
 	width: 50%;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	vertical-align: top
 }
 
@@ -11,8 +11,8 @@
 .showMHDescriptionTabBarRight {
 	display: inline-block;
 	width: 50%;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	vertical-align: top
 }
 
