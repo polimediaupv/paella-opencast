@@ -4,9 +4,15 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		
-		
+		subgrunt: {
+			paella: {
+				projects: {
+					'submodules/paella': 'build.release'
+				}
+			}
+		},		
 		copy: {
-			dist: {
+			paella: {
 				files: [
 					// Basic Paella
 					{expand: true, cwd: 'submodules/paella/build/player', src: ['config/**', 'javascript/**', 'resources/**', 'player.swf'], dest: 'build/'},			
@@ -31,6 +37,7 @@ module.exports = function(grunt) {
 			},
 			'dist.css': {
 				src: [
+					'build/resources/plugins/plugins.css',
 					'paella-matterhorn/plugins/*/*.css'
 				],
 				dest: 'build/resources/plugins/plugins.css'
@@ -62,18 +69,35 @@ module.exports = function(grunt) {
 				'paella-matterhorn/plugins/*/*.js'
 			]
 		},
-		
+		csslint: {
+			dist: {
+				options: {
+					import: 2,
+					"adjoining-classes": false,
+					"box-model": false,
+					"ids": false,
+					"outline-none": false            
+				},
+				src: ['paella-matterhorn/plugins/*/*.css']
+			}
+		},
+		cssmin: {
+			dist: {
+				files: {
+					'build/resources/plugins/plugins.css': ['build/resources/plugins/plugins.css']
+				}
+			}
+		},
 		
 		watch: {
 			 dist: {
 				 files: [
-				 	'index.html',
-				 	'extended.html',
-				 	'src/*.js',
-				 	'plugins/*/*.js',
-				 	'plugins/*/*.css'
+				 	'paella-matterhorn/ui/**',
+				 	'paella-matterhorn/javascript/*.js',
+				 	'paella-matterhorn/plugins/*/*.js',
+				 	'paella-matterhorn/plugins/*/*.css'
 				 ],
-				 tasks: ['dist']
+				 tasks: ['build']
 			}
 		},		
 		express: {
@@ -84,9 +108,13 @@ module.exports = function(grunt) {
 			      server: path.resolve('./server')
 		      }
 		  }
-		}
+		}	
 	});
 
+
+	grunt.loadNpmTasks('grunt-subgrunt');
+	grunt.loadNpmTasks('grunt-contrib-csslint');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -96,9 +124,8 @@ module.exports = function(grunt) {
 	
 	
 	grunt.registerTask('default', ['dist']);
-	grunt.registerTask('checksyntax', ['jshint']);
+	grunt.registerTask('checksyntax', ['jshint', 'csslint']);
 	
-	grunt.registerTask('dist', ['copy:dist', 'concat:dist.js', 'concat:dist.css', 'uglify:dist']);	
-	grunt.registerTask('server', ['express', 'watch:dist']);
-		
+	grunt.registerTask('build', ['subgrunt:paella', 'copy:paella', 'concat:dist.js', 'concat:dist.css', 'uglify:dist', 'cssmin:dist']);	
+	grunt.registerTask('server', ['build', 'express', 'watch:dist']);		
 };
