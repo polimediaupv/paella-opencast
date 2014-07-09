@@ -1,10 +1,15 @@
 {
-  "name": "PaellaPlayer",
-  "version": "3.0.0",
+  "name": "paella-engage-ui",
+  "version": "3.1.0",
   "description": "Paella Player for Matterhorn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polimediaupv/paella-matterhorn.git"
+  },  
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-concat": "~0.4.0",
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-contrib-jshint": "~0.10.0",
