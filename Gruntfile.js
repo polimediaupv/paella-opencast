@@ -7,7 +7,14 @@ module.exports = function(grunt) {
 		
 		clean: {
 			build: ["build"],
-		},				
+		},
+		update_submodules: {
+	        default: {
+	            options: {
+	                // default command line parameters will be used: --init --recursive
+	            }
+	        }
+		},		
 		subgrunt: {
 			paella: {
 				projects: {
@@ -121,10 +128,10 @@ module.exports = function(grunt) {
 			      server: path.resolve('./server')
 		      }
 		  }
-		}	
+		}
 	});
 
-
+	grunt.loadNpmTasks('grunt-update-submodules');
 	grunt.loadNpmTasks('grunt-subgrunt');
 	grunt.loadNpmTasks('grunt-contrib-csslint');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -140,7 +147,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['build.release']);
 	grunt.registerTask('checksyntax', ['jshint', 'csslint']);
 	
-	grunt.registerTask('build.common', ['subgrunt:paella', 'copy:paella', 'concat:dist.js', 'concat:dist.css']);
+	grunt.registerTask('build.common', ['update_submodules', 'subgrunt:paella', 'copy:paella', 'concat:dist.js', 'concat:dist.css']);
 	grunt.registerTask('build.release', ['build.common', 'uglify:dist', 'cssmin:dist']);
 	grunt.registerTask('build.debug', ['build.common']);
 	
