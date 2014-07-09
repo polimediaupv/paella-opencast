@@ -1,7 +1,7 @@
-Paella Plaffer 3.0 for Matterhorn
+Paella Player 3.1 for Matterhorn
 =================================
 
-This is the Paella Player 3.0 for Matterhorn.
+This is the Paella Player 3.1 for Matterhorn.
 
 
 Paella Player Matterhorn bundle
