@@ -66,7 +66,7 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			options: {
-				jshintrc: 'jshintrc'
+				jshintrc: '.jshintrc'
 			},
 			dist: [
 				'paella-matterhorn/javascript/*.js',
@@ -135,14 +135,14 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-express');
+
 	
-	
-	grunt.registerTask('default', ['dist']);
+	grunt.registerTask('default', ['build.release']);
 	grunt.registerTask('checksyntax', ['jshint', 'csslint']);
 	
 	grunt.registerTask('build.common', ['subgrunt:paella', 'copy:paella', 'concat:dist.js', 'concat:dist.css']);
 	grunt.registerTask('build.release', ['build.common', 'uglify:dist', 'cssmin:dist']);
-	grunt.registerTask('build.debug', ['build.common', 'uglify:dist', 'cssmin:dist']);
+	grunt.registerTask('build.debug', ['build.common']);
 	
 	grunt.registerTask('server.release', ['build.release', 'express', 'watch:release']);		
 	grunt.registerTask('server.debug', ['build.debug', 'express', 'watch:debug']);		
