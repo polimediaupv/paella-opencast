@@ -45,15 +45,15 @@ INSTALLATION INSTRUCTIONS
 
 5. Copy the paella-engage-ui module to your Matterhorn Installation
 
-    `$ cp target/paella-engage-ui-3.0.jar $MH_HOME/lib/matterhorn`
+    `$ cp target/paella-engage-ui-3.1.jar $MH_HOME/lib/matterhorn`
 
-6. By default paella is installed in /paella3.0/ui URL in your server. You need to enable address to that URL. Edit the ${MH_HOME}/etc/security/mh_default_org.xml file and add this line:
+6. By default paella is installed in /paella3.1/ui URL in your server. You need to enable address to that URL. Edit the ${MH_HOME}/etc/security/mh_default_org.xml file and add this line:
 
-    `<sec:intercept-url pattern="/paella3.0/ui/auth.html" access="ROLE_USER" />`
-    `<sec:intercept-url pattern="/paella3.0/ui/**" access="ROLE_ANONYMOUS" />`
+    `<sec:intercept-url pattern="/paella3.1/ui/auth.html" access="ROLE_USER" />`
+    `<sec:intercept-url pattern="/paella3.1/ui/**" access="ROLE_ANONYMOUS" />`
 
-7. If you want the editor to be available only for registred users add this line before '/paella3.0/ui/**':
+7. If you want the editor to be available only for registred users add this line before '/paella3.1/ui/**':
 
-    `<sec:intercept-url pattern="/paella3.0/ui/editor.html" access="ROLE_USER" />`
+    `<sec:intercept-url pattern="/paella3.1/ui/editor.html" access="ROLE_USER" />`
 
-8. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella3.0/ui
+8. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella3.1/ui
