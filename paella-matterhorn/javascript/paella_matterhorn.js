@@ -921,11 +921,13 @@ paella.matterhorn.SearchEpisode = Class.create({
 						divPrevLink.param_offset = (currentPage - 2) * params.limit;
 						divPrevLink.param_limit	= params.limit;
 						divPrevLink.param_q = params.q;
+						divPrevLink.param_sid = params.sid;
 						$(divPrevLink).click(function(event) {
 							var params = {};
 							params.offset = this.param_offset;
 							params.limit = this.param_limit;
 							params.q = this.param_q;
+							params.sid = this.param_sid;
 							thisClass.doSearch(params, divList);
 						});
 						divPrevLink.innerHTML = paella.dictionary.translate("Previous");
@@ -966,11 +968,13 @@ paella.matterhorn.SearchEpisode = Class.create({
 								divPageIdLink.param_offset = (i -1) * params.limit;
 								divPageIdLink.param_limit = params.limit;
 								divPageIdLink.param_q = params.q;
+								divPageIdLink.param_sid = params.sid;
 								$(divPageIdLink).click(function(event) {
 									var params = {};
 									params.offset = this.param_offset;
 									params.limit = this.param_limit;
 									params.q = this.param_q;
+									params.sid = this.param_sid;
 									thisClass.doSearch(params, divList);
 								});
 								divPageIdLink.innerHTML = i;
@@ -991,11 +995,13 @@ paella.matterhorn.SearchEpisode = Class.create({
 						divNextLink.param_offset = currentPage * params.limit;
 						divNextLink.param_limit	= params.limit;
 						divNextLink.param_q = params.q;
+						divNextLink.param_sid = params.sid;
 						$(divNextLink).click(function(event) {
 							var params = {};
 							params.offset = this.param_offset;
 							params.limit = this.param_limit;
 							params.q = this.param_q;
+							params.sid = this.param_sid;
 							thisClass.doSearch(params, divList);
 						});
 						divNextLink.innerHTML = paella.dictionary.translate("Next");
