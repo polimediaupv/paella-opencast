@@ -4,16 +4,11 @@ var express = require('express')
 var app = express();
 
 
-app.get('/juas', function(req, res) {
-  res.send('hello!');
-});
-
-
 var proxy = httpProxy.createProxyServer({});
  
 function proxyFunc(req, res, next) {
-	proxy.web(req, res, { target: 'http://engage.opencast.org/' });
-	//proxy.web(req, res, { target: 'http://videoapuntes-engage.upv.es:8080/' });
+	//proxy.web(req, res, { target: 'http://engage.opencast.org/' });
+	proxy.web(req, res, { target: 'http://videoapuntes-engage.upv.es:8080/' });
 }
 app.use(proxyFunc);
 
