@@ -36,6 +36,7 @@ Main characteristics
 - Compatible with Opencast Matterhorn 1.4
 
 
-Installation
-============
-Go to matterhorn-modules folder and read de README file
+Build and Install
+=================
+
+To build Paella Player for Matterhorn, please read the [documentation](doc/README.md).
