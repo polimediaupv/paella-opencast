@@ -7,8 +7,8 @@ In this section we are going to explain how to build and install Paella Player f
 paella-matterhorn repo uses submodules, so when you clone the paella-matterhorn repo you need to init the submodules.
 To do this you need  to run:
 
-  $ git submodule init
-  $ git submodule update
+	$ git submodule init
+	$ git submodule update
 
 Onve you have the submodule downloaded you can continue with the installation.
 
@@ -42,5 +42,5 @@ Congratulations, you have all the dependencies installed.
 
 ## Build Paella Player for Matterhorn
 
-Go to matterhorn-modules folder and follow the instructions.
+Go to `matterhorn-modules` folder and follow the instructions.
 
