@@ -1,11 +1,10 @@
-Paella Player for Matterhorn
-============================
+# Paella Player for Matterhorn
 This is the Paella player for matterhorn bundle.
 
 ![Paella Player Logo](https://raw.githubusercontent.com/polimediaupv/paella-matterhorn/master/doc/images/paella_mh.png)
 
-Paella Player
-=============
+## Paella Player
+
 The Paella (pronounce “paeja”) Player is a HTML5 multistream video player capable of playing multiple audio & video
 streams synchronously and supporting a number of user plugins. It is specially designed for lecture recordings, 
 like Matterhorn Lectures or Polimedia pills.
@@ -18,8 +17,7 @@ If you want to use Paella player, but does not have a Matterhorn installation, y
 the [standalone](https://github.com/polimediaupv/paella) version of paella.
 
 
-Documentation
-=============
+## Documentation
 
 - [Build and Install Paella Player for Matterhorn](build.md)
 
