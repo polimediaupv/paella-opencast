@@ -129,7 +129,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		var source = {
 			src:  track.url,
 			type: track.mimetype,
-			res: {w:res[0], h:res[1]}
+			res: {w:res[0], h:res[1]},
+			isLiveStream: false
 		};
 
 		return source;
