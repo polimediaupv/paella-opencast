@@ -892,6 +892,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 			// TODO
 			var asyncLoader = new paella.AsyncLoader();
 			var results = response['search-results'].result;
+			if (!(results instanceof Array)) { results = [results]; }
 			//There are annotations of the desired type, deleting...
 			for (var i =0; i < results.length; ++i ){
 				asyncLoader.addCallback(new thisClass.AsyncLoaderPublishCallback(thisClass.config, results[i]));
