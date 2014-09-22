@@ -9,7 +9,7 @@ paella.pluginList.push('mh_search.js');
 paella.pluginList.push('mh_description.js');
 paella.pluginList.push('mh_publish.js');
 
-
+//1
 
 // Patch to work with MH jetty server. 
 base.ajax.send = function(type,params,onSuccess,onFail) {
