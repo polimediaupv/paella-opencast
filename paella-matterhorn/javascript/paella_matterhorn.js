@@ -723,7 +723,12 @@ function loadPaella(containerId, onSuccess) {
 			if (onSuccess) onSuccess();
 		},
 		function() {
-			paella.messageBox.showError("Error loading video " + id);
+			if (paella.matterhorn.me.username == "anonymous") {
+				window.location.href = "auth.html?redirect=" + encodeURIComponent(window.location.href);
+			}
+			else {
+				paella.messageBox.showError("Error loading video " + id);
+			}		
 		}
 	);
 }
@@ -738,7 +743,12 @@ function loadPaellaExtended(containerId, onSuccess) {
 			if (onSuccess) onSuccess();
 		},
 		function() {
-			paella.messageBox.showError("Error loading video " + id);
+			if (paella.matterhorn.me.username == "anonymous") {
+				window.location.href = "auth.html?redirect=" + encodeURIComponent(window.location.href);
+			}
+			else {
+				paella.messageBox.showError("Error loading video " + id);
+			}		
 		}
 	);
 }

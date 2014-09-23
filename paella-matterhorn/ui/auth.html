@@ -16,11 +16,14 @@
 		<script type="text/javascript">
 			function onLoad() {
 				var redirect = paella.utils.parameters.list['redirect'];
-				if (redirect == undefined) {
-					window.location.href = "index.html";
-				}
-				else {
+				var id = paella.utils.parameters.list['id'];
+				if (redirect != undefined) {
 					window.location.href = decodeURIComponent(redirect);
+				}
+				else if (id != undefined) {
+					window.location.href = "watch.html?id=" + id;				
+				else {
+					window.location.href = "index.html";
 				}
 			}
 		</script>
