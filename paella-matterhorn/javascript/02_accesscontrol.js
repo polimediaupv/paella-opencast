@@ -31,7 +31,7 @@ var MHAccessControl = Class.create(paella.AccessControl,{
 	
 				if (!(roles instanceof Array)) { roles = [roles]; }
 	
-				if (paella.matterhorn.acl) {
+				if (paella.matterhorn.acl && paella.matterhorn.acl.acl && paella.matterhorn.acl.acl.ace) {
 					var aces = paella.matterhorn.acl.acl.ace;
 					if (!(aces instanceof Array)) { aces = [aces]; }
 
