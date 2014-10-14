@@ -41,12 +41,12 @@ paella.plugins.PublishPlugin = Class.create(paella.EventDrivenPlugin,{
 			if (data == false){
 				this.showOverlayMessage("This video is not published. Edit the video to publish it.");
 			}
-			else if (data == "undefined") {
+			else if ((data == "undefined") || (data === undefined)) {
 				this.showOverlayMessage("This video is not published. It will be published automatically in a few days. Edit the video to change this behaviour.");
 			}
 		}
 		else {
-			if ((data == false) || (data == "undefined")){
+			if ((data == false) || (data == "undefined") || (data == undefined)){
 				if (paella.initDelegate.initParams.accessControl.permissions.isAnonymous == true) {
 					paella.player.unloadAll(paella.dictionary.translate("This video is not published. If you are the author, Log In to publish it."));
 					window.href = "auth.html?redirect="+encodeURIComponent(window.href);
