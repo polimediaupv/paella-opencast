@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 			paella: {
 				files: [
 					// Basic Paella
-					{expand: true, cwd: 'submodules/paella/build/player', src: ['config/**', 'javascript/**', 'resources/**', 'player.swf'], dest: 'build/'},			
+					{expand: true, cwd: 'submodules/paella/build/player', src: ['localization/**', 'config/**', 'javascript/**', 'resources/**', 'player.swf'], dest: 'build/'},			
 					// Paella Matterhorn
 					{expand: true, cwd: 'paella-matterhorn/ui', src: ['**'], dest: 'build/'},
 					{expand: true, src:'plugins/*/resources/**', dest: 'build/resources/style/',
@@ -136,6 +136,24 @@ module.exports = function(grunt) {
 			}
 		},
 		
+		'merge-json': {
+			'i18n': {
+				files: {
+					'build/localization/paella_en.json': [
+						'build/localization/paella_en.json',
+						'paella-matterhorn/localization/*en.json',
+						'paella-matterhorn/plugins/*/localization/*en.json' 
+					],
+					'build/localization/paella_es.json': [
+						'build/localization/paella_es.json',
+						'paella-matterhorn/localization/*es.json', 
+						'paella-matterhorn/plugins/*/localization/*es.json' 
+					]
+				}
+			}
+		},
+		
+		
 		watch: {
 			 debug: {
 				 files: [
@@ -165,6 +183,7 @@ module.exports = function(grunt) {
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-merge-json');
 	grunt.loadNpmTasks('grunt-update-submodules');
 	grunt.loadNpmTasks('grunt-subgrunt');
 	grunt.loadNpmTasks('grunt-contrib-less');
@@ -183,7 +202,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['build.release']);
 	grunt.registerTask('checksyntax', ['concat:less','less:production', 'jshint', 'csslint', 'jsonlint']);
 	
-	grunt.registerTask('build.common', ['checksyntax', 'subgrunt:paella', 'copy:paella', 'concat:paella_matterhorn.js']);
+	grunt.registerTask('build.common', ['checksyntax', 'subgrunt:paella', 'copy:paella', 'concat:paella_matterhorn.js', 'merge-json']);
 	
 	grunt.registerTask('build.release', ['build.common', 'uglify:dist', 'cssmin:dist']);
 	grunt.registerTask('build.debug', ['build.common']);
