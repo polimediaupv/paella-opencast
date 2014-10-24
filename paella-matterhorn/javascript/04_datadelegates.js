@@ -157,12 +157,14 @@ paella.dataDelegates.MHAnnotationServiceVideoExportDelegate = Class.create(paell
 		if (val.trackItems.length > 0) {
 			thisParent(context, params, val, function(data, success) {
 				if (success) {			
-					if (valSent.sent) {			
-						thisParent(context+"#sent", params, valSent, function(dataSent, successSent) {
-							if (successSent) {						
-								if (onSuccess) { onSuccess({}, true); }
-							}
-							else { if (onSuccess) { onSuccess({}, false); } }	
+					if (valSent.sent) {
+						thisClass.remove(context+"#inprogress", params, function(data, success){					
+							thisParent(context+"#sent", params, valSent, function(dataSent, successSent) {
+								if (successSent) {						
+									if (onSuccess) { onSuccess({}, true); }
+								}
+								else { if (onSuccess) { onSuccess({}, false); } }	
+							});
 						});
 					}
 					else {
