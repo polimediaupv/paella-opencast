@@ -49,8 +49,10 @@ INSTALLATION INSTRUCTIONS
 
 6. By default paella is installed in /paella3.1/ui URL in your server. You need to enable address to that URL. Edit the ${MH_HOME}/etc/security/mh_default_org.xml file and add this line:
 
-    `<sec:intercept-url pattern="/paella3.1/ui/auth.html" access="ROLE_USER" />`
-    `<sec:intercept-url pattern="/paella3.1/ui/**" access="ROLE_ANONYMOUS" />`
+    ```
+    <sec:intercept-url pattern="/paella3.1/ui/auth.html" access="ROLE_USER" />
+    <sec:intercept-url pattern="/paella3.1/ui/**" access="ROLE_ANONYMOUS" />
+    ```
 
 7. If you want the editor to be available only for registred users add this line before '/paella3.1/ui/**':
 
