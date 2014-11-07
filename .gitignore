@@ -2,3 +2,8 @@
 *~
 node_modules
 build
+
+# #DCE, Ignore dev build tools, node.js supporting file
+node
+target
+
