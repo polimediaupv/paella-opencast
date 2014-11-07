@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Matterhorn Video Player</title>
+		<link rel="shortcut icon" href="mh_dce_resources/images/dce_favicon_ext.ico" type="image/x-icon" />
+	    <link rel="stylesheet" type="text/css" href="mh_dce_resources/style/mh_dce_header.css" />
+
+		<script type="text/javascript" src="javascript/base.js"></script>
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="mh_dce_resources/js/harvard-dce-engage-series.js"></script>
+
+	    <script type="text/javascript">
+                       // <!--
+$(document).ready(function () {
+    // #DCE retrieve mediapackage id from the request URL
+
+    //Ref: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
+    var getUrlParam = function (sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        console.log("1: " + sPageURL + "  " + sURLVariables);
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            console.log(sParameterName);
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+        return "unknown";
+    }
+
+    var mpId =  getUrlParam("id");
+    console.log("id is " + mpId);
+    var iframeLoc = "watch.html?id=" + mpId;
+    $("#iframe").attr('src', iframeLoc);
+    
+});
+            // -->
+     </script>
+
+	</head>
+    <body>
+        <div id="paellaExtendedHeaderWrap">
+            <div id="paellaExtendedHeader">
+                <div id="header-banner-ext" class="page-banner">
+                    <div id="harvard" class="banner-wrap">
+                        <a id="paellaExtendedHeaderLink" class="banner-link" title="Harvard Extension School" tabindex="-1" href="http://extension.harvard.edu">
+                            Harvard Extension School</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="paellaExtendedContainerWrap">
+            <iframe allowfullscreen frameborder="0" id="iframe"></iframe>
+        </div>
+        <div id="paellaExtendedFooterWrap">
+            <div id="footer" class="row">
+                <div id="footer-privacy">
+                    <a href="http://www.extension.harvard.edu/help/privacy.jsp">Privacy Statement</a>
+                    &#160;|&#160; <a href="http://www.extension.harvard.edu/open-learning-initiative/terms-of-use">Terms and Conditions</a>
+                </div>
+                <div id="footer-copyright"> &#169; 2014-15 President and Fellows of Harvard College</div>
+            </div>
+            <!-- END #footer -->
+        </div>
+    </body>
+</html>

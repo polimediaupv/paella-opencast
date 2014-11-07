@@ -45,7 +45,7 @@
                     </execution>
 
                     <execution>
-						<phase>validate</phase>                        
+			<phase>validate</phase>                        
                         <id>npm install</id>
                         <goals>
                             <goal>npm</goal>
@@ -57,7 +57,7 @@
                     </execution>
 
                     <execution>
-						<phase>compile</phase>                        
+			<phase>compile</phase>                        
                         <id>grunt build.release</id>
                         <goals>
                             <goal>grunt</goal>

@@ -1,0 +1,27 @@
+/** DCE for Harvard Course Link style  */
+
+#dce-series{
+	font-family: Georgia,"Times New Roman",serif;
+	text-align:left;
+	 margin: 10px 20px 0;
+}
+
+.dce-h1{
+	font-size: 20px;
+    color: #CDCDCD;
+}
+
+.dce-h2{
+	font-size: 15px;
+	color: #EFEFEF;
+}
+
+#dce-course-link {
+    color: #CCCCCC;
+    text-decoration: none;
+}
+
+
+#dce-course-link:hover {
+    color: #FAA166;
+}

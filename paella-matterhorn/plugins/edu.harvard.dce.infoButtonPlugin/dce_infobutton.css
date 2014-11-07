@@ -1,0 +1,45 @@
+/** #DCE Karen - Information button */
+
+.showInfoPluginButton {
+	background-size:300%;
+	background-image:url(dce_info_button_3frame.png);
+}
+
+
+.buttonPluginPopUp.showInfoPluginButton {
+	background-image:none;
+}
+
+
+.infoItemButton {  /*create a popup */
+	background-repeat: no-repeat;
+	background-size: 200% auto;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
+
+.infoItemButton.selected {
+	background-color: rgba(90,90,90,0.8);
+	border: 3px solid #23ff00;
+}
+
+
+.infoItemButton:hover {
+	box-shadow: inset 0px 0px 4px 0px #fa8533;
+}
+
+.infoItemButton.about{
+	background-image:url(dce_help_button.png);
+}
+
+.infoItemButton.feedback {
+ 	background-image:url(dce_feedback_button.png);
+}
+
+.infoItemButton.publications {
+	background-size: 100% auto; /*single frame*/
+ 	background-image:url(dce_publist_button.png);
+}
+
+/** end #DCE */
