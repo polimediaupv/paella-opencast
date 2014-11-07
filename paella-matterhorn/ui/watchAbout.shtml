@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>Video Player Help Page</title>
+
+        <link rel="stylesheet" href="mh_dce_resources/style/mh_dce_header.css" type="text/css" />
+
+        <script type="text/javascript" src="javascript/jquery.js"></script>
+        <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+        <style type="text/css" media="screen">
+            body{
+                margin:0px;
+                background:none repeat scroll 0 0 #F2F5F6;
+            }
+            
+            img.help {
+                max-width:1100px;
+                -webkit-box-shadow: 0 0 2px 2px #343434;
+                -moz-box-shadow:0 0 2px 2px #343434;
+                box-shadow: 0 0 2px 2px #343434;
+            }
+            
+            #container,
+            .banner-wrap{
+                max-width:1200px;
+            }
+            
+            #container{
+                margin:auto;
+                background-color:white;
+            }
+            
+            #content{
+                padding:20px;
+            }
+        
+            p {
+               font-size: 1.2em;
+            }
+        </style>
+    </head>
+    <body id="body" >
+        <div id="paellaExtendedHeader">
+            <!--Distance Education Header and banner-->
+            <div id="header-banner-ext" class="page-banner">
+                <div id="harvard" class="banner-wrap">
+                    <a class="banner-link" title="Harvard Extension School"
+                        href="http://www.extension.harvard.edu/">Harvard Extension School</a>
+                </div>
+            </div>
+            <!-- END #header -->
+        </div>
+        <div id="container">
+            <div id="paellaUsageAndFeatures">
+                <div>
+                </div>
+                <div id="content">
+                    <h1>Help Page for the Media Player</h1>
+                    <p>This page describes how to use the player page. </p>
+                    <p> We are continually working to improve the quality of your viewing experience. In
+                        the meantime, you may find that the audio on some lectures is slightly out
+                        of sync with the video. This may be especially noticeable on lectures that
+                        feature close-ups of instructors. We will make every effort to improve this
+                        in the next release. </p>
+                    <h1>Basic usage</h1>
+                    <p>The player is designed to display two video windows, with the camera and the
+                        presentation view, and some information regarding the lecture. You can
+                        navigate through the slides and tabs, but you can also begin viewing the
+                        lecture by pressing the play button on top of the video window or in the
+                        control bar.</p>
+                    <p></p>
+                    <p>
+                        <img class="help" src="mh_dce_resources/images/dce_help_basicUsage3.png"
+                            alt="Basic usage player play button" />
+                    </p>
+                    <h2></h2>
+                    <h2>Player display areas</h2>
+                    <p>There are three main areas in th player:</p>
+                    <ul>
+                        <li><span style="line-height: 1.3em;">The video display, where you can see
+                                the video of the lecture hall and the video of the presentation
+                                device and the player control buttons.</span></li>
+                        <li><span style="line-height: 1.3em;">The bottom pane, where you will find
+                                useful information about this lecture</span></li>
+                        <li><span style="line-height: 1.3em;">The right pane, where you will find
+                                information related to this lecture, like other lectures for this
+                                series or lecture suggestions.</span></li>
+                    </ul>
+                    <p>
+                        <img class="help" src="mh_dce_resources/images/dce_help_displayAreas3.png"
+                            alt="Player player display areas" />
+                    </p>
+                    <p> You can change the arrangement of those areas using the resize tool. You will find four
+                        sizes, from the smallest video window to the fullscreen video area. </p>
+                    <img class="help"
+                        src="mh_dce_resources/images/dce_help_resizeTool3.png"
+                        alt="Resize tool image" />
+                    <h2>Accessibility resources in the player</h2>
+                    <p>Some basic functions of the player can be used with the keyboard. Here is a list
+                        of the keyboard shortcuts:</p>
+                    <p>ALT+CTRL+P: play-pause</p>
+                    <p>ALT+CTRL+S: pause</p>
+                    <p>ALT+CTRL+M: mute</p>
+                    <p>ALT+CTRL+U: volume up</p>
+                    <p>ALT+CTRL+D: volume down</p>
+                    <p>SPACE: play-pause</p>
+                    <p>UP: volume up</p>
+                    <p>DOWN: volume down</p>
+                    <p>M: mute</p>
+                    <p></p>
+                    <h1> Managing views 
+                    </h1>
+                    <img class="help"
+                        src="mh_dce_resources/images/dce_help_managingViews3.png"
+                        alt="Managing view image" />
+                    <p>The view button selects which arrangement between the lecture video and the
+                        presentation video is displayed, so you can focus on the most interesting
+                        points.</p>
+                    <p></p>
+                    <h1>Locating content</h1>
+                    <p>The player provides several tools to navigate through the lecture.</p>
+                    <h2>The progress bar</h2>
+                    <p>The progress bar shows the current playing time. You can click over it to
+                        jump to any point in the lecture.</p>
+                    <p>
+                        <img class="help" src="mh_dce_resources/images/dce_help_progressBar3.png"
+                            alt="Progress bar image" />
+                    </p>
+                    <h2>The slide navigation tool</h2>
+                    <p>Clicking on the last button you can open the slide navigation tool. There you
+                        can move your mouse over the slides and a high resolution slide will be
+                        shown over the presentation video.</p>
+                    <p>Click on any slide to go to that point.</p>
+                    <p>
+                        <img class="help" src="mh_dce_resources/images/dce_help_slideNavigation3.png"
+                            alt="Slide navigatio tool image" />
+                    </p>
+                    <h2> The view again tool <img class="help"
+                            src="mh_dce_resources/images/paelladocs-viewagain.png"
+                            alt="Slide navigation tool image" />
+                    </h2>
+                    <p>The view again plugin goes back 30 seconds into the past, to review any
+                        difficult point on the lecture.</p>
+                    <h1></h1>
+                    <h1>Sharing content</h1>
+                    <h2> The social network plugin
+                    </h2> <img class="help"
+                        src="mh_dce_resources/images/dce_help_socialNetwork3.png"
+                        alt="social network button image" />
+                    <p>The social network plugin allows publishing a link for this lecture in
+                        Facebook or Twitter. Please note that the login requirement for protected videos still applies and 
+                        the access policy of your network may not allow this option.</p>
+                    <p></p>
+                    <h1>Help, Feedback, and Publication Listing</h1>
+                    <p>The information button provides three options. The first is a link to this
+                        page. The second is a link to a feedback page. The third is a link to the
+                        publications available in this format.</p>
+                    <p>
+                        <img class="help" src="mh_dce_resources/images/dce_help_helpFeedPub3.png"
+                            alt="Progress bar image" />
+                    </p>
+                    <h1>References</h1>
+                    <p>This player originates as the "Paella Engage Player" which is published by the
+                        Universitat Politecnica de Valencia under the GPL License 3.0. 
+                        <a href="http://paellaengage.upv.es">http://paellaengage.upv.es</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- end container -->
+        <div id="paellaExtendedFooter">
+
+            <div id="footer" class="row">
+                <div id="footer-privacy">
+                    <a href="http://www.extension.harvard.edu/help/privacy.jsp">Privacy Statement</a>
+                    &#160;|&#160; <a href="http://www.extension.harvard.edu/open-learning-initiative/terms-of-use">Terms and Conditions</a>
+                </div>
+                <div id="footer-copyright"> &#169; 2013-14 President and Fellows of Harvard College</div>
+            </div>
+            <!-- END #footer -->
+            
+        </div>
+    </body>
+</html>
