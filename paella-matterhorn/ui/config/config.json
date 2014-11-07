@@ -56,7 +56,7 @@
 			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
 			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": true},
 			"es.upv.paella.editor.trackCaptions": {"enabled":false},
-						
+
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
@@ -70,5 +70,12 @@
             "es.upv.paella.volumeRangePlugin": { "enabled": true, "showMasterVolume": true, "showSlaveVolume": false },
             "es.upv.paella.themeChooserPlugin": { "enabled": false }
 		}
-	}
+	},
+        "skin": {
+                "default": "dark",
+                "available": [
+                    "dark",
+                    "light"
+                ]
+        }
 }
