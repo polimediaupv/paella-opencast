@@ -49,14 +49,20 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 			this.desc.date = sd.toLocaleString();
 		}
 
-		paella.ajax.get({url:'/usertracking/stats.json', params:{id:paella.matterhorn.episode.id}},
-			function(data, contentType, returnCode) {
-				thisClass.desc.views = data.stats.views;
-				thisClass.insertDescription();			
-			},
-			function(data, contentType, returnCode) {
-			}
-		);
+		// TODO!
+		// #DCE orig, uncomment when stats endpoint is back in DCE MH repo
+		// paella.ajax.get({url:'/usertracking/stats.json', params:{id:paella.matterhorn.episode.id}},
+		//	function(data, contentType, returnCode) {
+		//		thisClass.desc.views = data.stats.views;
+		//		thisClass.insertDescription();
+		//	},
+		//	function(data, contentType, returnCode) {
+		//	}
+		//);
+		// #DCE delete following when stats endpoint is back
+		thisClass.desc.views = "";
+		thisClass.insertDescription();
+		// #DCE end
 	},
 
 	insertDescription:function() {
@@ -76,8 +82,11 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		divViews.innerHTML = paella.dictionary.translate("Views:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.views+'</span>';			
 		divTitle.innerHTML = paella.dictionary.translate("Title:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.title+'</span>';
 		divSubject.innerHTML = paella.dictionary.translate("Subject:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.subject+'</span>';
-		divPresenter.innerHTML = paella.dictionary.translate("Presenter:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4001" href="index.html?q='+this.desc.presenter+'">'+this.desc.presenter+'</a></span>';
-		divSeries.innerHTML = paella.dictionary.translate("Series:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4002" href="index.html?series='+this.desc.serieId+'">'+this.desc.serie+'</a></span>';
+		// #DCE MATT-374, link to DCE MH publication listing, no link for presenter offerings (student cannot cross access)
+		divPresenter.innerHTML = paella.dictionary.translate("Presenter:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.presenter+'</span>';
+		divSeries.innerHTML = paella.dictionary.translate("Series:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4002" href="' + paella.player.config.restServer.url + 'engage/ui/publicationListing.shtml?seriesId='+this.desc.serieId+'">'+this.desc.serie+'</a></span>';
+		//divPresenter.innerHTML = paella.dictionary.translate("Presenter:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4001" href="index.html?q='+this.desc.presenter+'">'+this.desc.presenter+'</a></span>';
+		//divSeries.innerHTML = paella.dictionary.translate("Series:")+'<span class="showMHDescriptionTabBarValue"><a tabindex="4002" href="index.html?series='+this.desc.serieId+'">'+this.desc.serie+'</a></span>';
 		divDescription.innerHTML = paella.dictionary.translate("Description:")+'<span class="showMHDescriptionTabBarValue">'+this.desc.description+'</span>';
 
 		//---------------------------//			
@@ -98,10 +107,11 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		divRight.appendChild(divSubject);
 		divRight.appendChild(divLanguage);
 		divRight.appendChild(divDescription);
-			
-			
-		this.domElement.appendChild(divLeft);	
-		this.domElement.appendChild(divRight);	
+
+		this.domElement.appendChild(divLeft);
+		// #DCE comment out contributor (producer), language (epsidode lang), subject (episode), description (keywords?)
+		// this.domElement.appendChild(divRight);
+
 	}
 	
 });

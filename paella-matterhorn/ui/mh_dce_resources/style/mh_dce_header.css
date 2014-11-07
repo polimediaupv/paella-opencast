@@ -1,0 +1,138 @@
+/** DCE Harvard Style for Paella Player wrapper
+*   October 2014
+*/
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    z-index: 10;
+    background: none repeat scroll 0 0 #F2F5F6;
+    color: #222;
+    font: 62.5%/1.3em Helvetica,Arial,sans-serif;
+    text-align: center;
+}
+
+.page-banner {
+	width: 100%;
+}
+.banner-link {
+    background-position: 0 -50px;
+    background-repeat: no-repeat;
+    display: block;
+    height: 0;
+    overflow: hidden;
+    padding-top: 50px;
+    text-decoration: none;
+    margin: auto;
+}
+.banner-link:hover {
+    background-position: 0 0;
+}
+
+#header-banner-ext {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+#header-banner-ext #harvard .banner-link {
+    background-image: url("../images/dce_masthead_ext.png");
+}
+#header-banner-sum {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+#header-banner-sum #harvard .banner-link {
+   background-image: url("../images/dce_masthead_sum.png"); 
+}
+
+#paellaExtendedHeaderWrap {
+    width: 100%;
+    height: 50px;
+    background: red;
+    position: fixed;
+    top: 0;
+}
+#paellaExtendedContainerWrap {
+    width: 100%;
+    margin: 0 auto;
+    top: 50px;
+    bottom: 31px;
+    position: fixed;
+}
+
+/* #DCE  prevent box shadow between player and header - for white-on-white summer */
+.playerContainer {
+        box-shadow: none;
+}
+
+#dce-series{
+	font-family: Georgia,"Times New Roman",serif;
+	text-align:left;
+	 margin: 10px 20px 0;
+}
+
+.h1{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.h2{
+	font-size: 15px;
+	color: #414141;
+}
+
+#footer {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.2em;
+    padding: 10px;
+    text-align: left;
+}
+
+#footer a {
+    white-space: nowrap;
+}
+#footer a, .list-note a {
+    color: #5c5d60;
+}
+
+a:link, a:visited {
+    border-bottom: medium none;
+    color: #347ab0;
+    opacity: 1;
+    text-decoration: none;
+}
+
+#footer-privacy {
+    float: left;
+    margin-right: 10px;
+}
+
+#footer-copyright {
+    float: right;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+/* extra Paella player DCE Footer style*/
+#paellaExtendedFooterWrap {
+    bottom: 0;
+    min-width: 590px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+
+#header, #content, #footer {
+    clear: both;
+    margin: 0;
+    padding: 0 10px;
+}
+
+#iframe { display: block; width:100%; height:100%; }
+

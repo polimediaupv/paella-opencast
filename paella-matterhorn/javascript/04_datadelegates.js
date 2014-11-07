@@ -355,13 +355,15 @@ paella.dataDelegates.MHFootPrintsDataDelegate = Class.create(paella.DataDelegate
 	write:function(context,params,value,onSuccess) {
 		var thisClass = this;
 		var episodeId = params.id;
+		// #DCE correct js syntax on reserved term: 'in'
+		var inpoint = value['in'];
 		paella.ajax.get({url: '/usertracking/', params: {
 					_method: 'PUT',
 					id: episodeId,
 					type:'FOOTPRINT',
-					in:value.in,
+					'in':value.in,
 					out:value.out }
-			},	
+			},
 			function(data, contentType, returnCode) {
 				var ret = false;
 				if (returnCode == 201) { ret = true; }								
@@ -371,7 +373,7 @@ paella.dataDelegates.MHFootPrintsDataDelegate = Class.create(paella.DataDelegate
 				if (onSuccess) { onSuccess({}, false); }
 			}
 		);
-	}   
+	}
 });
 
 

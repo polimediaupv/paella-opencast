@@ -345,28 +345,28 @@ paella.matterhorn.SearchEpisode = Class.create({
 		divResultTitleText.appendChild(titleResultText);
 		divResultText.appendChild(divResultTitleText);
 
-
+		// #DCE, MATT-374, removing author link from detail listing
 		// author
-		var author = "&nbsp;";
-		var author_search = "";
-		if(recording.dcCreator) {
-		  author = "by " + recording.dcCreator;
-		  author_search = recording.dcCreator.replace(" ", "+");
-		}
-		var divResultAuthorText = document.createElement('div');
-		divResultAuthorText.id = rootID+"_text_author_container";
-		divResultAuthorText.className = "recordings_entry_text_author_container";
-		var authorResultText = document.createElement('a');
-		authorResultText.setAttribute("tabindex", "-1");		
-		authorResultText.id = rootID+"_text_title";
-		authorResultText.innerHTML = author;
-		authorResultText.className = "recordings_entry_text_title";
-		if (author_search != "") {
-			authorResultText.href = "?q=" + author_search;
-		}
-		divResultAuthorText.appendChild(authorResultText);
-		divResultText.appendChild(divResultAuthorText);
-
+		//var author = "&nbsp;";
+		//var author_search = "";
+		//if(recording.dcCreator) {
+		//  author = "by " + recording.dcCreator;
+		//  author_search = recording.dcCreator.replace(" ", "+");
+		//}
+		//var divResultAuthorText = document.createElement('div');
+		//divResultAuthorText.id = rootID+"_text_author_container";
+		//divResultAuthorText.className = "recordings_entry_text_author_container";
+		//var authorResultText = document.createElement('a');
+		//authorResultText.setAttribute("tabindex", "-1");
+		//authorResultText.id = rootID+"_text_title";
+		//authorResultText.innerHTML = author;
+		//authorResultText.className = "recordings_entry_text_title";
+		//if (author_search != "") {
+		//	authorResultText.href = "?q=" + author_search;
+		//}
+		//divResultAuthorText.appendChild(authorResultText);
+		//divResultText.appendChild(divResultAuthorText);
+		// end #DCE
 
 		// date time
 		//var timeDate = recording.mediapackage.start;

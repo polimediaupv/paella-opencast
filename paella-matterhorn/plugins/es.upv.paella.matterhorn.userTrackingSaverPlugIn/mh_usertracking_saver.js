@@ -12,7 +12,8 @@ paella.plugins.UserTrackingSaverPlugIn = Class.create(paella.EventDrivenPlugin,{
 			'type': params.event,
 			'in': params.time,
 			'out': params.time,
-			'playing': params.playing
+			'playing': params.playing,
+			'resource': paella.matterhorn.resourceId
 		};
 		
 		switch (params.event) {
@@ -28,6 +29,9 @@ paella.plugins.UserTrackingSaverPlugIn = Class.create(paella.EventDrivenPlugin,{
 				break;
 			case "RESIZE-TO":
 				matterhornLog.type = "RESIZE-TO-"+params.label;
+				break;
+			case paella.events.loadComplete:
+				this.addEvent('NORMAL_STARTUP');
 				break;
 		}
 		
