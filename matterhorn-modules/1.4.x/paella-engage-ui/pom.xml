@@ -104,7 +104,7 @@
 						<Bundle-SymbolicName> ${project.artifactId} </Bundle-SymbolicName>
 						<Import-Package> org.opencastproject.rest;version=${matterhorn.version}</Import-Package>
 						<Private-Package>ui.*</Private-Package>
-						<Http-Alias>/engage/paella4betaDce/ui</Http-Alias>
+						<Http-Alias>/engage/player</Http-Alias>
 						<Http-Classpath>/ui</Http-Classpath>
 						<Http-Welcome>index.html</Http-Welcome>
 					</instructions>

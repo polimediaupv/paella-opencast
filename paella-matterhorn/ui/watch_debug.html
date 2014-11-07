@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Matterhorn Video Player</title>
+		<script type="text/javascript" src="javascript/base.js"></script>
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="src/00_base.js"></script>
+		<script type="text/javascript" src="src/01_utils.js"></script>
+		<script type="text/javascript" src="src/02_nodes.js"></script>
+		<script type="text/javascript" src="src/03_video_nodes.js"></script>
+		<script type="text/javascript" src="src/04_video_container.js"></script>
+		<script type="text/javascript" src="src/05_plugin_base.js"></script>
+		<script type="text/javascript" src="src/06_ui_controls.js"></script>
+		<script type="text/javascript" src="src/07_ui_extras.js"></script>
+		<script type="text/javascript" src="src/08_paella_core.js"></script>
+		<script type="text/javascript" src="src/09_paella_player.js"></script>
+		<script type="text/javascript" src="src/10_paella_extended.js"></script>
+		<script type="text/javascript" src="src/11_editor_base.js"></script>
+		<script type="text/javascript" src="src/12_editor_bootstrap_utils.js"></script>
+		<script type="text/javascript" src="src/13_editor_plugin_base.js"></script>
+		<script type="text/javascript" src="src/14_editor_ui_controls.js"></script>
+		<script type="text/javascript" src="src/15_editor_track.js"></script>
+		<script type="text/javascript" src="src/16_embed_player.js"></script>
+		<script type="text/javascript" src="src/17_paella_editor.js"></script>
+	
+		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="resources/style/controls.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="resources/style/extended.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="resources/style/editor.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="resources/style/index.css" type="text/css" media="screen" charset="utf-8">		
+		<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.slate.min.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="mh_resources/style/mh_header.css" type="text/css" media="screen" charset="utf-8">
+		
+		<script type="text/javascript" src="javascript/paella_matterhorn.js"></script>
+		<script type="text/javascript" src="mh_resources/js/mh_header.js"></script>
+
+		<script type="text/javascript">
+			function createEngageHTMLPage(parentNodeName) {
+				insertHeaderToDomNode(parentNodeName);	
+				var parentNode = document.getElementById(parentNodeName);
+				
+				var paellaExtendedContainer = document.createElement('div');
+				paellaExtendedContainer.id = 'paellaExtendedContainer';
+	
+				parentNode.appendChild(paellaExtendedContainer);	
+			}
+			
+			function loadMHPaella(parentNodeName) {
+				initPaellaMatterhornMe(function(){
+					loadPaellaExtended(parentNodeName, function() {
+						createEngageHTMLPage('playerHeader');
+					});					
+				});
+			}
+		</script>				
+	</head>
+	<body id="body" onload="loadMHPaella('body');">
+	</body>
+</html>

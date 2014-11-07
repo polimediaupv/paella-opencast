@@ -1,6 +1,5 @@
 {
     "dceMaxWidth":true,
-	"profileFrameStrategy": "paella.LimitedSizeProfileFrameStrategy",
 	"player":{
 		"defaultProfile": "full",
 		"profileFrameStrategy": "paella.ProfileFrameStrategy",
@@ -15,9 +14,9 @@
         }						   
 	},
 	"editor":{
-			"enabled":false
+		"enabled":false
 	},
-	"defaultProfile":"dce_professor_slide_iguales",
+	"defaultProfile":"professor_slide",
 	"data":{
 		"enabled":true,
 		"dataDelegates":{
@@ -40,30 +39,46 @@
         ]
     },	
 	"plugins":{
+		"DCE.info" : {"where.to.get.plugin.name": "look in plugin javascript getName()"},
 		"defaultConfig":{"enabled":true},
 		"list":{
-			"ch.ethz.paella.multipleQualitiesPlugin": {"enabled": false},
 			"es.upv.paella.test.videoLoadPlugin": {"enabled": false},
+			"es.upv.paella.extendedProfilesPlugin":  {"enabled": false },
 
 			"es.upv.paella.userTrackingCollectorPlugIn": {"enabled": true, "heartBeatTime": 30000},
-
 			"es.upv.paella.userTrackingGoogleAnalyticsSaverPlugIn": {"enabled":false, "trackingID": "UA-26470475-8", "trackingEvents": false},
+
 			"es.upv.paella.ShowEditorPlugin":{"enabled":false,"alwaysVisible":false,"editorPage":"editor.html"},
 			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":false},
 
 			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
-			"es.upv.paella.FootPrintsPlugin": {"enabled": false, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"},
-			"es.upv.paella.descriptionPlugin": {"enabled":false},
+                        "es.upv.paella.socialPlugin": {"enabled": false },
+			"es.upv.paella.footprintsPlugin": {"enabled": false, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"},
+			"es.upv.paella.descriptionPlugin": {"enabled":true},
 			"es.upv.paella.commentsPlugin": {"enabled": false },
-                        "es.upv.paella.helpPlugin":{"enabled":false, "langs":["en"]},
+
+			"es.upv.paella.helpPlugin":{"enabled":true, "langs":["en"]},
+			"es.upv.paella.zoomPlugin": {"enabled": false },
+			"es.upv.paella.themeChooserPlugin": {"enabled": false },
+			"es.upv.paella.volumeRangePlugin": {
+                             "enabled": true,
+                             "showMasterVolume": true,
+                             "showSlaveVolume": false
+			},
+			"es.upv.paella.playbackRate": {"enabled": false},
 
 			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":false},
 			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": false},
 			"es.upv.paella.editor.trackCaptions": {"enabled": false},
+			"es.upv.paella.editor.trackAnnotations" : {"enabled": false},
+			"es.upv.paella.editor.trackBreaks": {"enabled": false},
+			"es.upv.paella.editor.toolStatusPlugin" : {"enabled": false},
+			"es.upv.paella.matterhorn.editor.downloadsPlugin" : {"enabled": false},
+
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":false},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":false},
 
-                        "es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
+			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
 			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": false },
 			
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
@@ -77,7 +92,7 @@
 			"edu.harvard.dce.bannerPlugin": {"enabled": false, "defaultValue":false},
 			"edu.harvard.dce.courseLinkPlugin": {"enabled": false, "defaultValue":false},
 			"edu.harvard.dce.footerPlugin": {"enabled": false, "defaultValue":false},
-			"edu.harvard.dce.infoButtonPlugin": {"enabled": false, "defaultValue":false},
+			"edu.harvard.dce.infoButtonPlugin": {"enabled": true, "defaultValue":false},
 			"edu.harvard.dce.publicationListButtonPlugin": {"enabled": false, "defaultValue":false}
 		}
 	},

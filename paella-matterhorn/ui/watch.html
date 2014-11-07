@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8;" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Matterhorn Video Player</title>
-		<script type="text/javascript" src="javascript/swfobject.js"></script>
+		<link rel="shortcut icon" href="mh_dce_resources/images/dce_favicon_ext.ico" type="image/x-icon" />
+	    <link rel="stylesheet" type="text/css" href="mh_dce_resources/style/mh_dce_header.css" />
+
 		<script type="text/javascript" src="javascript/base.js"></script>
 		<script type="text/javascript" src="javascript/jquery.js"></script>
-		<script type="text/javascript" src="javascript/paella_player.js"></script>
-	
 		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="resources/style/style_dark.css" id="paellaSkin" type="text/css" media="screen" title="no title" charset="utf-8">
 		<link rel="stylesheet" href="resources/style/matterhorn-style.css" type="text/css" media="screen" charset="utf-8">		
@@ -18,13 +18,47 @@
 		
 		
 		<script type="text/javascript" src="javascript/paella_matterhorn.js"></script>
+	    <script type="text/javascript" src="mh_dce_resources/js/harvard-dce-engage-series.js"></script>
 
-		<link rel="stylesheet" href="mh_resources/style/mh_header.css" type="text/css" media="screen" charset="utf-8" />
-		<script type="text/javascript" src="mh_resources/js/mh_header.js"></script>
+	    <script type="text/javascript">
+        // <!--
+
+// #DCE pass param list to paella player in iframe
+$(document).ready(function () {
+    var hashes = window.location.href.split("?");
+    console.log(hashes.length);
+    var args = hashes.length > 1 ? "?" + hashes[1]: "";
+    console.log("passing params list " + args);
+    var iframeLoc = "watch-paella.html" + args;
+    $("#iframe").attr('src', iframeLoc);
+});
+     // -->
+     </script>
 
 	</head>
-	<body id="body" onload="loadPaella('playerContainer');">
-		<div id="playerContainer" style="display:block;width:100%">
-		</div>
-	</body>
+    <body>
+        <div id="paellaExtendedHeaderWrap">
+            <div id="paellaExtendedHeader">
+                <div id="header-banner-ext" class="page-banner">
+                    <div id="harvard" class="banner-wrap">
+                        <a id="paellaExtendedHeaderLink" class="banner-link" title="Harvard Extension School" tabindex="-1" href="http://extension.harvard.edu">
+                            Harvard Extension School</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="paellaExtendedContainerWrap">
+            <iframe allowfullscreen="allowfullscreen" frameborder="0" id="iframe"></iframe>
+        </div>
+        <div id="paellaExtendedFooterWrap">
+            <div id="footer" class="row">
+                <div id="footer-privacy">
+                    <a href="http://www.extension.harvard.edu/help/privacy.jsp">Privacy Statement</a>
+                    &#160;|&#160; <a href="http://www.extension.harvard.edu/open-learning-initiative/terms-of-use">Terms and Conditions</a>
+                </div>
+                <div id="footer-copyright"> &#169; 2014-15 President and Fellows of Harvard College</div>
+            </div>
+            <!-- END #footer -->
+        </div>
+    </body>
 </html>

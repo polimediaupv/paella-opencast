@@ -23,7 +23,7 @@ paella.plugins.CourseLinkPlugin = Class.create(paella.ButtonPlugin,{
         return "courseLinkPlugin";
     },
     getName: function () {
-        return "edu.harvard.dce.paella.CourseLinkPlugin";
+        return "edu.harvard.dce.paella.courseLinkPlugin";
     },
     checkEnabled: function (onSuccess) {
         onSuccess(true);

@@ -18,6 +18,8 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 				function(data,contentType,code) {
 					paella.matterhorn.episode = data['search-results'].result;
 					var asyncLoader = new paella.AsyncLoader();
+					var offeringId = null;
+					var type = null;
 
 					//#DCE auth result check
 					var jsonData = data;
@@ -27,9 +29,6 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 					   return;
 					}
 					// #DCE end auth check
-
-					paella.matterhorn.episode = data['search-results'].result;
-					var asyncLoader = new paella.AsyncLoader();
 
 					// #DCE verify that results returned at least one episode
 					var totalItems = parseInt(data['search-results'].total);
@@ -46,16 +45,17 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 					   var result = data['search-results'].result;
 					   if (result != undefined) {
 					       if (result.dcIsPartOf != undefined) {
-							 var offeringId = result.dcIsPartOf.toString();
+							 offeringId = result.dcIsPartOf.toString();
 					       }
 					       if (result.dcType != undefined) {
-						      var type = data['search-results'].result.dcType.toString();
+						      type = data['search-results'].result.dcType.toString();
 					       }
 					   }
-					   if (offeringId != undefined && type != undefined) {
-						  paella.matterhorn.resourceId = (offeringId.length >= 11 ? "/" + offeringId.substring(0, 4) + "/" + offeringId.substring(4, 6) + "/" + offeringId.substring(6,11) + "/" : "") + type;
+					   if (offeringId && type) {
+							paella.matterhorn.resourceId = (offeringId.length >= 11 ? "/" + offeringId.substring(0, 4) +
+									"/" + offeringId.substring(4, 6) + "/" + offeringId.substring(6,11) + "/" : "") + type;
 					   } else {
-					       paella.matterhorn.resourceId = ""
+					       paella.matterhorn.resourceId = "";
 					   }
 					   // end #DCE logging helper
 						
@@ -88,7 +88,7 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 		},
 		function() { if (onError) onError(); }
 	);
-};
+}
 
 // ------------------------------------------------------------
 // #DCE(naomi): start of dce auth addition
