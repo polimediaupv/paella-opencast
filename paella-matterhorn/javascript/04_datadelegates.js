@@ -8,9 +8,9 @@ paella.dataDelegates.MHAnnotationServiceDefaultDataDelegate = Class.create(paell
 				if (!(annotations instanceof Array)) { annotations = [annotations]; }
 				if (annotations.length > 0) {
 					if (annotations[0] && annotations[0].value !== undefined) {
-						var value;
+						var value = annotations[0].value;
 						try {
-							value = JSON.parse(annotations[0].value);
+							value = JSON.parse(value);
 						}
 						catch(err) {}
 						if (onSuccess) onSuccess(value, true); 
