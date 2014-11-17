@@ -35,6 +35,8 @@ module.exports = function(grunt) {
 				]
 			}
 		},
+		
+		
 		concat: {
 			options: {
 				separator: '\n',
@@ -70,7 +72,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'build/javascript/paella_matterhorn.min.js': ['build/javascript/paella_matterhorn.js']
+					'build/javascript/paella_matterhorn.js': ['build/javascript/paella_matterhorn.js']
 				}
 			}
 		},
@@ -107,22 +109,10 @@ module.exports = function(grunt) {
 				}
 			}
 		},		
-		csslint: {
-			dist: {
-				options: {
-					import: 2,
-					"adjoining-classes": false,
-					"box-model": false,
-					"ids": false,
-					"outline-none": false            
-				},
-				src: ['paella-matterhorn/ui/*/*.css']
-			}
-		},
 		cssmin: {
 			dist: {
 				files: {
-					'build/resources/plugins/plugins.css': ['build/resources/plugins/plugins.css']
+					'build/resources/style/matterhorn-style.css': ['build/resources/style/matterhorn-style.css']
 				}
 			}
 		},
@@ -152,8 +142,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		
-		
+				
 		watch: {
 			 debug: {
 				 files: [
@@ -200,9 +189,9 @@ module.exports = function(grunt) {
 
 	
 	grunt.registerTask('default', ['build.release']);
-	grunt.registerTask('checksyntax', ['concat:less','less:production', 'jshint', 'csslint', 'jsonlint']);
+	grunt.registerTask('checksyntax', ['concat:less','less:production', 'jshint', 'jsonlint']);
 	
-	grunt.registerTask('build.common', ['checksyntax', 'subgrunt:paella', 'copy:paella', 'concat:paella_matterhorn.js', 'merge-json']);
+	grunt.registerTask('build.common', ['update_submodules', 'checksyntax', 'subgrunt:paella', 'copy:paella', 'concat:paella_matterhorn.js', 'merge-json']);
 	
 	grunt.registerTask('build.release', ['build.common', 'uglify:dist', 'cssmin:dist']);
 	grunt.registerTask('build.debug', ['build.common']);
