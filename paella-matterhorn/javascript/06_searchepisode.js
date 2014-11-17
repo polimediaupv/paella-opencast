@@ -22,10 +22,10 @@ paella.matterhorn.SearchEpisode = Class.create({
 			
 			paella.data.read('publish',{id:this.recording.id},function(data,status) {
 				if (status == true) {
-					if (data == true){
+					if ((data == true) || (data == "True")) {
 						thisClass.recording.entry_published_class = "published";
 					}
-					else if (data == false){
+					else if ((data == false) || (data == "False")) {
 						thisClass.recording.entry_published_class = "unpublished";
 					}
 					else if (data == "undefined"){
