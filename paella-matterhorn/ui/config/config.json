@@ -1,12 +1,16 @@
 {
 	"player":{
 		"defaultProfile": "full",
+		"profileFrameStrategy": "paella.ProfileFrameStrategy",
 		"methods":[{"name":"streaming","enabled":true},
 				   {"name":"html","enabled":true},
 				   {"name":"flash","enabled":true},
 				   {"name":"image","enabled":true}],
-		"stream0Audio":true,
-		"stream1Audio":false				   
+        "stream0Audio": true,
+        "stream1Audio": false,
+        "rtmpSettings": {
+            "bufferTime": 5
+        }						   
 	},
 	"editor":{
 			"enabled":true
@@ -24,6 +28,15 @@
 			"userInfo": "UserDataDelegate"
 		}
 	},
+    "skin": {
+        "default": "dark",
+        "available": [
+            "dark",
+            "dark_small",
+            "light",
+            "light_small"
+        ]
+    },	
 	"plugins":{
 		"defaultConfig":{"enabled":true},
 		"list":{
@@ -37,7 +50,7 @@
 			"es.upv.paella.FootPrintsPlugin": {"enabled": true, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"},
 			"es.upv.paella.descriptionPlugin": {"enabled":false},
 			"es.upv.paella.commentsPlugin": {"enabled": false },
-            "es.upv.paella.helpPlugin":{"enabled":true, "langs":["en"]},
+            "es.upv.paella.helpPlugin":{"enabled":true, "langs":["es", "en"]},            
 			
 			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
 			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": true},
@@ -50,7 +63,23 @@
 			
 			
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
-			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false}			
+			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false},
+			
+            "edu.harvard.dce.paella.flexSkipPlugin": {
+                "enabled": true,
+                "direction": "Rewind",
+                "seconds": 10
+            },
+            "edu.harvard.dce.paella.flexSkipPluginForward": {
+                "enabled": true,
+                "direction": "Forward",
+                "seconds": 30
+            },
+            "es.upv.paella.volumeRangePlugin": {
+                "enabled": true,
+                "showMasterVolume": true,
+                "showSlaveVolume": false
+            }            
 		}
 	}
 }
