@@ -61,25 +61,13 @@
 			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
 			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": false },
 			
-			
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
 			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false},
 			
-            "edu.harvard.dce.paella.flexSkipPlugin": {
-                "enabled": true,
-                "direction": "Rewind",
-                "seconds": 10
-            },
-            "edu.harvard.dce.paella.flexSkipPluginForward": {
-                "enabled": true,
-                "direction": "Forward",
-                "seconds": 30
-            },
-            "es.upv.paella.volumeRangePlugin": {
-                "enabled": true,
-                "showMasterVolume": true,
-                "showSlaveVolume": false
-            }            
+            "edu.harvard.dce.paella.flexSkipPlugin": { "enabled": true, "direction": "Rewind", "seconds": 10 },
+            "edu.harvard.dce.paella.flexSkipPluginForward": {"enabled": false, "direction": "Forward", "seconds": 30 },
+            "es.upv.paella.volumeRangePlugin": { "enabled": true, "showMasterVolume": true, "showSlaveVolume": false },
+            "es.upv.paella.themeChooserPlugin": { "enabled": false }
 		}
 	}
 }
