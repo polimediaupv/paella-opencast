@@ -117,6 +117,15 @@ function loadPaellaExtended(containerId, onSuccess) {
 	initPaellaMatterhorn(id,
 		function() {
 			initPaellaExtended({containerId:containerId,initDelegate:initDelegate});
+			new base.Timer(function(timer) {
+				if (paella.player) {
+					timer.repeat = false;
+					paella.player.onresize();
+				}
+				else {
+					timer.repeat = true;
+				}
+			}, 100);
 			if (onSuccess) onSuccess();
 		},
 		function() {
