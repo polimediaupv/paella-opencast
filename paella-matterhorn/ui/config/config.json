@@ -87,7 +87,7 @@
             "edu.harvard.dce.paella.flexSkipPlugin": { "enabled": true, "direction": "Rewind", "seconds": 10 },
             "edu.harvard.dce.paella.flexSkipPluginForward": {"enabled": false, "direction": "Forward", "seconds": 30 },
             "es.upv.paella.volumeRangePlugin": { "enabled": true, "showMasterVolume": true, "showSlaveVolume": false },
-            "es.upv.paella.themeChooserPlugin": { "enabled": false }
+            "es.upv.paella.themeChooserPlugin": { "enabled": false },
 
 			"edu.harvard.dce.bannerPlugin": {"enabled": false, "defaultValue":false},
 			"edu.harvard.dce.courseLinkPlugin": {"enabled": false, "defaultValue":false},
