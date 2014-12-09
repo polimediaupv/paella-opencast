@@ -29,17 +29,7 @@
 			"userInfo": "UserDataDelegate"
 		}
 	},
-    "skin": {
-        "default": "dark",
-        "available": [
-            "dark",
-            "dark_small",
-            "light",
-            "light_small"
-        ]
-    },	
 	"plugins":{
-		"DCE.info" : {"where.to.get.plugin.name": "look in plugin javascript getName()"},
 		"defaultConfig":{"enabled":true},
 		"list":{
 			"es.upv.paella.test.videoLoadPlugin": {"enabled": false},
@@ -57,7 +47,7 @@
 			"es.upv.paella.descriptionPlugin": {"enabled":true},
 			"es.upv.paella.commentsPlugin": {"enabled": false },
 
-			"es.upv.paella.helpPlugin":{"enabled":true, "langs":["en"]},
+			"es.upv.paella.helpPlugin":{"enabled":false, "langs":["en"]},
 			"es.upv.paella.zoomPlugin": {"enabled": false },
 			"es.upv.paella.themeChooserPlugin": {"enabled": false },
 			"es.upv.paella.volumeRangePlugin": {
@@ -65,7 +55,7 @@
                              "showMasterVolume": true,
                              "showSlaveVolume": false
 			},
-			"es.upv.paella.playbackRate": {"enabled": false},
+			"es.upv.paella.playbackRate": {"enabled": true},
 
 			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":false},
 			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": false},
@@ -84,23 +74,20 @@
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
 			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false},
 			
+			"es.upv.paella.repeatButtonPlugin": {"enabled":false},
             "edu.harvard.dce.paella.flexSkipPlugin": { "enabled": true, "direction": "Rewind", "seconds": 10 },
-            "edu.harvard.dce.paella.flexSkipPluginForward": {"enabled": false, "direction": "Forward", "seconds": 30 },
+            "edu.harvard.dce.paella.flexSkipPluginForward": {"enabled": true, "direction": "Forward", "seconds": 30 },
             "es.upv.paella.volumeRangePlugin": { "enabled": true, "showMasterVolume": true, "showSlaveVolume": false },
             "es.upv.paella.themeChooserPlugin": { "enabled": false },
 
 			"edu.harvard.dce.bannerPlugin": {"enabled": false, "defaultValue":false},
-			"edu.harvard.dce.courseLinkPlugin": {"enabled": false, "defaultValue":false},
 			"edu.harvard.dce.footerPlugin": {"enabled": false, "defaultValue":false},
-			"edu.harvard.dce.infoButtonPlugin": {"enabled": true, "defaultValue":false},
-			"edu.harvard.dce.publicationListButtonPlugin": {"enabled": false, "defaultValue":false}
+			"edu.harvard.dce.infoButtonPlugin": {"enabled": false, "defaultValue":false},
+			"edu.harvard.dce.publicationListButtonPlugin": {"enabled": false, "defaultValue":false},
+			"es.upv.paella.viewModePlugin": { "enabled":false}
 		}
 	},
         "skin": {
-                "default": "dark",
-                "available": [
-                    "dark",
-                    "light"
-                ]
+                "default": "cs50"
         }
 }

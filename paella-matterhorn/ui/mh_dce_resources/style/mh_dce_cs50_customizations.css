@@ -1,0 +1,54 @@
+body{
+  background-color: #333;
+}
+
+div#playerContainer_controls_playback_playbackBar{
+  /* !important is a terrible, terrible hack but necessary because of how paella switches themes */
+  right: 200px !important;
+}
+
+#dceHeader {
+  /* Font stack from the main extension school site */
+  font-family: OpenSans, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+  font-size: 0.9em;
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  z-index: 1000;
+  background: black no-repeat url("../images/dce_masthead_ext.png") 0 -50px;
+}
+
+#dceHeader:hover {
+  background-position: 0px 0px;
+}
+
+#dceHeader .primary a{
+  position: absolute;
+  width: 400px;
+  height: 50px;
+}
+
+#dceHeader #extensionHome {
+  display: block;
+  height: 50px;
+  width: 400px;
+}
+
+#dceHeader div.secondary{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
+#dceHeader .seriesInfo{
+  position: absolute;
+  top: 15px;
+  left: 400px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#dceHeader .seriesInfo .seriesTitle{
+  font-size: 0.7em;
+  font-weight: normal;
+}

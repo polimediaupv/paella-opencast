@@ -193,7 +193,7 @@ module.exports = function(grunt) {
 	
 	grunt.registerTask('build.common', ['update_submodules', 'subgrunt:paella', 'checksyntax', 'copy:paella', 'concat:paella_matterhorn.js', 'merge-json']);
 	
-	grunt.registerTask('build.release', ['build.common', 'uglify:dist', 'cssmin:dist']);
+	grunt.registerTask('build.release', ['build.common', 'cssmin:dist']);
 	grunt.registerTask('build.debug', ['build.common']);
 	
 	grunt.registerTask('server.release', ['build.release', 'express', 'watch:release']);		
