@@ -79,15 +79,26 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			streams[currentTrack.type] = currentStream;
 		}
 		
+		var duration = parseInt(paella.matterhorn.episode.mediapackage.duration/1000);
 		var presenter = streams["presenter/delivery"];
 		var presentation = streams["presentation/delivery"];		
-		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:320, h:180}};
-		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: parseInt(paella.matterhorn.episode.mediapackage.duration/1000), res:{w:1280, h:720}};
+		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:320, h:180}};
+		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
+		var blackboardSource = {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
 		// Read the attachments
 		for (i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
 
-			if (currentAttachment.type == "presentation/segment+preview+hires") {
+			if (currentAttachment.type == "blackboard/image") {
+				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+					
+					blackboardSource.frames["frame_"+time] = currentAttachment.url;
+					blackboardSource.count = blackboardSource.count +1;                	
+				}
+			
+			}
+			else if (currentAttachment.type == "presentation/segment+preview+hires") {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
 					imageSourceHD.frames["frame_"+time] = currentAttachment.url;
@@ -127,6 +138,12 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			presentation.sources.image = imagesArray; 
 		}
 		
+		// Set the blackboard images
+		var blackboardArray = [];
+		if (blackboardSource.count > 0) { blackboardArray.push(blackboardSource); }		
+		if ( (blackboardArray.length > 0) && (presenter != undefined) ){
+			presenter.sources.image = blackboardArray;
+		}		
 		
 	
 		if (presenter) { this.streams.push(presenter); }
