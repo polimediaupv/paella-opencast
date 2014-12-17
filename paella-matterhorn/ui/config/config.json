@@ -40,6 +40,7 @@
 	"plugins":{
 		"defaultConfig":{"enabled":true},
 		"list":{
+			"ch.ethz.paella.multipleQualitiesPlugin": {"enabled": false},
 			"es.upv.paella.test.videoLoadPlugin": {"enabled": false},
 
 			"es.upv.paella.userTrackingCollectorPlugIn": {"enabled": true, "heartBeatTime": 30000},
