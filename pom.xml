@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.opencastproject</groupId>
-	<artifactId>paella-engage-ui-4beta-dce</artifactId>
+	<artifactId>paella-matterhorn</artifactId>
 	<packaging>bundle</packaging>
-	<name>paella-engage-ui-4beta-dce</name>
-	<version>4.beta</version>
+	<name>paella-matterhorn</name>
+	<version>4.0.0</version>
 	<parent>
 		<groupId>org.opencastproject</groupId>
 		<artifactId>base</artifactId>
-		<version>1.4.4</version>
+		<version>1.5.1</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<properties>
