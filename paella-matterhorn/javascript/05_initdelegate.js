@@ -16,11 +16,6 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 		function(){
 			base.ajax.get({url:'/search/episode.json', params:{'id': episodeId}},
 				function(data,contentType,code) {
-					paella.matterhorn.episode = data['search-results'].result;
-					var asyncLoader = new paella.AsyncLoader();
-					var offeringId = null;
-					var type = null;
-
 					//#DCE auth result check
 					var jsonData = data;
 					if (typeof (jsonData) == "string") jsonData = JSON.parse(jsonData);
@@ -36,6 +31,11 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 					   showLoadErrorMessage(paella.dictionary.translate("No recordings found for episode id") + ": \"" + episodeId + "\"");
 					   return;
 					}
+
+					paella.matterhorn.episode = data['search-results'].result;
+					var asyncLoader = new paella.AsyncLoader();
+					var offeringId = null;
+					var type = null;
 
 					if (paella.matterhorn.episode) {
 					   var serie = paella.matterhorn.episode.mediapackage.series;
