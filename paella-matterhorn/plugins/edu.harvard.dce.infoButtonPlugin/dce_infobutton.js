@@ -43,8 +43,8 @@ Class ('paella.plugins.InfoPlugin', paella.ButtonPlugin,{
           params += paella.matterhorn.episode.dcIsPartOf ? '&offeringId=' + paella.matterhorn.episode.dcIsPartOf : '';
           params += paella.matterhorn.episode.dcType ? '&typeNum=' + paella.matterhorn.episode.dcType : '';
           params += paella.matterhorn.episode.dcContributor ? '&ps=' + paella.matterhorn.episode.dcContributor : '';
-          params += paella.matterhorn.episode.dcCreated ? 'cDate=' + paella.matterhorn.episode.dcCreated : '';
-          params += paella.matterhorn.episode.dcSpatial ? 'cAgent=' + paella.matterhorn.episode.dcSpatial : '';
+          params += paella.matterhorn.episode.dcCreated ? '&cDate=' + paella.matterhorn.episode.dcCreated : '';
+          params += paella.matterhorn.episode.dcSpatial ? '&cAgent=' + paella.matterhorn.episode.dcSpatial : '';
         }
         window.open('http://cm.dce.harvard.edu/forms/feedback.shtml?' + params);
         break;
