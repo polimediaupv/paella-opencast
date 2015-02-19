@@ -28,6 +28,18 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		return source;
 	},
 
+	isSupportedStreamingTrack: function(track) {
+		switch (track.mimetype) {
+			case 'video/mp4':
+			case 'video/ogg':
+			case 'video/webm':
+			case 'video/x-flv':
+				return true;
+			default:
+				return false;
+		}
+		return false;
+	},
 
 
 	loadVideo:function(videoId,onSuccess) {
@@ -51,7 +63,9 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 				if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
 					currentStream.sources['rtmp'] = [];
 				}
-				currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack));
+				if (this.isSupportedStreamingTrack(currentTrack)) {
+					currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack));
+				}
 			}
 			else{
 				var videotype = null;
