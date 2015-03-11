@@ -8,6 +8,7 @@ paella.plugins.PublishPlugin = Class.create(paella.EventDrivenPlugin,{
 	
 	
 	checkEnabled:function(onSuccess) {
+		this.loadPublish();
 		onSuccess(true);
 	},
 		
