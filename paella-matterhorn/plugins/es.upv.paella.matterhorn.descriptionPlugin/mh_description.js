@@ -1,4 +1,4 @@
-paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
+paella.plugins.MHDescriptionPlugin  = Class.create(paella.ButtonPlugin,{
 	domElement:null,
 	desc: { date:'-', contributor:'-', language:'-', views:'-', serie:'-', serieId:'', presenter:'-', description:'-', title:'-', subject:'-' },
 	
@@ -10,12 +10,15 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 	getDefaultToolTip:function() { return paella.dictionary.translate("Description"); },	
 	
 
+	getAlignment:function() { return 'right'; },
+	getButtonType:function() { return paella.ButtonPlugin.type.popUpButton; },	
+	/*getIndex:function() {return 120;},*/
+
+
 	buildContent:function(domElement) {
 		this.domElement = domElement;
 		this.loadContent();
 	},
-			
-	action:function(tab) {},
 			
 	loadContent:function() {
 		var thisClass = this;
