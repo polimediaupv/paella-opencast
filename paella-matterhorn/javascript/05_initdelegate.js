@@ -17,24 +17,32 @@ function initPaellaMatterhorn(episodeId, onSuccess, onError) {
 			base.ajax.get({url:'/search/episode.json', params:{'id': episodeId}},
 				function(data,contentType,code) {
 					paella.matterhorn.episode = data['search-results'].result;
-					var asyncLoader = new paella.AsyncLoader();
 		
 					if (paella.matterhorn.episode) {
-						var serie = paella.matterhorn.episode.mediapackage.series;
-						
-						if (serie != undefined) {
-							asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'.json'}), "serie");
-							asyncLoader.addCallback(new paella.JSONCallback({url:'/series/'+serie+'/acl.json'}), "acl");
-						
-							asyncLoader.load(function() {
-									//Check for series
-									paella.matterhorn.serie = asyncLoader.getCallback("serie").data;
-									//Check for acl
-									paella.matterhorn.acl = asyncLoader.getCallback("acl").data;
-									if (onSuccess) onSuccess();
+						var serie = paella.matterhorn.episode.mediapackage.series;						
+						if (serie != undefined) {						
+							base.ajax.get({url:'/series/'+serie+'.json'},
+								function(data,contentType,code) {
+									paella.matterhorn.serie = data;
+									base.ajax.get({url:'/series/'+serie+'/acl.json'},
+										function(data,contentType,code) {
+											paella.matterhorn.acl = data;
+											if (onSuccess) onSuccess();
+										},
+										function(data,contentType,code) {
+											if (onError) onError();										
+										}
+									);									
 								},
-								function() {
-									if (onError) onError();
+								function(data,contentType,code) {
+									if (code == 401) { // Unauthorized
+										// Chapuza para arreglar un fallo de MH con LTI
+										// !!! Cuidado puede dar problemas !!!!
+										if (onSuccess) onSuccess();									
+									}
+									else {
+										if (onError) onError(); 	
+									}
 								}
 							);
 						}
