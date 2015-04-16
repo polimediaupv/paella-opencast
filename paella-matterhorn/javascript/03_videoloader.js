@@ -22,7 +22,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			src:  track.url,
 			type: track.mimetype,
 			res: {w:res[0], h:res[1]},
-			isLiveStream: false
+			isLiveStream: track.live
 		};
 
 		return source;
@@ -103,6 +103,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		for (i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
 
+            if (currentAttachment === undefined) continue;
+            try {
 			if (currentAttachment.type == "blackboard/image") {
 				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
 					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
@@ -142,6 +144,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			else if (currentAttachment.type == "presenter/player+preview") {
 				presenter.preview = currentAttachment.url;
 			}
+        } catch (err) {}
 		}
 
 		// Set the image stream
