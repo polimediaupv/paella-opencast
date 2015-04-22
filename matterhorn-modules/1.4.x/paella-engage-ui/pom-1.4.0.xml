@@ -4,7 +4,7 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>4.0.17</version>
+	<version>4.0.18</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<matterhorn.version>1.4.0</matterhorn.version>
