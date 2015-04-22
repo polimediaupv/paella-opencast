@@ -22,7 +22,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			src:  track.url,
 			type: track.mimetype,
 			res: {w:res[0], h:res[1]},
-			isLiveStream: track.live
+			isLiveStream: (track.live===true)
 		};
 
 		return source;
@@ -103,48 +103,50 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		for (i=0;i<attachments.length;++i) {
 			var currentAttachment = attachments[i];
 
-            if (currentAttachment === undefined) continue;
-            try {
-			if (currentAttachment.type == "blackboard/image") {
-				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+			if (currentAttachment !== undefined) {
+				try {
+					if (currentAttachment.type == "blackboard/image") {
+						if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+							time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+							
+							blackboardSource.frames["frame_"+time] = currentAttachment.url;
+							blackboardSource.count = blackboardSource.count +1;                	
+						}
 					
-					blackboardSource.frames["frame_"+time] = currentAttachment.url;
-					blackboardSource.count = blackboardSource.count +1;                	
-				}
-			
+					}
+					else if (currentAttachment.type == "presentation/segment+preview+hires") {
+						if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+							time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+							imageSourceHD.frames["frame_"+time] = currentAttachment.url;
+							imageSourceHD.count = imageSourceHD.count +1;
+				        	
+				        	if (!(this.frameList[time])){
+				            	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
+				        	}
+				        	this.frameList[time].url = currentAttachment.url;
+						}
+					}
+					else if (currentAttachment.type == "presentation/segment+preview") {
+						if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+							time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+							imageSource.frames["frame_"+time] = currentAttachment.url;
+							imageSource.count = imageSource.count +1;
+							
+				        	if (!(this.frameList[time])){
+				            	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
+				        	}
+				        	this.frameList[time].thumb = currentAttachment.url;
+						}
+					}
+					else if (currentAttachment.type == "presentation/player+preview") {
+						presentation.preview = currentAttachment.url;
+					}
+					else if (currentAttachment.type == "presenter/player+preview") {
+						presenter.preview = currentAttachment.url;
+					}
+				} 
+				catch (err) {}
 			}
-			else if (currentAttachment.type == "presentation/segment+preview+hires") {
-				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
-					imageSourceHD.frames["frame_"+time] = currentAttachment.url;
-					imageSourceHD.count = imageSourceHD.count +1;
-                	
-                	if (!(this.frameList[time])){
-	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
-                	}
-                	this.frameList[time].url = currentAttachment.url;
-				}
-			}
-			else if (currentAttachment.type == "presentation/segment+preview") {
-				if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-					time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
-					imageSource.frames["frame_"+time] = currentAttachment.url;
-					imageSource.count = imageSource.count +1;
-					
-                	if (!(this.frameList[time])){
-	                	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
-                	}
-                	this.frameList[time].thumb = currentAttachment.url;
-				}
-			}
-			else if (currentAttachment.type == "presentation/player+preview") {
-				presentation.preview = currentAttachment.url;
-			}
-			else if (currentAttachment.type == "presenter/player+preview") {
-				presenter.preview = currentAttachment.url;
-			}
-        } catch (err) {}
 		}
 
 		// Set the image stream
