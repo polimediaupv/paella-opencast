@@ -27,6 +27,7 @@ module.exports = function(grunt) {
 				files: [
 					// Basic Paella
 					{expand: true, cwd: 'submodules/paella/build/player', src: ['localization/**', 'config/**', 'javascript/**', 'resources/**', 'player.swf'], dest: 'build/'},			
+					{expand: true, cwd: 'submodules/paella/build/player', src: ['localization/**', 'config/**', 'javascript/**', 'resources/**', 'player_streaming.swf'], dest: 'build/'},			
 					// Paella Matterhorn
 					{expand: true, cwd: 'paella-matterhorn/ui', src: ['**'], dest: 'build/'},
 					{expand: true, src:'plugins/*/resources/**', dest: 'build/resources/style/',
