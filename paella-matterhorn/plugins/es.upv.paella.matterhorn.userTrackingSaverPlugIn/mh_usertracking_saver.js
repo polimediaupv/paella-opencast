@@ -55,9 +55,8 @@ new (Class (paella.userTracking.SaverPlugIn, {
 					matterhornLog.type = event + ';' + opt;
 				}
 				break;
-		}
-	
-		console.log(matterhornLog);
-//		paella.ajax.get( {url: '/usertracking/', params: matterhornLog });			
+		}	
+		//console.log(matterhornLog);
+		paella.ajax.get( {url: '/usertracking/', params: matterhornLog });			
 	}
 }))();
