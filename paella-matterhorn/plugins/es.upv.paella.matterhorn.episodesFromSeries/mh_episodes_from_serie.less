@@ -10,6 +10,8 @@
 .buttonPluginPopUp.EpisodesFromSerie {
 	position: absolute;
 	width: 500px;
+	height: 300px;
+	overflow-y: scroll;
 }
 
 
@@ -67,12 +69,21 @@
 	background-color: rgb(255,165,161) !important;
 }
 
+.episodesFromSerieListing .recordings_entry.no_publish_info.even_entry,
+.episodesFromSerieListing .recordings_entry.no_publish_info.odd_entry {
+	background-color: rgb(255,204,102) !important;
+}
+
+
 .episodesFromSerieListing .recordings_entry:hover{
     background-color: rgb(243, 222, 168);
-    cursor: pointer;
+    /*cursor: pointer; */
 }
 .episodesFromSerieListing .recordings_entry:focus{
     background-color: rgb(243, 222, 168);
 }
 
 
+recordings_entry_text_date {
+	color: lightslategray;
+}

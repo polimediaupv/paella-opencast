@@ -3,44 +3,38 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Matterhorn Video Player</title>
+		<title>Matterhorn Paella Video Player</title>
 		<script type="text/javascript" src="javascript/swfobject.js"></script>
 		<script type="text/javascript" src="javascript/base.js"></script>
 		<script type="text/javascript" src="javascript/jquery.js"></script>
-		<script type="text/javascript" src="javascript/paella_player.js"></script>
-	
+		<script type="text/javascript" src="javascript/lunr.min.js"></script>
+		<script type="text/javascript" src="javascript/require.js"></script>
+		<script type="text/javascript" src="javascript/paella_player.js"></script>		
+		
 		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="resources/style/style_dark.css" id="paellaSkin" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="resources/style/matterhorn-style.css" type="text/css" media="screen" charset="utf-8">		
-
 		<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.slate.min.css" type="text/css" media="screen" charset="utf-8">
-		<link rel="stylesheet" href="mh_resources/style/mh_header.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="resources/style/style_dark.css" id="paellaSkin" type="text/css" media="screen" title="no title" charset="utf-8">
+	
 		
-		
-		<script type="text/javascript" src="javascript/paella_matterhorn.js"></script>
-		<script type="text/javascript" src="mh_resources/js/mh_header.js"></script>
-		
+		<link rel="stylesheet" href="resources/style/matterhorn-style.css" type="text/css" media="screen" charset="utf-8">		
+		<link rel="stylesheet" href="mh_resources/style/mh_header.css" type="text/css" media="screen" charset="utf-8">		
+		<script type="text/javascript" src="javascript/paella_matterhorn.js"></script>		
 		
 		<script type="text/javascript">
-			function createEngageHTMLPage(parentNodeName) {
-				insertHeaderToDomNode(parentNodeName);	
-				var parentNode = document.getElementById(parentNodeName);
-				
-				var paellaExtendedContainer = document.createElement('div');
-				paellaExtendedContainer.id = 'paellaExtendedContainer';
-	
-				parentNode.appendChild(paellaExtendedContainer);	
-			}		
-
-			function loadMHPaella(parentNodeName) {
+			function loadMHPaella(parentNodeName) {				
+				/*
 				initPaellaMatterhornMe(function(){
 					loadPaellaExtended(parentNodeName, function() {
 						createEngageHTMLPage('playerHeader');
 					});					
 				});
+				*/
 			}
 		</script>
 	</head>
-	<body id="body" onload="loadMHPaella('body');">
+	<body id="body" onload="loadPaella('playerContainer');">
+		<div id="playerContainer" style="display:block;width:100%">
+		</div>
+	</body>		
 	</body>
 </html>
