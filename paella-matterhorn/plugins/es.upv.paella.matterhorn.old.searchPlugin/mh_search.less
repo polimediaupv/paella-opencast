@@ -46,12 +46,15 @@
 }
 
 .searchTabBarResultEntry {
-    padding: 2px 5px 2px 5px;
+	padding: 2px 5px 2px 5px;
+	border: 1px solid lightsalmon;
+	margin: 0px 0px 1px 0px;
 }
 .searchTabBarResultEntry:hover {
     background-color: rgb(243, 222, 168);
     cursor: pointer;
 }
+
 .searchTabBarResultEntry:focus {
     background-color: rgb(243, 222, 168);
     cursor: pointer;
@@ -78,7 +81,17 @@
 }
 
 .searchTabBarResultEntryText a {
-    color: black;
+    color: lightgrey;
+}
+
+.searchTabBarResultEntryText a:hover {
+    color: lightgrey;
+    text-decoration: none;
+}
+
+
+.searchTabBarResultEntry:hover > .searchTabBarResultEntryText a {
+    color: lightslategrey;
 }
 
 
@@ -88,6 +101,7 @@
     display: none;
 }
 
+/*
 .low_relevance {
     background-color: rgb(192, 192, 192);
 }
@@ -97,3 +111,4 @@
 .high_relevance {
     background-color: rgb(144, 238, 144);
 }
+*/
