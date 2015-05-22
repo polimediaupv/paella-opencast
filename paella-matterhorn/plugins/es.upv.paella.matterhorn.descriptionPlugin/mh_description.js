@@ -52,9 +52,10 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		paella.ajax.get({url:'/usertracking/stats.json', params:{id:paella.matterhorn.episode.id}},
 			function(data, contentType, returnCode) {
 				thisClass.desc.views = data.stats.views;
-				thisClass.insertDescription();			
+				thisClass.insertDescription();
 			},
 			function(data, contentType, returnCode) {
+				thisClass.insertDescription();				
 			}
 		);
 	},
