@@ -18,18 +18,19 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		    res = track.video.resolution.split('x');
         }
 
+		var src = track.url;
 		var urlSplit = /^(rtmp:\/\/[^\/]*\/[^\/]*)\/(.*)$/.exec(track.url);
-		var rtmp_server =  urlSplit[1];
-		var rtmp_stream =  urlSplit[2];			
-		if (track.mimetype == 'video/mp4'){
-			rtmp_stream = "mp4:" + rtmp_stream;
+		if (urlSplit != null) {
+			var rtmp_server =  urlSplit[1];
+			var rtmp_stream =  urlSplit[2];			
+			src = {
+				server: rtmp_server,
+				stream: rtmp_stream
+			};
 		}
 
 		var source = {			
-			src:  {
-				server: rtmp_server,
-				stream: rtmp_stream
-			},
+			src:  src,
 			type: track.mimetype,
 			res: {w:res[0], h:res[1]},
 			isLiveStream: (track.live===true)
