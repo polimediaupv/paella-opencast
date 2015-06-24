@@ -43,19 +43,29 @@
 	"plugins":{
 		"defaultConfig":{"enabled":true},
 		"list":{
-			"ch.ethz.paella.multipleQualitiesPlugin": {"enabled": false},
 			"es.upv.paella.test.videoLoadPlugin": {"enabled": false},
 			"es.upv.paella.test.tabBarExamplePlugin": {"enabled": false},
-
-			"es.upv.paella.userTrackingCollectorPlugIn": {"enabled": true, "heartBeatTime": 30000},
-			"es.upv.paella.userTrackingGoogleAnalyticsSaverPlugIn": {"enabled":true, "trackingID": "UA-26470475-8", "trackingEvents": false},
-			"es.upv.paella.ShowEditorPlugin":{"enabled":true,"alwaysVisible":true,"editorPage":"editor.html"},
-			"es.upv.paella.TrimmingPlayerPlugin":{"enabled":true},
-			"es.upv.paella.multipleQualitiesPlugin": {"enabled": true},
-			"es.upv.paella.FootPrintsPlugin": {"enabled": true, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"},
+            
+			"edu.harvard.dce.paella.flexSkipPlugin": {"enabled":true, "direction": "Rewind", "seconds": 10},
+			"edu.harvard.dce.paella.flexSkipForwardPlugin": {"enabled":true, "direction": "Forward", "seconds": 30},			
+					"es.upv.paella.showEditorPlugin":{"enabled":true,"alwaysVisible":true, "editorPage":"editor.html"},			
+			"es.upv.paella.trimmingPlayerPlugin":{"enabled":true},
+			"es.upv.paella.playPauseButtonPlugin":{"enabled":true},
+			"es.upv.paella.playButtonOnScreenPlugin": {"enabled":true},
+			"es.upv.paella.playbackRate": {"enabled":true},			
+			"es.upv.paella.volumeRangePlugin":{"enabled":true, "showMasterVolume": true, "showSlaveVolume": false },			
+					"es.upv.paella.footprintsPlugin": {"enabled":true, "skin": "custom", "fillStyle": "#faa166", "strokeStyle": "#fa8533"},
+            "es.upv.paella.multipleQualitiesPlugin":  {"enabled": true, "showWidthRes":true},						
+            "es.upv.paella.helpPlugin": {"enabled":true, "langs":["en","es"]},                        
+            "es.upv.paella.fullScreenButtonPlugin": {"enabled":true, "reloadOnFullscreen":{ "enabled":true, "keepUserSelection":true }},
+		            "es.upv.paella.themeChooserPlugin":  {"enabled":false},
+            "es.upv.paella.captionsPlugin":{"enabled":true,"searchOnCaptions":true},
+            "es.upv.paella.searchPlugin":{"enabled":true, "sortType":"time", "colorSearch":false},
+			"es.upv.paella.editor.trimmingTrackPlugin":{"enabled":true},            
+            
+            
 			"es.upv.paella.descriptionPlugin": {"enabled":false},
 			"es.upv.paella.commentsPlugin": {"enabled": false },
-            "es.upv.paella.helpPlugin":{"enabled":true, "langs":["es", "en"]},            
 			
 			"es.upv.paella.editor.TrimmingTrackPlugin":{"enabled":true},
 			"es.upv.paella.editor.SnapShotsEditorPlugin": {"enabled": true},
@@ -64,15 +74,10 @@
 			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true},
 			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
-			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": true },
-			
+			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": true },			
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
-			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false},
-			
-            "edu.harvard.dce.paella.flexSkipPlugin": { "enabled": true, "direction": "Rewind", "seconds": 10 },
-            "edu.harvard.dce.paella.flexSkipPluginForward": {"enabled": false, "direction": "Forward", "seconds": 30 },
-            "es.upv.paella.volumeRangePlugin": { "enabled": true, "showMasterVolume": true, "showSlaveVolume": false },
-            "es.upv.paella.themeChooserPlugin": { "enabled": false }
+			"es.upv.paella.matterhorn.EpisodesFromSerie": {"enabled": true},
+			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false}
 		}
 	}
 }
