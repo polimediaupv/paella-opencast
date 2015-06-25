@@ -1,5 +1,5 @@
 new (Class (paella.userTracking.SaverPlugIn, {
-	getName: function() { return "es.upv.paella.usertracking.matterhornUserTrackingSaverPlugIn"; },
+	getName: function() { return "es.upv.paella.matterhorn.userTrackingSaverPlugIn"; },
 	
 	checkEnabled: function(onSuccess) {
 		paella.ajax.get({url:'/usertracking/detailenabled'},

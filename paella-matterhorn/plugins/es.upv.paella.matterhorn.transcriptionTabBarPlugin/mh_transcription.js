@@ -14,10 +14,10 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 	
 	
 	getSubclass:function() { return "searchTabBar"; },
-	getName:function() { return 'es.upv.paella.matterhorn.searchTabBarPlugin'; },
-	getTabName:function() { return paella.dictionary.translate('Search'); },
+	getName:function() { return 'es.upv.paella.matterhorn.transcriptionTabBarPlugin'; },
+	getTabName:function() { return paella.dictionary.translate('Transcription'); },
 	getIndex:function() { return 20; },
-	getDefaultToolTip:function() { return paella.dictionary.translate("Search"); },		
+	getDefaultToolTip:function() { return paella.dictionary.translate("Transcription"); },		
 	
 	checkEnabled:function(onSuccess) {
 		var ret = false;

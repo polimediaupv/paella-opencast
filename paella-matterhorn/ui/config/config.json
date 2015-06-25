@@ -46,6 +46,7 @@
 			"edu.harvard.dce.paella.flexSkipPlugin": {"enabled":true, "direction": "Rewind", "seconds": 10},
 			"edu.harvard.dce.paella.flexSkipForwardPlugin": {"enabled":true, "direction": "Forward", "seconds": 30},
             "es.upv.paella.captionsPlugin": {"enabled":true, "searchOnCaptions":true},
+            "es.upv.paella.extendedTabAdapterPlugin": {"enabled":true}, 
 				"es.upv.paella.footprintsPlugin": {"enabled":true},
 			"es.upv.paella.frameControlPlugin":  {"enabled": true},
             "es.upv.paella.fullScreenButtonPlugin": {"enabled":true, "reloadOnFullscreen":{ "enabled":true, "keepUserSelection":true }},
@@ -97,14 +98,16 @@
 			
 			
 			"//****": "Opencast Plugins",
-			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
-			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": true },			
-			"es.upv.paella.matterhorn.EpisodesFromSerie": {"enabled": true},
+			"es.upv.paella.matterhorn.descriptionPlugin": {"enabled": true },
+			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": true },
+			"es.upv.paella.matterhorn.episodesFromSeries": {"enabled": true},
 			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
-			"es.upv.paella.matterhorn.publishEditorPlugin": {"enabled": false, "defaultValue":false},
-			
-			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled":true},
-			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled":true}			
+			"es.upv.paella.matterhorn.searchPlugin": {"enabled": true},			
+			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
+			"es.upv.paella.matterhorn.transcriptionTabBarPlugin": {"enabled": true },			
+			"es.upv.paella.matterhorn.editor.publishPlugin": {"enabled": false, "defaultValue":false},			
+			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled": false},
+			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled": false}
         }
 	}
 }

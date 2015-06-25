@@ -1,6 +1,6 @@
 paella.plugins.EpisodesFromSerie = Class.create(paella.ButtonPlugin,{
 	getSubclass:function() { return 'EpisodesFromSerie'; },
-	getName:function() { return "es.upv.paella.matterhorn.EpisodesFromSerie"; },
+	getName:function() { return "es.upv.paella.matterhorn.episodesFromSeries"; },
 	
 	getIndex:function() { return 10; },
 	getDefaultToolTip:function() { return paella.dictionary.translate("Related Videos"); },	
