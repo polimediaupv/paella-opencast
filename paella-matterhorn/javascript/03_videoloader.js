@@ -18,8 +18,19 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		    res = track.video.resolution.split('x');
         }
 
-		var source = {
-			src:  track.url,
+		var src = track.url;
+		var urlSplit = /^(rtmp:\/\/[^\/]*\/[^\/]*)\/(.*)$/.exec(track.url);
+		if (urlSplit != null) {
+			var rtmp_server =  urlSplit[1];
+			var rtmp_stream =  urlSplit[2];			
+			src = {
+				server: rtmp_server,
+				stream: rtmp_stream
+			};
+		}
+
+		var source = {			
+			src:  src,
 			type: track.mimetype,
 			res: {w:res[0], h:res[1]},
 			isLiveStream: (track.live===true)
@@ -29,14 +40,16 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 	},
 
 	isSupportedStreamingTrack: function(track) {
-		switch (track.mimetype) {
-			case 'video/mp4':
-			case 'video/ogg':
-			case 'video/webm':
-			case 'video/x-flv':
-				return true;
-			default:
-				return false;
+		if (/^(rtmp:\/\/[^\/]*\/[^\/]*)\/(.*)$/.test(track.url) == true) {
+			switch (track.mimetype) {
+				case 'video/mp4':
+				case 'video/ogg':
+				case 'video/webm':
+				case 'video/x-flv':
+					return true;
+				default:
+					return false;
+			}
 		}
 		return false;
 	},
@@ -60,10 +73,10 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			
 			
 			if (this.isStreaming(currentTrack)) {
-				if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
-					currentStream.sources['rtmp'] = [];
-				}
 				if (this.isSupportedStreamingTrack(currentTrack)) {
+					if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
+						currentStream.sources['rtmp'] = [];
+					}
 					currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack));
 				}
 			}

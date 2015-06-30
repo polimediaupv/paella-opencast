@@ -1,21 +1,34 @@
-paella.plugins.UserTrackingSaverPlugIn = Class.create(paella.EventDrivenPlugin,{
-	getName:function() { return "es.upv.paella.matterhorn.userTrackingSaverPlugIn"; },
-	getEvents:function() { return [paella.events.userTracking]; },
-
+new (Class (paella.userTracking.SaverPlugIn, {
+	getName: function() { return "es.upv.paella.matterhorn.userTrackingSaverPlugIn"; },
 	
-	onEvent:function(eventType, params) {		
-		var videoCurrentTime = parseInt(paella.player.videoContainer.currentTime() + paella.player.videoContainer.trimStart());
-		
+	checkEnabled: function(onSuccess) {
+		paella.ajax.get({url:'/usertracking/detailenabled'},
+			function(data, contentType, returnCode) {
+				if (data == 'true') {
+					onSuccess(true); 					
+				}
+				else {
+					onSuccess(false); 
+				}
+			},
+			function(data, contentType, returnCode) {
+				onSuccess(false);
+			}
+		);	
+	},
+	
+	log: function(event, params) {
+		var videoCurrentTime = parseInt(paella.player.videoContainer.currentTime() + paella.player.videoContainer.trimStart());		
 		var matterhornLog = {
 			_method: 'PUT',
 			'id': paella.player.videoIdentifier,
-			'type': params.event,
-			'in': params.time,
-			'out': params.time,
-			'playing': params.playing
+			'type': undefined,
+			'in': videoCurrentTime,
+			'out': videoCurrentTime,
+			'playing': !paella.player.videoContainer.paused()
 		};
 		
-		switch (params.event) {
+		switch (event) {
 			case paella.events.play:
 				matterhornLog.type = 'PLAY';
 				break;
@@ -26,25 +39,24 @@ paella.plugins.UserTrackingSaverPlugIn = Class.create(paella.EventDrivenPlugin,{
 			case paella.events.seekToTime:
 				matterhornLog.type = 'SEEK';
 				break;
-			case "RESIZE-TO":
-				matterhornLog.type = "RESIZE-TO-"+params.label;
+			case paella.events.resize:
+				matterhornLog.type = "RESIZE-TO-" + params.width + "x" + params.height;
 				break;
-		}
-		
-		paella.ajax.get( {url: '/usertracking/', params: matterhornLog });
-	},
-	
-	checkEnabled:function(onSuccess) {
-		paella.ajax.get({url:'/usertracking/detailenabled'},
-			function(data, contentType, returnCode) {
-				if (data == 'true') { onSuccess(true); } else { onSuccess(false); }
-			},
-			function(data, contentType, returnCode) {
-				onSuccess(false);
-			}
-		);	
+			case "paella:searchService:search":
+				matterhornLog.type = "SEARCH-" + params;
+				break;
+			default:
+				matterhornLog.type = event;
+				opt = params;
+				if (opt != undefined) {				
+					if (typeof(params) == "object") {
+						opt = JSON.stringify(params);
+					}
+					matterhornLog.type = event + ';' + opt;
+				}
+				break;
+		}	
+		//console.log(matterhornLog);
+		paella.ajax.get( {url: '/usertracking/', params: matterhornLog });			
 	}
-});
-
-
-paella.plugins.userTrackingSaverPlugIn = new paella.plugins.UserTrackingSaverPlugIn();
+}))();

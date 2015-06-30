@@ -1,9 +1,16 @@
-paella.plugins.EpisodesFromSerie = Class.create(paella.RightBarPlugin,{
+paella.plugins.EpisodesFromSerie = Class.create(paella.ButtonPlugin,{
 	getSubclass:function() { return 'EpisodesFromSerie'; },
+	getName:function() { return "es.upv.paella.matterhorn.episodesFromSeries"; },
+	
+	getIndex:function() { return 10; },
+	getDefaultToolTip:function() { return paella.dictionary.translate("Related Videos"); },	
+	
 
-	getName:function() {
-		return "es.upv.paella.matterhorn.EpisodesFromSerie";
-	},
+	getAlignment:function() { return 'right'; },
+	getButtonType:function() { return paella.ButtonPlugin.type.popUpButton; },	
+	
+	
+	
 
 	buildContent:function(domElement) {
 	
@@ -31,7 +38,7 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.RightBarPlugin,{
 		domElement.appendChild(episodesFromSerieListing);
 
 
-		var params = {limit:10, page:0, sid:serieId};
+		var params = {limit:5, page:0, sid:serieId};
 		var mySearch = new paella.matterhorn.SearchEpisode(paella.player.config, params);
 		mySearch.doSearch(params, document.getElementById('episodesFromSerieListing'));
 	}

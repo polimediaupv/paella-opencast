@@ -7,7 +7,7 @@
 	<version>4.1.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<matterhorn.version>1.4.2</matterhorn.version>
+		<matterhorn.version>1.6.1</matterhorn.version>
 		<matterhorn.basedir>${project.basedir}/../..</matterhorn.basedir>
 		<checkstyle.skip>false</checkstyle.skip>
 	</properties>
@@ -58,7 +58,7 @@
 
                     <execution>
 						<phase>compile</phase>                        
-                        <id>grunt build.release</id>
+                        <id>grunt build.debug</id>
                         <goals>
                             <goal>grunt</goal>
                         </goals>
