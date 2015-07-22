@@ -4,10 +4,10 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>4.1.2</version>
+	<version>4.1.4</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<matterhorn.version>2.0.0-beta2</matterhorn.version>
+		<matterhorn.version>2.0.0</matterhorn.version>
 		<matterhorn.basedir>${project.basedir}/../..</matterhorn.basedir>
 		<checkstyle.skip>false</checkstyle.skip>
 	</properties>
