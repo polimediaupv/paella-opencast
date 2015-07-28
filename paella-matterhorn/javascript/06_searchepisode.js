@@ -351,7 +351,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 		var author_search = "";
 		if(recording.dcCreator) {
 		  author = "by " + recording.dcCreator;
-		  author_search = recording.dcCreator.replace(" ", "+");
+		  author_search = recording.dcCreator;
 		}
 		var divResultAuthorText = document.createElement('div');
 		divResultAuthorText.id = rootID+"_text_author_container";
@@ -362,7 +362,7 @@ paella.matterhorn.SearchEpisode = Class.create({
 		authorResultText.innerHTML = author;
 		authorResultText.className = "recordings_entry_text_title";
 		if (author_search != "") {
-			authorResultText.href = "?q=" + author_search;
+			authorResultText.href = "index.html?q=" + encodeURIComponent(author_search);
 		}
 		divResultAuthorText.appendChild(authorResultText);
 		divResultText.appendChild(divResultAuthorText);
