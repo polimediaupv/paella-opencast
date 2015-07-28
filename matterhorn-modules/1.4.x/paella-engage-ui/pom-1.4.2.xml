@@ -4,7 +4,7 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>4.1.4</version>
+	<version>4.1.4-1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<matterhorn.version>1.4.2</matterhorn.version>
@@ -104,7 +104,7 @@
 						<Bundle-SymbolicName> ${project.artifactId} </Bundle-SymbolicName>
 						<Import-Package> org.opencastproject.rest;version=${matterhorn.version}</Import-Package>
 						<Private-Package>ui.*</Private-Package>
-						<Http-Alias>/paella4.0/ui</Http-Alias>
+						<Http-Alias>/paella/ui</Http-Alias>
 						<Http-Classpath>/ui</Http-Classpath>
 						<Http-Welcome>index.html</Http-Welcome>
 					</instructions>
