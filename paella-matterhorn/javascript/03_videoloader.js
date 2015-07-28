@@ -24,8 +24,8 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 			var rtmp_server =  urlSplit[1];
 			var rtmp_stream =  urlSplit[2];			
 			src = {
-				server: rtmp_server,
-				stream: rtmp_stream
+				server: encodeURIComponent(rtmp_server),
+				stream: encodeURIComponent(rtmp_stream)
 			};
 		}
 
