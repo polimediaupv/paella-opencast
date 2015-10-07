@@ -1,4 +1,4 @@
-paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
+paella.plugins.TranscriptionTabBarPlugin  = Class.create(paella.TabBarPlugin,{
 	divContainer:null,
 	divSearchBar:null,
 	divLoading:null,
@@ -158,11 +158,13 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 			if (event.keyCode == 13) { $(document).trigger( paella.events.seekToTime, {time: segment.time/1000}); }
 		});		
 
-		var divPreview = document.createElement('div'); 
+		var divPreview = document.createElement('div');
 		divPreview.className = "searchTabBarResultEntryPreview";
-		var imgPreview = document.createElement('img');
-		imgPreview.src = segment.previews.preview.$;
-		divPreview.appendChild(imgPreview);
+		if (segment && segment.previews && segment.previews.preview) {
+			var imgPreview = document.createElement('img');
+			imgPreview.src = segment.previews.preview.$;
+			divPreview.appendChild(imgPreview);
+		}
 		divEntry.appendChild(divPreview);
 		
 
@@ -284,4 +286,4 @@ paella.plugins.SearchPlugin  = Class.create(paella.TabBarPlugin,{
 });
 
 
-paella.plugins.searchPlugin = new paella.plugins.SearchPlugin();
+paella.plugins.transcriptionTabBarPlugin = new paella.plugins.TranscriptionTabBarPlugin();
