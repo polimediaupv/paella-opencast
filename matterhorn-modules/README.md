@@ -1,7 +1,7 @@
-Paella Player 3.1 for Matterhorn
+Paella Player for Matterhorn
 =================================
 
-This is the Paella Player 3.1 for Matterhorn.
+This is the Paella Player for Matterhorn.
 
 
 Paella Player Matterhorn bundle
