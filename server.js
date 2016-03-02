@@ -8,10 +8,12 @@ var proxy = httpProxy.createProxyServer({});
  
 function proxyFunc(req, res, next) {
 	//proxy.web(req, res, { target: 'http://engage.opencast.org/' });
-	// proxy.web(req, res, { target: 'http://videoapuntes-engage.upv.es:8989/' });
-	proxy.web(req, res, { target: 'http://mhtest.virtuos.uos.de/' });
+	proxy.web(req, res, { target: 'http://engage.videoapuntes.upv.es:8080/' });
 	
 }
+
+
+app.use('/paella/ui', express.static('build/paella-opencast'));
 app.use(proxyFunc);
 
 
