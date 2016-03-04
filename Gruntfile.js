@@ -15,14 +15,14 @@ module.exports = function(grunt) {
 					// Basic Paella
 					{expand: true, dot:true, cwd: 'node_modules/PaellaPlayer', src: ['**'], dest: 'build/paella'},
 					// Paella Opencast
-					{expand: true, cwd: 'paella-matterhorn/plugins', src: ['**'], dest: 'build/paella/plugins'},
+					{expand: true, cwd: 'paella-opencast/plugins', src: ['**'], dest: 'build/paella/plugins'},
 				]
 			},
 			"paella-opencast": {
 				files: [
 					// Basic Paella
 					{expand: true, cwd: 'build/paella/build/player', src: ['**', '!paella-standalone.js'], dest: 'build/paella-opencast'},
-					{expand: true, cwd: 'paella-matterhorn/ui', src: ['**'], dest: 'build/paella-opencast'}
+					{expand: true, cwd: 'paella-opencast/ui', src: ['**'], dest: 'build/paella-opencast'}
 				]
 			}
 		},
@@ -45,8 +45,8 @@ module.exports = function(grunt) {
 				jshintrc: 'node_modules/PaellaPlayer/.jshintrc'
 			},
 			dist: [
-				'paella-matterhorn/javascript/*.js',
-				'paella-matterhorn/plugins/*/*.js'
+				'paella-opencast/javascript/*.js',
+				'paella-opencast/plugins/*/*.js'
 			]
 		},
 		
@@ -56,9 +56,9 @@ module.exports = function(grunt) {
 		watch: {
 			 debug: {
 				 files: [
-				 	'paella-matterhorn/ui/**',
-				 	'paella-matterhorn/javascript/*.js',
-				 	'paella-matterhorn/plugins/**'
+				 	'paella-opencast/ui/**',
+				 	'paella-opencast/javascript/*.js',
+				 	'paella-opencast/plugins/**'
 				 ],
 				 tasks: ['build']
 			}
