@@ -1,18 +1,18 @@
-Paella Player for Matterhorn
+Paella Player for Opencast
 =================================
 
-This is the Paella Player for Matterhorn.
+This is the Paella Player for Opencast.
 
 
-Paella Player Matterhorn bundle
+Paella Player Opencast bundle
 ===============================
-This is the folder for Paella player matterhorn bundle. 
+This is the folder for Paella player opencast bundle. 
 
 
-Matterhorn Bundle Installation
+Opencast Bundle Installation
 ==============================
-1. Check your Matterhorn version by running the following command
+1. Check your Opencast version by running the following command
 
-    `$ grep -m 1 '<version>' $MH_HOME/pom.xml`
+    `$ grep -m 1 '<version>' $OPENCAST_HOME/pom.xml`
 
 2. Go to that version folder and follow the instructions.
