@@ -1,5 +1,5 @@
-# Paella Player for Matterhorn
-This is the Paella player for matterhorn bundle.
+# Paella Player for Opencast
+This is the Paella player for opencast bundle.
 
 ![Paella Player Logo](https://raw.githubusercontent.com/polimediaupv/paella-matterhorn/master/doc/images/paella_mh.png)
 
@@ -19,5 +19,5 @@ the [standalone](https://github.com/polimediaupv/paella) version of paella.
 
 ## Documentation
 
-- [Build and Install Paella Player for Matterhorn](build.md)
+- [Build and Install Paella Player for Opencast](build.md)
 
