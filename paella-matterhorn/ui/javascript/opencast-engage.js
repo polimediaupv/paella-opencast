@@ -54,7 +54,7 @@
 
 		$scope.reloadPage = function() {
 			var q = $scope.newSearch || $scope.q || "";
-			var limit = parseInt($scope.limitText) || 15;
+			var limit = parseInt($scope.limitText) || 20;
 			var page = $scope.page || 0;
 			var sort = $scope.sort || "";			
 			var url = '?limit='+limit+'&page='+page+'&q='+q+'&sort='+sort;
@@ -106,7 +106,7 @@
 		});
 				
 		$scope.q = search.q || "";
-		$scope.limit = search.limit ? parseInt(search.limit) : 15;
+		$scope.limit = search.limit ? parseInt(search.limit) : 20;
 		$scope.page = search.page ? parseInt(search.page) : 0;
 		
 		

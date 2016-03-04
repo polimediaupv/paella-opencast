@@ -2,7 +2,7 @@
 // OCR Segments Search
 /////////////////////////////////////////////////
 new (Class (paella.SearchServicePlugIn, {
-	getName: function() { return "es.upv.paella.matterhorn.searchPlugin"; },
+	getName: function() { return "es.upv.paella.opencast.searchPlugin"; },
 
 	search: function(text, next) {
 
@@ -10,10 +10,11 @@ new (Class (paella.SearchServicePlugIn, {
 			next(false,[]);
 		}
 		else {
+			var episodeId = paella.utils.parameters.get('id');
 		
-			paella.ajax.get({url:'/search/episode.json', params:{id:paella.matterhorn.episode.id, q:text, limit:1000}},
+			paella.ajax.get({url:'/search/episode.json', params:{id:episodeId, q:text, limit:1000}},
 				function(data, contentType, returnCode) {				
-					paella.debug.log("Searching episode="+paella.matterhorn.episode.id + " q="+text);				
+					paella.debug.log("Searching episode=" + episodeId + " q="+text);				
 	                segmentsAvailable = (data !== undefined) && (data['search-results'] !== undefined) &&
 	                    (data['search-results'].result !== undefined) && 
 	                    (data['search-results'].result.segments !== undefined) && 

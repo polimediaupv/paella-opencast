@@ -1,6 +1,6 @@
 paella.plugins.EpisodesFromSerie = Class.create(paella.ButtonPlugin,{
 	getSubclass:function() { return 'EpisodesFromSerie'; },
-	getName:function() { return "es.upv.paella.matterhorn.episodesFromSeries"; },
+	getName:function() { return "es.upv.paella.opencast.episodesFromSeries"; },
 	
 	getIndex:function() { return 10; },
 	getDefaultToolTip:function() { return paella.dictionary.translate("Related Videos"); },	
@@ -10,12 +10,22 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.ButtonPlugin,{
 	getButtonType:function() { return paella.ButtonPlugin.type.popUpButton; },	
 	
 	
-	
+	checkEnabled:function(onSuccess) {
+		var self = this;
+		paella.opencast.getEpisode()
+		.then(
+			function(episode) {
+				self._episode = episode;
+				onSuccess(true);
+			},
+			function() { onSuccess(false); }
+		);
+	},	
 
 	buildContent:function(domElement) {
-	
-		var serieId = paella.matterhorn.episode.mediapackage.series;
-		var serieTitle = paella.matterhorn.episode.mediapackage.seriestitle;
+		var self = this;	
+		var serieId = self._episode.mediapackage.series;
+		var serieTitle = self._episode.mediapackage.seriestitle;
 
 
 

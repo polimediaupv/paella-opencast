@@ -14,18 +14,24 @@ paella.plugins.TranscriptionTabBarPlugin  = Class.create(paella.TabBarPlugin,{
 	
 	
 	getSubclass:function() { return "searchTabBar"; },
-	getName:function() { return 'es.upv.paella.matterhorn.transcriptionTabBarPlugin'; },
+	getName:function() { return 'es.upv.paella.opencast.transcriptionTabBarPlugin'; },
 	getTabName:function() { return paella.dictionary.translate('Transcription'); },
 	getIndex:function() { return 20; },
 	getDefaultToolTip:function() { return paella.dictionary.translate("Transcription"); },		
 	
+	
 	checkEnabled:function(onSuccess) {
-		var ret = false;
-		if (paella.matterhorn && paella.matterhorn.episode && paella.matterhorn.episode.segments) {
-			ret = true;
-		}
-		onSuccess(ret);
-	},
+		var self = this;
+		paella.opencast.getEpisode()
+		.then(
+			function(episode) {
+				self._episode = episode;
+				onSuccess(episode.segments != undefined);
+			},
+			function() { onSuccess(false); }
+		);
+	},	
+	
 		
 	setup:function() {},
 	
@@ -125,15 +131,15 @@ paella.plugins.TranscriptionTabBarPlugin  = Class.create(paella.TabBarPlugin,{
 	},
 		
 	loadSegmentText:function() {
+		var self = this;	
 		this.setLoading(true);
 		this.divResults.innerHTML = "";
 				
-				
-		if (paella.matterhorn.episode.segments === undefined) {
+		if (self._episode.segments === undefined) {
 			paella.debug.log("Segment Text data not available");
 		} 
 		else {
-			var segments = paella.matterhorn.episode.segments;
+			var segments = self._episode.segments;
 			for (var i =0; i < segments.segment.length; ++i ){
 				var segment = segments.segment[i];
 				this.appendSegmentTextEntry(segment);
@@ -197,9 +203,9 @@ paella.plugins.TranscriptionTabBarPlugin  = Class.create(paella.TabBarPlugin,{
 		
 		
 		var segmentsAvailable = false;
-		paella.ajax.get({url:'/search/episode.json', params:{id:paella.matterhorn.episode.id, q:value, limit:1000}},
+		paella.ajax.get({url:'/search/episode.json', params:{id:thisClass._episode.id, q:value, limit:1000}},
 			function(data, contentType, returnCode) {
-				paella.debug.log("Searching episode="+paella.matterhorn.episode.id + " q="+value);
+				paella.debug.log("Searching episode="+thisClass._episode.id + " q="+value);
 
                 segmentsAvailable = (data !== undefined) && (data['search-results'] !== undefined) &&
                     (data['search-results'].result !== undefined) && 

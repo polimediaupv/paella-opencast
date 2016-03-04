@@ -60,7 +60,7 @@ module.exports = function(grunt) {
 				 	'paella-matterhorn/javascript/*.js',
 				 	'paella-matterhorn/plugins/**'
 				 ],
-				 tasks: ['copy:paella-opencast']
+				 tasks: ['build']
 			}
 		},		
 		express: {
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('prepare', ['copy:paella']);
 
 	grunt.registerTask('checksyntax', ['prepare', 'jshint', 'subgrunt:checksyntax']);
-	grunt.registerTask('build', ['checksyntax', 'subgrunt:build.debug', 'copy:paella-opencast']);
+	grunt.registerTask('build', ['prepare', 'subgrunt:build.debug', 'copy:paella-opencast']);
 
 	
 	grunt.registerTask('server', ['build', 'express', 'watch']);		

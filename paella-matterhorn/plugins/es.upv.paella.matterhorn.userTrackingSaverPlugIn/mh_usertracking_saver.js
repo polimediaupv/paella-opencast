@@ -1,5 +1,5 @@
 new (Class (paella.userTracking.SaverPlugIn, {
-	getName: function() { return "es.upv.paella.matterhorn.userTrackingSaverPlugIn"; },
+	getName: function() { return "es.upv.paella.opencast.userTrackingSaverPlugIn"; },
 	
 	checkEnabled: function(onSuccess) {
 		paella.ajax.get({url:'/usertracking/detailenabled'},
@@ -19,7 +19,7 @@ new (Class (paella.userTracking.SaverPlugIn, {
 	
 	log: function(event, params) {
 		var videoCurrentTime = parseInt(paella.player.videoContainer.currentTime() + paella.player.videoContainer.trimStart());		
-		var matterhornLog = {
+		var opencastLog = {
 			_method: 'PUT',
 			'id': paella.player.videoIdentifier,
 			'type': undefined,
@@ -30,33 +30,33 @@ new (Class (paella.userTracking.SaverPlugIn, {
 		
 		switch (event) {
 			case paella.events.play:
-				matterhornLog.type = 'PLAY';
+				opencastLog.type = 'PLAY';
 				break;
 			case paella.events.pause:
-				matterhornLog.type = 'PAUSE';
+				opencastLog.type = 'PAUSE';
 				break;
 			case paella.events.seekTo:
 			case paella.events.seekToTime:
-				matterhornLog.type = 'SEEK';
+				opencastLog.type = 'SEEK';
 				break;
 			case paella.events.resize:
-				matterhornLog.type = "RESIZE-TO-" + params.width + "x" + params.height;
+				opencastLog.type = "RESIZE-TO-" + params.width + "x" + params.height;
 				break;
 			case "paella:searchService:search":
-				matterhornLog.type = "SEARCH-" + params;
+				opencastLog.type = "SEARCH-" + params;
 				break;
 			default:
-				matterhornLog.type = event;
+				opencastLog.type = event;
 				opt = params;
 				if (opt != undefined) {				
 					if (typeof(params) == "object") {
 						opt = JSON.stringify(params);
 					}
-					matterhornLog.type = event + ';' + opt;
+					opencastLog.type = event + ';' + opt;
 				}
 				break;
 		}	
-		//console.log(matterhornLog);
-		paella.ajax.get( {url: '/usertracking/', params: matterhornLog });			
+		//console.log(opencastLog);
+		paella.ajax.get( {url: '/usertracking/', params: opencastLog });			
 	}
 }))();

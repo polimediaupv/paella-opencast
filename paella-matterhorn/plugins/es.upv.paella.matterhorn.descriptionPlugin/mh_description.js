@@ -4,11 +4,30 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 	
 	
 	getSubclass:function() { return "showMHDescriptionTabBar"; },
-	getName:function() { return "es.upv.paella.matterhorn.descriptionPlugin"; },
+	getName:function() { return "es.upv.paella.opencast.descriptionPlugin"; },
 	getTabName:function() { return paella.dictionary.translate("Description"); },
 	getIndex:function() { return 10; },
 	getDefaultToolTip:function() { return paella.dictionary.translate("Description"); },	
 	
+	
+	checkEnabled:function(onSuccess) {
+		var self = this;
+		paella.opencast.getEpisode()
+		.then(
+			function(episode) {
+				self._episode = episode;
+				paella.opencast.getEpisode()
+				.then(
+					function(series) {
+						self._series = series;
+						onSuccess(true);
+					},
+					function() { onSuccess(false); }
+				);
+			},
+			function() { onSuccess(false); }
+		);
+	},	
 
 	buildContent:function(domElement) {
 		this.domElement = domElement;
@@ -20,16 +39,15 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 	loadContent:function() {
 		var thisClass = this;
 
-		if (paella.matterhorn.episode.dcTitle) { this.desc.title = paella.matterhorn.episode.dcTitle; }
-		if (paella.matterhorn.episode.dcCreator) { this.desc.presenter = paella.matterhorn.episode.dcCreator; }
-		if (paella.matterhorn.episode.dcContributor) { this.desc.contributor = paella.matterhorn.episode.dcContributor; }
-		if (paella.matterhorn.episode.dcDescription) { this.desc.description = paella.matterhorn.episode.dcDescription; }
-		if (paella.matterhorn.episode.dcLanguage) { this.desc.language = paella.matterhorn.episode.dcLanguage; }
-		if (paella.matterhorn.episode.dcSubject) { this.desc.subject = paella.matterhorn.episode.dcSubject; }
-		if (paella.matterhorn.serie) {
-			// paella.matterhorn.serie['http://purl.org/dc/terms/'];
-			if (paella.matterhorn.serie) {
-				var serie = paella.matterhorn.serie['http://purl.org/dc/terms/'];
+		if (thisClass._episode.dcTitle) { this.desc.title = thisClass._episode.dcTitle; }
+		if (thisClass._episode.dcCreator) { this.desc.presenter = thisClass._episode.dcCreator; }
+		if (thisClass._episode.dcContributor) { this.desc.contributor = thisClass._episode.dcContributor; }
+		if (thisClass._episode.dcDescription) { this.desc.description = thisClass._episode.dcDescription; }
+		if (thisClass._episode.dcLanguage) { this.desc.language = thisClass._episode.dcLanguage; }
+		if (thisClass._episode.dcSubject) { this.desc.subject = thisClass._episode.dcSubject; }
+		if (self._series) {
+			if (self._series) {
+				var serie = self._series['http://purl.org/dc/terms/'];
 				if (serie) { 
 					this.desc.serie = serie.title[0].value; 
 					this.desc.serieId = serie.identifier[0].value; 
@@ -37,7 +55,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 			}
 		}
 		this.desc.date = "n.a.";
-		var dcCreated = paella.matterhorn.episode.dcCreated;
+		var dcCreated = thisClass._episode.dcCreated;
 		if (dcCreated) {			
 			var sd = new Date();
 			sd.setFullYear(parseInt(dcCreated.substring(0, 4), 10));
@@ -49,7 +67,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 			this.desc.date = sd.toLocaleString();
 		}
 
-		paella.ajax.get({url:'/usertracking/stats.json', params:{id:paella.matterhorn.episode.id}},
+		paella.ajax.get({url:'/usertracking/stats.json', params:{id:thisClass._episode.id}},
 			function(data, contentType, returnCode) {
 				thisClass.desc.views = data.stats.views;
 				thisClass.insertDescription();

@@ -122,16 +122,16 @@
 			
 			
 			"//****": "Opencast Plugins",
-			"es.upv.paella.matterhorn.descriptionPlugin": {"enabled": true },
-			"es.upv.paella.matterhorn.downloadsPlugin": {"enabled": true },
-			"es.upv.paella.matterhorn.episodesFromSeries": {"enabled": true},
-			"es.upv.paella.matterhorn.publishPlugin": {"enabled": false, "defaultValue":false},
-			"es.upv.paella.matterhorn.searchPlugin": {"enabled": true},			
-			"es.upv.paella.matterhorn.userTrackingSaverPlugIn": {"enabled": true },
-			"es.upv.paella.matterhorn.transcriptionTabBarPlugin": {"enabled": true },			
-			"es.upv.paella.matterhorn.editor.publishPlugin": {"enabled": false, "defaultValue":false},			
-			"es.upv.paella.matterhorn.editor.MultipleVideoExportEditorPlugin": {"enabled": false},
-			"es.upv.paella.matterhorn.editor.SingleVideoExportEditorPlugin": {"enabled": false}
+			"es.upv.paella.opencast.descriptionPlugin": {"enabled": true },
+			"es.upv.paella.opencast.downloadsPlugin": {"enabled": true },
+			"es.upv.paella.opencast.episodesFromSeries": {"enabled": true},
+			"es.upv.paella.opencast.publishPlugin": {"enabled": false, "defaultValue":false},
+			"es.upv.paella.opencast.searchPlugin": {"enabled": true},			
+			"es.upv.paella.opencast.userTrackingSaverPlugIn": {"enabled": true },
+			"es.upv.paella.opencast.transcriptionTabBarPlugin": {"enabled": true },			
+			"es.upv.paella.opencast.editor.publishPlugin": {"enabled": false, "defaultValue":false},			
+			"es.upv.paella.opencast.editor.MultipleVideoExportEditorPlugin": {"enabled": false},
+			"es.upv.paella.opencast.editor.SingleVideoExportEditorPlugin": {"enabled": false}
         }
 	}
 }

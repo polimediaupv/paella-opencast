@@ -72,13 +72,19 @@
 						</ul>
 					</div>				
 				
-					<div class="btn-group pull-right">
-						<select ng-model="limitText" class="form-control input-sm" ng-change="reloadPage()">
-							<option value=15>15</option>
-							<option value=30>30</option>
-							<option value=60>60</option>
-							<option value=120>120</option>
-						</select>
+				
+					<div class="btn-group dropup pull-right">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{limit}} <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#" ng-click="itemsPerPage(10)">10</a></li>
+							<li><a href="#" ng-click="itemsPerPage(20)">20</a></li>
+							<li><a href="#" ng-click="itemsPerPage(30)">30</a></li>
+							<li><a href="#" ng-click="itemsPerPage(50)">50</a></li>
+							<li><a href="#" ng-click="itemsPerPage(100)">100</a></li>
+							<li><a href="#" ng-click="itemsPerPage(200)">200</a></li>
+						</ul>
 					</div>				
 				</div>				
 			</div>

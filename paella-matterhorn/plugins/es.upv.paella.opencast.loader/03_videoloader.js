@@ -1,13 +1,5 @@
-/*
 
-Video data: paella.VideoLoader
-
-Extend paella.VideoLoader and implement the loadVideo method:
-
-*/
-
-
-var MHVideoLoader = Class.create(paella.VideoLoader, {
+var OpencastToPaellaConverter = Class.create({
 	isStreaming:function(track) {
 		return /rtmp:\/\//.test(track.url);
 	},
@@ -31,7 +23,7 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 
 		var source = {			
 			src:  src,
-			type: track.mimetype,
+			mimetype: track.mimetype,
 			res: {w:res[0], h:res[1]},
 			isLiveStream: (track.live===true)
 		};
@@ -53,31 +45,28 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		}
 		return false;
 	},
+	
+	convertToDataJson: function(episode) {
+		var self = this;
+		var opencastStreams = {};
+		var opencastFrameList = {};
 
-
-	loadVideo:function(videoId,onSuccess) {
-		var i;
-		var streams = {};
-		var tracks = paella.matterhorn.episode.mediapackage.media.track;
-		var attachments = paella.matterhorn.episode.mediapackage.attachments.attachment;
+		var tracks = episode.mediapackage.media.track;
+		var attachments = episode.mediapackage.attachments.attachment;
 		if (!(tracks instanceof Array)) { tracks = [tracks]; }
-		if (!(attachments instanceof Array)) { attachments = [attachments]; }
-		this.frameList = {};
-
-
+		if (!(attachments instanceof Array)) { attachments = [attachments]; }		
 		// Read the tracks!!
-		for (i=0;i<tracks.length;++i) {
-			var currentTrack = tracks[i];
-			var currentStream = streams[currentTrack.type];
+		tracks.forEach(function(currentTrack) {
+			var currentStream = opencastStreams[currentTrack.type];
 			if (currentStream == undefined) { currentStream = { sources:{}, preview:'' }; }
 			
 			
-			if (this.isStreaming(currentTrack)) {
-				if (this.isSupportedStreamingTrack(currentTrack)) {
+			if (self.isStreaming(currentTrack)) {
+				if (self.isSupportedStreamingTrack(currentTrack)) {
 					if ( !(currentStream.sources['rtmp']) || !(currentStream.sources['rtmp'] instanceof Array)){
 						currentStream.sources['rtmp'] = [];
 					}
-					currentStream.sources['rtmp'].push(this.getStreamSource(currentTrack));
+					currentStream.sources['rtmp'].push(self.getStreamSource(currentTrack));
 				}
 			}
 			else{
@@ -92,76 +81,73 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 						videotype = 'flv';
 						break;
 					default:
-						paella.debug.log('MHVideoLoader: MimeType ('+currentTrack.mimetype+') not recognized!');
+						paella.debug.log('OpencastToPaellaConverter: MimeType ('+currentTrack.mimetype+') not recognized!');
 						break;
 				}
 				if (videotype){
 					if ( !(currentStream.sources[videotype]) || !(currentStream.sources[videotype] instanceof Array)){
 						currentStream.sources[videotype] = [];
 					}				
-					currentStream.sources[videotype].push(this.getStreamSource(currentTrack));
+					currentStream.sources[videotype].push(self.getStreamSource(currentTrack));
 				}
 			}
 
-			streams[currentTrack.type] = currentStream;
-		}
+			opencastStreams[currentTrack.type] = currentStream;
+		});
 		
-		var duration = parseInt(paella.matterhorn.episode.mediapackage.duration/1000);
-		var presenter = streams["presenter/delivery"];
-		var presentation = streams["presentation/delivery"];		
+		var duration = parseInt(episode.mediapackage.duration/1000);
+		var presenter = opencastStreams["presenter/delivery"];
+		var presentation = opencastStreams["presentation/delivery"];		
 		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:320, h:180}};
 		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
 		var blackboardSource = {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
 		// Read the attachments
-		for (i=0;i<attachments.length;++i) {
-			var currentAttachment = attachments[i];
-
-			if (currentAttachment !== undefined) {
-				try {
-					if (currentAttachment.type == "blackboard/image") {
-						if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-							time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
-							
-							blackboardSource.frames["frame_"+time] = currentAttachment.url;
-							blackboardSource.count = blackboardSource.count +1;                	
-						}
-					
+		attachments.forEach(function(currentAttachment){
+			try {
+				if (currentAttachment.type == "blackboard/image") {
+					if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+						time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+						
+						blackboardSource.frames["frame_"+time] = currentAttachment.url;
+						blackboardSource.count = blackboardSource.count +1;                	
 					}
-					else if (currentAttachment.type == "presentation/segment+preview+hires") {
-						if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-							time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
-							imageSourceHD.frames["frame_"+time] = currentAttachment.url;
-							imageSourceHD.count = imageSourceHD.count +1;
-				        	
-				        	if (!(this.frameList[time])){
-				            	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
-				        	}
-				        	this.frameList[time].url = currentAttachment.url;
-						}
+				
+				}
+				else if (currentAttachment.type == "presentation/segment+preview+hires") {
+					if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+						time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+						imageSourceHD.frames["frame_"+time] = currentAttachment.url;
+						imageSourceHD.count = imageSourceHD.count +1;
+			        	
+			        	if (!(opencastFrameList[time])){
+			            	opencastFrameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};
+			        	}
+			        	opencastFrameList[time].url = currentAttachment.url;
 					}
-					else if (currentAttachment.type == "presentation/segment+preview") {
-						if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-							time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
-							imageSource.frames["frame_"+time] = currentAttachment.url;
-							imageSource.count = imageSource.count +1;
-							
-				        	if (!(this.frameList[time])){
-				            	this.frameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};                	
-				        	}
-				        	this.frameList[time].thumb = currentAttachment.url;
-						}
+				}
+				else if (currentAttachment.type == "presentation/segment+preview") {
+					if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
+						time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+						imageSource.frames["frame_"+time] = currentAttachment.url;
+						imageSource.count = imageSource.count +1;
+						
+			        	if (!(this.frameList[time])){
+			            	opencastFrameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};
+			        	}
+			        	opencastFrameList[time].thumb = currentAttachment.url;
 					}
-					else if (currentAttachment.type == "presentation/player+preview") {
-						presentation.preview = currentAttachment.url;
-					}
-					else if (currentAttachment.type == "presenter/player+preview") {
-						presenter.preview = currentAttachment.url;
-					}
-				} 
-				catch (err) {}
-			}
-		}
-
+				}
+				else if (currentAttachment.type == "presentation/player+preview") {
+					presentation.preview = currentAttachment.url;
+				}
+				else if (currentAttachment.type == "presenter/player+preview") {
+					presenter.preview = currentAttachment.url;
+				}
+			} 
+			catch (err) {}
+		});
+		
+		
 		// Set the image stream
 		var imagesArray = [];
 		if (imageSourceHD.count > 0) { imagesArray.push(imageSourceHD); }
@@ -175,15 +161,29 @@ var MHVideoLoader = Class.create(paella.VideoLoader, {
 		if (blackboardSource.count > 0) { blackboardArray.push(blackboardSource); }		
 		if ( (blackboardArray.length > 0) && (presenter != undefined) ){
 			presenter.sources.image = blackboardArray;
-		}		
-		
+		}				
 	
-		if (presenter) { this.streams.push(presenter); }
-		if (presentation) { this.streams.push(presentation); }
 
-		// Callback
-		this.loadStatus = true;
-		onSuccess();			
+		
+
+		var data =  {
+			metadata: {
+				title: episode.mediapackage.title,
+				duration: episode.mediapackage.duration/1000
+			},
+			streams: [],
+			frameList: []
+		};
+
+		if (presenter) { data.streams.push(presenter); }
+		if (presentation) { data.streams.push(presentation); }
+		
+		Object.keys(opencastFrameList).forEach(function(key, index) {
+			data.frameList.push(opencastFrameList[key]);
+		});
+		
+		return data;
 	}
+		
 });
 
