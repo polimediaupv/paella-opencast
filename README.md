@@ -2,7 +2,7 @@ Paella Player for Opencast
 ============================
 This is the Paella player for opencast bundle.
 
-![Paella Player Logo](https://raw.githubusercontent.com/polimediaupv/paella-matterhorn/master/doc/images/paella_mh.png)
+![Paella Player Logo](doc/images/paella_mh.png)
 
 Paella Player
 =============
