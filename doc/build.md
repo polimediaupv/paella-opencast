@@ -1,16 +1,6 @@
 # Build and Install
 
-In this section we are going to explain how to build and install Paella Player for Matterhorn.
-
-## Init git submodelues
-
-paella-matterhorn repo uses submodules, so when you clone the paella-matterhorn repo you need to init the submodules.
-To do this you need  to run:
-
-	$ git submodule init
-	$ git submodule update
-
-Onve you have the submodule downloaded you can continue with the installation.
+In this section we are going to explain how to build and install Paella Player for Opencast.
 
 ## Dependencies
 
@@ -40,7 +30,7 @@ Now, run the next command:
 Congratulations, you have all the dependencies installed.	
 
 
-## Build Paella Player for Matterhorn
+## Build Paella Player for Opencast
 
-Go to `matterhorn-modules` folder and follow the instructions.
+Go to `opencast-modules` folder and follow the instructions.
 
