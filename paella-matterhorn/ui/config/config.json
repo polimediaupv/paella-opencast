@@ -36,6 +36,11 @@
         "default": "dark",
         "available": [ "dark", "dark_small", "light", "light_small" ]
     },
+	"folders": {
+		"profiles": "config/profiles",
+		"resources": "resources",
+		"skins": "resources/style"
+	},    
 	"plugins":{
 		"enablePluginsByDefault": false,		
 
