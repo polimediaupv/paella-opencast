@@ -3,7 +3,7 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>5.0.0</version>
+	<version>5.0.3</version>
 	<groupId>org.opencastproject.paella</groupId>
 		
 	<prerequisites>
@@ -28,7 +28,7 @@
 			<plugin>
 			    <groupId>com.github.eirslett</groupId>
 			    <artifactId>frontend-maven-plugin</artifactId>
-			    <version>0.0.28</version>
+			    <version>1.0</version>
 			    
 			    <configuration>
 			        <workingDirectory>.</workingDirectory>
@@ -42,8 +42,8 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v5.7.0</nodeVersion>
-                            <npmVersion>3.6.0</npmVersion>
+                            <nodeVersion>v4.4.5</nodeVersion>
+                            <npmVersion>2.15.0</npmVersion>
                         </configuration>
                     </execution>
 
