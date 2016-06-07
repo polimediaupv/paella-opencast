@@ -46,6 +46,10 @@ Congratulations, you have all the dependencies installed.
 
 4. Copy the paella bundle to your Opencast installation
 
+    - For opencast 2.0 copy the bundle to: `$OPENCAST_HOME/lib/matterhorn`
+    
+    - For opencast 2.1 or 2.2 copy the bundle to: `$OPENCAST_HOME/deploy`
+
 5. By default paella is installed in /paella/ui URL in your server. You need to enable address to that URL. Edit the `${$OPENCAST_HOME}/etc/security/mh_default_org.xml` file and add this line:
 
     ```
