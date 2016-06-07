@@ -40,16 +40,20 @@ Congratulations, you have all the dependencies installed.
 
     `<opencast.version>2.0.0</opencast.version>`
 
-3. Copy the paella-engage-ui module to your Opencast installation
+3. Build the paella bundle
 
-4. By default paella is installed in /paella/ui URL in your server. You need to enable address to that URL. Edit the `${$OPENCAST_HOME}/etc/security/mh_default_org.xml` file and add this line:
+    `mvn clean install`
+
+4. Copy the paella bundle to your Opencast installation
+
+5. By default paella is installed in /paella/ui URL in your server. You need to enable address to that URL. Edit the `${$OPENCAST_HOME}/etc/security/mh_default_org.xml` file and add this line:
 
     ```
-    <sec:intercept-url pattern="/paella3.1/ui/auth.html" access="ROLE_USER" />
-    <sec:intercept-url pattern="/paella3.1/ui/**" access="ROLE_ANONYMOUS" />
+    <sec:intercept-url pattern="/paella/ui/auth.html" access="ROLE_USER" />
+    <sec:intercept-url pattern="/paella/ui/**" access="ROLE_ANONYMOUS" />
     ```
     
-5. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella/ui
+6. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella/ui
 
 ## Configuring Paella as the default video player for your tenant
 
