@@ -96,8 +96,8 @@ var OpencastToPaellaConverter = Class.create({
 		});
 		
 		var duration = parseInt(episode.mediapackage.duration/1000);
-		var presenter = opencastStreams["presenter/delivery"];
-		var presentation = opencastStreams["presentation/delivery"];		
+		var presenter = opencastStreams["presenter/delivery"] || opencastStreams["presenter/preview"];
+		var presentation = opencastStreams["presentation/delivery"] || opencastStreams["presentation/preview"];		
 		var imageSource =   {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:320, h:180}};
 		var imageSourceHD = {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
 		var blackboardSource = {type:"image/jpeg", frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
@@ -131,7 +131,7 @@ var OpencastToPaellaConverter = Class.create({
 						imageSource.frames["frame_"+time] = currentAttachment.url;
 						imageSource.count = imageSource.count +1;
 						
-			        	if (!(this.frameList[time])){
+			        	if (!(opencastFrameList[time])){
 			            	opencastFrameList[time] = {id:'frame_'+time, mimetype:currentAttachment.mimetype, time:time, url:currentAttachment.url, thumb:currentAttachment.url};
 			        	}
 			        	opencastFrameList[time].thumb = currentAttachment.url;
