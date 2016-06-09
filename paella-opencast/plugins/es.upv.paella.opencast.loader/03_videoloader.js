@@ -79,7 +79,14 @@ var OpencastToPaellaConverter = Class.create({
 						break;
 					case 'video/x-flv':
 						videotype = 'flv';
+						break;						
+					case 'application/x-mpegURL':
+						videotype = 'hls';
 						break;
+					case 'application/dash+xml':
+						videotype = 'mpd';
+						break;
+						
 					default:
 						paella.debug.log('OpencastToPaellaConverter: MimeType ('+currentTrack.mimetype+') not recognized!');
 						break;

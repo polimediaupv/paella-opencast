@@ -3,8 +3,8 @@
 		"profileFrameStrategy": "paella.ProfileFrameStrategy",
 		"videoQualityStrategy": "paella.BestFitVideoQualityStrategy",		
         "methods": [
-        	{ "factory":"Html5VideoFactory", "enabled":true },
         	{ "factory":"MpegDashVideoFactory", "enabled":true },
+        	{ "factory":"Html5VideoFactory", "enabled":true },
         	{ "factory":"RTMPVideoFactory", "enabled":true },
         	{ "factory":"HLSVideoFactory", "enabled":true },
         	{ "factory":"ImageVideoFactory", "enabled":true },
