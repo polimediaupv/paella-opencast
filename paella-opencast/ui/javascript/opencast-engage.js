@@ -16,6 +16,9 @@
 							if (a.type == "presentation/search+preview") {
 								ret = a.url;
 							}
+							if ((ret == null) && (a.type == "presenter/search+preview")) {
+								ret = a.url;
+							}
 						});
 					}
 					if (ret == null) {
