@@ -55,8 +55,9 @@ new (Class (paella.userTracking.SaverPlugIn, {
 					opencastLog.type = event + ';' + opt;
 				}
 				break;
-		}	
+		}
+		opencastLog.type = opencastLog.type.substr(0, 128);
 		//console.log(opencastLog);
-		paella.ajax.get( {url: '/usertracking/', params: opencastLog });			
+		paella.ajax.get( {url: '/usertracking/', params: opencastLog});			
 	}
 }))();
