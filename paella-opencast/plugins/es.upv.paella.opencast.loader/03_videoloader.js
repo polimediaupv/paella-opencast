@@ -1,7 +1,7 @@
 
 var OpencastToPaellaConverter = Class.create({
 	isStreaming:function(track) {
-		return /rtmp:\/\//.test(track.url);
+		return /rtmps?:\/\//.test(track.url);
 	},
 
 	getStreamSource:function(track) {
@@ -32,7 +32,7 @@ var OpencastToPaellaConverter = Class.create({
 	},
 
 	isSupportedStreamingTrack: function(track) {
-		if (/^(rtmp:\/\/[^\/]*\/[^\/]*)\/(.*)$/.test(track.url) == true) {
+		if (/^(rtmps?:\/\/[^\/]*\/[^\/]*)\/(.*)$/.test(track.url) == true) {
 			switch (track.mimetype) {
 				case 'video/mp4':
 				case 'video/ogg':
