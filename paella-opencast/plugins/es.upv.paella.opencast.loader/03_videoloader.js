@@ -11,7 +11,7 @@ var OpencastToPaellaConverter = Class.create({
         }
 
 		var src = track.url;
-		var urlSplit = /^(rtmp:\/\/[^\/]*\/[^\/]*)\/(.*)$/.exec(track.url);
+		var urlSplit = /^(rtmps?:\/\/[^\/]*\/[^\/]*)\/(.*)$/.exec(track.url);
 		if (urlSplit != null) {
 			var rtmp_server =  urlSplit[1];
 			var rtmp_stream =  urlSplit[2];			
