@@ -115,7 +115,12 @@
 			
 			return "-";
 		}
-		
+	
+		$scope.itemsPerPage = function(v) {
+				$scope.limitText = v;
+				$scope.reloadPage();
+		}
+	
 		//Read search params
 		var search={};
 		window.location.search.slice(1).split("&").forEach(function(x){
