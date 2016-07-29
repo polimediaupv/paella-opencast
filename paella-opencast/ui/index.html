@@ -37,7 +37,7 @@
 				<form class="navbar-form navbar-right" role="search">
 					<div class="btn-group">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{{me.user.username}} <span class="caret"></span>
+							{{getUserName()}} <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li ng-hide="isLogged"><a href="#" ng-click="login()"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li>
