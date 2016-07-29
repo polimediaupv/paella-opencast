@@ -86,7 +86,7 @@
 	
 		$scope.getOpencastEpisodes = function() {
 			var q = $scope.q || "";
-			var limit = parseInt($scope.limitText) || 15;
+			var limit = parseInt($scope.limitText) || 20;
 			var page = $scope.page || 0;
 			var offset = page*limit;
 			var sort = $scope.sort || "";			
@@ -102,6 +102,20 @@
 			});
 		}	
 	
+		$scope.getUserName = function() 
+		{
+			if ($scope.me){
+				if ($scope.me.username) {return $scope.me.username; } //opencast 1.6/1.7
+				if ($scope.me.user) {
+					if ($scope.me.user.username) {
+						return $scope.me.user.username;  //opencast 2.0/2.2
+					}
+				}				
+			}
+			
+			return "-";
+		}
+		
 		//Read search params
 		var search={};
 		window.location.search.slice(1).split("&").forEach(function(x){
