@@ -18,46 +18,48 @@ new (Class (paella.userTracking.SaverPlugIn, {
 	},
 	
 	log: function(event, params) {
-		var videoCurrentTime = parseInt(paella.player.videoContainer.currentTime() + paella.player.videoContainer.trimStart());		
-		var opencastLog = {
-			_method: 'PUT',
-			'id': paella.player.videoIdentifier,
-			'type': undefined,
-			'in': videoCurrentTime,
-			'out': videoCurrentTime,
-			'playing': !paella.player.videoContainer.paused()
-		};
-		
-		switch (event) {
-			case paella.events.play:
-				opencastLog.type = 'PLAY';
-				break;
-			case paella.events.pause:
-				opencastLog.type = 'PAUSE';
-				break;
-			case paella.events.seekTo:
-			case paella.events.seekToTime:
-				opencastLog.type = 'SEEK';
-				break;
-			case paella.events.resize:
-				opencastLog.type = "RESIZE-TO-" + params.width + "x" + params.height;
-				break;
-			case "paella:searchService:search":
-				opencastLog.type = "SEARCH-" + params;
-				break;
-			default:
-				opencastLog.type = event;
-				opt = params;
-				if (opt != undefined) {				
-					if (typeof(params) == "object") {
-						opt = JSON.stringify(params);
+		paella.player.videoContainer.currentTime().then(function(ct){
+			var videoCurrentTime = parseInt(ct + paella.player.videoContainer.trimStart());		
+			var opencastLog = {
+				_method: 'PUT',
+				'id': paella.player.videoIdentifier,
+				'type': undefined,
+				'in': videoCurrentTime,
+				'out': videoCurrentTime,
+				'playing': !paella.player.videoContainer.paused()
+			};
+			
+			switch (event) {
+				case paella.events.play:
+					opencastLog.type = 'PLAY';
+					break;
+				case paella.events.pause:
+					opencastLog.type = 'PAUSE';
+					break;
+				case paella.events.seekTo:
+				case paella.events.seekToTime:
+					opencastLog.type = 'SEEK';
+					break;
+				case paella.events.resize:
+					opencastLog.type = "RESIZE-TO-" + params.width + "x" + params.height;
+					break;
+				case "paella:searchService:search":
+					opencastLog.type = "SEARCH-" + params;
+					break;
+				default:
+					opencastLog.type = event;
+					opt = params;
+					if (opt != undefined) {				
+						if (typeof(params) == "object") {
+							opt = JSON.stringify(params);
+						}
+						opencastLog.type = event + ';' + opt;
 					}
-					opencastLog.type = event + ';' + opt;
-				}
-				break;
-		}
-		opencastLog.type = opencastLog.type.substr(0, 128);
-		//console.log(opencastLog);
-		paella.ajax.get( {url: '/usertracking/', params: opencastLog});			
+					break;
+			}
+			opencastLog.type = opencastLog.type.substr(0, 128);
+			//console.log(opencastLog);
+			paella.ajax.get( {url: '/usertracking/', params: opencastLog});
+		});		
 	}
 }))();
