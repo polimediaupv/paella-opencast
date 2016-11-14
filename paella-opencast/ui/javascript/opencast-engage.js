@@ -95,7 +95,7 @@
 			$scope.loading = true;
 			$http.get(url).then(function(res){
 				$scope.searchResult = res.data['search-results'];
-				$scope.searchResult.result = [].concat($scope.searchResult.result);
+				$scope.searchResult.result = [].concat($scope.searchResult.result || []);
 
 				$scope.lastPage = Math.ceil((parseInt($scope.searchResult.total)/limit)-1).toString();
 				$scope.loading = false;
