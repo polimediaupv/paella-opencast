@@ -1,7 +1,7 @@
 {
   "name": "paella-engage-ui",
-  "version": "5.0.16",
-  "license": "GPL 3.0",
+  "version": "5.0.16-1",
+  "license": "GPL-3.0",
   "description": "Paella Player for Matterhorn",
   "repository": {
     "type": "git",
