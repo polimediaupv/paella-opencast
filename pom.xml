@@ -3,7 +3,7 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>5.0.16</version>
+	<version>5.1.0</version>
 	<groupId>org.opencastproject.paella</groupId>
 		
 	<prerequisites>
@@ -11,7 +11,7 @@
 	</prerequisites>
 
 	<properties>
-		<opencast.version>2.0.0</opencast.version>
+		<opencast.version>2.3.0</opencast.version>
 		<paella.version>${project.version}</paella.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -22,7 +22,7 @@
 		<version>${paella.version}</version>
 		<relativePath>./pom-base.xml</relativePath>
 	</parent>
--->
+	-->
 	<build>
 		<plugins>
 			<plugin>
@@ -46,7 +46,7 @@
                             <npmVersion>2.15.0</npmVersion>
                         </configuration>
                     </execution>
-
+                    
                     <execution>
 						<phase>validate</phase>                        
                         <id>npm install</id>
@@ -60,12 +60,12 @@
 
                     <execution>
 						<phase>compile</phase>                        
-                        <id>grunt build</id>
+                        <id>gulp build</id>
                         <goals>
-                            <goal>grunt</goal>
+                            <goal>gulp</goal>
                         </goals>
                         <configuration>
-                            <arguments>build</arguments>
+                            <arguments>paella-opencast:build</arguments>
                         </configuration>
                     </execution>
 			    </executions>			    

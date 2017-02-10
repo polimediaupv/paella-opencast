@@ -1,6 +1,6 @@
 {
-  "name": "paella-engage-ui",
-  "version": "5.0.16-1",
+  "name": "paella-opencast",
+  "version": "5.1.0",
   "license": "GPL-3.0",
   "description": "Paella Player for Matterhorn",
   "repository": {
@@ -8,17 +8,16 @@
     "url": "https://github.com/polimediaupv/paella-matterhorn.git"
   },
   "dependencies": {
-    "PaellaPlayer": "polimediaupv/paella.git#5.0.16",
+    "PaellaPlayer": "polimediaupv/paella.git#develop",
     "express": "^4.13.4",
-    "grunt": "~0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "~1.0.0",
-    "grunt-contrib-copy": "~0.8.2",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-express": "~1.4.1",
-    "grunt-parallel": "^0.4.1",
-    "grunt-subgrunt": "~1.1.0",
-    "http-proxy": "^1.13.2"
+    "gulp": "^3.9.1",
+    "gulp-hub": "^0.8.0",
+    "gulp-live-server": "0.0.30",
+    "gulp-sequence": "^0.4.6",
+    "http-proxy": "^1.13.2",
+    "merge-stream": "^1.0.1"
+  },
+  "devDependencies": {
+    "gulp-clean": "^0.3.2"
   }
 }

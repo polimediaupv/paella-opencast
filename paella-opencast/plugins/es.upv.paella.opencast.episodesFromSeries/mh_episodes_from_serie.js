@@ -60,7 +60,7 @@ paella.plugins.episodesFromSerie = new paella.plugins.EpisodesFromSerie();
 
 /************************************************************************************/
 
-SearchEpisode = Class.create({
+var SearchEpisode = Class.create({
 	config:null,
 	proxyUrl:'',
 	recordingEntryID:'',
