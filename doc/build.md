@@ -9,25 +9,21 @@ Paella Player uses [Grunt](http://gruntjs.com/) as a task runner. So we need to 
 1. [Node Js](http://nodejs.org/)
 2. [Grunt Js](http://gruntjs.com/)
 3. [Js Hint](http://www.jshint.com/)
+4. [Git](https://git-scm.com/)
+5. [Apache Maven](https://maven.apache.org/) ≥ 3.1.0
 
-First we are goint to install [Node Js](http://nodejs.org/) in our system. To do so, go to [http://nodejs.org/](http://nodejs.org/) and download and install nodejs.
-Now we have the node and npm command installed.
+First, we are going to install Node Js, Maven and Git. Use your package manager to do that or download the software  from their project websites.
 
-Now, we are going to install the other dependencies. To do so open a terminal and run the next command:
+Now, we are going to install the other dependencies. To do so open a terminal and run:
 
 	$ npm -g install grunt-cli jshint
-	
-If you are in a OSX/Linux machine, run that command with sudo:
-
-	$ sudo npm -g install grunt-cli jshint
-
 
 Finally, we need to install the grunt modules needed by Paella. Open the terminal and go to the folder you have downloaded paella player.
 Now, run the next command:
 
 	$ npm install
 
-Congratulations, you have all the dependencies installed.	
+Congratulations, you have all the dependencies installed.
 
 
 ## Build Paella Player for Opencast
@@ -47,7 +43,7 @@ Congratulations, you have all the dependencies installed.
 4. Copy the paella bundle to your Opencast installation
 
     - For opencast 2.0 copy the bundle to: `$OPENCAST_HOME/lib/matterhorn`
-    
+
     - For opencast 2.1 or 2.2 copy the bundle to: `$OPENCAST_HOME/deploy`
 
 5. By default paella is installed in /paella/ui URL in your server. You need to enable address to that URL. Edit the `${$OPENCAST_HOME}/etc/security/mh_default_org.xml` file and add this line:
@@ -56,7 +52,7 @@ Congratulations, you have all the dependencies installed.
     <sec:intercept-url pattern="/paella/ui/auth.html" access="ROLE_USER" />
     <sec:intercept-url pattern="/paella/ui/**" access="ROLE_ANONYMOUS" />
     ```
-    
+
 6. The Paella Player can be accessed at http://\<yourengageserverurl\>:\<yourport\>/paella/ui
 
 ## Configuring Paella as the default video player for your tenant
@@ -68,4 +64,4 @@ Congratulations, you have all the dependencies installed.
 2. Change the `prop.player` property to `/paella/ui/watch.html`
 
     `prop.player=/paella/ui/watch.html`
- 
+
