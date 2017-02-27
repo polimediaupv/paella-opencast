@@ -12,9 +12,13 @@ function proxyFunc(req, res, next) {
 	//proxy.web(req, res, { target: 'https://opencast-dev.uni-koeln.de/' });	
 }
 
-
+app.use(function(req,res,next){
+	console.log("jaja");
+	next();
+})
 app.use('/paella/ui', express.static('build/paella-opencast'));
 app.use(proxyFunc);
 
-
-module.exports = app;
+app.listen(4000, function () {
+  console.log('Example app listening on port 3000!');
+});
