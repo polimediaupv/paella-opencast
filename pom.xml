@@ -23,63 +23,63 @@
 		<relativePath>./pom-base.xml</relativePath>
 	</parent>
 	-->
-    <profiles>
-        <profile>
-            <id>frontend</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>            	
+	<profiles>
+		<profile>
+			<id>frontend</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>				
 			<build>
 				<plugins>
 					<plugin>
-					    <groupId>com.github.eirslett</groupId>
-					    <artifactId>frontend-maven-plugin</artifactId>
-					    <version>1.0</version>
-					    
-					    <configuration>
-					        <workingDirectory>.</workingDirectory>
-					    </configuration>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.0</version>
+						
+						<configuration>
+							<workingDirectory>.</workingDirectory>
+						</configuration>
 		
-					    <executions>
-		                    <execution>
-		                        <id>install node and npm</id>
-								<phase>validate</phase>                        
-		                        <goals>
-		                            <goal>install-node-and-npm</goal>
-		                        </goals>
-		                        <configuration>
-		                            <nodeVersion>v4.4.5</nodeVersion>
-		                            <npmVersion>2.15.0</npmVersion>
-		                        </configuration>
-		                    </execution>
-		                    
-		                    <execution>
-								<phase>validate</phase>                        
-		                        <id>npm install</id>
-		                        <goals>
-		                            <goal>npm</goal>
-		                        </goals>                        
-		                        <configuration>
-		                            <arguments>install</arguments>
-		                        </configuration>
-		                    </execution>
+						<executions>
+							<execution>
+								<id>install node and npm</id>
+								<phase>validate</phase>						
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>v4.4.5</nodeVersion>
+									<npmVersion>2.15.0</npmVersion>
+								</configuration>
+							</execution>
+							
+							<execution>
+								<phase>validate</phase>						
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>						
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
 		
-		                    <execution>
-								<phase>compile</phase>                        
-		                        <id>gulp build</id>
-		                        <goals>
-		                            <goal>gulp</goal>
-		                        </goals>
-		                        <configuration>
-		                            <arguments>paella-opencast:build</arguments>
-		                        </configuration>
-		                    </execution>
-					    </executions>			    
+							<execution>
+								<phase>process-resources</phase>						
+								<id>gulp build</id>
+								<goals>
+									<goal>gulp</goal>
+								</goals>
+								<configuration>
+									<arguments>paella-opencast:build</arguments>
+								</configuration>
+							</execution>
+						</executions>				
 					</plugin>
 				</plugins>
 			</build>
-        </profile>
-    </profiles>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>					
 			<plugin>
