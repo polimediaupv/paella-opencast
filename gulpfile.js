@@ -11,7 +11,7 @@ gulp.task('paella-opencast:clean', function () {
 
 
 gulp.task('paella-opencast:prepare:source', function(){
-	var s1 = gulp.src('node_modules/PaellaPlayer/**').pipe(gulp.dest('build/paella'));
+	var s1 = gulp.src('node_modules/paellaplayer/**').pipe(gulp.dest('build/paella'));
 	var s2 = gulp.src('paella-opencast/plugins/**').pipe(gulp.dest('build/paella/plugins'));
 	
 	return mergeStream(s1,s2);
@@ -19,7 +19,7 @@ gulp.task('paella-opencast:prepare:source', function(){
 
 
 gulp.task('paella-opencast:prepare', ['paella-opencast:prepare:source'], function(cb){
-	var cmd_npm = spawn('npm', ['install'], {cwd: 'build/paella' /*, stdio: 'inherit'*/});
+	var cmd_npm = spawn('npm', ['install'], {cwd: 'build/paella', stdio: 'inherit'});
 	cmd_npm.on('close', function (code) {
 		cb(code);
 	});	
