@@ -4,25 +4,12 @@ In this section we are going to explain how to build and install Paella Player f
 
 ## Dependencies
 
-Paella Player uses [Gulp](http://gulpjs.com/) as a task runner. So we need to install some dependencies:
+We need to install some dependencies:
 
-1. [Node Js](http://nodejs.org/)
-2. [Gulp Js](http://gulpjs.com/)
-3. [Git](https://git-scm.com/)
-4. [Apache Maven](https://maven.apache.org/) ≥ 3.1.0
+1. [Git](https://git-scm.com/)
+2. [Apache Maven](https://maven.apache.org/) ≥ 3.1.0
 
-First, we are going to install Node Js, Maven and Git. Use your package manager to do that or download the software  from their project websites.
-
-Now, we are going to install the other dependencies. To do so open a terminal and run:
-
-	$ npm -g install gulp-cli
-
-Finally, we need to install the gulp modules needed by Paella. Open the terminal and go to the folder you have downloaded paella player.
-Now, run the next command:
-
-	$ npm install
-
-Congratulations, you have all the dependencies installed.
+Use your package manager to do that or download the software from their project websites.
 
 
 ## Build Paella Player for Opencast
