@@ -27,14 +27,14 @@ gulp.task('paella-opencast:prepare', ['paella-opencast:prepare:source'], functio
 
 
 gulp.task('paella-opencast:compile.debug', ['paella-opencast:prepare'], function(cb){
-	var cmd_npm = spawn('node_modules/gulp/bin/gulp.js', ['build.debug'], {cwd: 'build/paella'/*, stdio: 'inherit'*/});
+	var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'build.debug'], {cwd: 'build/paella'/*, stdio: 'inherit'*/});
 	cmd_npm.on('close', function (code) {
 		cb(code);
 	});	
 });
 
 gulp.task('paella-opencast:compile.release', ['paella-opencast:prepare'], function(cb){
-	var cmd_npm = spawn('node_modules/gulp/bin/gulp.js', ['build.release'], {cwd: 'build/paella'/*, stdio: 'inherit'*/});
+	var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'build.release'], {cwd: 'build/paella'/*, stdio: 'inherit'*/});
 	cmd_npm.on('close', function (code) {
 		cb(code);
 	});	
