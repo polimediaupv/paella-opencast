@@ -48,7 +48,7 @@ new (Class (paella.userTracking.SaverPlugIn, {
 					break;
 				default:
 					opencastLog.type = event;
-					opt = params;
+					var opt = params;
 					if (opt != undefined) {				
 						if (typeof(params) == "object") {
 							opt = JSON.stringify(params);
