@@ -134,7 +134,7 @@ var OpencastToPaellaConverter = Class.create({
 				}
 				else if (currentAttachment.type == "presentation/segment+preview") {
 					if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
-						time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
+						var time = parseInt(RegExp.$1)*60*60 + parseInt(RegExp.$2)*60 + parseInt(RegExp.$3);
 						imageSource.frames["frame_"+time] = currentAttachment.url;
 						imageSource.count = imageSource.count +1;
 						
