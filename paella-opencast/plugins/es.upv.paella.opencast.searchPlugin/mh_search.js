@@ -15,7 +15,7 @@ new (Class (paella.SearchServicePlugIn, {
 			paella.ajax.get({url:'/search/episode.json', params:{id:episodeId, q:text, limit:1000}},
 				function(data, contentType, returnCode) {				
 					paella.debug.log("Searching episode=" + episodeId + " q="+text);				
-	                segmentsAvailable = (data !== undefined) && (data['search-results'] !== undefined) &&
+	                var segmentsAvailable = (data !== undefined) && (data['search-results'] !== undefined) &&
 	                    (data['search-results'].result !== undefined) && 
 	                    (data['search-results'].result.segments !== undefined) && 
 	                    (data['search-results'].result.segments.segment.length > 0);
