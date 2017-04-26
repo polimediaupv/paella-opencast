@@ -16,7 +16,10 @@ Use your package manager to do that or download the software from their project 
 
 1. Check your Opencast version by running the following command
 
-    `$ grep -m 1 '<version>' $OPENCAST_HOME/pom.xml`
+    `$ grep -m 1 '<version>' $OPENCAST_HOME/pom.xml`    
+
+Note that if you installed opencast using the RPM package madules `$OPENCAST_HOME` will be `/usr/share/opencast`.
+If you installed opencast using the source code, `$OPENCAST_HOME` will be the folder where you downloaded the source code.
 
 2. Edit the pom.xml file and change the `<opencast.version>`property to match your Opencast version.
 
@@ -26,7 +29,7 @@ Use your package manager to do that or download the software from their project 
 
     `mvn clean install`
 
-4. Copy the paella bundle to your Opencast installation
+4. Copy the paella bundle (file `$PAELLA_SOURCE/target/paella-engage-ui-{version}.jar`) to your opencast installation
 
     - For opencast 2.0 copy the bundle to: `$OPENCAST_HOME/lib/matterhorn`
 
