@@ -3,7 +3,7 @@
 	<artifactId>paella-engage-ui</artifactId>
 	<packaging>bundle</packaging>
 	<name>paella-engage-ui</name>
-	<version>5.1.14</version>
+	<version>5.2.1</version>
 	<groupId>org.opencastproject.paella</groupId>
 		
 	<prerequisites>
@@ -11,7 +11,7 @@
 	</prerequisites>
 
 	<properties>
-		<opencast.version>2.3.0</opencast.version>
+		<opencast.version>3.0</opencast.version>
 		<paella.version>${project.version}</paella.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -116,7 +116,6 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName> ${project.artifactId} </Bundle-SymbolicName>
-						<Import-Package> org.opencastproject.rest;version=${opencast.version}</Import-Package>
 						<Private-Package>ui.*</Private-Package>
 						<Http-Alias>/paella/ui</Http-Alias>
 						<Http-Classpath>/ui</Http-Classpath>
