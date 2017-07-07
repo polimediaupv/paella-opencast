@@ -5,67 +5,54 @@
 	<name>paella-engage-ui</name>
 	<version>5.2.1</version>
 	<groupId>org.opencastproject.paella</groupId>
-		
+
 	<prerequisites>
 		<maven>3.1</maven>
 	</prerequisites>
 
-	<properties>
-		<opencast.version>3.0</opencast.version>
-		<paella.version>${project.version}</paella.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	<!--
-	<parent>
-		<groupId>org.opencastproject.paella</groupId>
-		<artifactId>paella.base</artifactId>
-		<version>${paella.version}</version>
-		<relativePath>./pom-base.xml</relativePath>
-	</parent>
-	-->
 	<profiles>
 		<profile>
 			<id>frontend</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-			</activation>				
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
-						<version>1.0</version>
-						
+						<version>1.4</version>
+
 						<configuration>
 							<workingDirectory>.</workingDirectory>
 						</configuration>
-		
+
 						<executions>
 							<execution>
 								<id>install node and npm</id>
-								<phase>validate</phase>						
+								<phase>validate</phase>
 								<goals>
 									<goal>install-node-and-npm</goal>
 								</goals>
 								<configuration>
-									<nodeVersion>v4.4.5</nodeVersion>
-									<npmVersion>2.15.0</npmVersion>
+									<nodeVersion>v6.11.0</nodeVersion>
+									<npmVersion>3.10.10</npmVersion>
 								</configuration>
 							</execution>
-							
+
 							<execution>
-								<phase>validate</phase>						
+								<phase>validate</phase>
 								<id>npm install</id>
 								<goals>
 									<goal>npm</goal>
-								</goals>						
+								</goals>
 								<configuration>
 									<arguments>install</arguments>
 								</configuration>
 							</execution>
-		
+
 							<execution>
-								<phase>process-resources</phase>						
+								<phase>process-resources</phase>
 								<id>gulp build</id>
 								<goals>
 									<goal>gulp</goal>
@@ -74,18 +61,18 @@
 									<arguments>paella-opencast:build</arguments>
 								</configuration>
 							</execution>
-						</executions>				
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
 	<build>
-		<plugins>					
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.1</version>
+				<version>3.0.2</version>
 				<executions>
 					<execution>
 						<id>copy-player</id>
@@ -100,19 +87,19 @@
 									<directory>./build/paella-opencast</directory>
 									<includes>
 										<include>**</include>
-									</includes>									
+									</includes>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
-					</execution> 
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.0.1</version>
-				<extensions>true</extensions>				
+				<version>3.3.0</version>
+				<extensions>true</extensions>
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName> ${project.artifactId} </Bundle-SymbolicName>
