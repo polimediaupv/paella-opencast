@@ -1,5 +1,24 @@
 ---
-sudo: false
+sudo: true
 
 language: java
-jdk: oraclejdk7
+
+jdk: oraclejdk8
+
+before_install:
+   - sudo apt-get install rpm
+
+script:
+   - mvn -B clean install
+   - mkdir -p ~/rpmbuild/SOURCES
+   - cp target/*jar ~/rpmbuild/SOURCES
+   - export VERSION=$(sed -n '0,/^.*<version>\(.*\)<\/version>.*$/s//\1/p' pom.xml)
+   - echo "%version ${VERSION}" >> "${HOME}/.rpmmacros"
+   - echo "%buildno ${TRAVIS_BUILD_NUMBER}" >> "${HOME}/.rpmmacros"
+   - echo "%commit ${TRAVIS_COMMIT}" >> "${HOME}/.rpmmacros"
+   - rpmbuild -ba paella-opencast.spec
+
+after_success:
+   - curl -i -u "${PKGUPLOADUSER}:${PKGUPLOADPASS}"
+     -F file=@${HOME}/rpmbuild/RPMS/noarch/paella-opencast-${VERSION}-${TRAVIS_BUILD_NUMBER}.${TRAVIS_COMMIT}.noarch.rpm
+     https://pkg.opencast.org/upload
