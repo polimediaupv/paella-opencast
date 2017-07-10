@@ -5,20 +5,27 @@ language: java
 
 jdk: oraclejdk8
 
-before_install:
-   - sudo apt-get install rpm
-
 script:
-   - mvn -B clean install
-   - mkdir -p ~/rpmbuild/SOURCES
-   - cp target/*jar ~/rpmbuild/SOURCES
-   - export VERSION=$(sed -n '0,/^.*<version>\(.*\)<\/version>.*$/s//\1/p' pom.xml)
-   - echo "%version ${VERSION}" >> "${HOME}/.rpmmacros"
-   - echo "%buildno ${TRAVIS_BUILD_NUMBER}" >> "${HOME}/.rpmmacros"
-   - echo "%commit ${TRAVIS_COMMIT}" >> "${HOME}/.rpmmacros"
-   - rpmbuild -ba paella-opencast.spec
+  - mvn -B clean install
+  
+before_deploy:
+  - sh ./.travis_scripts/build_rpm.sh
 
-after_success:
-   - curl -i -u "${PKGUPLOADUSER}:${PKGUPLOADPASS}"
-     -F file=@${HOME}/rpmbuild/RPMS/noarch/paella-opencast-${VERSION}-${TRAVIS_BUILD_NUMBER}.${TRAVIS_COMMIT}.noarch.rpm
-     https://pkg.opencast.org/upload
+deploy:
+  - provider: releases
+    api_key:
+      secure: nmjIncsp2ZuZHLj9O16YCJdms0seB0UC5XyeSznhdtRi5RQcNALveRPtk9dLYb8GAI66A+b0Uqw43gVuj6A8ejTJgDdXlSHJtSHbsZDZJaIOP3JQnz9kSJg13l5sOGOE00ALPuJe+zpErACVLYnrw3x7TIoMZM5jGjobyX6vkfg=
+    skip_cleanup: true
+    file:
+      - ${HOME}/deploy/paella-opencast-${TRAVIS_TAG}.noarch.rpm
+      - ${HOME}/deploy/paella-engage-ui-${TRAVIS_TAG}.jar
+    on:
+      repo: polimediaupv/paella-opencast
+      tags: true
+      
+  - provider: script
+    script: sh ./.travis_scripts/upload_rpm_to_opencast.sh
+    skip_cleanup: true
+    on:
+      tags: true
+      
