@@ -54,4 +54,4 @@ Build and Install
 To build Paella Player for Opencast, please read the
 [documentation](doc/build.md).
 
-[![Build Status](https://travis-ci.org/polimediaupv/paella-matterhorn.svg?branch=master)](https://travis-ci.org/polimediaupv/paella-opencast)
+[![Build Status](https://travis-ci.org/polimediaupv/paella-opencast.svg?branch=master)](https://travis-ci.org/polimediaupv/paella-opencast)
