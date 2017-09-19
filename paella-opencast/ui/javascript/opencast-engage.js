@@ -9,7 +9,7 @@
 			},		
 			templateUrl: 'directives/opencast-episode.html',
 			controller: ["$scope", function($scope) {
-				$scope.getSearchImage = function() {
+				$scope.getSearchImage = function() {					
 					var ret = null;
 					if ( ($scope.episode.mediapackage) && ($scope.episode.mediapackage.attachments) && ($scope.episode.mediapackage.attachments.attachment) ) {
 						$scope.episode.mediapackage.attachments.attachment.forEach(function(a){
@@ -60,7 +60,8 @@
 			var limit = parseInt($scope.limitText) || 20;
 			var page = $scope.page || 0;
 			var sort = $scope.sort || "";			
-			var url = '?limit='+limit+'&page='+page+'&q='+q+'&sort='+sort;
+			var series = $scope.series || "";
+			var url = '?limit='+limit+'&page='+page+'&q='+q+'&sort='+sort+'&series='+series;
 
 			window.location.href = url;			
 		}
@@ -89,8 +90,10 @@
 			var limit = parseInt($scope.limitText) || 20;
 			var page = $scope.page || 0;
 			var offset = page*limit;
-			var sort = $scope.sort || "";			
-			var url = '/search/episode.json?limit='+limit+'&offset='+offset+'&q='+q+'&sort='+sort;
+			var sort = $scope.sort || "";	
+			var series = $scope.series || "";
+		
+			var url = '/search/episode.json?limit='+limit+'&offset='+offset+'&q='+q+'&sort='+sort+'&sid='+series;
 
 			$scope.loading = true;
 			$http.get(url).then(function(res){
@@ -131,6 +134,7 @@
 		$scope.q = search.q || "";
 		$scope.limit = search.limit ? parseInt(search.limit) : 20;
 		$scope.page = search.page ? parseInt(search.page) : 0;
+		$scope.series = search.series;
 		
 		
 		$scope.isLogged = false;

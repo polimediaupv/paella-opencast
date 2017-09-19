@@ -12,6 +12,7 @@
 				var redirect = base.parameters.list['redirect'];
 				var id = base.parameters.list['id'];
 				var series = base.parameters.list['series'];
+				var sid = base.parameters.list['sid'];
 				if (redirect != undefined) {
 					window.location.href = decodeURIComponent(redirect);
 				}
@@ -19,10 +20,10 @@
 					window.location.href = "watch.html?id=" + id;
 				}
 				else if (sid != undefined) {
-					window.location.href = "watch.html?sid=" + series;
+					window.location.href = "index.html?series=" + series;
 				}
 				else if (series != undefined) {
-					window.location.href = "watch.html?sid=" + series;
+					window.location.href = "index.html?series=" + series;
 				}
 				else {
 					window.location.href = "index.html";
