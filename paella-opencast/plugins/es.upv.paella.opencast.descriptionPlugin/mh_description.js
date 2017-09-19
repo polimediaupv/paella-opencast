@@ -16,14 +16,7 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		.then(
 			function(episode) {
 				self._episode = episode;
-				paella.opencast.getEpisode()
-				.then(
-					function(series) {
-						self._series = series;
-						onSuccess(true);
-					},
-					function() { onSuccess(false); }
-				);
+				onSuccess(true);
 			},
 			function() { onSuccess(false); }
 		);
@@ -45,14 +38,9 @@ paella.plugins.MHDescriptionPlugin  = Class.create(paella.TabBarPlugin,{
 		if (thisClass._episode.dcDescription) { this.desc.description = thisClass._episode.dcDescription; }
 		if (thisClass._episode.dcLanguage) { this.desc.language = thisClass._episode.dcLanguage; }
 		if (thisClass._episode.dcSubject) { this.desc.subject = thisClass._episode.dcSubject; }
-		if (self._series) {
-			if (self._series) {
-				var serie = self._series['http://purl.org/dc/terms/'];
-				if (serie) { 
-					this.desc.serie = serie.title[0].value; 
-					this.desc.serieId = serie.identifier[0].value; 
-				}
-			}
+		if (thisClass._episode.mediapackage.series) {
+			this.desc.serie = thisClass._episode.mediapackage.seriestitle; 
+			this.desc.serieId = thisClass._episode.mediapackage.series;
 		}
 		this.desc.date = "n.a.";
 		var dcCreated = thisClass._episode.dcCreated;
