@@ -1,0 +1,16 @@
+{
+	"Change metadata": "Modificar los metadatos",
+	"Title": "Título",
+	
+	"Visibility": "Visibilidad",
+	"Visible": "Visible",
+	"Hidden": "Oculto",
+	
+	"Privacy": "Privacidad",
+	"The episode is public": "El episodio es público",
+	"The episode is linked to subject": "El episodio está asociado a la asignatura",
+	"Privacy unknown, please contact with the IT department": "Privacidad desconocida, por favor contacta con el departamento informático",
+	
+	"The episode will be visible automatically in 7 days": "El episodio será visible automaticamente en 7 dias",
+	"There is a state change request pending": "Hay una solicitud de cambio de estado pendiente"
+}

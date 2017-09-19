@@ -1,0 +1,54 @@
+
+<div>
+	<h3>{{ "Change metadata" | translate }}</h3>
+	<div class="panel">
+	
+		<form>
+			<div class="form-group">
+				<label >{{'Title' | translate}}</label>
+				<input class="form-control" placeholder="" ng-model="EpisodeChangeMetadataState.newTitle">
+			</div>
+
+
+			<div class="form-group">
+				<label>{{'Privacy' | translate}}</label>
+				<div>
+					<div ng-show="EpisodeChangeMetadataState.privacy == 'public'">
+						{{'The episode is public' | translate}}
+					</div>
+					<div ng-show="EpisodeChangeMetadataState.privacy == 'sakai'">
+						{{'The episode is linked to subject' | translate}} {{EpisodeChangeMetadataState.subject}}
+					</div>
+					<div ng-hide="(EpisodeChangeMetadataState.privacy == 'sakai') || (EpisodeChangeMetadataState.privacy == 'public')">
+						{{'Privacy unknown, please contact with your IT department' | translate}}
+					</div>
+				</div>				
+			</div>			
+
+						
+			<div class="form-group">
+				<label >{{'Visibility' | translate}}</label>
+				<div class="alert alert-info" role="alert" ng-show="(EpisodeChangeMetadataState.publish == 'autopublish') && (!EpisodeChangeMetadataState.newPublish)">
+					{{'The episode will be visible automatically in 7 days' | translate}}
+				</div>				
+				<div class="radio">
+					<label>
+						<input type="radio" value="publish" ng-model="EpisodeChangeMetadataState.newPublish">
+						{{ 'Visible' | translate }}
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" value="unpublish" ng-model="EpisodeChangeMetadataState.newPublish">
+						{{ 'Hidden' | translate }}
+					</label>
+				</div>
+			</div>			
+		</form>
+		
+		
+		<div class="alert alert-info" role="alert" ng-show="EpisodeChangeMetadataState.processing == true">
+			{{'There is a state change request pending' | translate}}
+		</div>				
+	</div>
+</div>
