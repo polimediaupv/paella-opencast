@@ -5,7 +5,8 @@
 		"reloadOnFullscreen": true,
 		"videoZoom": {
 			"enabled":true,
-			"max":800
+			"max":800,
+			"minWindowSize":500
 		},		
         "methods": [
 			{ "factory":"ChromaVideoFactory", "enabled":true },
