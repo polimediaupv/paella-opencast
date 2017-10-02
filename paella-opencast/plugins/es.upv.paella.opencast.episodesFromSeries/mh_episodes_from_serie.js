@@ -13,13 +13,16 @@ paella.plugins.EpisodesFromSerie = Class.create(paella.ButtonPlugin,{
 	checkEnabled:function(onSuccess) {
 		var self = this;
 		paella.opencast.getEpisode()
-		.then(
-			function(episode) {
-				self._episode = episode;
+		.then(function(episode) {
+			self._episode = episode;
+			if (episode.mediapackage.series) { 
 				onSuccess(true);
-			},
-			function() { onSuccess(false); }
-		);
+			}
+			else {
+				onSuccess(false);
+			}
+		})
+		.catch(function() { onSuccess(false); });
 	},	
 
 	buildContent:function(domElement) {

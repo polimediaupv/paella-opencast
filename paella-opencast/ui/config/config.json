@@ -1,5 +1,6 @@
 {
 	"player":{
+		"accessControlClass": "OpencastAccessControl",
 		"profileFrameStrategy": "paella.ProfileFrameStrategy",
 		"videoQualityStrategy": "paella.BestFitVideoQualityStrategy",
 		"reloadOnFullscreen": true,
@@ -95,7 +96,6 @@
 
 			"//****": "Video Overlay Button Plugins",
 			"es.upv.paella.liveStramingIndicator":  { "enabled": true },
-			"es.upv.paella.showEditorPlugin":{"enabled":true,"alwaysVisible":true, "editorPage":"editor.html"},
 			"es.upv.paella.arrowSlidesNavigatorPlugin": {"enabled": true, "showArrowsIn": "slave"},
 			"es.upv.paella.videoDataPlugin": {
 				"enabled": false,
@@ -131,27 +131,18 @@
 			"//****": "User Tracking Saver Plugins",
 			"es.upv.paella.usertracking.elasticsearchSaverPlugin": { "enabled": false, "url": "http://my.elastic.server"},
 			"es.upv.paella.usertracking.GoogleAnalyticsSaverPlugIn": { "enabled": false, "trackingID": "UA-XXXXXXXX-Y" },
-			
-			"//****": "Editor Plugins",
-			"es.upv.paella.editor.snapShotsEditorPlugin": {"enabled":true},
-			"es.upv.paella.editor.toolStatusPlugin": {"enabled":true},
-			"es.upv.paella.editor.trackAnnotationsPlugin": {"enabled":true},
-			"es.upv.paella.editor.trackBreaksPlugin": {"enabled":true},
-			"es.upv.paella.editor.trimmingTrackPlugin": {"enabled":true},
-			
+						
 			
 			
 			"//****": "Opencast Plugins",
 			"es.upv.paella.opencast.descriptionPlugin": {"enabled": true },
 			"es.upv.paella.opencast.downloadsPlugin": {"enabled": true },
 			"es.upv.paella.opencast.episodesFromSeries": {"enabled": true},
+			"es.upv.paella.opencast.logIn": {"enabled": true},
 			"es.upv.paella.opencast.publishPlugin": {"enabled": false, "defaultValue":false},
 			"es.upv.paella.opencast.searchPlugin": {"enabled": true},			
 			"es.upv.paella.opencast.userTrackingSaverPlugIn": {"enabled": true },
-			"es.upv.paella.opencast.transcriptionTabBarPlugin": {"enabled": true },			
-			"es.upv.paella.opencast.editor.publishPlugin": {"enabled": false, "defaultValue":false},			
-			"es.upv.paella.opencast.editor.MultipleVideoExportEditorPlugin": {"enabled": false},
-			"es.upv.paella.opencast.editor.SingleVideoExportEditorPlugin": {"enabled": false}
+			"es.upv.paella.opencast.transcriptionTabBarPlugin": {"enabled": true }
         }
 	}
 }

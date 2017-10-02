@@ -5,50 +5,48 @@ paella.opencast = new (Class ({
 	_series: undefined,
 	_acl: undefined,
 	
-	getUserInfo:function() {
-		var self = this;
-		var defer = new $.Deferred();
-	
-		if (self._me) {
-			defer.resolve(self._me);
-		}
-		else {
-			base.ajax.get({url:'/info/me.json'},
-				function(data,contentType,code) {
-					self._me = data;
-					defer.resolve(data);
-				},
-				function(data,contentType,code) { defer.reject(); }
-			);
-		}	
-		return defer;
+	getUserInfo:function() {	
+		var self = this;	
+		return new Promise((resolve, reject)=>{
+			if (self._me) {
+				resolve(self._me);
+			}
+			else {
+				base.ajax.get({url:'/info/me.json'},
+					function(data,contentType,code) {
+						self._me = data;
+						resolve(data);
+					},
+					function(data,contentType,code) { reject(); }
+				);
+			}				
+		});	
 	},
 	
 	getEpisode: function() {
-		var self = this;
-		var defer = new $.Deferred();		
-
-		if (self._episode) {
-			defer.resolve(self._episode);
-		}
-		else {
-			var episodeId = paella.utils.parameters.get('id');
-			base.ajax.get({url:'/search/episode.json', params:{'id': episodeId}},
-				function(data, contentType, code) {
-					if (data['search-results'].result) {
-						self._episode = data['search-results'].result;
-						defer.resolve(self._episode);		
+		var self = this;		
+		return new Promise((resolve, reject)=>{
+			if (self._episode) {
+				resolve(self._episode);
+			}
+			else {
+				var episodeId = paella.utils.parameters.get('id');
+				base.ajax.get({url:'/search/episode.json', params:{'id': episodeId}},
+					function(data, contentType, code) {
+						if (data['search-results'].result) {
+							self._episode = data['search-results'].result;
+							resolve(self._episode);		
+						}
+						else {
+							reject();						
+						}
+					},
+					function(data, contentType, code) {
+						reject();
 					}
-					else {
-						defer.reject();						
-					}
-				},
-				function(data, contentType, code) {
-					defer.reject();
-				}
-			);
-		}		
-		return defer;		
+				);
+			}		
+		});		
 	},
 	
 	
@@ -56,23 +54,23 @@ paella.opencast = new (Class ({
 		var self = this;
 		return this.getEpisode()
 		.then(function(episode) {			
-			var defer = new $.Deferred();
-			var serie = episode.mediapackage.series;
-			if (serie != undefined) {						
-				base.ajax.get({url:'/series/'+serie+'.json'},
-					function(data,contentType,code) {
-						self._series = data;
-						defer.resolve(self._series);
-					},
-					function(data, contentType, code) {
-						defer.reject();
-					}
-				);
-			}
-			else {
-				defer.reject();
-			}
-			return defer;
+			return new Promise((resolve, reject)=>{
+				var serie = episode.mediapackage.series;
+				if (serie != undefined) {						
+					base.ajax.get({url:'/series/'+serie+'.json'},
+						function(data,contentType,code) {
+							self._series = data;
+							resolve(self._series);
+						},
+						function(data, contentType, code) {
+							reject();
+						}
+					);
+				}
+				else {
+					reject();
+				}
+			});
 		});		
 	},
 
@@ -80,23 +78,23 @@ paella.opencast = new (Class ({
 		var self = this;
 		return this.getEpisode()
 		.then(function(episode) {			
-			var defer = new $.Deferred();
-			var serie = episode.mediapackage.series;
-			if (serie != undefined) {			
-				base.ajax.get({url:'/series/'+serie+'/acl.json'},
-					function(data,contentType,code) {
-						self._acl = data;
-						defer.resolve(self._acl);
-					},
-					function(data,contentType,code) {
-						defer.reject();									
-					}
-				);						
-			}
-			else {
-				defer.reject();
-			}
-			return defer;
+			return new Promise((resolve, reject)=>{
+				var serie = episode.mediapackage.series;
+				if (serie != undefined) {			
+					base.ajax.get({url:'/series/'+serie+'/acl.json'},
+						function(data,contentType,code) {
+							self._acl = data;
+							resolve(self._acl);
+						},
+						function(data,contentType,code) {
+							reject();									
+						}
+					);						
+				}
+				else {
+					reject();
+				}
+			});
 		});		
 	}	
 	
