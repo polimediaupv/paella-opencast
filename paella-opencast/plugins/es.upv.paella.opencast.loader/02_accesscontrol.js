@@ -12,10 +12,9 @@ var OpencastAccessControl = Class.create(paella.AccessControl, {
 	_userData: undefined,
 	
 	canRead:function() {
-		return paella.opencast.getEpisode().then(
-			function() { return paella_DeferredResolved(true); },
-			function() { return paella_DeferredResolved(false); }
-		);
+		return paella.opencast.getEpisode()
+		.then( () => { return paella_DeferredResolved(true); } )
+		.catch(() => { return paella_DeferredResolved(false); } );
 	},
 
 	canWrite:function() {
@@ -23,7 +22,7 @@ var OpencastAccessControl = Class.create(paella.AccessControl, {
 		.then(function(me) {		
 			return paella.opencast.getACL()
 			.then(function(acl){
-				var carWrite = false;			
+				var canWrite = false;			
 				var roles = me.roles;	
 				if (!(roles instanceof Array)) { roles = [roles]; }
 						
@@ -53,28 +52,28 @@ var OpencastAccessControl = Class.create(paella.AccessControl, {
 
 	userData:function() {
 		var self = this;
-		var defer = new $.Deferred();
-		if (self._userData) {
-			defer.resolve(self._userData);
-		}
-		else {
-			paella.opencast.getUserInfo().then(
-				function(me) {
-					var isAnonymous = ((me.roles.length == 1) && (me.roles[0] == me.org.anonymousRole));
-					self._userData = {
-						username: me.user.username,
-						name: me.user.name || me.user.username || "",
-						avatar: paella.utils.folders.resources() + '/images/default_avatar.png',
-						isAnonymous: isAnonymous
-					};
-					defer.resolve(self._userData);
-				},
-				function() {
-					defer.reject();		
-				}
-			);
-		}
-		return defer;
+		return new Promise((resolve, reject)=>{
+			if (self._userData) {
+				resolve(self._userData);
+			}
+			else {
+				paella.opencast.getUserInfo().then(
+					function(me) {
+						var isAnonymous = ((me.roles.length == 1) && (me.roles[0] == me.org.anonymousRole));
+						self._userData = {
+							username: me.user.username,
+							name: me.user.name || me.user.username || "",
+							avatar: paella.utils.folders.resources() + '/images/default_avatar.png',
+							isAnonymous: isAnonymous
+						};
+						resolve(self._userData);
+					},
+					function() {
+						reject();		
+					}
+				);
+			}
+		});
 	},
 
 	getAuthenticationUrl:function(callbackParams) {

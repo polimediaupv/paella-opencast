@@ -2,8 +2,14 @@
 var gulp = require('gulp');
 var clean = require('gulp-clean');
 var spawn = require('child_process').spawn;
-var gls = require('gulp-live-server');
 var mergeStream = require('merge-stream');
+
+var connect = require('gulp-connect');
+var serveStatic = require('serve-static');
+var httpProxy = require('http-proxy');
+
+var proxy = httpProxy.createProxyServer({secure:false});
+
 
 gulp.task('paella-opencast:clean', function () {
 	return gulp.src('build', {read: false}).pipe(clean());
@@ -16,6 +22,7 @@ gulp.task('paella-opencast:prepare:source', function(){
 
 	return mergeStream(s1,s2);
 });
+
 
 
 gulp.task('paella-opencast:prepare', ['paella-opencast:prepare:source'], function(cb){
@@ -41,19 +48,43 @@ gulp.task('paella-opencast:compile.release', ['paella-opencast:prepare'], functi
 });
 
 
-gulp.task('paella-opencast:copy-paella', ["paella-opencast:compile.debug"], function(){
-	return gulp.src('build/paella/build/player/**').pipe(gulp.dest('build/paella-opencast'));
+gulp.task('paella-opencast:build', ["paella-opencast:compile.debug"], function(){
+	return gulp.src([
+		'build/paella/build/player/**',
+		'paella-opencast/ui/**'
+		
+	]).pipe(gulp.dest('build/paella-opencast'));	
 });
 
-gulp.task('paella-opencast:build', ["paella-opencast:copy-paella"], function(){
-	return gulp.src('paella-opencast/ui/**').pipe(gulp.dest('build/paella-opencast'));
+
+gulp.task('paella-opencast:server:rebuild', ['paella-opencast:build'], function(){
+	return connect.reload();
 });
 
-
-
-gulp.task('paella-opencast:server', function() {
-    var server = gls.static('build/paella-opencast', 8000);
-    server.start();
+gulp.task('paella-opencast:server:watch', function () {
+	return gulp.watch(['paella-opencast/plugins/**'], ['paella-opencast:server:rebuild']);
 });
 
-gulp.task('default', ['paella-opencast:build']);
+gulp.task('paella-opencast:server:run', function() {
+	return connect.server({
+		port: 8000,
+		middleware: function(connect, opt) {
+			return [
+				[ "/paella/ui", serveStatic('build/paella-opencast', {'index': ['index.html']}) ],
+				[ "/", function(req, res, next) {
+						//proxy.web(req, res, { target: 'http://engage.opencast.org/' });
+						proxy.web(req, res, { target: 'http://engage.videoapuntes.upv.es:8080/' });						
+						//proxy.web(req, res, { target: 'https://opencast-dev.uni-koeln.de/' });	
+					}
+				]
+			]
+		},
+		livereload: true
+	});
+});
+
+gulp.task('paella-opencast:server', ['paella-opencast:server:run', 'paella-opencast:server:watch']);
+
+gulp.task('default', ['paella-opencast:build']);	
+
+
