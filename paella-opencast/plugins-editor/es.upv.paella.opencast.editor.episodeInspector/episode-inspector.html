@@ -1,0 +1,19 @@
+<div ng-show="loading">
+	<h3>{{ "Loading..." | translate }}</h3>
+</div>
+<div ng-hide="loading">
+	<div ng-show="mediapackage.media.track">
+		<h3>{{ "Media tracks" | translate }}</h3>
+		<div class="panel">
+			<div class="downloadsLinkContainer" ng-repeat="trackItem in mediapackage.media.track">			
+				<a class="downloadsLinkItem" tabindex="4000" ng-href="{{trackItem.url}}" download>
+					<span class="downloadLinkText TypeFile Video" ng-show="trackItem.video">Video track</span>
+					<span class="downloadLinkText TypeFile Audio" ng-show="!trackItem.video && trackItem.audio">Audio track</span>
+					<span class="downloadLinkText MIMEType">[{{trackItem.mimetype}}]</span>:
+					<span class="downloadLinkText Track">{{trackItem.type}}</span>
+					<span class="downloadLinkText Resolution" ng-show="trackItem.video">({{trackItem.video.resolution}}@{{trackItem.video.framerate}})</span>				
+				</a>
+			</div>
+		</div>
+	</div>	
+</div>

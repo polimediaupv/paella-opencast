@@ -16,6 +16,31 @@ gulp.task('paella-opencast:clean', function () {
 });
 
 
+gulp.task('paella-opencast:editor:prepare:source', function(){
+	var s1 = gulp.src('node_modules/paella-editor/**').pipe(gulp.dest('build/paella-editor'));	
+	var s2 = gulp.src('paella-opencast/plugins-editor/**').pipe(gulp.dest('build/paella-editor/plugins'));
+	
+	return mergeStream(s1,s2);
+	
+});
+
+gulp.task('paella-opencast:editor:prepare', ['paella-opencast:editor:prepare:source'], function(cb){
+	var cmd_npm = spawn('npm', ['install'], {cwd: 'build/paella-editor', stdio: 'inherit'});
+	cmd_npm.on('close', function (code) {
+		cb(code);
+	});	
+});
+
+gulp.task('paella-opencast:editor:compile', ['paella-opencast:editor:prepare'], function(cb){
+	var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'editorFiles'], {cwd: 'build/paella-editor'/*, stdio: 'inherit'*/});
+	cmd_npm.on('close', function (code) {
+		cb(code);
+	});	
+});
+
+
+
+
 gulp.task('paella-opencast:prepare:source', function(){
 	var s1 = gulp.src('node_modules/paellaplayer/**').pipe(gulp.dest('build/paella'));
 	var s2 = gulp.src('paella-opencast/plugins/**').pipe(gulp.dest('build/paella/plugins'));
@@ -48,9 +73,10 @@ gulp.task('paella-opencast:compile.release', ['paella-opencast:prepare'], functi
 });
 
 
-gulp.task('paella-opencast:build', ["paella-opencast:compile.debug"], function(){
+gulp.task('paella-opencast:build', ["paella-opencast:compile.debug", "paella-opencast:editor:compile"], function(){
 	return gulp.src([
 		'build/paella/build/player/**',
+		'build/paella-editor/build/editor-files/**',
 		'paella-opencast/ui/**'
 		
 	]).pipe(gulp.dest('build/paella-opencast'));	
@@ -62,7 +88,7 @@ gulp.task('paella-opencast:server:rebuild', ['paella-opencast:build'], function(
 });
 
 gulp.task('paella-opencast:server:watch', function () {
-	return gulp.watch(['paella-opencast/plugins/**'], ['paella-opencast:server:rebuild']);
+	return gulp.watch(['paella-opencast/plugins/**', 'paella-opencast/plugins-editor/**'], ['paella-opencast:server:rebuild']);
 });
 
 gulp.task('paella-opencast:server:run', function() {

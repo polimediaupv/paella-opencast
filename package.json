@@ -13,9 +13,11 @@
     "gulp-clean": "^0.3.2",
     "http-proxy": "^1.13.2",
     "merge-stream": "^1.0.1",
-    "paellaplayer": "github:polimediaupv/paella#5.2.4"
+    "paellaplayer": "github:polimediaupv/paella#5.2.4",
+    "paella-editor": "github:polimediaupv/paella-editor#develop"
   },
   "devDependencies": {
-    "gulp-connect": "^5.0.0"
+    "gulp-connect": "^5.0.0",
+    "serve-static": "^1.12.3"
   }
 }

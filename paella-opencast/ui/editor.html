@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8;">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Paella Engage Example</title>
+		<script type="text/javascript" src="javascript/traceur.min.js"></script>
+		<script type="text/javascript" src="javascript/swfobject.js"></script>
+		<script type="text/javascript" src="javascript/base.js"></script>
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="javascript/lunr.min.js"></script>
+		<script type="text/javascript" src="javascript/angular.js"></script>
+		<script type="text/javascript" src="javascript/rzslider.js"></script>
+		<script type="text/javascript" src="javascript/paella_player.js"></script>
+		<script type="text/javascript" src="javascript/ui-bootstrap-tpls.min.js"></script>
+		<script type="text/javascript" src="javascript/angular-route.min.js"></script>
+		<script type="text/javascript" src="javascript/angular-resource.min.js"></script>
+		<script type="text/javascript" src="javascript/angular-translate.min.js"></script>
+		<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
+		<script type="text/javascript" src="javascript/require.js"></script>
+
+		<script type="text/javascript" src="javascript/paella_editor.js"></script>
+
+		<link rel="stylesheet" href="resources/editor/css/bootstrap.min.css">
+		<link rel="stylesheet" href="resources/editor/css/rzslider.min.css">
+		<link rel="stylesheet" href="resources/editor/css/editor.css">
+	</head>
+    <body id="body" onload="loadOpencastPaella('playerContainer');">
+		<main class="">
+			<div id="topContainer">
+				<div id="paellaVideoContainer" class="">
+					<div id="playerContainer" style="background-color: transparent">
+					</div>
+					<div class="row pe-playback-bar">
+						<button id="backward-btn" class="btn glyphicon glyphicon-step-backward"></button>
+						<button id="play-btn" class="btn glyphicon glyphicon-play"></button>
+						<button id="pause-btn" class="btn glyphicon glyphicon-pause"></button>
+						<button id="forward-btn" class="btn glyphicon glyphicon-step-forward"></button>
+					</div>
+				</div>
+				
+				<div id="resizerV"></div>
+				
+				<side-bar id="sideBar" class="">
+				</side-bar>
+			</div>
+			
+			<div id="resizerH"></div>
+			
+			<div id="timeLineBar">
+				<time-line></time-line>
+			</div>
+		</main>
+		<loader></loader>
+	</body>
+</html>
