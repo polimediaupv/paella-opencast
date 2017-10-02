@@ -1,0 +1,42 @@
+
+episode-inspector h3 {
+	padding: 3px;
+	color: white;
+	font-size: 15px;
+}
+
+episode-inspector  .panel {
+	padding: 5px;
+    margin: 0 10px;
+	background-color: #a7a7a7;
+    color: white;
+}
+
+
+episode-inspector .downloadsLinkItem {
+  color: #333333;
+}
+episode-inspector .downloadsLinkItem:focus,
+episode-inspector .downloadsLinkItem:hover {
+  color: #9a1818;
+}
+/*
+episode-inspector .downloadLinkText {
+}
+episode-inspector .downloadLinkText.TypeFile {
+}
+episode-inspector .downloadLinkText.TypeFile.Video {
+}
+episode-inspector .downloadLinkText.TypeFile.Audio {
+}
+*/
+
+episode-inspector .downloadLinkText.Track {
+  font-weight: bold;
+}
+episode-inspector .downloadLinkText.Resolution {
+  color: darkslateblue;
+}
+episode-inspector .downloadLinkText.MIMEType {
+  color: crimson;
+}

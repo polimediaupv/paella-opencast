@@ -141,6 +141,7 @@
 			"es.upv.paella.opencast.logIn": {"enabled": true},
 			"es.upv.paella.opencast.publishPlugin": {"enabled": false, "defaultValue":false},
 			"es.upv.paella.opencast.searchPlugin": {"enabled": true},			
+			"es.upv.paella.opencast.showEditorPlugin":{"enabled":true, "editorPage":"editor.html"},
 			"es.upv.paella.opencast.userTrackingSaverPlugIn": {"enabled": true },
 			"es.upv.paella.opencast.transcriptionTabBarPlugin": {"enabled": true }
         }
