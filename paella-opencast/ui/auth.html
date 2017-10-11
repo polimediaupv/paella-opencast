@@ -6,21 +6,23 @@
 
 		<title>Paella Auth</title>
 
-		<script type="text/javascript" src="javascript/base.js"></script>		
 		<script type="text/javascript">
 			function onLoad() {
-				var redirect = base.parameters.list['redirect'];
-				var id = base.parameters.list['id'];
-				var series = base.parameters.list['series'];
-				var sid = base.parameters.list['sid'];
+			
+				var search={};
+				window.location.search.slice(1).split("&").forEach(function(x){
+					var p = x.split("=");
+					search[p[0]]=p[1];
+				});			
+			
+				var redirect = search['redirect'];
+				var id = search['id'];
+				var series = search['series'] || search['sid'];
 				if (redirect != undefined) {
 					window.location.href = decodeURIComponent(redirect);
 				}
 				else if (id != undefined) {
 					window.location.href = "watch.html?id=" + id;
-				}
-				else if (sid != undefined) {
-					window.location.href = "index.html?series=" + series;
 				}
 				else if (series != undefined) {
 					window.location.href = "index.html?series=" + series;
