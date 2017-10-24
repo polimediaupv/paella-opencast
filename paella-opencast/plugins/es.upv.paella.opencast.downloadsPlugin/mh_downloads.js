@@ -30,7 +30,6 @@ paella.plugins.DownloadsPlugin = Class.create(paella.TabBarPlugin,{
 		};
 		paella.dictionary.addDictionary(mimeDict);
 
-
 		if (paella.utils.language()=="es") {
 			var esDict = {
 				'Downloads':'Descargas',			
@@ -57,10 +56,23 @@ paella.plugins.DownloadsPlugin = Class.create(paella.TabBarPlugin,{
 		var tracks = self._episode.mediapackage.media.track;
 		if (!(tracks instanceof Array)) { tracks = [tracks]; }
 		
-		for (var i=0; i<tracks.length; ++i) {
-			var track = tracks[i];
-			paella.debug.log(track.type);
-			container.appendChild(this.createLink(track, i));
+		for (var i = 0; i < tracks.length; ++i) {
+  		  var track = tracks[i];
+		  var download = false;
+		  if (track.tags != undefined && track.tags.tag != undefined
+		      && track.mimetype.indexOf("video") >= 0
+		      && track.url.indexOf("rtmp://") < 0) {
+		    for (var j = 0; j < track.tags.tag.length; j++) {
+		      if (track.tags.tag[j] === "engage-download") {
+		    	download = true;
+		        break;
+		      }
+        	    }
+	          }			
+	 	  if (download) {
+		    paella.debug.log(track.type);
+		    container.appendChild(this.createLink(track, i));
+		  }
 		}
 		this.domElement.appendChild(container);
 	},
