@@ -88,7 +88,7 @@ gulp.task('paella-opencast:server:rebuild', ['paella-opencast:build'], function(
 });
 
 gulp.task('paella-opencast:server:watch', function () {
-	return gulp.watch(['paella-opencast/plugins/**', 'paella-opencast/plugins-editor/**'], ['paella-opencast:server:rebuild']);
+	return gulp.watch(['paella-opencast/ui/**', 'paella-opencast/plugins/**', 'paella-opencast/plugins-editor/**'], ['paella-opencast:server:rebuild']);
 });
 
 gulp.task('paella-opencast:server:run', function() {
