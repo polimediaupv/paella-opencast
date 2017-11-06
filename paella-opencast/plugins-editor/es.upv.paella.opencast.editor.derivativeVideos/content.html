@@ -1,0 +1,25 @@
+<div class="panel">
+    <form role="form">
+        <div class="form-group">
+            <label for="clip" class="">{{ 'Clip' | translate }}:</label>
+            <select name="" id="" class="form-control" ng-model="currentClipId">
+                <option id="clip" ng-repeat="clip in clips" value="{{ clip.id }}" ng-selected="clip.id==currentClip.id">{{ clip.title }}</option>
+            </select>
+            <button class="btn btn-default form-control" ng-click="addClip()">{{ 'Add Clip' | translate }}</button>
+        </div>
+        <div class="form-group">
+            <label for="">{{ 'Title' | translate }}</label>
+            <input type="text" class="form-control" ng-model="currentClip.title">
+        </div>
+        <div class="form-group">
+            <label for="">{{ 'Status' | translate }}</label>
+            <input type="text" class="form-control" disabled value="{{ 'clip_status_' + currentClip.status | translate }}">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" ng-show="currentClip.status == 0" ng-click="sendCurrentClip()">{{ 'Send' | translate }}</button>
+            <button class="btn btn-default" ng-show="currentClip.status == 1" ng-click="cancelCurrentClip()">{{ 'Cancel' | translate }}</button>
+            <button class="btn btn-default" ng-show="currentClip.status == 3" ng-click="openVideo()">{{ 'Open' | translate }}</button>
+            <button class="btn btn-danger" ng-show="currentClip.status == 0" ng-click="removeCurrentClip()">{{ 'Remove' | translate }}</button>
+        </div>
+    </form>
+</div>
