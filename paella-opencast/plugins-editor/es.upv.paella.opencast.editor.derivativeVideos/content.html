@@ -2,8 +2,9 @@
     <form role="form">
         <div class="form-group">
             <label for="clip" class="">{{ 'Clip' | translate }}:</label>
-            <select name="" id="" class="form-control" ng-model="currentClipId">
-                <option id="clip" ng-repeat="clip in clips" value="{{ clip.id }}" ng-selected="clip.id==currentClip.id">{{ clip.title }}</option>
+            <select class="form-control" 
+                ng-options="option.title for option in clips track by option.id"
+                ng-model="currentClip">
             </select>
             <button class="btn btn-default form-control" ng-click="addClip()">{{ 'Add Clip' | translate }}</button>
         </div>

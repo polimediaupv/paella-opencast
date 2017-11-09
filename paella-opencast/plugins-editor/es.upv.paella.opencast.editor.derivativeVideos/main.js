@@ -143,21 +143,23 @@
         }
 
         addTrack() {
-            if (this.currentClip) {
-                let trackId = 1;
-                let trackIds = [];
-                this.clips.forEach((clip) => {
-                    clip.tracks.forEach((track) => {
-                        trackIds.push(track.id);
-                    })
-                })
-                if (trackIds.length) {
-                    trackIds.sort();
-                    trackId = trackIds[trackIds.length-1] + 1;
-                }
-                let end = this._currentTime + 30<this._duration ? this._currentTime + 30 : this._duration;
-                this.currentClip.tracks.push( { id:trackId, s:this._currentTime, e:end } );
+            if (!this.currentClip) {
+                this.addClip();
             }
+            let trackId = 1;
+            let trackIds = [];
+            this.clips.forEach((clip) => {
+                clip.tracks.forEach((track) => {
+                    trackIds.push(track.id);
+                })
+            })
+            if (trackIds.length) {
+                trackIds.sort();
+                trackId = trackIds[trackIds.length-1] + 1;
+            }
+            let trackDuration = this._duration * 0.05;  // 2% of the video duration
+            let end = this._currentTime + trackDuration<this._duration ? this._currentTime + trackDuration : this._duration;
+            this.currentClip.tracks.push( { id:trackId, s:this._currentTime, e:end } );
         }
 
         removeTrack(trackId) {
@@ -177,8 +179,8 @@
 
         processCurrentClip() {
             return new Promise((resolve,reject) => {
-                if (currentClip && currentClip.status==VideoStatus.NOT_SENT) {
-                    currentClip.status = VideoStatus.PROCeSSING;
+                if (this.currentClip && this.currentClip.status==VideoStatus.NOT_SENT) {
+                    this.currentClip.status = VideoStatus.PROCESSING;
                     this.saveClips()
                         .then(() => {
                             paella.data.write("updateDerivativeVideos",{ id:paella.initDelegate.getId() },{},() => {
@@ -194,8 +196,8 @@
 
         cancelCurrentClip() {
             return new Promise((resolve,reject) => {
-                if (currentClip && currentClip.status==VideoStatus.PROCESSING) {
-                    currentClip.status = VideoStatus.NOT_SENT;
+                if (this.currentClip && this.currentClip.status==VideoStatus.PROCESSING) {
+                    this.currentClip.status = VideoStatus.NOT_SENT;
                     this.saveClips()
                         .then(() => {
                             paella.data.write("updateDerivativeVideos",{ id:paella.initDelegate.getId() },{},() => {
@@ -358,7 +360,7 @@
         $scope.clips = [];
         $scope.currentClip = {};
         $scope.currentClipId = -1;
-
+        
         function clipModelUpdated(apply) {
             $scope.clips = derivativeVideosModel.clips;
             $scope.currentClip = derivativeVideosModel.currentClip;
@@ -366,7 +368,8 @@
             if (apply) $scope.$apply();
         }
 
-        $scope.$watch('currentClipId', function() {
+        $scope.$watch('currentClip', function() {
+            $scope.currentClipId = $scope.currentClip.id;
             if (derivativeVideosModel.currentClipId!=Number($scope.currentClipId)) {
                 derivativeVideosModel.currentClipId = Number($scope.currentClipId);
                 clipModelUpdated(false);
