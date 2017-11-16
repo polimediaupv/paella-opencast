@@ -114,6 +114,15 @@
         get currentTracks() { return this.currentClip && this.currentClip.tracks; }
         get clips() { return this._clips; }
 
+        allowModifyCurrent() {
+            if (this.currentClip) {
+                return this.currentClip.status == VideoStatus.NOT_SENT;
+            }
+            else {
+                return true;
+            }
+        }
+
         addClip() {
             let newId = 1;
             let clipIds = [];
@@ -180,10 +189,11 @@
         processCurrentClip() {
             return new Promise((resolve,reject) => {
                 if (this.currentClip && this.currentClip.status==VideoStatus.NOT_SENT) {
-                    this.currentClip.status = VideoStatus.PROCESSING;
+                    this.currentClip.status = VideoStatus.SENT;
                     this.saveClips()
                         .then(() => {
                             paella.data.write("updateDerivativeVideos",{ id:paella.initDelegate.getId() },{},() => {
+                                notify.apply(this);
                                 resolve();
                             });
                         });
@@ -196,11 +206,12 @@
 
         cancelCurrentClip() {
             return new Promise((resolve,reject) => {
-                if (this.currentClip && this.currentClip.status==VideoStatus.PROCESSING) {
+                if (this.currentClip && this.currentClip.status==VideoStatus.SENT) {
                     this.currentClip.status = VideoStatus.NOT_SENT;
                     this.saveClips()
                         .then(() => {
                             paella.data.write("updateDerivativeVideos",{ id:paella.initDelegate.getId() },{},() => {
+                                notify.apply(this);
                                 resolve();
                             });
                         });
@@ -312,9 +323,9 @@
         getColor() { return "#3385FA"; }
         getTextColor() { return "#F0F0F0"; }
         getTrackItems() { return Promise.resolve(this._tracks || []); }
-        allowResize() { return true; }
-        allowDrag() { return true; }
-        allowEditContent() { return true; }
+        allowResize() { return derivativeVideosModel.allowModifyCurrent(); }
+        allowDrag() { return derivativeVideosModel.allowModifyCurrent(); }
+        allowEditContent() { return derivativeVideosModel.allowModifyCurrent(); }
         setTimeOnSelect() { return false; }
         onTrackChanged(id,start,end) {}
         onTrackContentChanged(id,content) {}
@@ -326,6 +337,9 @@
         getTools() { return ["Create","Delete"]; }
 
         onToolSelected(toolName) {
+            if (!derivativeVideosModel.allowModifyCurrent()) {
+                return;
+            }
             switch (toolName) {
             case 'Create':
                 derivativeVideosModel.addTrack();
@@ -337,7 +351,7 @@
         }
 
         isToolEnabled(toolName) {
-            return true;
+            return derivativeVideosModel.allowModifyCurrent();
         }
 
         isToggleTool(toolName) {
