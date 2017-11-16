@@ -369,7 +369,7 @@
         }
 
         $scope.$watch('currentClip', function() {
-            $scope.currentClipId = $scope.currentClip.id;
+            $scope.currentClipId = $scope.currentClip && $scope.currentClip.id;
             if (derivativeVideosModel.currentClipId!=Number($scope.currentClipId)) {
                 derivativeVideosModel.currentClipId = Number($scope.currentClipId);
                 clipModelUpdated(false);
