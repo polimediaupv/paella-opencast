@@ -17,7 +17,7 @@
             <input type="text" class="form-control" disabled value="{{ 'clip_status_' + currentClip.status | translate }}">
         </div>
         <div class="form-group">
-            <button class="btn btn-default" ng-show="currentClip.status == 0" ng-click="sendCurrentClip()">{{ 'Send' | translate }}</button>
+            <button class="btn btn-default" ng-show="currentClip.status == 0" ng-click="sendCurrentClip()" ng-class="{ 'disabled' : isSendDisabled() }">{{ 'Send' | translate }}</button>
             <button class="btn btn-default" ng-show="currentClip.status == 1" ng-click="cancelCurrentClip()">{{ 'Cancel' | translate }}</button>
             <button class="btn btn-default" ng-show="currentClip.status == 3" ng-click="openVideo()">{{ 'Open' | translate }}</button>
             <button class="btn btn-danger" ng-show="currentClip.status == 0" ng-click="removeCurrentClip()">{{ 'Remove' | translate }}</button>

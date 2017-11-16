@@ -401,7 +401,14 @@
             derivativeVideosModel.removeCurrentClip();
         };
 
+        $scope.isSendDisabled = function() {
+            return !derivativeVideosModel.currentTracks || derivativeVideosModel.currentTracks.length==0;
+        };
+
         $scope.sendCurrentClip = function() {
+            if ($scope.isSendDisabled()) {
+                return;
+            }
             derivativeVideosModel.processCurrentClip()
                 .then(() => {});
         };
