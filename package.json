@@ -1,7 +1,7 @@
 {
   "name": "paella-opencast",
-  "version": "5.2.7",
-  "license": "GPL-3.0",
+  "version": "5.2.8",
+  "license": "ECL-2.0",
   "description": "Paella Player for Matterhorn",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
     "gulp-clean": "^0.3.2",
     "http-proxy": "^1.13.2",
     "merge-stream": "^1.0.1",
-    "paellaplayer": "github:polimediaupv/paella#5.2.7"
+    "paellaplayer": "github:polimediaupv/paella#5.2.8"
   },
   "devDependencies": {
     "gulp-connect": "^5.0.0"
