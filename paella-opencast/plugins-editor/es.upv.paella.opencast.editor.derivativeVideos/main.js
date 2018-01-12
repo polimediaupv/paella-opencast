@@ -223,9 +223,7 @@
         }
 
         openCurrentVideo() {
-            return new Promise((resolve,reject) => {
-                // TODO: get the video url
-            });
+	        window.open("watch.html?id=" + this.currentClip.mediapackageID, '_blank');            
         }
 
         loadClips() {
