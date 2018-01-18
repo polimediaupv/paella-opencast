@@ -139,6 +139,7 @@
 			"es.upv.paella.opencast.downloadsPlugin": {"enabled": true },
 			"es.upv.paella.opencast.episodesFromSeries": {"enabled": true},
 			"es.upv.paella.opencast.logIn": {"enabled": true},
+			"es.upv.paella.opencast.piwikSaverPlugIn": {"enabled": false, "tracker":"//tracker.server.com", "siteId": "1" },			
 			"es.upv.paella.opencast.publishPlugin": {"enabled": false, "defaultValue":false},
 			"es.upv.paella.opencast.searchPlugin": {"enabled": true},			
 			"es.upv.paella.opencast.userTrackingSaverPlugIn": {"enabled": true },
