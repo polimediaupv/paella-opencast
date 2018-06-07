@@ -1,0 +1,16 @@
+{
+    "editor": {
+        "loginFailedUrl": "watch.html${LOCATION.SEARCH}",
+        "alertMessage": "You are not authorized to view this resource",
+        "closeEditorUrl": "watch.html${LOCATION.SEARCH}"
+    },
+        "plugins": {
+                "enablePluginsByDefault": true,
+        "//**** Instructions: Disable any individual plugin by setting its enable property to false": {
+            "enabled": false
+        },
+        "//**** For a list of available plugins and configuration, go to": "https://github.com/polimediaupv/paella/blob/master/doc/plugins.md",
+        "list": {
+                }
+        }
+}
