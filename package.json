@@ -1,6 +1,6 @@
 {
   "name": "paella-opencast",
-  "version": "5.2.10",
+  "version": "5.2.16",
   "license": "ECL-2.0",
   "description": "Paella Player for Opencast",
   "repository": {
@@ -13,7 +13,7 @@
     "gulp-clean": "^0.3.2",
     "http-proxy": "^1.13.2",
     "merge-stream": "^1.0.1",
-    "paellaplayer": "github:polimediaupv/paella#5.2.13"
+    "paellaplayer": "github:polimediaupv/paella#5.2.16"
   },
   "devDependencies": {
     "gulp-connect": "^5.0.0"
