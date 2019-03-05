@@ -6,13 +6,15 @@ language: java
 jdk: oraclejdk8
 
 env:
-  - OPENCAST_BRANCH=6.2 OPENCAST_VERSION=6.2
+  - OPENCAST_BRANCH=r/6.x OPENCAST_MVN_VERSION=6-SNAPSHOT
+  - OPENCAST_BRANCH=6.2 OPENCAST_MVN_VERSION=6.2
 
 install:
   - git clone https://github.com/opencast/opencast.git --branch $OPENCAST_BRANCH ../opencast
+  - ( cd ../opencast && mvn --quiet --batch-mode install -DskipTests=true -Dcheckstyle.skip=true -DskipJasmineTests=true -Pnone )
 
 before_script:
-  - sed -i "s|<version>.*-SNAPSHOT</version>|<version>$OPENCAST_VERSION</version>|" pom.xml
+  - sed -i "s|<version>.*-SNAPSHOT</version>|<version>$OPENCAST_MVN_VERSION</version>|" pom.xml
 
 script:
   - mvn -B clean install
@@ -24,7 +26,7 @@ script:
 #      secure: nmjIncsp2ZuZHLj9O16YCJdms0seB0UC5XyeSznhdtRi5RQcNALveRPtk9dLYb8GAI66A+b0Uqw43gVuj6A8ejTJgDdXlSHJtSHbsZDZJaIOP3JQnz9kSJg13l5sOGOE00ALPuJe+zpErACVLYnrw3x7TIoMZM5jGjobyX6vkfg=
 #    skip_cleanup: true
 #    file:
-#      - ${HOME}/deploy/paella-engage-ui-${TRAVIS_TAG}.jar
+#      - target/opencast-engage-paella-player-${$OPENCAST_MVN_VERSION}.jar
 #    on:
 #      repo: polimediaupv/paella-opencast
 #      tags: true
