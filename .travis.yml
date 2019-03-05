@@ -23,11 +23,11 @@ before_script:
 script:
   - mvn -B clean install
   - echo `pwd`
-  - ls -lh /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${$OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${$OPENCAST_MVN_VERSION}.pom
+  - ls -lh /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${OPENCAST_MVN_VERSION}.pom
 
 before_deploy:
   - echo `pwd`
-  - ls -lh /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${$OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${$OPENCAST_MVN_VERSION}.pom
+  - ls -lh /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${OPENCAST_MVN_VERSION}.pom
 
 deploy:
   - provider: releases
@@ -35,7 +35,7 @@ deploy:
       secure: nmjIncsp2ZuZHLj9O16YCJdms0seB0UC5XyeSznhdtRi5RQcNALveRPtk9dLYb8GAI66A+b0Uqw43gVuj6A8ejTJgDdXlSHJtSHbsZDZJaIOP3JQnz9kSJg13l5sOGOE00ALPuJe+zpErACVLYnrw3x7TIoMZM5jGjobyX6vkfg=
     skip_cleanup: true
     file:
-      - /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${$OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${$OPENCAST_MVN_VERSION}.pom
+      - /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${OPENCAST_MVN_VERSION}.pom
     on:
       repo: polimediaupv/paella-opencast
       tags: true
