@@ -5,27 +5,27 @@ language: java
 
 jdk: oraclejdk8
 
+env:
+  - OPENCAST_BRANCH=6.2 OPENCAST_VERSION=6.2
+
+install:
+  - git clone https://github.com/opencast/opencast.git --branch $OPENCAST_BRANCH ../opencast
+
+before_script:
+  - sed -i "s|<version>.*-SNAPSHOT</version>|<version>$OPENCAST_VERSION</version>|" pom.xml
+
 script:
   - mvn -B clean install
-  
-before_deploy:
-  - sh ./.travis_scripts/build_rpm.sh
 
-deploy:
-  - provider: releases
-    api_key:
-      secure: nmjIncsp2ZuZHLj9O16YCJdms0seB0UC5XyeSznhdtRi5RQcNALveRPtk9dLYb8GAI66A+b0Uqw43gVuj6A8ejTJgDdXlSHJtSHbsZDZJaIOP3JQnz9kSJg13l5sOGOE00ALPuJe+zpErACVLYnrw3x7TIoMZM5jGjobyX6vkfg=
-    skip_cleanup: true
-    file:
-      - ${HOME}/deploy/paella-opencast-${TRAVIS_TAG}.noarch.rpm
-      - ${HOME}/deploy/paella-engage-ui-${TRAVIS_TAG}.jar
-    on:
-      repo: polimediaupv/paella-opencast
-      tags: true
-      
-  - provider: script
-    script: sh ./.travis_scripts/upload_rpm_to_opencast.sh
-    skip_cleanup: true
-    on:
-      tags: true
+
+#deploy:
+#  - provider: releases
+#    api_key:
+#      secure: nmjIncsp2ZuZHLj9O16YCJdms0seB0UC5XyeSznhdtRi5RQcNALveRPtk9dLYb8GAI66A+b0Uqw43gVuj6A8ejTJgDdXlSHJtSHbsZDZJaIOP3JQnz9kSJg13l5sOGOE00ALPuJe+zpErACVLYnrw3x7TIoMZM5jGjobyX6vkfg=
+#    skip_cleanup: true
+#    file:
+#      - ${HOME}/deploy/paella-engage-ui-${TRAVIS_TAG}.jar
+#    on:
+#      repo: polimediaupv/paella-opencast
+#      tags: true
       
