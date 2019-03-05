@@ -22,7 +22,12 @@ before_script:
 
 script:
   - mvn -B clean install
+  - echo `pwd`
+  - ls -lh /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${$OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${$OPENCAST_MVN_VERSION}.pom
 
+before_deploy:
+  - echo `pwd`
+  - ls -lh /home/travis/.m2/repository/org/opencastproject/opencast-engage-paella-player/${$OPENCAST_MVN_VERSION}/opencast-engage-paella-player-${$OPENCAST_MVN_VERSION}.pom
 
 deploy:
   - provider: releases
