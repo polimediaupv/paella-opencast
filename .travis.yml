@@ -6,8 +6,10 @@ language: java
 jdk: oraclejdk8
 
 env:
+  - OPENCAST_BRANCH=develop OPENCAST_MVN_VERSION=7-SNAPSHOT
   - OPENCAST_BRANCH=r/6.x OPENCAST_MVN_VERSION=6-SNAPSHOT
   - OPENCAST_BRANCH=6.2 OPENCAST_MVN_VERSION=6.2
+  - OPENCAST_BRANCH=5.4 OPENCAST_MVN_VERSION=5.4  
 
 install:
   - git clone https://github.com/opencast/opencast.git --branch $OPENCAST_BRANCH ../opencast
