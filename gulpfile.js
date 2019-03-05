@@ -1,90 +1,76 @@
-"use strict"
+/**
+ * Licensed to The Apereo Foundation under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ *
+ * The Apereo Foundation licenses this file to you under the Educational
+ * Community License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License
+ * at:
+ *
+ *   http://opensource.org/licenses/ecl2.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
+
+/* global require */
+
+'use strict';
 var gulp = require('gulp');
-var clean = require('gulp-clean');
 var spawn = require('child_process').spawn;
 var mergeStream = require('merge-stream');
 
-var connect = require('gulp-connect');
-var serveStatic = require('serve-static');
-var httpProxy = require('http-proxy');
 
-var proxy = httpProxy.createProxyServer({secure:false});
-
-
-gulp.task('paella-opencast:clean', function () {
-	return gulp.src('build', {read: false}).pipe(clean());
-});
+var buildPath = 'target/gulp',
+    paellaSrc = 'src/main/paella-opencast';
 
 
 gulp.task('paella-opencast:prepare:source', function(){
-	var s1 = gulp.src('node_modules/paellaplayer/**').pipe(gulp.dest('build/paella'));
-	var s2 = gulp.src('paella-opencast/plugins/**').pipe(gulp.dest('build/paella/plugins'));
+  var s1 = gulp.src('node_modules/paellaplayer/**').pipe(gulp.dest(buildPath + '/paella'));
+  var s2 = gulp.src(paellaSrc + '/plugins/**').pipe(gulp.dest(buildPath + '/paella/plugins'));
 
-	return mergeStream(s1,s2);
+  return mergeStream(s1,s2);
 });
 
 
 
-gulp.task('paella-opencast:prepare', ['paella-opencast:prepare:source'], function(cb){
-	var cmd_npm = spawn('npm', ['install'], {cwd: 'build/paella', stdio: 'inherit'});
-	cmd_npm.on('close', function (code) {
-		cb(code);
-	});
-});
+gulp.task('paella-opencast:prepare', gulp.series('paella-opencast:prepare:source', function(cb){
+  var cmd_npm = spawn('npm', ['install'], {cwd: buildPath + '/paella', stdio: 'inherit'});
+  cmd_npm.on('close', function (code) {
+    cb(code);
+  });
+}));
 
 
-gulp.task('paella-opencast:compile.debug', ['paella-opencast:prepare'], function(cb){
-	var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'build.debug'], {cwd: 'build/paella'/*, stdio: 'inherit'*/});
-	cmd_npm.on('close', function (code) {
-		cb(code);
-	});	
-});
+gulp.task('paella-opencast:compile.debug', gulp.series('paella-opencast:prepare', function(cb){
+  var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'build.debug'], {cwd: buildPath + '/paella'});
+  cmd_npm.on('close', function (code) {
+    cb(code);
+  });
+}));
 
-gulp.task('paella-opencast:compile.release', ['paella-opencast:prepare'], function(cb){
-	var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'build.release'], {cwd: 'build/paella'/*, stdio: 'inherit'*/});
-	cmd_npm.on('close', function (code) {
-		cb(code);
-	});
-});
-
-
-gulp.task('paella-opencast:build', ["paella-opencast:compile.debug"], function(){
-	return gulp.src([
-		'build/paella/build/player/**',
-		'paella-opencast/ui/**'
-		
-	]).pipe(gulp.dest('build/paella-opencast'));	
-});
+gulp.task('paella-opencast:compile.release', gulp.series('paella-opencast:prepare', function(cb){
+  var cmd_npm = spawn('node', ['node_modules/gulp/bin/gulp.js', 'build.release'], {cwd: buildPath + '/paella'});
+  cmd_npm.on('close', function (code) {
+    cb(code);
+  });
+}));
 
 
-gulp.task('paella-opencast:server:rebuild', ['paella-opencast:build'], function(){
-	return connect.reload();
-});
+gulp.task('paella-opencast:build', gulp.series('paella-opencast:compile.debug', function(){
+  return gulp.src([
+    buildPath + '/paella/build/player/**',
+    paellaSrc + '/ui/**'
 
-gulp.task('paella-opencast:server:watch', function () {
-	return gulp.watch(['paella-opencast/plugins/**'], ['paella-opencast:server:rebuild']);
-});
-
-gulp.task('paella-opencast:server:run', function() {
-	return connect.server({
-		port: 8000,
-		middleware: function(connect, opt) {
-			return [
-				[ "/paella/ui", serveStatic('build/paella-opencast', {'index': ['index.html']}) ],
-				[ "/", function(req, res, next) {
-						//proxy.web(req, res, { target: 'http://engage.opencast.org/' });
-						proxy.web(req, res, { target: 'http://engage.videoapuntes.upv.es:8080/' });						
-						//proxy.web(req, res, { target: 'https://opencast-dev.uni-koeln.de/' });	
-					}
-				]
-			]
-		},
-		livereload: true
-	});
-});
-
-gulp.task('paella-opencast:server', ['paella-opencast:server:run', 'paella-opencast:server:watch']);
-
-gulp.task('default', ['paella-opencast:build']);	
+  ]).pipe(gulp.dest(buildPath + '/paella-opencast'));
+}));
 
 
+
+gulp.task('default', gulp.series('paella-opencast:build'));

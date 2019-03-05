@@ -5,3 +5,7 @@ bower_components
 build
 node
 target
+.settings
+.project
+.classpath
+.vscode
