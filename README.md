@@ -5,19 +5,18 @@ This is the Paella player bundled for Opencast.
 
 ![Paella Player Logo](doc/images/paella_mh.png)
 
+
+Paella is now integrated into opencast. Opencast 5.x will have paella as a (optional) player.
+
+As paella bundle is now in opencast tree, paella opencast bundle development will be in opencast github repository (https://github.com/opencast/opencast).
+
+
 Paella Player
 =============
 
-The Paella (pronounce “paeja”) Player is a HTML5 video player capable of
-playing multiple audio & video streams synchronously and supporting a number of
-user plugins. It is specially designed for lecture recordings, like Opencast
-Lectures or Polimedia pills.
+The [Paella Player](https://paellaplayer.upv.es) is an Open Source Javascript video player capable of playing an unlimited number of audio & video streams synchronously, Live Streaming, Zoom, Captions, contributed user plugins and a lot more. It is easy to install and customize for your own needs.
 
-By using Paella, students can view both the lecture hall and the teacher's
-screen, get information about the lecture (slides, OCR, series videos,
-footprints) and interact with the lecture (views, comments). Teachers can also
-soft edit the lecture to set the start and end point or make breaks in the
-recording.
+Paella has been specially designed for lecture recordings, and currently is the default video player of the [Opencast Community](https://opencast.org). It works with all HTML5 browsers (Chrome, Firefox, Safari and Edge) and within iOS and Android.
 
 If you want to use the Paella player, but do not use Opencast, try the
 [standalone](https://github.com/polimediaupv/paella) version.
@@ -26,26 +25,19 @@ If you want to use the Paella player, but do not use Opencast, try the
 Main Characteristics
 ====================
 
-- Multi stream video player
-- Based on HTML5 and Javascript
-- Resize position/size of video windows while playing
-- Play/Pause/30 seconds back controls
-- Jump anywhere in the video keeping both tracks in sync
-- Jump by clicking on the slide list
-- High quality slides while seeking
-- Can handle progressive download, pseudo streaming and RTMP streaming
-- Supports .flv and .mp4 files
-- Easily change the relative position of presenter and presentation windows
-- Native fullscreen version
-- Embeddable
-- “Publish to” buttons for Facebook and Twitter
-- Captions support
-- Comments (experimental)
-- Easy skinning
-- Easy install
-- Soft editing: Trimming and breaks
-- Supports Chrome, Firefox, Safari and Internet Explorer 9 an 10
-- Compatible with Opencast >= 1.4
+- Split-screen player for viewing video and slide content simultaneously
+- Unlimited number of simultaneous video streams
+- Zoom in any video window
+- Automatic slide index
+- Heat maps indicate sections of content most often watched
+- Multiple quality adaptive Streaming support with HTTP Live Streaming (HLS) or MPEG-DASH
+- Live Streaming support
+- Multiple language captions
+- Support for multiple audio tracks
+- REST APIs make it easy to extend to or integrate
+- Easy customization and localization of the player interface
+- ARIA support
+
 
 
 Build and Install
