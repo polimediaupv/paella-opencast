@@ -8,7 +8,7 @@
     <groupId>org.opencastproject</groupId>
     <artifactId>base</artifactId>
     <version>7-SNAPSHOT</version>
-    <relativePath>../opencast/pom.xml</relativePath>
+    <relativePath>${project.basedir}/../opencast/pom.xml</relativePath>
   </parent>
   <properties>
     <opencast.basedir>${project.basedir}/../opencast</opencast.basedir>
