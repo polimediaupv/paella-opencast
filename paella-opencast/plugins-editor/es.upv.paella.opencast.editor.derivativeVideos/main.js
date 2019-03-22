@@ -124,15 +124,12 @@
         }
 
         addClip() {
-            let newId = 1;
-            let clipIds = [];
+            let newId = 1;            
             this.clips.forEach((clip) => {
-                clipIds.push(clip.id);
-            });
-            clipIds.sort();
-            if (clipIds.length>0) {
-                newId = clipIds[clipIds.length - 1] + 1;
-            }
+                if (clip.id >= newId) {
+                    newId = clip.id + 1;
+                }
+            });            
             this.clips.push({
                 id: newId,
                 title: "Clip " + newId,
