@@ -13,6 +13,7 @@ env:
   - OPENCAST_BRANCH=6.1 OPENCAST_MVN_VERSION=6.1
   - OPENCAST_BRANCH=6.2 OPENCAST_MVN_VERSION=6.2
   - OPENCAST_BRANCH=6.3 OPENCAST_MVN_VERSION=6.3
+  - OPENCAST_BRANCH=6.4 OPENCAST_MVN_VERSION=6.4
 
 install:
   - git clone https://github.com/opencast/opencast.git --branch $OPENCAST_BRANCH ../opencast
