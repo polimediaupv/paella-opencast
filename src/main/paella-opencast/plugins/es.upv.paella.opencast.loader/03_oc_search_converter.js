@@ -275,6 +275,13 @@ class OpencastToPaellaConverter {
       }
     });
 
+    // Put presenter/delivery the first element in the array
+    if (flavors.indexOf('presenter/delivery') > 0) {
+      flavors.splice(flavors.indexOf('presenter/delivery'), 1);
+      flavors.unshift('presenter/delivery');
+    }
+
+
     return flavors;
   }
 
