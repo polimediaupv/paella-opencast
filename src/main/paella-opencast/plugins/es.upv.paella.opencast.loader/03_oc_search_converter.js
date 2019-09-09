@@ -21,10 +21,43 @@
 class OpencastToPaellaConverter {
 
   constructor() {
+    this._config = paella.player.config.plugins.list['es.upv.paella.opencast.loader'] || {};
   }
 
-  getVideoTypeFromTrack(track) {
-    var videoType = null;
+  getFilterStream() {
+    var filterStream;
+
+    var streams = this._config.streams || [];
+    streams.some(function(curretStream){
+      return curretStream.filter.system.some(function(currentFilter) {
+        if ((currentFilter == '*') || base.userAgent.system[currentFilter] ) {
+          filterStream = curretStream;
+          return true;
+        }
+      });
+    });
+
+    if (!filterStream) {
+      filterStream = {
+        'filter': {
+          'system': ['*']
+        },
+        'tracks': {
+          'flavors': ['*/*'],
+          'tags': ['*']
+        }
+      };
+    }
+
+    return filterStream;
+  }
+
+  getAudioTagConfig() {
+    return  this._config.audioTag || { '*/*': '*' };
+  }
+
+  getSourceTypeFromTrack(track) {
+    var sourceType = null;
 
     var protocol = /^(.*):\/\/.*$/.exec(track.url);
     if (protocol) {
@@ -36,7 +69,7 @@ class OpencastToPaellaConverter {
         case 'video/ogg':
         case 'video/webm':
         case 'video/x-flv':
-          videoType = 'rtmp';
+          sourceType = 'rtmp';
           break;
         default:
           paella.debug.log(`OpencastToPaellaConverter: MimeType (${track.mimetype}) not supported!`);
@@ -49,18 +82,20 @@ class OpencastToPaellaConverter {
         case 'video/mp4':
         case 'video/ogg':
         case 'video/webm':
-          videoType = track.mimetype.split('/')[1];
+          sourceType = track.mimetype.split('/')[1];
           break;
         case 'video/x-flv':
-          videoType = 'flv';
+          sourceType = 'flv';
           break;
         case 'application/x-mpegURL':
-          videoType = 'hls';
+          sourceType = 'hls';
           break;
         case 'application/dash+xml':
-          videoType = 'mpd';
+          sourceType = 'mpd';
           break;
-
+        case 'audio/m4a':
+          sourceType = 'audio';
+          break;
         default:
           paella.debug.log(`OpencastToPaellaConverter: MimeType (${track.mimetype}) not supported!`);
           break;
@@ -72,7 +107,7 @@ class OpencastToPaellaConverter {
       }
     }
 
-    return videoType;
+    return sourceType;
   }
 
   getStreamSourceFromTrack(track) {
@@ -94,16 +129,54 @@ class OpencastToPaellaConverter {
 
     var source = {
       src:  src,
-      mimetype: track.mimetype,
-      res: {w:res[0], h:res[1]},
       isLiveStream: (track.live === true)
     };
+
+    if(track.video) {
+      source.mimetype = track.mimetype;
+      source.res = {w:res[0], h:res[1]};
+    }
 
     return source;
   }
 
-  getStreamFromFlavour(episode, mainFlavour) {
-    var currentStream = { sources:{}, preview: '', content: mainFlavour };
+  getAudioTagFromTrack(currentTrack) {
+    let audioTagConfig = this.getAudioTagConfig();
+    let audioTag;
+
+    if (!(currentTrack.tags.tag instanceof Array)) {
+      currentTrack.tags.tag = [currentTrack.tags.tag];
+    }
+    currentTrack.tags.tag.some(function(tag){
+      if (tag.startsWith('audioTag:')){
+        audioTag = tag.slice(9);
+        return true;
+      }
+    });
+    if (!audioTag) {
+      Object.entries(audioTagConfig).some(function(atc){
+        let sflavor = currentTrack.type.split('/');
+        let smask = atc[0].split('/');
+
+        if (((smask[0] == '*') || (smask[0] == sflavor[0])) && ((smask[1] == '*') || (smask[1] == sflavor[1]))) {
+          audioTag = (atc[1] == '*') ? base.dictionary.currentLanguage() : atc[1];
+          return true;
+        }
+      });
+    }
+
+    return audioTag;
+  }
+
+  /**
+   * Extract a stream identified by a given flavor from the media packages track list and try to find a corresponding
+   * image attachment for the selected track.
+   * @param episode   result structure from search service
+   * @param flavor    flavor used for track selection
+   * @param subFlavor subflavor used for track selection
+   */
+  getStreamFromFlavor(episode, flavor, subFlavor) {
+    var currentStream = { sources:{}, preview: '', content: flavor };
 
     var tracks = episode.mediapackage.media.track;
     var attachments = episode.mediapackage.attachments.attachment;
@@ -112,16 +185,23 @@ class OpencastToPaellaConverter {
 
     // Read the tracks!!
     tracks.forEach((currentTrack) => {
-      if (currentTrack.type == `${mainFlavour}/delivery`) {
-        var videoType = this.getVideoTypeFromTrack(currentTrack);
-        if (videoType){
-          if ( !(currentStream.sources[videoType]) || !(currentStream.sources[videoType] instanceof Array)){
-            currentStream.sources[videoType] = [];
+      if (currentTrack.type == flavor + '/' + subFlavor) {
+        var sourceType = this.getSourceTypeFromTrack(currentTrack);
+        if (sourceType){
+          if ( !(currentStream.sources[sourceType]) || !(currentStream.sources[sourceType] instanceof Array)){
+            currentStream.sources[sourceType] = [];
           }
           if (currentTrack.audio) {
-            currentStream.audioTag = base.dictionary.currentLanguage();
+            currentStream.audioTag = this.getAudioTagFromTrack(currentTrack);
           }
-          currentStream.sources[videoType].push(this.getStreamSourceFromTrack(currentTrack));
+          currentStream.sources[sourceType].push(this.getStreamSourceFromTrack(currentTrack));
+
+          if (currentTrack.video) {
+            currentStream.type = 'video';
+          }
+          else if (currentTrack.audio) {
+            currentStream.type = 'audio';
+          }
         }
       }
     });
@@ -131,17 +211,17 @@ class OpencastToPaellaConverter {
     var imageSource =   {type:'image/jpeg', frames:{}, count:0, duration: duration, res:{w:320, h:180}};
     var imageSourceHD = {type:'image/jpeg', frames:{}, count:0, duration: duration, res:{w:1280, h:720}};
     attachments.forEach((currentAttachment) => {
-      if (currentAttachment.type == `${mainFlavour}/player+preview`) {
+      if (currentAttachment.type == `${flavor}/player+preview`) {
         currentStream.preview = currentAttachment.url;
       }
-      else if (currentAttachment.type == `${mainFlavour}/segment+preview+hires`) {
+      else if (currentAttachment.type == `${flavor}/segment+preview+hires`) {
         if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
           time = parseInt(RegExp.$1) * 60 * 60 + parseInt(RegExp.$2) * 60 + parseInt(RegExp.$3);
           imageSourceHD.frames['frame_' + time] = currentAttachment.url;
           imageSourceHD.count = imageSourceHD.count + 1;
         }
       }
-      else if (currentAttachment.type == `${mainFlavour}/segment+preview`) {
+      else if (currentAttachment.type == `${flavor}/segment+preview`) {
         if (/time=T(\d+):(\d+):(\d+)/.test(currentAttachment.ref)) {
           var time = parseInt(RegExp.$1) * 60 * 60 + parseInt(RegExp.$2) * 60 + parseInt(RegExp.$3);
           imageSource.frames['frame_' + time] = currentAttachment.url;
@@ -165,29 +245,47 @@ class OpencastToPaellaConverter {
   }
 
   getContentToImport(episode) {
-    var flavours = [];
+    var filterStream = this.getFilterStream();
+
+    var flavors = [];
     var tracks = episode.mediapackage.media.track;
     if (!(tracks instanceof Array)) { tracks = [tracks]; }
 
     tracks.forEach((currentTrack) => {
-      if (flavours.indexOf(currentTrack.type) < 0) {
-        flavours.push(currentTrack.type);
+      let importF = filterStream.tracks.flavors.some(function(cFlavour) {
+        let smask = cFlavour.split('/');
+        let sflavour = currentTrack.type.split('/');
+
+        return (((smask[0] == '*') || (smask[0] == sflavour[0])) && ((smask[1] == '*') || (smask[1] == sflavour[1])));
+      });
+
+      if (!(currentTrack.tags.tag instanceof Array)) {
+        currentTrack.tags.tag = [currentTrack.tags.tag];
+      }
+      let importT = filterStream.tracks.tags.some(function(cTag) {
+        return currentTrack.tags.tag.some(function(t){
+          return ((cTag == '*') || (cTag == t));
+        });
+      });
+
+      if (importF || importT) {
+        if (flavors.indexOf(currentTrack.type) < 0) {
+          flavors.push(currentTrack.type);
+        }
       }
     });
 
-    return flavours;
+    return flavors;
   }
 
   getStreams(episode) {
     // Get the streams
     var paellaStreams = [];
-    var flavours = this.getContentToImport(episode);
-    flavours.forEach((flavour) => {
-      var flavourSplit = flavour.split('/');
-      if (flavourSplit[1] == 'delivery') {
-        var s = this.getStreamFromFlavour(episode, flavourSplit[0]);
-        paellaStreams.push(s);
-      }
+    var flavors = this.getContentToImport(episode);
+    flavors.forEach((flavorStr) => {
+      var [flavor, subFlavor] = flavorStr.split('/');
+      var stream = this.getStreamFromFlavor(episode, flavor, subFlavor);
+      paellaStreams.push(stream);
     });
     return paellaStreams;
   }
@@ -328,6 +426,26 @@ class OpencastToPaellaConverter {
     return segments;
   }
 
+  getPreviewImage(episode) {
+    let presenterPreview;
+    let presentationPreview;
+    let otherPreview;
+
+    var attachments = episode.mediapackage.attachments.attachment;
+    attachments.forEach((currentAttachment) => {
+      if (currentAttachment.type == 'presenter/player+preview') {
+        presenterPreview = currentAttachment.url;
+      }
+      if (currentAttachment.type == 'presentation/player+preview') {
+        presentationPreview = currentAttachment.url;
+      }
+      if (currentAttachment.type.endsWith('/player+preview')) {
+        otherPreview = currentAttachment.url;
+      }
+    });
+
+    return presentationPreview || presenterPreview || otherPreview;
+  }
 
   convertToDataJson(episode) {
     var streams = this.getStreams(episode);
@@ -337,7 +455,8 @@ class OpencastToPaellaConverter {
     var data =  {
       metadata: {
         title: episode.mediapackage.title,
-        duration: episode.mediapackage.duration / 1000
+        duration: episode.mediapackage.duration / 1000,
+        preview: this.getPreviewImage(episode)
       },
       streams: streams,
       frameList: segments,

@@ -3,7 +3,7 @@ sudo: true
 
 language: java
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 env:
 #  - OPENCAST_BRANCH=develop OPENCAST_MVN_VERSION=7-SNAPSHOT
