@@ -245,28 +245,32 @@ class OpencastToPaellaConverter {
   }
 
   getContentToImport(episode) {
-    var filterStream = this.getFilterStream();
-
-    var flavors = [];
-    var tracks = episode.mediapackage.media.track;
+    let importF = false;
+    let importT = false;
+    let flavors = [];
+    let filterStream = this.getFilterStream();
+    
+    let tracks = episode.mediapackage.media.track;
     if (!(tracks instanceof Array)) { tracks = [tracks]; }
 
     tracks.forEach((currentTrack) => {
-      let importF = filterStream.tracks.flavors.some(function(cFlavour) {
+      importF = filterStream.tracks.flavors.some(function(cFlavour) {
         let smask = cFlavour.split('/');
         let sflavour = currentTrack.type.split('/');
 
         return (((smask[0] == '*') || (smask[0] == sflavour[0])) && ((smask[1] == '*') || (smask[1] == sflavour[1])));
       });
 
-      if (!(currentTrack.tags.tag instanceof Array)) {
-        currentTrack.tags.tag = [currentTrack.tags.tag];
-      }
-      let importT = filterStream.tracks.tags.some(function(cTag) {
-        return currentTrack.tags.tag.some(function(t){
-          return ((cTag == '*') || (cTag == t));
+      if (currentTrack.tags.tag) {
+        if (!(currentTrack.tags.tag instanceof Array)) {
+          currentTrack.tags.tag = [currentTrack.tags.tag];
+        }
+        importT = filterStream.tracks.tags.some(function(cTag) {
+          return currentTrack.tags.tag.some(function(t){
+            return ((cTag == '*') || (cTag == t));
+          });
         });
-      });
+      }
 
       if (importF || importT) {
         if (flavors.indexOf(currentTrack.type) < 0) {
