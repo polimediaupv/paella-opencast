@@ -119,6 +119,21 @@
     },
     "//**** For a list of available plugins and configuration, go to": "https://github.com/polimediaupv/paella/blob/master/doc/plugins.md",
     "list": {
+      "es.upv.paella.opencast.loader": {
+        "orderTracks": ["presenter/delivery", "presenter/preview", "presentation/delivery", "presentation/preview"],
+        "streams": [
+          {
+            "filter": {
+              "system": ["*"]
+            },
+            "tracks": {
+              "flavors": ["*/*"],
+              "tags": []
+            }
+          }
+        ],
+        "audioTag": {}
+      },
       "//**** Video profile plugins": "",
       "es.upv.paella.singleStreamProfilePlugin": {
           "enabled": true,
@@ -222,7 +237,7 @@
       "es.upv.paella.ratePlugin": {
         "enabled": false
       },
-      "es.upv.paella.audioLanguage": {
+      "es.upv.paella.audioSelector": {
         "enabled": true
       },
       "es.upv.paella.videoZoomPlugin": {

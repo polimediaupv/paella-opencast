@@ -22,6 +22,7 @@ class OpencastToPaellaConverter {
 
   constructor() {
     this._config = paella.player.config.plugins.list['es.upv.paella.opencast.loader'] || {};
+    this._orderTracks = this._config.orderTracks || ["presenter/delivery", "presenter/preview", "presentation/delivery", "presentation/preview"];
   }
 
   getFilterStream() {
@@ -245,22 +246,21 @@ class OpencastToPaellaConverter {
   }
 
   getContentToImport(episode) {
-    let importF = false;
-    let importT = false;
-    let flavors = [];
-    let filterStream = this.getFilterStream();
-    
-    let tracks = episode.mediapackage.media.track;
+    var filterStream = this.getFilterStream();
+
+    var flavors = [];
+    var tracks = episode.mediapackage.media.track;
     if (!(tracks instanceof Array)) { tracks = [tracks]; }
 
     tracks.forEach((currentTrack) => {
-      importF = filterStream.tracks.flavors.some(function(cFlavour) {
+      let importF = filterStream.tracks.flavors.some(function(cFlavour) {
         let smask = cFlavour.split('/');
         let sflavour = currentTrack.type.split('/');
 
         return (((smask[0] == '*') || (smask[0] == sflavour[0])) && ((smask[1] == '*') || (smask[1] == sflavour[1])));
       });
 
+      let importT = false;
       if (currentTrack.tags.tag) {
         if (!(currentTrack.tags.tag instanceof Array)) {
           currentTrack.tags.tag = [currentTrack.tags.tag];
@@ -279,12 +279,14 @@ class OpencastToPaellaConverter {
       }
     });
 
-    // Put presenter/delivery the first element in the array
-    if (flavors.indexOf('presenter/delivery') > 0) {
-      flavors.splice(flavors.indexOf('presenter/delivery'), 1);
-      flavors.unshift('presenter/delivery');
+    // Sort the streams
+    for (let i = this._orderTracks.length - 1; i >= 0; i--) {
+      let flavor = this._orderTracks[i];
+      if (flavors.indexOf(flavor) > 0) {
+        flavors.splice(flavors.indexOf(flavor), 1);
+        flavors.unshift(flavor);
+      }
     }
-
 
     return flavors;
   }
