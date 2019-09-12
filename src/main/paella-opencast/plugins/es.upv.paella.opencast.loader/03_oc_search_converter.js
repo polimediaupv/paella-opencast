@@ -22,6 +22,7 @@ class OpencastToPaellaConverter {
 
   constructor() {
     this._config = paella.player.config.plugins.list['es.upv.paella.opencast.loader'] || {};
+    this._orderTracks = this._config.orderTracks || ["presenter/delivery", "presenter/preview", "presentation/delivery", "presentation/preview"];
   }
 
   getFilterStream() {
@@ -259,14 +260,17 @@ class OpencastToPaellaConverter {
         return (((smask[0] == '*') || (smask[0] == sflavour[0])) && ((smask[1] == '*') || (smask[1] == sflavour[1])));
       });
 
-      if (!(currentTrack.tags.tag instanceof Array)) {
-        currentTrack.tags.tag = [currentTrack.tags.tag];
-      }
-      let importT = filterStream.tracks.tags.some(function(cTag) {
-        return currentTrack.tags.tag.some(function(t){
-          return ((cTag == '*') || (cTag == t));
+      let importT = false;
+      if (currentTrack.tags.tag) {
+        if (!(currentTrack.tags.tag instanceof Array)) {
+          currentTrack.tags.tag = [currentTrack.tags.tag];
+        }
+        importT = filterStream.tracks.tags.some(function(cTag) {
+          return currentTrack.tags.tag.some(function(t){
+            return ((cTag == '*') || (cTag == t));
+          });
         });
-      });
+      }
 
       if (importF || importT) {
         if (flavors.indexOf(currentTrack.type) < 0) {
@@ -274,6 +278,15 @@ class OpencastToPaellaConverter {
         }
       }
     });
+
+    // Sort the streams
+    for (let i = this._orderTracks.length - 1; i >= 0; i--) {
+      let flavor = this._orderTracks[i];
+      if (flavors.indexOf(flavor) > 0) {
+        flavors.splice(flavors.indexOf(flavor), 1);
+        flavors.unshift(flavor);
+      }
+    }
 
     return flavors;
   }
