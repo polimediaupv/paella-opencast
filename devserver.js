@@ -11,10 +11,10 @@ var proxy = httpProxy.createProxyServer({
 
  
 function proxyFunc(req, res, next) {
-    proxy.web(req, res,
-    function(err){
-        next(createError(502, err));
-    });
+  proxy.web(req, res,
+  function(err){
+    next(createError(502, err));
+  });
 }
 
 app.use('/paella/ui', express.static('target/gulp/paella-opencast'));
