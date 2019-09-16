@@ -1,0 +1,18 @@
+
+body {
+	padding-top: 70px;
+}
+
+.navbar-brand {
+	padding: 8px 15px;
+}
+
+
+
+.opencast-navigation {
+	margin: 0;
+}
+
+.opencast-toolbar {
+	margin-bottom: 20px;	
+}
