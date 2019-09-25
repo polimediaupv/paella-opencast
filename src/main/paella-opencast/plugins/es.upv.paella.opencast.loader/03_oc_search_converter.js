@@ -261,16 +261,16 @@ class OpencastToPaellaConverter {
       });
 
       let importT = false;
-      if (currentTrack.tags.tag) {
+      let tags = [];
+      if ( (currentTrack.tags) && (currentTrack.tags.tag) ) {
+        tags = [currentTrack.tags.tag];
         if (!(currentTrack.tags.tag instanceof Array)) {
-          currentTrack.tags.tag = [currentTrack.tags.tag];
+          tags = [currentTrack.tags.tag];
         }
-        importT = filterStream.tracks.tags.some(function(cTag) {
-          return currentTrack.tags.tag.some(function(t){
-            return ((cTag == '*') || (cTag == t));
-          });
-        });
       }
+      importT = filterStream.tracks.tags.some(function(cTag) {
+        return (cTag == '*') || tags.some(function(t){ return (cTag == t); });
+      });
 
       if (importF || importT) {
         if (flavors.indexOf(currentTrack.type) < 0) {
@@ -445,6 +445,8 @@ class OpencastToPaellaConverter {
     let otherPreview;
 
     var attachments = episode.mediapackage.attachments.attachment;
+    if (!(attachments instanceof Array)) { attachments = [attachments]; }
+
     attachments.forEach((currentAttachment) => {
       if (currentAttachment.type == 'presenter/player+preview') {
         presenterPreview = currentAttachment.url;
