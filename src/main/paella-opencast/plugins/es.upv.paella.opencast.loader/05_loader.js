@@ -65,7 +65,7 @@ function loadOpencastPaella(containerId) {
       }
     }
     else {
-      paella.load(containerId, {
+      paella.lazyLoad(containerId, {
         configUrl:'/paella/config/config.json',
         loadVideo:function() {
           return new Promise((resolve, reject) => {
