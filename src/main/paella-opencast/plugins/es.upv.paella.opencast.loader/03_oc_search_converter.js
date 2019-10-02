@@ -22,7 +22,8 @@ class OpencastToPaellaConverter {
 
   constructor() {
     this._config = paella.player.config.plugins.list['es.upv.paella.opencast.loader'] || {};
-    this._orderTracks = this._config.orderTracks || ["presenter/delivery", "presenter/preview", "presentation/delivery", "presentation/preview"];
+    this._orderTracks = this._config.orderTracks ||
+          ['presenter/delivery', 'presenter/preview', 'presentation/delivery', 'presentation/preview'];
   }
 
   getFilterStream() {
@@ -145,10 +146,14 @@ class OpencastToPaellaConverter {
     let audioTagConfig = this.getAudioTagConfig();
     let audioTag;
 
-    if (!(currentTrack.tags.tag instanceof Array)) {
-      currentTrack.tags.tag = [currentTrack.tags.tag];
+    let tags = [];
+    if ( (currentTrack.tags) && (currentTrack.tags.tag) ) {
+      tags = currentTrack.tags.tag;
+      if (!(tags instanceof Array)) {
+        tags = [tags];
+      }
     }
-    currentTrack.tags.tag.some(function(tag){
+    tags.some(function(tag){
       if (tag.startsWith('audioTag:')){
         audioTag = tag.slice(9);
         return true;
@@ -181,8 +186,8 @@ class OpencastToPaellaConverter {
 
     var tracks = episode.mediapackage.media.track;
     var attachments = episode.mediapackage.attachments.attachment;
-    if (!(tracks instanceof Array)) { tracks = [tracks]; }
-    if (!(attachments instanceof Array)) { attachments = [attachments]; }
+    if (!(tracks instanceof Array)) { tracks = tracks ? [tracks] : []; }
+    if (!(attachments instanceof Array)) { attachments = attachments ? [attachments] : []; }
 
     // Read the tracks!!
     tracks.forEach((currentTrack) => {
@@ -308,8 +313,8 @@ class OpencastToPaellaConverter {
 
     var attachments = episode.mediapackage.attachments.attachment;
     var catalogs = episode.mediapackage.metadata.catalog;
-    if (!(attachments instanceof Array)) { attachments = [attachments]; }
-    if (!(catalogs instanceof Array)) { catalogs = [catalogs]; }
+    if (!(attachments instanceof Array)) { attachments = attachments ? [attachments] : []; }
+    if (!(catalogs instanceof Array)) { catalogs = catalogs ? [catalogs] : []; }
 
 
     // Read the attachments
@@ -392,7 +397,7 @@ class OpencastToPaellaConverter {
     var segments = [];
 
     var attachments = episode.mediapackage.attachments.attachment;
-    if (!(attachments instanceof Array)) { attachments = [attachments]; }
+    if (!(attachments instanceof Array)) { attachments = attachments ? [attachments] : []; }
 
     // Read the attachments
     var opencastFrameList = {};
@@ -445,8 +450,7 @@ class OpencastToPaellaConverter {
     let otherPreview;
 
     var attachments = episode.mediapackage.attachments.attachment;
-    if (!(attachments instanceof Array)) { attachments = [attachments]; }
-
+    if (!(attachments instanceof Array)) { attachments = attachments ? [attachments] : []; }
     attachments.forEach((currentAttachment) => {
       if (currentAttachment.type == 'presenter/player+preview') {
         presenterPreview = currentAttachment.url;
