@@ -132,7 +132,12 @@
             }
           }
         ],
-        "audioTag": {}
+        "audioTag": {
+          "presenter/delivery": "selected",
+          "audio_backup/upv": "backup",
+          "audio_lapel/upv": "lapel",
+          "audio_ambient/upv": "ambient"
+        }
       },
       "//**** Video profile plugins": "",
       "es.upv.paella.singleStreamProfilePlugin": {
@@ -238,6 +243,9 @@
         "enabled": false
       },
       "es.upv.paella.audioSelector": {
+        "enabled": false
+      },
+      "es.upv.paella.opencast.audioSelector": {
         "enabled": true
       },
       "es.upv.paella.videoZoomPlugin": {
