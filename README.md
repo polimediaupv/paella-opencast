@@ -22,28 +22,11 @@ If you want to use the Paella player, but do not use Opencast, try the
 [standalone](https://github.com/polimediaupv/paella) version.
 
 
-Main Characteristics
-====================
-
-- Split-screen player for viewing video and slide content simultaneously
-- Unlimited number of simultaneous video streams
-- Zoom in any video window
-- Automatic slide index
-- Heat maps indicate sections of content most often watched
-- Multiple quality adaptive Streaming support with HTTP Live Streaming (HLS) or MPEG-DASH
-- Live Streaming support
-- Multiple language captions
-- Support for multiple audio tracks
-- REST APIs make it easy to extend to or integrate
-- Easy customization and localization of the player interface
-- ARIA support
-
-
-
 Build and Install
 =================
 
-To build Paella Player for Opencast, please read the
-[documentation](doc/build.md).
+**Note:** This bundle is only tested in Opencast 6.x
+
+To build Paella Player for Opencast, please read the [documentation](doc/build.md).
 
 [![Build Status](https://travis-ci.org/polimediaupv/paella-opencast.svg?branch=master)](https://travis-ci.org/polimediaupv/paella-opencast)
