@@ -51,18 +51,29 @@
 			</div>
 		</div>
 		<div class="container">
-			<div ng-show="loading2">
+			<div ng-show="loading">
 				<img class="img-responsive center-block" src="mysubjects/images/ajax_loader.gif">
 			</div>
+			<div ng-show="error">
+				<div class="alert alert-danger" role="alert">Ha ocurrido un error</div>
+			</div>
 			<div ng-hide="loading">			
-				<ul class="list-group">								
+				<ul class="list-group">	
+					
 					<li class="list-group-item" ng-show="mysubject">
 						<div class="row">
 							<div class="col-md-9"> Mis videos públicos </div>
 							<div class="col-md-3">
 								<div class="btn-group">
-									<a class="btn btn-default btn-success" ng-href="/engage/ui/index.html?epFrom=SHOW_PUBLIC_{{mysubject}}"> Videos visibles </a>
-									<a class="btn btn-default btn-danger" ng-href="/engage/ui/index.html?epFrom=HIDE_PUBLIC_{{mysubject}}"> Videos ocultos </a>
+									<a class="btn btn-default btn-success" ng-href="/engage/ui/index.html?epFrom=SHOW_PUBLIC_{{mysubject}}" data-toggle="tooltip" data-placement="top" title="Videos visibles">
+										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+									</a>
+									<a class="btn btn-default btn-danger" ng-href="/engage/ui/index.html?epFrom=HIDE_PUBLIC_{{mysubject}}" data-toggle="tooltip" data-placement="top" title="Videos ocultos">
+										<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+									</a>
+									<a class="btn btn-default btn-info" ng-href="https://studio.videoapuntes.upv.es/studio/studio.html?series=HIDE_PUBLIC_{{mysubject}}" data-toggle="tooltip" data-placement="top" title="Grabar un video desde casa"> 
+										<span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -72,8 +83,15 @@
 							<div class="col-md-9"> {{s.subject}} </div>
 							<div class="col-md-3">
 								<div class="btn-group">
-									<a class="btn btn-default btn-success" ng-href="/engage/ui/index.html?epFrom=SHOW_{{s.subject}}"> Videos visibles </a>
-									<a class="btn btn-default btn-danger" ng-href="/engage/ui/index.html?epFrom=HIDE_{{s.subject}}" ng-show="s.instructor"> Videos ocultos </a>
+									<a class="btn btn-default btn-success" ng-href="/engage/ui/index.html?epFrom=SHOW_{{s.subject}}" data-toggle="tooltip" data-placement="top" title="Videos visibles">
+										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+									</a>
+									<a class="btn btn-default btn-danger" ng-href="/engage/ui/index.html?epFrom=HIDE_{{s.subject}}" ng-show="s.instructor" data-toggle="tooltip" data-placement="top" title="Videos ocultos">
+										<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+									</a>
+									<a class="btn btn-default btn-info" ng-href="https://studio.videoapuntes.upv.es/studio/studio.html?series=HIDE_{{s.subject}}" data-toggle="tooltip" data-placement="top" title="Grabar un video desde casa"> 
+										<span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+									</a>
 								</div>
 							</div>
 						</div>
