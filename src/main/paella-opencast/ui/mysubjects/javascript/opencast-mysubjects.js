@@ -26,9 +26,13 @@
 		}	
 	
 		// Start
+		$('[data-toggle="tooltip"]').tooltip();
+
 		$scope.loading = true;
+		$scope.error = false;
 	
-		$http.get('/info/me.json').then(function(res){
+		$http.get('/info/me.json')
+		.then(function(res){
 			$scope.me = res.data;
 			
 			$scope.subjects = {};
@@ -59,9 +63,13 @@
 			else {
 				$scope.isLogged = true;		
 			}
-			
+		})
+		.catch(function(err){
+			$scope.error = true;
+		})
+		.finally(function(){
 			$scope.loading = false;
-		});	
+		});
 	}]);
 
 })();
