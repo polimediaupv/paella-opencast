@@ -57,9 +57,24 @@
 			<div ng-show="error">
 				<div class="alert alert-danger" role="alert">Ha ocurrido un error</div>
 			</div>
-			<div ng-hide="loading">			
+			<div ng-hide="loading">	
+				<div ng-show="instrcutor">
+					<div class="alert alert-info" role="alert">
+						<p><strong>Novedad!</strong> Debido a la grave situación originada por la pandemia del coronavirus y para facilitar la docencia online,
+						se ha habilitado una herramienta para que podais crear vuestos videoapuntes remotamente.</p>
+						<p>Si es profesor de algun site de poliformat, el botón <strong>azul de la cámara (<span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>)</strong> 
+						le permite hacer un VideoApunte remoto desde su casa/despacho.</p>
+					</div>
+				</div>
+
 				<ul class="list-group">	
-					
+					<li class="list-group-item" style="background-color: #f8f8f8;">
+						<div class="row">
+							<div class="col-md-10"> Site de poliformaT </div>
+							<div class="col-md-2"> Acciones </div>
+						</div>
+					</li>
+
 					<li class="list-group-item" ng-show="mysubject">
 						<div class="row">
 							<div class="col-md-10"> Mis videos públicos </div>
@@ -96,7 +111,7 @@
 							</div>
 						</div>
 					</li>
-				</ul>				
+				</ul>
 			</div>
 		</div>		
 	</body>

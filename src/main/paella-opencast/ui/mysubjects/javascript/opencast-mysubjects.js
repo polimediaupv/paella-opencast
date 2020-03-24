@@ -30,6 +30,7 @@
 
 		$scope.loading = true;
 		$scope.error = false;
+		$scope.instrcutor = false;
 	
 		$http.get('/info/me.json')
 		.then(function(res){
@@ -46,6 +47,7 @@
 					var subject = r.substr(0,r.length-11);
 					createKey(subject);
 					$scope.subjects[subject].instructor = true;
+					$scope.instrcutor = true;
 				}
 				else if (r.endsWith("_Learner")) {
 					var subject = r.substr(0,r.length-8)
