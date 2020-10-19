@@ -7,15 +7,12 @@ var app = express();
 var proxy = httpProxy.createProxyServer({secure:false});
  
 function proxyFunc(req, res, next) {
-	//proxy.web(req, res, { target: 'http://engage.opencast.org/' });
-	proxy.web(req, res, { target: 'https://engage.videoapuntes.upv.es/' });
+	//proxy.web(req, res, { target: 'https://stable.opencast.org/' });
+	proxy.web(req, res, { target: 'https://engage.videoapuntes.upv.es/', secure: false, changeOrigin: true });
 	//proxy.web(req, res, { target: 'https://opencast-dev.uni-koeln.de/' });	
 }
 
-app.use(function(req,res,next){
-	console.log("jaja");
-	next();
-})
+
 app.use('/paella/ui', express.static('target/gulp/paella-opencast'));
 app.use(proxyFunc);
 

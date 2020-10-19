@@ -482,6 +482,19 @@ class OpencastToPaellaConverter {
       captions: captions
     };
 
+    // PATCH: Fast patch to solve problems with iOS/iPad
+    if (paella.utils.userAgent.system.MacOS || paella.utils.userAgent.system.iOS) {
+      let str = [];
+      data.streams.forEach(s => {
+        if (s.type == "video") {
+          if (s.sources.hls && !s.sources.hls[0].type) {
+            s.sources.hls[0].type = s.sources.hls[0].mimetype = "video/mp4";
+          }
+          str.push(s);
+        }
+      });
+      data.streams = str;
+    }
     return data;
   }
 }
