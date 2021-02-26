@@ -29,11 +29,11 @@ var source = require('vinyl-source-stream');
 var gunzip = require('gulp-gunzip');
 var untar = require('gulp-untar');
 
-var PAELLA_VERSION = '6.2.7';
+var PAELLA_VERSION = '6.4.3';
 
 var buildPath = 'target/gulp',
     paellaSrc = 'src/main/paella-opencast',
-    paellaBuildPath = buildPath + '/paella-' + PAELLA_VERSION
+    paellaBuildPath = buildPath + '/paella-' + PAELLA_VERSION;
 
 
 gulp.task('paella-opencast:download:paella', function(){
@@ -44,14 +44,14 @@ gulp.task('paella-opencast:download:paella', function(){
   .pipe(gulp.dest(buildPath));
 });
 
+
 gulp.task('paella-opencast:prepare:source', gulp.series('paella-opencast:download:paella', function(){
   return gulp.src(paellaSrc + '/plugins/**').pipe(gulp.dest(paellaBuildPath + '/plugins'));
 }));
 
 
-
 gulp.task('paella-opencast:prepare', gulp.series('paella-opencast:prepare:source', function(cb){
-  var cmd_npm = spawn('npm', ['ci'], {cwd: paellaBuildPath});
+  var cmd_npm = spawn('npm', ['ci'], {cwd: paellaBuildPath });
   cmd_npm.on('close', function (code) {
     cb(code);
   });

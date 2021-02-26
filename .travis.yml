@@ -6,21 +6,14 @@ language: java
 jdk: openjdk8
 
 env:
-#  - OPENCAST_BRANCH=develop OPENCAST_MVN_VERSION=7-SNAPSHOT
-#  - OPENCAST_BRANCH=r/6.x OPENCAST_MVN_VERSION=6-SNAPSHOT
-#  - OPENCAST_BRANCH=5.4 OPENCAST_MVN_VERSION=5.4
-  - OPENCAST_BRANCH=6.0 OPENCAST_MVN_VERSION=6.0
-  - OPENCAST_BRANCH=6.1 OPENCAST_MVN_VERSION=6.1
-  - OPENCAST_BRANCH=6.2 OPENCAST_MVN_VERSION=6.2
-  - OPENCAST_BRANCH=6.3 OPENCAST_MVN_VERSION=6.3
-  - OPENCAST_BRANCH=6.4 OPENCAST_MVN_VERSION=6.4
-  - OPENCAST_BRANCH=6.5 OPENCAST_MVN_VERSION=6.5
-  - OPENCAST_BRANCH=6.6 OPENCAST_MVN_VERSION=6.6
-  - OPENCAST_BRANCH=6.7 OPENCAST_MVN_VERSION=6.7
+  - OPENCAST_BRANCH=develop OPENCAST_MVN_VERSION=10-SNAPSHOT
+  - OPENCAST_BRANCH=r/9.x OPENCAST_MVN_VERSION=9-SNAPSHOT
+  - OPENCAST_BRANCH=8.10 OPENCAST_MVN_VERSION=8.10
+  - OPENCAST_BRANCH=9.2 OPENCAST_MVN_VERSION=9.2
 
-install:
-  - git clone https://github.com/opencast/opencast.git --branch $OPENCAST_BRANCH ../opencast
-  - ( cd ../opencast && mvn --quiet --batch-mode install -DskipTests=true -Dcheckstyle.skip=true -DskipJasmineTests=true -Pnone )
+#install:
+#  - git clone https://github.com/opencast/opencast.git --branch $OPENCAST_BRANCH ../opencast
+#  - ( cd ../opencast && mvn --quiet --batch-mode install -DskipTests=true -Dcheckstyle.skip=true -DskipJasmineTests=true -Pnone )
 
 before_script:
   - sed -i "s|<version>.*-SNAPSHOT</version>|<version>$OPENCAST_MVN_VERSION</version>|" pom.xml

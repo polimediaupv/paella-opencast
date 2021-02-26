@@ -4,58 +4,15 @@
   <artifactId>opencast-engage-paella-player</artifactId>
   <packaging>bundle</packaging>
   <name>Opencast :: engage-paella-player</name>
-  <parent>
-    <groupId>org.opencastproject</groupId>
-    <artifactId>base</artifactId>
-    <version>7-SNAPSHOT</version>
-    <relativePath>${project.basedir}/../opencast/pom.xml</relativePath>
-  </parent>
+  <groupId>org.opencastproject</groupId>
+  <version>10-SNAPSHOT</version>
+  
   <properties>
-    <opencast.basedir>${project.basedir}/../opencast</opencast.basedir>
     <checkstyle.skip>false</checkstyle.skip>
+    <node.version>v14.15.1</node.version>
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.opencastproject</groupId>
-      <artifactId>opencast-common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <!-- osgi support -->
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.compendium</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>        
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>    
-    </dependency>
-    <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>jsr311-api</artifactId>      
-    </dependency>
-  </dependencies>
-
+  
+  <dependencies />
   <profiles>
     <profile>
       <id>frontend-no-prebuilt</id>
@@ -80,7 +37,7 @@
                 </configuration>
               </execution>
               <execution>
-                <id>npm install</id>
+                <id>npm ci</id>
                 <goals>
                   <goal>exec</goal>
                 </goals>
@@ -88,10 +45,24 @@
                 <configuration>
                   <executable>npm</executable>
                   <arguments>
-                    <argument>install</argument>
+                    <argument>ci</argument>
                   </arguments>
                 </configuration>
-              </execution>              
+              </execution>
+              <execution>
+                <id>esline</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>validate</phase>
+                <configuration>
+                  <executable>npm</executable>
+                  <arguments>
+                    <argument>run</argument>
+                    <argument>eslint</argument>
+                  </arguments>
+                </configuration>
+              </execution>
               <execution>
                 <id>frontend build</id>
                 <goals>
@@ -99,9 +70,9 @@
                 </goals>
                 <phase>compile</phase>
                 <configuration>
-                  <executable>npm</executable>
+                  <executable>node_modules/gulp/bin/gulp.js</executable>
                   <arguments>
-                    <argument>run build</argument>
+                    <argument>paella-opencast:build</argument>
                   </arguments>
                 </configuration>
               </execution>
@@ -131,7 +102,6 @@
                 </goals>
                 <configuration>
                   <nodeVersion>${node.version}</nodeVersion>
-                  <npmVersion>${npm.version}</npmVersion>
                 </configuration>
               </execution>
 
@@ -148,22 +118,32 @@
 
               <execution>
                 <phase>validate</phase>
-                <id>npm install</id>
+                <id>npm ci</id>
                 <goals>
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>install</arguments>
+                  <arguments>ci</arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <phase>validate</phase>
+                <id>eslint</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run eslint</arguments>
                 </configuration>
               </execution>
               <execution>
                 <phase>process-resources</phase>
-                <id>npm run build</id>
+                <id>gulp build</id>
                 <goals>
-                  <goal>npm</goal>
+                  <goal>gulp</goal>
                 </goals>
                 <configuration>
-                  <arguments>run build</arguments>
+                  <arguments>paella-opencast:build</arguments>
                 </configuration>
               </execution>
             </executions>
@@ -175,6 +155,10 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -212,15 +196,6 @@
             <Http-Alias>/paella/ui</Http-Alias>
             <Http-Classpath>/ui</Http-Classpath>
             <Http-Welcome>watch.html</Http-Welcome>
-            <Import-Package>
-              javax.ws.rs;version=2.0.1,
-              javax.ws.rs.core;version=2.0.1,
-              *
-            </Import-Package>
-            <Export-Package>org.opencastproject.engage.paella</Export-Package>
-            <Service-Component>
-              OSGI-INF/paella-config-file.xml
-            </Service-Component>
           </instructions>
         </configuration>
         <executions>
