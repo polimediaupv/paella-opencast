@@ -1,0 +1,22 @@
+
+.transcriptions-container ul {
+    max-height: 300px;
+    overflow: auto;
+    list-style-type: none;
+    margin-block-start: 5px;
+    margin-block-end: 5px;
+    margin-inline-start: 3px;
+    padding-inline-start: 0px;
+    font-family: sans-serif;
+}
+
+.transcriptions-container ul li {
+    display: flex;
+    gap: 7px;
+    margin: 7px;
+    max-width: 500px;
+}
+
+.transcriptions-container ul li img {
+    width: 100px;
+}

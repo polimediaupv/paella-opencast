@@ -1,0 +1,32 @@
+
+.episodes-from-series {
+    font-family: sans-serif;
+    max-width: 400px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.episodes-from-series ul {
+    padding: 0px;
+}
+
+.episodes-from-series li {
+    list-style: none;
+    display: flex;
+    gap: 7px;
+    margin: 7px;
+    max-width: 500px;
+}
+
+.episodes-from-series a {
+    color: white;
+    display: flex;
+}
+
+.episodes-from-series a:hover {
+    color: grey;
+}
+
+.episodes-from-series img {
+    max-width: 120px;
+}

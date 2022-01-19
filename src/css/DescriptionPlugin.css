@@ -1,0 +1,21 @@
+
+.description-plugin {
+    font-family: Helvetica, Arial, sans-serif;
+    display: flex;
+}
+
+.description-plugin .table-column {
+    max-width: 45%;
+}
+
+.description-plugin .table-item {
+    padding: 5px;
+}
+
+.description-plugin .table-item .item-value {
+
+}
+
+.description-plugin .table-item .item-value a {
+    color: #f0f0f0;
+}

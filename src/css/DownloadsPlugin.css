@@ -1,0 +1,20 @@
+
+.downloads-plugin {
+    font-family: sans-serif;
+}
+
+.downloads-plugin ul {
+    list-style: none;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0px;
+}
+
+.downloads-plugin a {
+    color: white;
+}
+
+.downloads-plugin a:hover {
+    color: lightgray;
+}
+

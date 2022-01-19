@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>opencast-engage-paella-player</artifactId>
+  <artifactId>opencast-engage-paella-player-7</artifactId>
   <packaging>bundle</packaging>
-  <name>Opencast :: engage-paella-player</name>
+  <name>Opencast :: engage-paella-player-7</name>
   <groupId>org.opencastproject</groupId>
-  <version>10-SNAPSHOT</version>
+  <version>9.6</version>
   
   <properties>
     <checkstyle.skip>false</checkstyle.skip>
@@ -22,47 +22,31 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <executions>
+
               <execution>
-                <id>npm clean</id>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <phase>pre-clean</phase>
-                <configuration>
-                  <executable>npm</executable>
-                  <arguments>
-                    <argument>cache</argument>
-                    <argument>verify</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-              <execution>
+                <phase>validate</phase>
                 <id>npm ci</id>
                 <goals>
                   <goal>exec</goal>
                 </goals>
-                <phase>initialize</phase>
                 <configuration>
                   <executable>npm</executable>
-                  <arguments>
-                    <argument>ci</argument>
-                  </arguments>
+                  <arguments>ci</arguments>
                 </configuration>
               </execution>
+
               <execution>
-                <id>esline</id>
+                <phase>validate</phase>
+                <id>check</id>
                 <goals>
                   <goal>exec</goal>
                 </goals>
-                <phase>validate</phase>
                 <configuration>
                   <executable>npm</executable>
-                  <arguments>
-                    <argument>run</argument>
-                    <argument>eslint</argument>
-                  </arguments>
+                  <arguments>run check</arguments>
                 </configuration>
               </execution>
+
               <execution>
                 <id>frontend build</id>
                 <goals>
@@ -107,17 +91,6 @@
 
               <execution>
                 <phase>validate</phase>
-                <id>npm clean</id>
-                <goals>
-                  <goal>npm</goal>
-                </goals>
-                <configuration>
-                  <arguments>cache verify</arguments>
-                </configuration>
-              </execution>
-
-              <execution>
-                <phase>validate</phase>
                 <id>npm ci</id>
                 <goals>
                   <goal>npm</goal>
@@ -126,24 +99,26 @@
                   <arguments>ci</arguments>
                 </configuration>
               </execution>
+
               <execution>
                 <phase>validate</phase>
-                <id>eslint</id>
+                <id>check</id>
                 <goals>
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>run eslint</arguments>
+                  <arguments>run check</arguments>
                 </configuration>
               </execution>
+
               <execution>
                 <phase>process-resources</phase>
-                <id>gulp build</id>
+                <id>npm run build</id>
                 <goals>
-                  <goal>gulp</goal>
+                  <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>paella-opencast:build</arguments>
+                  <arguments>run build</arguments>
                 </configuration>
               </execution>
             </executions>
@@ -173,7 +148,7 @@
               <outputDirectory>${basedir}/target/classes/ui/</outputDirectory>
               <resources>
                 <resource>
-                  <directory>./target/gulp/paella-opencast</directory>
+                  <directory>./target/paella-build</directory>
                   <includes>
                     <include>**</include>
                   </includes>
@@ -193,7 +168,7 @@
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Build-Number>${buildNumber}</Build-Number>
             <Private-Package>ui.*</Private-Package>
-            <Http-Alias>/paella/ui</Http-Alias>
+            <Http-Alias>/paella7/ui</Http-Alias>
             <Http-Classpath>/ui</Http-Classpath>
             <Http-Welcome>watch.html</Http-Welcome>
           </instructions>
