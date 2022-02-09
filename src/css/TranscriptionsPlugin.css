@@ -1,6 +1,14 @@
 
-.transcriptions-container ul {
-    max-height: 300px;
+.transcriptions-container {
+    min-width: 300px;
+}
+
+.transcriptions-container input {
+    width: 100%;
+}
+
+.transcriptions-container ul {    
+    max-height: 90%;
     overflow: auto;
     list-style-type: none;
     margin-block-start: 5px;
@@ -12,9 +20,15 @@
 
 .transcriptions-container ul li {
     display: flex;
-    gap: 7px;
-    margin: 7px;
+    gap: 3px;
+    margin: 3px;
     max-width: 500px;
+    border: 1px rgba(0,0,0,0) solid;
+}
+
+.transcriptions-container ul li:hover {
+    border: 1px lightsalmon dashed;
+    cursor: pointer;
 }
 
 .transcriptions-container ul li img {

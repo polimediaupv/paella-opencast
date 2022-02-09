@@ -34,26 +34,37 @@ export default class TranscriptionsPlugin extends PopUpButtonPlugin {
   rebuildList(search = '') {
     const { videoContainer } = this.player;
     this._transcriptionsContainer.innerHTML = '';
-    this.transcriptions.forEach(t => {
+    this.transcriptions
+    .filter(t => {  // filter trimming
+      if (videoContainer.isTrimEnabled) {
+        return ((t.time / 1000) > videoContainer.trimStart)
+          && ((t.time / 1000) < videoContainer.trimEnd);
+      }
+      return true;
+    })
+    .filter(t => {  // filter search
       if (search !== '') {
         const searchExp = search.split(' ')
                     .map(s => `(?:${s})`)
                     .join('|');
         const re = new RegExp(searchExp, 'i');
-        if (!re.test(t.text)) {
-          return;
-        }
+        return re.test(t.text);
       }
+      return true;
+    })
+    .forEach(t => {
       const id = `transcriptionItem${t.index}`;
+      const trimmingOffset = videoContainer.isTrimEnabled ? videoContainer.trimStart : 0;
+      const instant = (t.time / 1000) - trimmingOffset;
       const transcriptionItem = createElementWithHtmlText(`
                 <li>
                     <img id="${id}" src="${t.preview}" alt="${t.text}"/>
-                    <span><strong>${utils.secondsToTime(t.time / 1000)}:</strong> ${t.text}</span>
+                    <span><strong>${utils.secondsToTime(instant)}:</strong> ${t.text}</span>
                 </li>`,
       this._transcriptionsContainer);
       transcriptionItem.addEventListener('click', async evt => {
         const trimmingOffset = videoContainer.isTrimEnabled ? videoContainer.trimStart : 0;
-        this.player.videoContainer.setCurrentTime(trimmingOffset + t.time / 1000);
+        this.player.videoContainer.setCurrentTime((t.time / 1000) - trimmingOffset);
         evt.stopPropagation();
       });
     });
@@ -81,7 +92,7 @@ export default class TranscriptionsPlugin extends PopUpButtonPlugin {
 
   async isEnabled() {
     const enabled = await super.isEnabled();
-    this.transcriptions = this.player.videoManifest.transcriptions || [];
+    this.transcriptions = this?.player?.videoManifest?.transcriptions?.filter(t => t?.text != '') || [];
     return enabled && this.transcriptions.length > 0;
   }
 

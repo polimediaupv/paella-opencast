@@ -110,23 +110,35 @@ function getSourceData(track, config) {
 }
 
 function getMetadata(episode) {
-  const { duration, title, language, series, seriestitle } = episode.mediapackage;
-  const date = new Date(episode.dcCreated);
-  const creators = (Array.isArray(episode?.mediapackage?.creators) ?
-    episode.mediapackage.creators :
-    [episode?.mediapackage?.creators])
-            .map(creator => creator?.creator);
+  const { duration, title, language, series, seriestitle, subjects, license } = episode.mediapackage;
+  const startDate = new Date(episode.dcCreated);
+  const presenters = episode?.mediapackage?.creators?.creator
+    ? (Array.isArray(episode?.mediapackage?.creators?.creator)
+      ? episode?.mediapackage?.creators?.creator
+      : [episode?.mediapackage?.creators?.creator])
+    : [];
+  const contributors = episode?.mediapackage?.contributors?.contributor
+    ? (Array.isArray(episode.mediapackage.contributors.contributor)
+      ? episode.mediapackage.contributors.contributor
+      : [episode.mediapackage.contributors.contributor])
+    : [];
 
   const result = {
     title,
-    duration: duration / 1000,
-    creators,
+    subject: subjects?.subject,
+    description: episode?.dcDescription,
     language,
+    rights: episode?.dcRightsHolder,
+    license,
     series,
     seriestitle,
-    date
+    presenters,
+    contributors,
+    startDate,
+    duration: duration / 1000,
+    location: episode?.dcSpatial,
+    UID: episode?.id
   };
-
 
   return result;
 }
@@ -245,8 +257,8 @@ function processAttachments(episode, manifest, config) {
     if (att.type === previewAttachment && timeRE) {
       const h = Number(timeRE[1]) * 60 * 60;
       const m = Number(timeRE[2]) * 60;
-      const s = timeRE[3];
-      const t = (h + m + s) / 100;
+      const s = Number(timeRE[3]);
+      const t = h + m + s;
       previewImages.push({
         mimetype: att.mimetype,
         url: att.url,

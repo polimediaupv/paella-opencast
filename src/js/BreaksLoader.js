@@ -18,8 +18,23 @@
  * the License.
  *
  */
-import { Plugin } from 'paella-core';
 
-export default class TestPlugin extends Plugin {
-
-}
+export const loadBreaks = async (player, videoId) => {
+  const breaks = [];
+  const response = await fetch(`/annotation/annotations.json?episode=${videoId}` +
+    '&type=paella%2Fbreaks&day=&limit=1&offset=0');
+  if (response.ok) {
+    try {
+      const data = await response.json();
+      const annotation = Array.isArray(data.annotations?.annotation) ?
+        data.annotations?.annotation[0] : data.annotations?.annotation;
+      JSON.parse(annotation.value).breaks.forEach(({id, e, s, text}) => {
+        breaks.push({id, s, e, text});
+      });
+    }
+    catch (e) {
+      player.log.warn('Error loading breaks annotations');
+    }
+  }
+  return breaks;
+};

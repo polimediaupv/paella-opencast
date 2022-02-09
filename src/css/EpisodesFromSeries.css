@@ -2,8 +2,6 @@
 .episodes-from-series {
     font-family: sans-serif;
     max-width: 400px;
-    max-height: 500px;
-    overflow: auto;
 }
 
 .episodes-from-series ul {
@@ -21,12 +19,18 @@
 .episodes-from-series a {
     color: white;
     display: flex;
+    border: 1px rgba(0,0,0,0) dashed;
+    font-size: 0.9em;
+    width: 100%
 }
 
 .episodes-from-series a:hover {
     color: grey;
+    border: 1px lightsalmon dashed;
 }
 
 .episodes-from-series img {
     max-width: 120px;
+    height: fit-content;
+    margin-right: 5px;
 }

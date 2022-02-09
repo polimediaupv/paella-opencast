@@ -26,7 +26,6 @@ const webpack = require('webpack');
 
 module.exports = function (env) {
   const ocServer = env.server || 'http://localhost:8080';
-  console.log(ocServer);
   const proxyOpts = {
     target: ocServer,
     secure: false,
@@ -58,10 +57,18 @@ module.exports = function (env) {
             '/paella7/ui': ''
           }
         },
+        '/paella/ui': {
+          target: 'http://localhost:7070',
+          pathRewrite: {
+            '/paella/ui': ''
+          }
+        },
         '/search/**': proxyOpts,
         '/info/**': proxyOpts,
+        '/series/**': proxyOpts,
         '/annotation/**': proxyOpts,
         '/engage/**': proxyOpts,
+        '/annotation/**': proxyOpts,
         '/play/**': proxyOpts,
         '/usertracking/**': proxyOpts
       }
@@ -96,6 +103,15 @@ module.exports = function (env) {
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader']
+        },
+        {
+          test: /\.xml$/,
+          use: {
+            loader: 'xml-loader',
+            options: {
+              explicitArray: false,
+            },
+          },
         }
       ]
     },

@@ -20,7 +20,7 @@
  */
 
 import {PluginModule} from 'paella-core';
-import packageData from '../../package.json';
+import packagePom from '../../pom.xml';
 
 export default class PaellaOpencastPlugins extends PluginModule {
   get moduleName() {
@@ -28,6 +28,6 @@ export default class PaellaOpencastPlugins extends PluginModule {
   }
 
   get moduleVersion() {
-    return packageData.version;
+    return packagePom?.project?.parent?.version || packagePom?.project?.version || 'unknown';
   }
 }

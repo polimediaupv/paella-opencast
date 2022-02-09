@@ -1,20 +1,41 @@
 
 .downloads-plugin {
     font-family: sans-serif;
+    min-width: 300px;
 }
 
-.downloads-plugin ul {
+.downloads-plugin h4 {
+    margin: 0 0 10px 0;
+    border-bottom: 1px lightgrey solid;
+}
+
+.downloads-plugin .downloadStream {    
+    margin-left: 5px;
+}
+
+.downloads-plugin .downloadStream ul {
     list-style: none;
     max-height: 500px;
     overflow: auto;
     padding: 0px;
+    margin: 0 0 10px 10px;
 }
 
+.downloads-plugin .downloadStream .mimetype {
+    color: lightcoral;
+    margin-right: 10px;
+}
+
+.downloads-plugin .downloadStream .res {
+    color: lightsalmon;
+}
+
+
 .downloads-plugin a {
-    color: white;
+    color: lightsalmon;
 }
 
 .downloads-plugin a:hover {
-    color: lightgray;
+    color: salmon;
 }
 

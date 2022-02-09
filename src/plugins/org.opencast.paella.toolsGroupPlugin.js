@@ -20,7 +20,7 @@
  */
 import { ButtonGroupPlugin } from 'paella-core';
 
-import MenuIcon from '../icons/menu-icon.svg';
+import MenuIcon from '../icons/cog.svg';
 
 export default class ToolsGroupPlugin extends ButtonGroupPlugin {
   async load() {

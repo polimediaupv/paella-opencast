@@ -32,13 +32,37 @@ import '../css/EpisodesFromSeries.css';
 
 export default class EpisodesFromSeriesPlugin extends PopUpButtonPlugin {
 
+  async isEnabled() {
+    try {
+      if (!(await super.isEnabled())) {
+        return false;
+      }
+      else {
+        const { series } = this.player.videoManifest.metadata;
+        if (!series) {
+          return false;
+        }
+        const limit = this.config.maxCount || 5;
+        const response = await fetch(`/search/episode.json?sid=${ series }&limit=${limit}`);
+        if (response.ok) {
+          this._episodesData = await response.json();
+          return (this._episodesData['search-results'].total > 1);
+        }
+        return false;
+      }
+    }
+    catch(_e) {
+      return false;
+    }
+  }
+
   async load() {
     this.icon = ListIcon;
   }
 
   async getContent() {
     const {
-      series,
+      //series,
       seriestitle
     } = this.player.videoManifest.metadata;
 
@@ -50,12 +74,8 @@ export default class EpisodesFromSeriesPlugin extends PopUpButtonPlugin {
     const list = createElementWithHtmlText('<ul></ul>', container);
 
     const thisId = this.player.videoId;
-    const sid = series;
-    const limit = this.config.maxCount || 5;
-    const response = await fetch(`/search/episode.json?sid=${ sid }&limit=${limit}`);
-    if (response.ok) {
-      const responseData = await response.json();
-      const result = responseData['search-results'].result;
+    if (this._episodesData) {
+      const result = this._episodesData['search-results'].result;
       (Array.isArray(result) ? result : [result]).forEach(({id,dcTitle,mediapackage}) => {
         if (id !== thisId) {
           const preview = getVideoPreview(mediapackage,this.player.config);
@@ -64,7 +84,7 @@ export default class EpisodesFromSeriesPlugin extends PopUpButtonPlugin {
                   <li>
                       <a href="${url}">
                           <img src="${preview}" alt="${dcTitle}">
-                          ${dcTitle}
+                          <span>${dcTitle}</span>
                       </a>
                   </li>
                   `,list);

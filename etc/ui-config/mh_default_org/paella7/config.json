@@ -1,370 +1,298 @@
 {
-  "player": {
-    "accessControlClass": "OpencastAccessControl",
-    "profileFrameStrategy": "paella.ProfileFrameStrategy",
-    "videoQualityStrategy": "paella.BestFitVideoQualityStrategy",
-    "reloadOnFullscreen": true,
-    "videoZoom": {
-      "enabled": true,
-      "max": 800,
-      "minWindowSize": 500
-    },
-    "deprecated-methods": [
-      {
-        "name": "streaming",
-        "enabled": true
-      },
-      {
-        "name": "html",
-        "enabled": true
-      },
-      {
-        "name": "flash",
-        "enabled": true
-      },
-      {
-        "name": "image",
-        "enabled": true
-      }
-    ],
-    "methods": [
-      {
-        "factory": "ChromaVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "WebmVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "Html5VideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "MpegDashVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "HLSVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "RTMPVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "ImageVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "YoutubeVideoFactory",
-        "enabled": true
-      },
-      {
-        "factory": "Video360ThetaFactory",
-        "enabled": true
-      },
-      {
-        "factory": "Video360Factory",
-        "enabled": true
-      }
-    ],
-    "audioMethods": [
-      {
-        "factory": "MultiformatAudioFactory",
-        "enabled": true
-      }
-    ],
-    "rtmpSettings": {
-      "bufferTime": 5,
-      "requiresSubscription": false
-    },
-    "slidesMarks": {
-      "enabled": true,
-      "color": "gray"
-    }
-  },
-  "defaultProfile": "presenter_presentation",
-  "data": {
-    "enabled": true,
-    "dataDelegates": {
-      "default": "MHAnnotationServiceDefaultDataDelegate",
-      "trimming": "MHAnnotationServiceTrimmingDataDelegate",
-      "metadata": "VideoManifestMetadataDataDelegate",
-      "footprints": "MHFootPrintsDataDelegate",
-      "cameraTrack": "OpencastTrackCameraDataDelegate"
-    }
-  },
-  "folders": {
-    "profiles": "config/profiles",
-    "resources": "resources",
-    "skins": "resources/style"
-  },
-  "experimental": {
-    "autoplay": true
-  },
-  "skin": {
-    "default": "dark",
-    "available": [
-      "dark",
-      "dark_small",
-      "light",
-      "light_small"
-    ]
-  },
-  "plugins": {
-    "enablePluginsByDefault": false,
-    "//**** Instructions: Disable any individual plugin by setting its enable property to false": {
-      "enabled": false
-    },
-    "//**** For a list of available plugins and configuration, go to": "https://github.com/polimediaupv/paella/blob/master/doc/plugins.md",
-    "list": {
-      "es.upv.paella.opencast.loader": {
-        "orderTracks": ["presenter/delivery", "presenter/preview", "presentation/delivery", "presentation/preview"],
-        "streams": [
-          {
-            "filter": {
-              "system": ["*"]
-            },
-            "tracks": {
-              "flavors": ["*/*"],
-              "tags": []
-            }
-          }
-        ],
-        "audioTag": {}
-      },
-      "//**** Video profile plugins": "",
-      "es.upv.paella.singleStreamProfilePlugin": {
-          "enabled": true,
-          "videoSets": [
-            { "icon":"professor_icon.svg", "id":"presenter", "content":["presenter"]},
-            { "icon":"slide_icon.svg", "id":"presentation", "content":["presentation"]}
-          ]
+    "repositoryUrl": "repository",
+    "manifestFileName": "data.json",
 
-      },
-      "es.upv.paella.dualStreamProfilePlugin": { "enabled":true,
-        "videoSets": [
-          { "icon":"slide_professor_icon.svg", "id":"presenter_presentation", "content":["presenter","presentation"] },
-          { "icon":"slide_professor_icon.svg", "id":"presenter2_presentation", "content":["presenter-2","presentation"] },
-          { "icon":"slide_professor_icon.svg", "id":"presenter3_presentation", "content":["presenter-3","presentation"] }
+    "defaultLayout": "presenter-presentation",
+
+    "opencast": {
+        "previewAttachment": "presentation/segment+preview",
+        "mainAudioContent": "presenter",
+        "contentTypes": {
+            "presentation/delivery": "presentation",
+            "presenter/delivery": "presenter",
+            "presentation/preview": "presentation",
+            "presenter/preview": "presenter"
+        },
+        "videoPreviewAttachment": [
+            "presenter/player+preview",
+            "presentation/player+preview"
         ]
-      },
-      "es.upv.paella.tripleStreamProfilePlugin": {
-        "enabled": true,
-        "videoSets": [
-          { "icon":"three_streams_icon.svg", "id":"presenter_presentation_presenter2", "content":["presenter","presentation","multitrack"] },
-          { "icon":"three_streams_icon.svg", "id":"presenter_presentation_presenter3", "content":["presenter","presentation","presenter-2"] },
-          { "icon":"three_streams_icon.svg", "id":"presenter_presentation_presenter3", "content":["presenter","presentation","presenter-3"] }
-        ]
-      },
-      "edu.harvard.dce.paella.flexSkipPlugin": {
-        "enabled": true,
-        "direction": "Rewind",
-        "seconds": 10
-      },
-      "edu.harvard.dce.paella.flexSkipForwardPlugin": {
-        "enabled": true,
-        "direction": "Forward",
-        "seconds": 30
-      },
-      "es.upv.paella.captionsPlugin": {
-        "enabled": true,
-        "searchOnCaptions": true
-      },
-      "es.upv.paella.extendedTabAdapterPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.footprintsPlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.frameControlPlugin": {
-        "enabled": true,
-        "showFullPreview": "auto"
-      },
-      "es.upv.paella.fullScreenButtonPlugin": {
-        "enabled": true,
-        "reloadOnFullscreen": {
-          "enabled": true,
-          "keepUserSelection": true
+    },
+
+    "plugins": {
+        "es.upv.paella.singleVideo": {
+            "enabled": true,
+            "validContent": [
+                { "id": "presenter", "content": ["presenter"], "icon": "present-mode-2.svg", "title": "Presenter" },
+                { "id": "presentation", "content": ["presentation"], "icon": "present-mode-1.svg", "title": "Presentation" },
+                { "id": "presenter-2", "content": ["presenter-2"], "icon": "present-mode-1.svg", "title": "Presentation" }
+            ]
+        },
+        "es.upv.paella.dualVideo": {
+            "enabled": true,
+            "validContent": [
+                { "id": "presenter-presentation", "content": ["presenter","presentation"], "icon": "present-mode-3.svg", "title": "Presenter and presentation" },
+                { "id": "presenter-2-presentation", "content": ["presenter-2","presentation"], "icon": "present-mode-3.svg", "title": "Presenter and presentation" },
+                { "id": "presenter-presenter-2", "content": ["presenter","presenter-2"], "icon": "present-mode-3.svg", "title": "Presenter and presentation" }
+            ]
+        },
+        "es.upv.paella.tripleVideo": {
+            "enabled": true,
+            "validContent": [
+                { "id": "presenter-presenter-2-presentation", "content": ["presenter","presenter-2","presentation"], "icon": "present-mode-4.svg", "title": "Presenter and presentation" },
+                { "id": "presenter-2-presenter-3-presentation", "content": ["presenter-2","presenter-3","presentation"], "icon": "present-mode-4.svg", "title": "Presenter and presentation" }
+            ]
+        },
+
+        "es.upv.paella.hlsVideoFormat": {
+            "enabled": true,
+            "order": 0,
+            "hlsConfig": {
+                "maxBufferLength": 40
+            },
+            "corsConfig": {
+                "withCredentials": false,
+                "requestHeaders": {
+                    "Access-Control-Allow-Credentials": false
+                }
+            }
+        },
+
+        "es.upv.paella.hlsLiveVideoFormat": {
+            "enabled": true,
+            "order": 0,
+            "hlsConfig": {
+                "maxBufferLength": 40
+            },
+            "corsConfig": {
+                "withCredentials": false,
+                "requestHeaders": {
+                    "Access-Control-Allow-Credentials": false
+                }
+            }
+        },
+
+        "es.upv.paella.mp4VideoFormat": {
+            "enabled": true,
+            "order": 1
+        },
+
+        "es.upv.paella.playPauseButton": {
+            "enabled": true,
+            "order": 0,
+            "description": "Play and pause button"
+        },
+
+        "es.upv.paella.backwardButtonPlugin": {
+            "enabled": false,
+            "side": "left",
+            "order": 1
+        },
+
+        "es.upv.paella.forwardButtonPlugin": {
+            "enabled": false,
+            "side": "left",
+            "order": 2
+        },
+
+        "es.upv.paella.volumeButtonPlugin": {
+            "enabled": true,
+            "side": "left",
+            "order": 4
+        },
+
+        "org.opencast.paella.loginPlugin": {
+            "enabled": true,
+            "side": "right",
+            "parentContainer": "videoContainer",
+            "order": 10,
+            "description": "Login"
+        },
+
+        "org.opencast.paella.editorPlugin": {
+            "enabled": true,
+            "side": "right",
+            "parentContainer": "videoContainer",
+            "order": 20,
+            "description": "Edit the video",
+            "showIfCanWrite": true,
+            "editorUrl": "/admin-ng/index.html#!/events/events/{id}/tools/editor"
+        },
+
+        "org.opencast.paella.episodesFromSeries": {
+            "enabled": true,
+            "side": "right",
+            "parentContainer": "videoContainer",
+            "order": 30,
+            "maxCount": 10,
+            "description": "Videos in this series"
+        },
+
+        "es.upv.paella.fullscreenButton": {
+            "enabled": true,
+            "side": "right",
+            "order": 50
+        },
+
+        "es.upv.paella.frameControlButtonPlugin": {
+            "enabled": true,
+            "side": "right",
+            "order": 40,
+            "targetContent": "presentation"
+        },
+
+        "es.upv.paella.layoutSelector": {
+            "enabled": true,
+            "side": "right",
+            "order": 30
+        },
+
+        "org.opencast.paella.toolsGroupPlugin": {
+            "enabled": true,
+            "side": "right",
+            "groupName": "toolsGroup",
+            "description": "See more tools",
+            "order": 10
+        },
+
+        "org.opencast.paella.descriptionPlugin": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 10,
+            "description": "Video description and data"
+        },
+
+        "es.upv.paella.playbackRateButton": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 20,
+            "rates": [0.75, 1, 1.5, 2],
+            "description": "Playback speed"
+        },
+
+        "es.upv.paella.qualitySelector": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 30,
+            "description": "Video quality"
+        },
+
+        "es.upv.paella.audioSelector": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 40
+        },
+
+        "org.opencast.paella.transcriptionsPlugin": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 50,
+            "description": "Audio transcriptions"
+        },
+
+        "es.upv.paella.captionsSelectorPlugin": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 60,
+            "description": "Captions"
+        },
+
+        "es.upv.paella.downloadsPlugin": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 70,
+            "description": "Downloads"
+        },
+
+        "es.upv.paella.keyboardShortcutsHelp": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 80,
+            "description": "Keyboard Shortcuts"
+        },
+
+        "org.opencast.paella.versionButton": {
+            "enabled": true,
+            "parentContainer": "toolsGroup",
+            "order": 90,
+            "description": "Opencast player version"
+        },
+
+        "es.upv.paella.zoomPlugin": {
+            "enabled": true,
+            "order": 0,
+            "maxZoom": 400,
+            "showButtons": true,
+            "target": "presenter"
+        },
+
+        "es.upv.paella.videoCanvas": {
+            "enabled": true,
+            "order": 1
+        },
+
+        "es.upv.paella.cookieDataPlugin": {
+            "enabled": true,
+            "order": 0,
+            "context": ["default","trimming"]
+        },
+
+        "es.upv.paella.vttManifestCaptionsPlugin": {
+            "enabled": true
+        },
+
+        "es.upv.paella.hlsCaptionsPlugin": {
+            "enabled": true
+        },
+
+        "es.upv.paella.defaultShortcuts": {
+            "enabled": true,
+            "validPlaybackRates": [0.75, 2, 1, 1.5]
+        },
+
+        "es.upv.paella.arrowSlidesNavigator": {
+            "enabled": true,
+            "target": [
+                "presentation",
+                "presenter"
+            ]
+        },
+
+        "es.upv.paella.opencastKeyShortcuts": {
+            "enabled": true
+        },
+
+        "es.upv.paella.userEventTracker": {
+            "enabled": true,
+            "context": "userTracking"
+        },
+
+        "es.upv.paella.debug.userTrackingDataPlugin": {
+            "enabled": false,
+            "context": [
+                "userTracking"
+            ]
+        },
+
+        "es.upv.paella.analytics.userTrackingDataPlugin": {
+            "enabled": false,
+            "trackingId": "configure_your_tracking_id_here",
+            "domain": "",
+            "category": true,
+            "context": [
+                "userTracking"
+            ]
+        },
+
+        "org.opencast.paella.opencast.userTrackingDataPlugin" :{
+            "enabled": true,
+            "context": [
+                "userTracking"
+            ]
+        },
+
+        "org.opencast.paella.breaksPlugin": {
+            "enabled": true
         }
-      },
-      "es.upv.paella.helpPlugin": {
-        "enabled": true,
-        "langs": [
-          "en",
-          "es"
-        ]
-      },
-      "es.upv.paella.multipleQualitiesPlugin": {
-        "enabled": true,
-        "showWidthRes": true
-      },
-      "es.upv.paella.playbackRatePlugin": {
-        "enabled": true,
-        "availableRates": [
-          0.75,
-          1,
-          1.25,
-          1.5
-        ]
-      },
-      "es.upv.paella.playPauseButtonPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.searchPlugin": {
-        "enabled": true,
-        "sortType": "time",
-        "colorSearch": false
-      },
-      "es.upv.paella.socialPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.themeChooserPlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.viewModePlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.volumeRangePlugin": {
-        "enabled": true,
-        "showMasterVolume": true,
-        "showSlaveVolume": false
-      },
-      "es.upv.paella.pipModePlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.ratePlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.audioSelector": {
-        "enabled": true
-      },
-      "es.upv.paella.videoZoomPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.videoZoomToolbarPlugin": {
-        "enabled": false,
-        "targetStreamIndex": 0
-      },
-      "es.upv.paella.videoZoomTrack4kPlugin": {
-        "enabled": true,
-        "targetStreamIndex": 0,
-        "autoModeByDefault": false
-      },
-      "es.upv.paella.airPlayPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.liveStreamingIndicatorPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.arrowSlidesNavigatorPlugin": {
-        "enabled": true,
-        "showArrowsIn": "slave"
-      },
-      "es.upv.paella.videoDataPlugin": {
-        "enabled": false,
-        "excludeLocations": [
-          "paellaplayer.upv.es"
-        ],
-        "excludeParentLocations": [
-          "localhost:8000"
-        ]
-      },
-      "es.upv.paella.commentsPlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.test.tabBarExamplePlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.blackBoardPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.breaksPlayerPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.overlayCaptionsPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.playButtonOnScreenPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.test.videoLoadPlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.translecture.captionsPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.trimmingPlayerPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.zoomPlugin": {
-        "enabled": false
-      },
-      "es.upv.paella.windowTitlePlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.track4kPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.captions.DFXPParserPlugin": {
-        "enabled": true
-      },
-      "es.teltek.paella.captions.WebVTTParserPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.search.captionsSearchPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.frameCaptionsSearchPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.usertracking.elasticsearchSaverPlugin": {
-        "enabled": false,
-        "url": "http://my.elastic.server"
-      },
-      "es.upv.paella.usertracking.GoogleAnalyticsSaverPlugIn": {
-        "enabled": false,
-        "trackingID": "UA-XXXXXXXX-Y"
-      },
-      "es.upv.paella.usertracking.piwikSaverPlugIn": {
-        "enabled": false,
-        "tracker": "http://localhost/piwik/",
-        "siteId": "1"
-      },
-      "org.opencast.usertracking.MatomoSaverPlugIn": {
-        "enabled": false,
-        "server": "http://localhost/piwik/",
-        "site_id": 1,
-        "heartbeat": 30,
-        "client_id": "Paella Player"
-      },
-      "es.teltek.paella.usertracking.xAPISaverPlugin": {
-        "enabled": false,
-        "endpoint": "http://localhost:8081/data/xAPI/",
-        "auth": "auth_key"
-      },
-      "es.upv.paella.opencast.descriptionPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.opencast.downloadsPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.opencast.episodesFromSeries": {
-        "enabled": true
-      },
-      "es.upv.paella.opencast.logIn": {
-        "enabled": true
-      },
-      "es.upv.paella.opencast.searchPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.opencast.transcriptionTabBarPlugin": {
-        "enabled": true
-      },
-      "es.upv.paella.opencast.userTrackingSaverPlugIn": {
-        "enabled": true
-      }
     }
-  }
 }

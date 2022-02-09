@@ -23,8 +23,9 @@ import getBasicPluginContext from 'paella-basic-plugins';
 import getSlidePluginContext from 'paella-slide-plugins';
 import getZoomPluginContext from 'paella-zoom-plugin';
 import getUserTrackingPluginContext from 'paella-user-tracking';
+import { loadTrimming, setTrimming } from './js/TrimmingLoader';
 
-import packageData from '../package.json';
+import packagePom from '../pom.xml';
 
 import EpisodeConversor from './js/EpisodeConversor.js';
 
@@ -94,12 +95,8 @@ const initParams = {
       }
     };
 
+    // Load episode
     const data = await loadEpisode();
-    const stats = await loadStats();
-    if (stats) {
-      data.metadata.views = stats.views;
-    }
-
     if (data === null) {
       player.log.info('Try to load me.json');
       // Check me.json, if the user is not logged in, redirect to login
@@ -107,16 +104,22 @@ const initParams = {
       const me = await data.json();
 
       if (me.userRole === 'ROLE_USER_ANONYMOUS') {
+        player.log.info('Video not found and user is not authenticated. Try to log in.');
         location.href = 'auth.html?redirect=' + encodeURIComponent(window.location.href);
       }
       else {
         // TODO: the video does not exist or the user can't see it
-        return null;
+        throw Error('The video does not exist or the user can\'t see it');
       }
     }
-    else {
-      return data;
+
+    // Load stats
+    const stats = await loadStats();
+    if (stats) {
+      data.metadata.views = stats.views;
     }
+
+    return data;
   },
 
   loadDictionaries: player => {
@@ -128,7 +131,7 @@ const initParams = {
 
 class PaellaOpencast extends Paella {
   get version() {
-    const player = packageData.version;
+    const player = packagePom?.project?.parent?.version || packagePom?.project?.version || 'unknown';
     const coreLibrary = super.version;
     const pluginModules = this.pluginModules.map(m => `${ m.moduleName }: ${ m.moduleVersion }`);
     return {
@@ -145,25 +148,72 @@ paella.loadManifest()
     .then(() => paella.log.info('Paella player load done'))
     .catch(e => paella.log.error(e));
 
+function humanTimeToSeconds(humanTime) {
+  let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+  const hoursRE = /([0-9]+)h/i.exec(humanTime);
+  const minRE = /([0-9]+)m/i.exec(humanTime);
+  const secRE = /([0-9]+)s/i.exec(humanTime);
+  if (hoursRE) {
+    hours = parseInt(hoursRE[1]) * 60 * 60;
+  }
+  if (minRE) {
+    minutes = parseInt(minRE[1]) * 60;
+  }
+  if (secRE) {
+    seconds = parseInt(secRE[1]);
+  }
+  const totalTime =  hours + minutes + seconds;
+  return totalTime;
+}
+
 bindEvent(paella, Events.PLAYER_LOADED, async () => {
+  // Enable trimming
+  let trimmingData = await loadTrimming(paella, paella.videoId);
+  // Check for trimming param in URL: ?trimming=1m2s;2m
+  const trimming = utils.getHashParameter('trimming') || utils.getUrlParameter('trimming');
+  if (trimming) {
+    const trimmingSplit = trimming.split(';');
+    if (trimmingSplit.length == 2) {
+      const startTrimming = trimmingData.start + humanTimeToSeconds(trimmingSplit[0]);
+      const endTrimming = Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
+
+      if (startTrimming < endTrimming && endTrimming > 0 && startTrimming >= 0) {
+        trimmingData = {
+          start: startTrimming,
+          end: endTrimming,
+          enabled: true
+        };
+      }
+    }
+  }
+  await setTrimming(paella, trimmingData);
+
+  // Check time param in URL and seek:  ?time=1m2s
   const timeString = utils.getHashParameter('time') || utils.getUrlParameter('time');
   if (timeString) {
-    let hours = 0;
-    let minutes = 0;
-    let seconds = 0;
-    const hoursRE = /([0-9]+)h/i.exec(timeString);
-    const minRE = /([0-9]+)m/i.exec(timeString);
-    const secRE = /([0-9]+)s/i.exec(timeString);
-    if (hoursRE) {
-      hours = parseInt(hoursRE[1]) * 60 * 60;
-    }
-    if (minRE) {
-      minutes = parseInt(minRE[1]) * 60;
-    }
-    if (secRE) {
-      seconds = parseInt(secRE[1]);
-    }
-    const totalTime =  hours + minutes + seconds;
+    const totalTime = humanTimeToSeconds(timeString);
     await paella.videoContainer.setCurrentTime(totalTime);
+  }
+
+  // Check captions param in URL:  ?captions  / ?captions=<lang>
+  const captions = utils.getHashParameter('captions') || utils.getUrlParameter('captions');
+  if (captions != null) {
+    let captionsIndex = 0;
+    if (captions !== '') {
+      paella.captionsCanvas.captions.some((c, idx) => {
+        if (c.language == captions) {
+          captionsIndex = idx;
+          return true;
+        }
+        return false;
+      });
+    }
+    const captionSelected = paella?.captionsCanvas?.captions[captionsIndex];
+    if (captionSelected) {
+      paella.log.info(`Enabling captions: ${captionSelected?.label} (${captionSelected?.language})`);
+      paella.captionsCanvas.enableCaptions({ index: captionsIndex });
+    }
   }
 });

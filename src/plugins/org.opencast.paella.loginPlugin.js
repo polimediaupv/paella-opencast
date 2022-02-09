@@ -18,24 +18,33 @@
  * the License.
  *
  */
-import {
-  PopUpButtonPlugin,
-  createElementWithHtmlText
-} from 'paella-core';
+import OpencastAuthButtonPlugin from '../js/OpencastAuthButtonPlugin.js';
 
-//import videoDataIcon from "";
+import AccountIcon from '../icons/account.svg';
 
-export default class VideoDataPlugin extends PopUpButtonPlugin {
-  async getContent() {
-    const content = createElementWithHtmlText('<p>Video data</p>');
-    return content;
-  }
-
-  get popUpType() {
-    return 'modal';
-  }
-
+export default class LoginPlugin extends OpencastAuthButtonPlugin {
   async load() {
-    //this.icon = videoDataIcon;
+    this.icon = AccountIcon;
+  }
+
+  async isEnabled() {
+    try {
+      if (!(await super.isEnabled())) {
+        return false;
+      }
+      else {
+        const userInfo = await this._getUserInfo();
+        const isAnonymous = ((userInfo.roles.length == 1) && (userInfo.roles[0] == userInfo.org.anonymousRole));
+        return isAnonymous;
+      }
+    }
+    catch(_e) {
+      return false;
+    }
+  }
+
+  async action() {
+    var authenticationUrl = 'auth.html?redirect=' + encodeURIComponent(window.location.href);
+    window.location.href = authenticationUrl;
   }
 }
