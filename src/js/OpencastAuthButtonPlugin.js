@@ -34,7 +34,21 @@ export default class OpencastAuthButtonPlugin extends ButtonPlugin {
     }
   }
 
-  async _getACL() {
+  async _getEpisodeACL() {
+    try {
+      const response = await fetch(`/search/episode.json?id=${this.player.videoId}`);
+      if (response.ok) {
+        const episode = await response.json();
+        return episode['search-results']?.result?.acl;
+      }
+      return null;
+    }
+    catch(_e) {
+      return null;
+    }
+  }
+
+  async _getSeriesACL() {
     try {
       const { series } = this.player.videoManifest.metadata;
       if (!series) {
@@ -49,6 +63,10 @@ export default class OpencastAuthButtonPlugin extends ButtonPlugin {
     catch(_e) {
       return null;
     }
+  }
+
+  async _getACL() {
+    return await this._getEpisodeACL() || await this._getSeriesACL();
   }
 
   async _canWrite() {

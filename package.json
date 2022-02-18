@@ -12,32 +12,32 @@
     "check": "npm run eslint && npm run html-linter && npm run html-validate"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.0",
+    "@babel/core": "^7.17.5",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.6.0",
-    "eslint": "^8.8.0",
+    "eslint": "^8.9.0",
     "eslint-plugin-header": "^3.1.1",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "html-linter": "^1.1.1",
-    "html-validate": "^6.3.1",
+    "html-validate": "^6.4.0",
     "html-webpack-plugin": "^5.5.0",
     "http-proxy": "^1.18.1",
     "source-map-loader": "^3.0.1",
     "style-loader": "^3.3.1",
     "svg-inline-loader": "^0.8.2",
-    "webpack": "^5.68.0",
+    "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4",
     "xml-loader": "^1.2.1"
   },
   "dependencies": {
-    "paella-basic-plugins": "^1.0.8",
-    "paella-core": "^1.0.25",
-    "paella-slide-plugins": "^1.0.6",
-    "paella-user-tracking": "^1.0.7",
-    "paella-zoom-plugin": "^1.0.5"
+    "paella-basic-plugins": "^1.0.9",
+    "paella-core": "^1.0.28",
+    "paella-slide-plugins": "^1.0.7",
+    "paella-user-tracking": "^1.0.8",
+    "paella-zoom-plugin": "^1.0.7"
   }
 }
