@@ -5,7 +5,7 @@
   <packaging>bundle</packaging>
   <name>Opencast :: engage-paella-player</name>
   <groupId>org.opencastproject</groupId>
-  <version>10-SNAPSHOT</version>
+  <version>11.9</version>
   
   <properties>
     <checkstyle.skip>false</checkstyle.skip>

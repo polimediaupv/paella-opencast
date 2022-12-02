@@ -47,7 +47,7 @@ paella.addPlugin(function() {
       })
       .then((paused) => {
         var opencastLog = {
-          _method: 'PUT',
+          // _method: 'PUT',
           'id': paella.player.videoIdentifier,
           'type': undefined,
           'in': videoCurrentTime,
@@ -84,7 +84,7 @@ paella.addPlugin(function() {
           break;
         }
         opencastLog.type = opencastLog.type.substr(0, 128);
-        paella.ajax.get( {url: '/usertracking/', params: opencastLog});
+        paella.ajax.put( {url: '/usertracking/', params: opencastLog});
       });
     }
   };
