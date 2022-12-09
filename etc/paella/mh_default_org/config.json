@@ -372,6 +372,10 @@
       },
       "es.upv.paella.opencast.userTrackingSaverPlugIn": {
         "enabled": true
+      },
+      "es.upv.paella.showEditorPlugin": {
+        "enabled": true,
+        "editorUrl": "/paella/editor/ui/editor.html?id={id}"
       }
     }
   }
