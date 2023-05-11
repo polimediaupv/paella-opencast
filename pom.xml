@@ -1,61 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>opencast-engage-paella-player</artifactId>
+  <artifactId>opencast-engage-paella-player-7</artifactId>
   <packaging>bundle</packaging>
-  <name>Opencast :: engage-paella-player</name>
+  <name>Opencast :: engage-paella-player-7</name>
   <parent>
     <groupId>org.opencastproject</groupId>
     <artifactId>base</artifactId>
-    <version>7-SNAPSHOT</version>
-    <relativePath>${project.basedir}/../opencast/pom.xml</relativePath>
+    <version>14-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
   <properties>
-    <opencast.basedir>${project.basedir}/../opencast</opencast.basedir>
-    <checkstyle.skip>false</checkstyle.skip>
+    <opencast.basedir>${project.basedir}/../..</opencast.basedir>
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.opencastproject</groupId>
-      <artifactId>opencast-common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <!-- osgi support -->
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.compendium</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>        
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>    
-    </dependency>
-    <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>jsr311-api</artifactId>      
-    </dependency>
-  </dependencies>
-
+  <dependencies />
   <profiles>
     <profile>
       <id>frontend-no-prebuilt</id>
@@ -65,43 +23,47 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <executions>
+
               <execution>
-                <id>npm clean</id>
+                <phase>validate</phase>
+                <id>npm ci</id>
                 <goals>
                   <goal>exec</goal>
                 </goals>
-                <phase>pre-clean</phase>
                 <configuration>
                   <executable>npm</executable>
                   <arguments>
-                    <argument>cache</argument>
-                    <argument>verify</argument>
+                    <argument>ci</argument>
                   </arguments>
                 </configuration>
               </execution>
+
               <execution>
-                <id>npm install</id>
+                <phase>validate</phase>
+                <id>check</id>
                 <goals>
                   <goal>exec</goal>
                 </goals>
-                <phase>initialize</phase>
                 <configuration>
                   <executable>npm</executable>
                   <arguments>
-                    <argument>install</argument>
+                    <argument>run</argument>
+                    <argument>check</argument>
                   </arguments>
                 </configuration>
-              </execution>              
+              </execution>
+
               <execution>
+                <phase>validate</phase>
                 <id>frontend build</id>
                 <goals>
                   <goal>exec</goal>
                 </goals>
-                <phase>compile</phase>
                 <configuration>
                   <executable>npm</executable>
                   <arguments>
-                    <argument>run build</argument>
+                    <argument>run</argument>
+                    <argument>build</argument>
                   </arguments>
                 </configuration>
               </execution>
@@ -131,34 +93,34 @@
                 </goals>
                 <configuration>
                   <nodeVersion>${node.version}</nodeVersion>
-                  <npmVersion>${npm.version}</npmVersion>
                 </configuration>
               </execution>
 
               <execution>
                 <phase>validate</phase>
-                <id>npm clean</id>
+                <id>npm ci</id>
                 <goals>
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>cache verify</arguments>
+                  <arguments>ci</arguments>
                 </configuration>
               </execution>
 
               <execution>
                 <phase>validate</phase>
-                <id>npm install</id>
+                <id>check</id>
                 <goals>
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>install</arguments>
+                  <arguments>run check</arguments>
                 </configuration>
               </execution>
+
               <execution>
-                <phase>process-resources</phase>
-                <id>npm run build</id>
+                <phase>validate</phase>
+                <id>frontend build</id>
                 <goals>
                   <goal>npm</goal>
                 </goals>
@@ -177,6 +139,10 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
@@ -189,7 +155,7 @@
               <outputDirectory>${basedir}/target/classes/ui/</outputDirectory>
               <resources>
                 <resource>
-                  <directory>./target/gulp/paella-opencast</directory>
+                  <directory>./target/paella-build</directory>
                   <includes>
                     <include>**</include>
                   </includes>
@@ -209,18 +175,9 @@
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Build-Number>${buildNumber}</Build-Number>
             <Private-Package>ui.*</Private-Package>
-            <Http-Alias>/paella/ui</Http-Alias>
+            <Http-Alias>/paella7/ui</Http-Alias>
             <Http-Classpath>/ui</Http-Classpath>
             <Http-Welcome>watch.html</Http-Welcome>
-            <Import-Package>
-              javax.ws.rs;version=2.0.1,
-              javax.ws.rs.core;version=2.0.1,
-              *
-            </Import-Package>
-            <Export-Package>org.opencastproject.engage.paella</Export-Package>
-            <Service-Component>
-              OSGI-INF/paella-config-file.xml
-            </Service-Component>
           </instructions>
         </configuration>
         <executions>
