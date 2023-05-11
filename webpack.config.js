@@ -19,9 +19,9 @@
  *
  */
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+
 
 
 module.exports = function (env) {
@@ -36,7 +36,8 @@ module.exports = function (env) {
     entry: './src/index.js',
     output: {
       path: path.join(__dirname,'target/paella-build'),
-      filename: 'paella-player.js'
+      filename: 'paella-player.js',
+      publicPath: env.PUBLIC_PATH ?? '/paella7/ui'
     },
     devtool: 'source-map',
     devServer: {
@@ -47,32 +48,20 @@ module.exports = function (env) {
         'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
       },
       static: {
-        directory: path.join(__dirname, './etc/ui-config/mh_default_org/paella7'),
+        directory: path.join(__dirname, '../../etc/ui-config/mh_default_org/paella7'),
         publicPath: '/ui/config/paella7'
       },
       proxy: {
-        '/paella7/ui': {
-          target: 'http://localhost:7070',
-          pathRewrite: {
-            '/paella7/ui': ''
-          }
-        },
-        '/paella/ui': {
-          target: 'http://localhost:7070',
-          pathRewrite: {
-            '/paella/ui': ''
-          }
-        },
         '/search/**': proxyOpts,
         '/info/**': proxyOpts,
         '/series/**': proxyOpts,
         '/annotation/**': proxyOpts,
         '/engage/**': proxyOpts,
-        '/annotation/**': proxyOpts,
         '/play/**': proxyOpts,
-        '/usertracking/**': proxyOpts
+        '/usertracking/**': proxyOpts,
+        '/editor/**': proxyOpts,
+        '/editor-ui/**': proxyOpts
       }
-
     },
 
     module: {
@@ -117,19 +106,16 @@ module.exports = function (env) {
     },
 
     plugins: [
+      new webpack.DefinePlugin({
+        OPENCAST_SERVER_URL: JSON.stringify(env.OPENCAST_SERVER_URL),
+        OPENCAST_CONFIG_URL: JSON.stringify(env.OPENCAST_CONFIG_URL),
+      }),
       new webpack.SourceMapDevToolPlugin({
         filename: '[file].js.map[query]'
       }),
-
-      new HtmlWebpackPlugin({
-        template: './src/watch.html',
-        filename: 'watch.html',
-        inject: true
-      }),
       new CopyWebpackPlugin({
         patterns: [
-          { from: './src/style.css', to: '' },
-          { from: './src/auth.html', to: '' }
+          { from: 'public', to: '' }
         ]
       })
     ],

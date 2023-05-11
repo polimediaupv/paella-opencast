@@ -18,17 +18,23 @@
  * the License.
  *
  */
-import { utils } from 'paella-core';
-import { applyDefaultTheme } from './default-theme.js';
-import { PaellaOpencast, getUrlFromOpencastConfig } from './js/PaellaOpencast.js';
+import { expect } from '@playwright/test';
 
-window.onload = () => {
-  let paella = new PaellaOpencast('player-container');
+const player = '__paella_instances__[0]';
 
-  paella.loadManifest()
-  .then(()=>{ return applyDefaultTheme(paella);})
-  .then(()=>{ return utils.loadStyle(getUrlFromOpencastConfig('/custom_theme.css')); })
-  .then(() => paella.log.info('Paella player load done'))
-  .catch(e => paella.log.error(e));
 
+export const getPlayerState = async page => await page.evaluate(`${player}.PlayerState`);
+
+export const waitState = async (page, state) => {
+  await page.evaluate(`${player}.waitState(${state})`);
+};
+
+export const getState = async (page) => await page.evaluate(`${player}.state`);
+
+export const playVideo = async (page) => {
+  const PlayerState = await getPlayerState(page);
+  await waitState(page, PlayerState.MANIFEST);
+  await page.click('#playerContainerClickArea');
+  await waitState(page, PlayerState.LOADED);
+  await expect(await getState(page)).toBe(PlayerState.LOADED);
 };

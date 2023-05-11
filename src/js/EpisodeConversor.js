@@ -59,7 +59,8 @@ const g_streamTypes = [
     getSourceData: (track) => {
       const src = track.url;
       const mimetype = track.mimetype;
-      return { src, mimetype };
+      const master = track.master;
+      return { src, mimetype, master };
     }
   },
   {
@@ -186,20 +187,28 @@ function getStreams(episode, config) {
     track = [track];
   }
 
-  const sources = [];
+  let sources = [];
 
   track.forEach(track => {
     const sourceData = getSourceData(track, config);
     sourceData && sources.push(sourceData);
   });
 
-  return mergeSources(sources, config);
+  const hasMaster = sources.find((x)=> x.type == 'hls' && x.source.master == true);
+  if (hasMaster) {
+    sources = sources.filter((x)=> x.type == 'hls' ? x.source.master == true : true);
+  }
+  const streams = mergeSources(sources, config);
+  return streams;
 }
 
 function processSegments(episode, manifest) {
   const { segments } = episode;
   if (segments) {
     manifest.transcriptions = manifest.transcriptions || [];
+    if (!Array.isArray(segments.segment)) {
+      segments.segment = [segments.segment];
+    }
     segments.segment.forEach(({ index, previews, text, time, duration}) => {
       manifest.transcriptions.push({
         index,
@@ -287,55 +296,77 @@ function processAttachments(episode, manifest, config) {
   }
 }
 
-function getCaptions(episode) {
-  const result = [];
-  let attachments = episode.mediapackage?.attachments?.attachment;
-  if (!(attachments instanceof Array)) {
-    attachments = attachments ? [attachments] : [];
-  }
+function readCaptions(potentialNewCaptions, captions) {
+  potentialNewCaptions.forEach((potentialCaption) => {
+    try {
+      let captions_regex = /^captions\/([^+]+)(\+(.+))?/g;
+      let captions_match = captions_regex.exec(potentialCaption.type);
 
+      if (captions_match) {
+        let captions_lang = captions_match[3];
 
-  attachments.forEach(att => {
-    const exp = /captions\/([a-z\d]+)(?:\+([a-z]+))?/.exec(att.type);
-    if (exp) {
-      const format = exp[1];
-      const lang = exp[2] || '';
-      result.push({
-        id: att.id,
-        lang: lang,
-        text: lang || 'Unknown language',
-        format: format,
-        url:att.url
-      });
+        if (!captions_lang && potentialCaption.tags && potentialCaption.tags.tag) {
+          if (!(potentialCaption.tags.tag instanceof Array)) {
+            potentialCaption.tags.tag = [potentialCaption.tags.tag];
+          }
+          potentialCaption.tags.tag.forEach((tag)=>{
+            if (tag.startsWith('lang:')){
+              captions_lang = tag.substring('lang:'.length);
+            }
+          });
+        }
+
+        let captions_format = potentialCaption.url.split('.').pop();
+
+        captions.push({
+          id: potentialCaption.id,
+          lang: captions_lang,
+          text: captions_lang || 'unknown language',
+          url: potentialCaption.url,
+          format: captions_format
+        });
+      }
     }
+    catch (err) {/**/}
   });
+}
 
-  let catalogs = episode.mediapackage?.metadata?.catalog;
-  if (!(catalogs instanceof Array)) {
-    catalogs = catalogs ? [catalogs] : [];
-  }
+function getCaptions(episode) {
+  var captions = [];
 
+  var attachments = episode.mediapackage.attachments.attachment;
+  var catalogs = episode.mediapackage.metadata.catalog;
+  var tracks = episode.mediapackage.media.track;
+  if (!(attachments instanceof Array)) { attachments = attachments ? [attachments] : []; }
+  if (!(catalogs instanceof Array)) { catalogs = catalogs ? [catalogs] : []; }
+  if (!(tracks instanceof Array)) { tracks = tracks ? [tracks] : []; }
+
+  // Read the attachments
+  readCaptions(attachments, captions);
+
+  // Read the tracks
+  readCaptions(tracks, captions);
+
+  // Read the catalogs
   catalogs.forEach((currentCatalog) => {
     try {
       // backwards compatibility:
       // Catalogs flavored as 'captions/timedtext' are assumed to be dfxp
       if (currentCatalog.type == 'captions/timedtext') {
         let captions_lang;
-
         if (currentCatalog.tags && currentCatalog.tags.tag) {
           if (!(currentCatalog.tags.tag instanceof Array)) {
             currentCatalog.tags.tag = [currentCatalog.tags.tag];
           }
           currentCatalog.tags.tag.forEach((tag)=>{
             if (tag.startsWith('lang:')){
-              let split = tag.split(':');
-              captions_lang = split[1];
+              captions_lang = tag.substring('lang:'.length);
             }
           });
         }
 
         let captions_label = captions_lang || 'unknown language';
-        result.push({
+        captions.push({
           id: currentCatalog.id,
           lang: captions_lang,
           text: captions_label,
@@ -347,7 +378,7 @@ function getCaptions(episode) {
     catch (err) {/**/}
   });
 
-  return result;
+  return captions;
 }
 
 export function episodeToManifest(ocResponse, config) {
@@ -372,7 +403,7 @@ export function episodeToManifest(ocResponse, config) {
     return result;
   }
   else {
-    throw Error('No episode found');
+    return null;
   }
 }
 

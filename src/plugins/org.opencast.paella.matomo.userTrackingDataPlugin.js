@@ -18,25 +18,32 @@
  * the License.
  *
  */
+import { MatomoUserTrackingDataPlugin } from 'paella-user-tracking';
+import { getUrlFromOpencastServer } from '../js/PaellaOpencast';
 
-import { getUrlFromOpencastServer } from './PaellaOpencast';
+export default class OpencastMatomoUserTrackingDataPlugin extends MatomoUserTrackingDataPlugin {
 
-export const loadBreaks = async (player, videoId) => {
-  const requestUrl = `/annotation/annotations.json?episode=${videoId}&type=paella%2Fbreaks&day=&limit=1&offset=0`;
-  const breaks = [];
-  const response = await fetch(getUrlFromOpencastServer(requestUrl));
-  if (response.ok) {
+  async getCurrentUserId() {
     try {
-      const data = await response.json();
-      const annotation = Array.isArray(data.annotations?.annotation) ?
-        data.annotations?.annotation[0] : data.annotations?.annotation;
-      JSON.parse(annotation.value).breaks.forEach(({id, e, s, text}) => {
-        breaks.push({id, s, e, text});
-      });
+      if (this.config.logUserId) {
+
+        if (this.opencast_username === undefined) {
+          const data = await fetch(getUrlFromOpencastServer('/info/me.json'));
+          const me = await data.json();
+          if ((me?.roles?.length == 1) && (me.roles[0] == me.org.anonymousRole)) {
+            this.opencast_username = null;
+          }
+          else {
+            this.opencast_username = me.user.username;
+          }
+        }
+        return this.opencast_username;
+      }
     }
-    catch (e) {
-      player.log.warn('Error loading breaks annotations');
+    catch(e) {
+      this.player.log.debug('Error getting opencast username');
     }
+
+    return null;
   }
-  return breaks;
-};
+}
