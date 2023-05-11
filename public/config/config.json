@@ -217,10 +217,11 @@
             "hlsConfig": {
                 "maxBufferLength": 40
             },
+            "crossOrigin": false,
             "corsConfig": {
                 "withCredentials": false,
                 "requestHeaders": {
-                    "Access-Control-Allow-Credentials": false
+                    "Access-Control-Allow-Credentials": true
                 }
             }
         },
@@ -231,6 +232,7 @@
             "hlsConfig": {
                 "maxBufferLength": 40
             },
+            "crossOrigin": false,
             "corsConfig": {
                 "withCredentials": false,
                 "requestHeaders": {

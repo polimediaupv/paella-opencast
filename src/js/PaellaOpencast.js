@@ -37,7 +37,9 @@ import dictionary from '../default-dictionaries.js';
 
 
 function getUrlFromBase(base, url) {
-  const fullURL = `${base}/${url}`.replaceAll('//', '/').replaceAll('//', '/');
+  const a = base.endsWith('/') ? base.slice(0, -1) : base;
+  const b = url.startsWith('/') ? url.slice(1) : url;
+  const fullURL = `${a}/${b}`;
   return fullURL;
 }
 

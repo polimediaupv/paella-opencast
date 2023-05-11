@@ -1,5 +1,5 @@
 Paella Player For Opencast
-============================
+===========================
 
 This is the Paella player bundled for [Opencast](https://opencast.org).
 
