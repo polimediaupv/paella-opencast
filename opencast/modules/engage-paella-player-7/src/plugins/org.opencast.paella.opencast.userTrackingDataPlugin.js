@@ -25,10 +25,6 @@ export default class OpencastUserTrackingDataPlugin extends DataPlugin {
 
   async isEnabled() {
     try {
-      if (!(await super.isEnabled())) {
-        return false;
-      }
-
       const response = await fetch(getUrlFromOpencastServer('/usertracking/detailenabled'));
       const data = await response.text();
       const enabled = /true/i.test(data);

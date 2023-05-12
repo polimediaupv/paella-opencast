@@ -505,7 +505,7 @@
         },
 
         "es.upv.paella.userEventTracker": {
-            "enabled": true,
+            "enabled": false,
             "context": "userTracking",
             "events": [
                 "PLAY",

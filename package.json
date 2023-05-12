@@ -1,46 +1,20 @@
 {
-  "name": "paella-7-opencast",
+  "name": "paella-7-opencast-root",
   "description": "Paella Player 7 for Opencast",
   "sourceType": "module",
   "private": true,
+  "workspaces": [
+    "opencast/modules/*"
+  ],
   "scripts": {
-    "build": "webpack --mode production",
-    "build:ci": "webpack --mode development --env OPENCAST_SERVER_URL=https://develop.opencast.org --env OPENCAST_CONFIG_URL=config --env PUBLIC_PATH=/",
-    "dev": "webpack serve --mode development --host=0.0.0.0",
-    "eslint": "eslint --config .eslintrc.js src --resolve-plugins-relative-to .",
-    "html-linter": "html-linter --config opencast/docs/checkstyle/html-linter.json 'src/**/*.html'",
-    "html-validate": "html-validate 'public/*.html'",
-    "check": "npm run eslint && npm run html-linter && npm run html-validate",
-    "testenv:dev": "webpack serve --mode development --host=0.0.0.0 --env server=https://develop.opencast.org",
-    "server:ci": "webpack serve --mode development --host=0.0.0.0 --env OPENCAST_SERVER_URL=https://develop.opencast.org --env OPENCAST_CONFIG_URL=config --env PUBLIC_PATH=/"
+    "build": "npm -w paella-7-opencast run build",
+    "build:ci": "npm -w paella-7-opencast run build:ci",
+    "dev": "npm -w paella-7-opencast run dev",
+    "check": "npm -w paella-7-opencast run check"
   },
-  "devDependencies": {
-    "@babel/core": "^7.21.3",
-    "@babel/eslint-parser": "^7.21.3",
-    "@babel/preset-env": "^7.21.4",
-    "@playwright/test": "^1.33.0",
-    "babel-loader": "^9.1.2",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.7.3",
-    "eslint": "^8.39.0",
-    "eslint-plugin-header": "^3.1.1",
-    "express": "^4.18.2",
-    "html-linter": "^1.1.1",
-    "html-validate": "^7.15.1",
-    "http-proxy": "^1.18.1",
-    "source-map-loader": "^4.0.1",
-    "style-loader": "^3.3.2",
-    "svg-inline-loader": "^0.8.2",
-    "webpack": "^5.80.0",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.13.3",
-    "xml-loader": "^1.2.1"
-  },
-  "dependencies": {
-    "paella-basic-plugins": "^1.31.0",
-    "paella-core": "^1.31.0",
-    "paella-slide-plugins": "^1.8.0",
-    "paella-user-tracking": "^1.8.0",
-    "paella-zoom-plugin": "^1.27.0"
+  "eslintConfig": {
+    "extends": [
+      "./opencast/modules/engage-paella-player-7/.eslintrc.js"
+    ]
   }
 }

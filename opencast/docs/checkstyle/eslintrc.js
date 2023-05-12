@@ -5,7 +5,7 @@ module.exports = {
   },
   'extends': 'eslint:recommended',
   'parserOptions': {
-    'ecmaVersion': 2015
+    'ecmaVersion': 2017
   },
   'plugins': [
     'header'
@@ -14,7 +14,7 @@ module.exports = {
     // enforce Opencast's license header at the beginning of JavaScript files
     'header/header': [
       2,
-      './opencast/docs/checkstyle/opencast-header.txt'
+      '../../docs/checkstyle/opencast-header.txt'
     ],
     // enforce 2 spaces indentation
     'indent': [

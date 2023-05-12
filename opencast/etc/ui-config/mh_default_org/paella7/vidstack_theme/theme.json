@@ -1,0 +1,24 @@
+{
+    "styleSheets": [
+        "theme.css"
+    ],
+    "configOverrides": {
+        "progressIndicator": {
+            "inlineMode": true
+        },
+        "videoContainer": {
+            "overPlaybackBar": true
+        }        
+    },
+    "icons": [
+        { "plugin": "es.upv.paella.playPauseButton", "identifier": "play", "icon": "play.svg" },
+        { "plugin": "es.upv.paella.playPauseButton", "identifier": "pause", "icon": "pause.svg" },
+        { "plugin": "es.upv.paella.playPauseButton", "identifier": "replay", "icon": "replay.svg" },
+
+        { "plugin": "es.upv.paella.fullscreenButton", "identifier": "fullscreenIcon", "icon": "fullscreen.svg" },
+        { "plugin": "es.upv.paella.fullscreenButton", "identifier": "windowedIcon", "icon": "fullscreen-exit.svg" },
+
+        { "plugin": "es.upv.paella.captionsSelectorPlugin", "identifier": "captionsIcon", "icon": "./subtitles.svg" }
+        
+    ]
+}
