@@ -89,14 +89,14 @@ export async function applyOpencastTheme(paella) {
   const config = await fetch(getUrlFromOpencastConfig('config.json'));
   const configJson = await config.json();
 
-  const u = new URL(window.location.href)
-  const ocTheme = u.searchParams.get('oc.theme') 
+  const u = new URL(window.location.href);
+  const ocTheme = u.searchParams.get('oc.theme')
     ?? configJson?.opencast?.theme
     ?? 'default_theme'  ;
   try {
     await paella.skin.loadSkin(getUrlFromOpencastConfig(`${ocTheme}/theme.json`));
   }
   catch (err) {
-    paella.log.info(`Error applying opencast theme '${ocTheme}'. Using default theme!`)
+    paella.log.info(`Error applying opencast theme '${ocTheme}'. Using default theme!`);
   }
 }
