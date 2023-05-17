@@ -1,4 +1,6 @@
 {
+    "fallbackId": "ID-dual-stream-demo",
+
     "defaultLayout": "presenter-presentation-dynamic",
 
     "defaultLanguage": "en",
@@ -52,7 +54,6 @@
             "portraitHorizontalAlignment": "align-center"
         }
     },
-    
 
     "opencast": {
         "cookieConsent": {
@@ -338,7 +339,7 @@
             "tabIndex": 6,
             "popUpType": "no-modal"
         },
-        
+
         "es.upv.paella.layoutSelector": {
             "enabled": true,
             "side": "right",
@@ -371,7 +372,7 @@
             "order": 104,
             "tabIndex": 11,
             "description": "Fullscreen"
-        },        
+        },
 
 
         "/* settings toolbox */": "*********************************************************",
@@ -519,7 +520,7 @@
         },
         "org.opencast.paella.breaksPlugin": {
             "enabled": true
-        },        
+        },
         "es.upv.paella.vttManifestCaptionsPlugin": {
             "enabled": true
         },
