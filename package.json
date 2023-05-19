@@ -7,10 +7,10 @@
     "opencast/modules/*"
   ],
   "scripts": {
-    "build": "npm -w paella-7-opencast run build",
-    "build:ci": "npm -w paella-7-opencast run build:ci",
-    "dev": "npm -w paella-7-opencast run dev",
-    "check": "npm -w paella-7-opencast run check"
+    "build": "npm -w paella-7-opencast run build --",
+    "build:ci": "npm -w paella-7-opencast run build:ci --",
+    "dev": "npm -w paella-7-opencast run dev --",
+    "check": "npm -w paella-7-opencast run check --"
   },
   "eslintConfig": {
     "extends": [

@@ -27,6 +27,6 @@ You can test this player online in https://polimediaupv.github.io/paella-opencas
 
 To test in your local environment, run:
 
-`npm run dev -- -- --env server=https://stable.opencast.org` 
+`npm run dev -- --env server=https://stable.opencast.org` 
 
 and navigate to http://localhost:7070/engage/ui/index.html to view the videos from the opencast server you configured or directly to [http://localhost:7070/paella7/ui/watch.html?id=\<videoid\>](http://localhost:7070/paella7/ui/watch.html?id=videoid).
