@@ -41,6 +41,9 @@
     color: var(--main-fg-color);
 
 }
+.progress-indicator-container .progress-indicator-content {
+    opacity: 1;
+}
 
 .progress-indicator .progress-indicator-content,
 .progress-indicator .progress-indicator-remaining {
@@ -51,17 +54,18 @@
 
 .playback-bar.inline-mode {
     background-image: linear-gradient(rgb(50, 50, 50) 0%, rgb(50, 50, 50) 35.33%, rgb(40, 40, 40) 35.33%, rgb(40, 40, 40) 70.66%, rgb(34, 34, 34) 70.66%, rgb(34, 34, 34) 100%);
-    border-top: rgb(85, 85, 85);
+    border-top: 1px solid rgb(89, 87, 87);
 }
 
 .progress-indicator .progress-indicator-content {
-    background-image: linear-gradient(to bottom, #fafafa, #666);
+    background-image:     linear-gradient(to bottom, #ffffff, #807e7e);
+    border: 1px solid rgb(89, 87, 87);
 }
 
 .progress-indicator .progress-indicator-remaining {
     border-radius: 5px;
     background-image: linear-gradient(to bottom, #1f1f1f, #313131);
-    border: 1px solid #555;
+    border: 1px solid #9b9b9b;
 }
 
 .progress-indicator .progress-indicator-timer {

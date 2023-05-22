@@ -13,15 +13,42 @@
             "hideHandlerOnMouseOut": true,
             "showRemainingProgress": true
         },
-
+        
         "videoContainer": {
-            "overPlaybackBar": false
+            "overPlaybackBar": false,
+            "dynamicLayout" : {
+                "portraitHorizontalAlignment": "align-center",
+                "landscapeVerticalAlignment": "align-center"
+            }
         },
         "plugins": {
             "es.upv.paella.customTimeProgressIndicator": { "enabled": false },
             "es.upv.paella.slideMapProgressBarPlugin": {"enabled": false },
             "es.upv.paella.volumeButtonPlugin": {
                 "volumeAlwaysVisible": false
+            },
+
+            "es.upv.paella.dualVideoDynamic": {
+                "tabIndexStart": 40,
+                "allowSwitchSide": true
+            },
+
+            "es.upv.paella.dualVideoPiP": {
+                "enabled": true,
+                "validContent": [
+                    { "id": "presenter-presentation-pip", "content": ["presenter","presentation"], "icon": "present-mode-3.svg", "title": "Picture-in-picture" },
+                    { "id": "presenter-2-presentation-pip", "content": ["presenter-2","presentation"], "icon": "present-mode-3.svg", "title": "Picture-in-picture" },
+                    { "id": "presenter-presenter-2-pip", "content": ["presenter","presenter-2"], "icon": "present-mode-3.svg", "title": "Picture-in-picture" }
+                ],
+                "dualVideoContentIds": [
+                    "presenter-presentation-dynamic",
+                    "presenter-2-presentation-dynamic",
+                    "presenter-presenter-2-dynamic",
+                    "presenter-presentation",
+                    "presenter-2-presentation",
+                    "presenter-presenter-2"
+                ],
+                "tabIndexStart": 40
             }
         }
     },
