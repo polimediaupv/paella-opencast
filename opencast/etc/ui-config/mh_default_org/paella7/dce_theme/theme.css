@@ -85,7 +85,7 @@
     height: 17px;
 }
 
-/*
-      background-image: linear-gradient(to bottom, #fafafa, #666);
-      border-radius: 5px;
-  */
+.player-container button:focus-visible {
+    outline-style: none;
+    box-shadow: inset 0px 0px 8px 0px #6495ed;
+}
