@@ -69,14 +69,10 @@
 
         { "plugin": "es.upv.paella.frameControlButtonPlugin","identifier": "photoIcon", "icon": "./icons/photo.svg"},
 
-        
+        { "plugin": "es.upv.paella.captionsSelectorPlugin", "identifier": "captionsIcon", "icon": "./icons/closed-captions.svg" },
 
         { "plugin": "es.upv.paella.fullscreenButton", "identifier": "fullscreenIcon", "icon": "./icons/fullscreen.svg" },
         { "plugin": "es.upv.paella.fullscreenButton", "identifier": "windowedIcon", "icon": "./icons/windowed.svg" }
-
-        
-
-
 
     ]
 }
