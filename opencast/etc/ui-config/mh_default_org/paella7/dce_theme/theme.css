@@ -28,7 +28,7 @@
     /* --video-container-padding: 10px; */
 }
 
-#player-container2,
+
 .video-container {
     background-color: #222;
     background-image: linear-gradient(to bottom, #333, #111);
@@ -88,4 +88,22 @@
 .player-container button:focus-visible {
     outline-style: none;
     box-shadow: inset 0px 0px 8px 0px #6495ed;
+}
+
+.popup-content,
+.timeline-popup-content {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 0;
+}
+ul.menu-button-content li.menu-button-item button:hover {
+    background-color: #555;
+}
+ul.menu-button-content li.menu-button-item button.selected {
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+.frame-control-plugin-container button img {
+    border: 1px solid #555;
 }
