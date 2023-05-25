@@ -339,6 +339,15 @@
             "tabIndex": 6,
             "popUpType": "no-modal"
         },
+        "es.upv.paella.keyboardShortcutsHelp": {
+            "enabled": true,
+            "side": "right",
+            "order": 80,
+            "description": "Keyboard shortcuts",
+            "closeParentPopUp": true,
+            "tabIndex": 7,
+            "popUpType": "no-modal"
+        },
 
         "es.upv.paella.layoutSelector": {
             "enabled": true,
@@ -405,15 +414,6 @@
             "parentContainer": "settingsGroup",
             "order": 50,
             "description": "Downloads"
-        },
-        "es.upv.paella.keyboardShortcutsHelp": {
-            "enabled": true,
-            "order": 80,
-            "description": "Keyboard shortcuts",
-            "parentContainer": "settingsGroup",
-            "closeParentPopUp": true,
-            "tabIndex": 7,
-            "popUpType": "no-modal"
         },
         "org.opencast.paella.versionButton": {
             "enabled": true,
