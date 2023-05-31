@@ -22,6 +22,9 @@ You can find the Paella player bundled for [Opencast](https://opencast.org) in [
 
 You can test this player online in https://polimediaupv.github.io/paella-opencast/watch.html?id=ID-dual-stream-demo. You can change the video id by anyone from http://develop.opencast.org
 
+You can test themes using the `oc.theme` URL parameter: https://polimediaupv.github.io/paella-opencast/watch.html?id=ID-dual-stream-demo&oc.theme=ethz_theme.
+
+
 
 # Local development
 
