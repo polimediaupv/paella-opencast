@@ -107,3 +107,12 @@ ul.menu-button-content li.menu-button-item button.selected {
 .frame-control-plugin-container button img {
     border: 1px solid #555;
 }
+
+/* ************************** */
+.video-canvas .button-area button {
+    background-color: var(--highlight-bg-color-hover);
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 4px;
+}

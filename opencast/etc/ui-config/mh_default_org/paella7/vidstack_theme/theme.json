@@ -31,21 +31,24 @@
         { "plugin": "es.upv.paella.fullscreenButton", "identifier": "fullscreenIcon", "icon": "./icons/fullscreen.svg" },
         { "plugin": "es.upv.paella.fullscreenButton", "identifier": "windowedIcon", "icon": "./icons/fullscreen-exit.svg" },
 
-        { "plugin": "************ es.upv.paella.layoutSelector","identifier": "layoutIcon", "icon": "./icons/presentation-mode.svg"},
-
         { "plugin": "es.upv.paella.captionsSelectorPlugin", "identifier": "captionsIcon", "icon": "./icons/subtitles.svg" },
 
         
         { "plugin": "org.opencast.paella.toolsGroupPlugin", "identifier": "buttonIcon", "icon": "./icons/settings.svg" },
         { "plugin": "org.opencast.paella.descriptionPlugin", "identifier": "buttonIcon", "icon": "./icons/info.svg" },
         { "plugin": "es.upv.paella.downloadsPlugin", "identifier": "downloadIcon", "icon": "./icons/download.svg" },
-        { "plugin": "************ es.upv.paella.keyboardShortcutsHelp", "identifier": "keyboardIcon", "icon": "./icons/download.svg" },
         { "plugin": "org.opencast.paella.versionButton", "identifier": "buttonIcon", "icon": "./icons/bookmark.svg" },
         
 
         { "plugin": "org.opencast.paella.loginPlugin", "identifier": "buttonIcon", "icon": "./icons/user.svg" },
-        { "plugin": "************ org.opencast.paella.editorPlugin", "identifier": "buttonIcon", "icon": "./icons/bookmark.svg" },
         { "plugin": "org.opencast.paella.episodesFromSeries", "identifier": "buttonIcon", "icon": "./icons/playlist.svg" }    
         
+    ],
+
+    "icons_not_used": [
+        { "plugin": "************ es.upv.paella.layoutSelector","identifier": "layoutIcon", "icon*": "./icons/presentation-mode.svg"},
+        { "plugin": "************ es.upv.paella.keyboardShortcutsHelp", "identifier": "keyboardIcon", "icon*": "./icons/download.svg" },
+        { "plugin": "************ org.opencast.paella.editorPlugin", "identifier": "buttonIcon", "icon*": "./icons/bookmark.svg" }
     ]
+
 }

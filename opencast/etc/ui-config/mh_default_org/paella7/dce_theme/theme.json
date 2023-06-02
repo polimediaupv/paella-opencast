@@ -72,7 +72,12 @@
         { "plugin": "es.upv.paella.captionsSelectorPlugin", "identifier": "captionsIcon", "icon": "./icons/closed-captions.svg" },
 
         { "plugin": "es.upv.paella.fullscreenButton", "identifier": "fullscreenIcon", "icon": "./icons/fullscreen.svg" },
-        { "plugin": "es.upv.paella.fullscreenButton", "identifier": "windowedIcon", "icon": "./icons/windowed.svg" }
+        { "plugin": "es.upv.paella.fullscreenButton", "identifier": "windowedIcon", "icon": "./icons/windowed.svg" },
 
+
+        
+        { "plugin": "es.upv.paella.dualVideoDynamic", "identifier": "iconMaximize", "icon": "./icons/maximize.svg" },
+        { "plugin": "es.upv.paella.dualVideoDynamic", "identifier": "iconMimimize", "icon": "./icons/minimize.svg" },
+        { "plugin": "es.upv.paella.dualVideoDynamic", "identifier": "iconClose", "icon": "./icons/close.svg" }
     ]
 }
