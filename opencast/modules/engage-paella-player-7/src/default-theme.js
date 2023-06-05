@@ -37,7 +37,6 @@ export async function applyOpencastTheme(paella) {
   }
   catch (err) {
     paella.log.info(`Error applying opencast theme '${ocTheme}'. Using default theme!`);
-    console.log(err);
     await paella.skin.loadSkin(getUrlFromOpencastPaella(`default_theme/theme.json`));
   }
 }
