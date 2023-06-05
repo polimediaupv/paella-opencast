@@ -49,7 +49,7 @@ module.exports = function (env) {
       },
       static: {
         directory: path.join(__dirname, '../../etc/ui-config/mh_default_org/paella7'),
-        publicPath: '/ui/config/paella7'
+        publicPath: env.OPENCAST_CONFIG_URL ?? '/ui/config/paella7'
       },
       proxy: {
         '/search/**': proxyOpts,
@@ -109,6 +109,7 @@ module.exports = function (env) {
       new webpack.DefinePlugin({
         OPENCAST_SERVER_URL: JSON.stringify(env.OPENCAST_SERVER_URL),
         OPENCAST_CONFIG_URL: JSON.stringify(env.OPENCAST_CONFIG_URL),
+        OPENCAST_PAELLA_URL: JSON.stringify(env.PUBLIC_PATH)
       }),
       new webpack.SourceMapDevToolPlugin({
         filename: '[file].js.map[query]'
