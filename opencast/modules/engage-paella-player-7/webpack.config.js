@@ -106,6 +106,10 @@ module.exports = function (env) {
     },
 
     plugins: [
+      new webpack.ProvidePlugin({
+        h: ['preact', 'h'],
+        Fragment: ['preact', 'Fragment'],
+      }),
       new webpack.DefinePlugin({
         OPENCAST_SERVER_URL: JSON.stringify(env.OPENCAST_SERVER_URL),
         OPENCAST_CONFIG_URL: JSON.stringify(env.OPENCAST_CONFIG_URL),

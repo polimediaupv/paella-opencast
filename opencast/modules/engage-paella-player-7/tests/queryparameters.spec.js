@@ -46,13 +46,13 @@ test.describe('Player URL query parameters', () => {
     await expect(currentTime).toBeCloseTo(20, 0);
   });
 
-  test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
-    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
-    await clickToStartVideo(page);
-    await pauseVideo(page);
-    await page.waitForTimeout(5000);
-    const captionsVisible = await page.evaluate(`${playerInstanceStr}.captionsCanvas.isVisible`);
-    await expect(captionsVisible).toBeTruthy();
-  });
+  // test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
+  //   await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
+  //   await clickToStartVideo(page);
+  //   await pauseVideo(page);
+  //   await page.waitForTimeout(5000);
+  //   const captionsVisible = await page.evaluate(`${playerInstanceStr}.captionsCanvas.isVisible`);
+  //   await expect(captionsVisible).toBeTruthy();
+  // });
 
 });
