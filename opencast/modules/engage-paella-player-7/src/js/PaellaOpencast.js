@@ -241,23 +241,25 @@ export class PaellaOpencast extends Paella {
       // Retrieve trimming data in URL start-end params in seconds: ?start=12&end=345
       // Allow the 'end' param to overrule the end in trimming data,
       // Allow a 'start' or an 'end' URL parameter to be passed alone
-      const startParamVal = utils.getHashParameter('start') || utils.getUrlParameter('start');
-      const endParamVal = utils.getHashParameter('end') || utils.getUrlParameter('end');
+      const startTrimVal = utils.getHashParameter('start') || utils.getUrlParameter('start');
+      const endTrimVal = utils.getHashParameter('end') || utils.getUrlParameter('end');
 
-      if (trimming || start || end) {
+      if (trimming || startTrimVal || endTrimVal) {
         let startTrimming = 0;  // default start time
         let endTrimming = videoDuration; // raw video duration;
         if (trimming) {
           const trimmingSplit = trimming.split(';');
           if (trimmingSplit.length == 2) {
             startTrimming = trimmingData.start + humanTimeToSeconds(trimmingSplit[0]);
-            endTrimming = Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
+            endTrimming = (trimmingData.end == 0)
+              ? trimmingData.start + humanTimeToSeconds(trimmingSplit[1])
+              : Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
           }
-        } else if (startParamVal) {
-          startTrimming = trimmingData.start + Math.floor(startParamVal);
+        } else if (startTrimVal) {
+          startTrimming = trimmingData.start + Math.floor(startTrimVal);
         }
-        if (endParamVal) {
-          endTrimming = Math.min(trimmingData.start + Math.floor(endParamVal), videoDuration);
+        if (endTrimVal) {
+          endTrimming = Math.min(trimmingData.start + Math.floor(endTrimVal), videoDuration);
         }
         if (startTrimming < endTrimming && endTrimming > 0 && startTrimming >= 0) {
           trimmingData = {

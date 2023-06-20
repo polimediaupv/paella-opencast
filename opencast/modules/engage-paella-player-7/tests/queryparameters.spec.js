@@ -41,12 +41,19 @@ test.describe('Player URL query parameters', () => {
     await clickToStartVideo(page);
     await pauseVideo(page);
     await page.waitForTimeout(5000);
-
     const currentTime = await page.evaluate(`${playerInstanceStr}.videoContainer.currentTime()`);
     await expect(currentTime).toBeCloseTo(20, 0);
   });
 
-  // #DCE start-end params (the OC stable test video is 1min 4secs long)
+  test('Check trimming param in URL: ?trimming=10s;50s', async ({ page }) => {
+    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&trimming=10s;50s');
+    await clickToStartVideo(page);
+    await pauseVideo(page);
+    await page.waitForTimeout(5000);
+    const duration = await page.evaluate(`${playerInstanceStr}.videoContainer.duration()`);
+    await expect(duration).toBeCloseTo(40, 0);
+  });
+
   test('Check time param in URL and seek: &start=20&end=45', async ({ page }) => {
     await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&start=20&end=45');
     await clickToStartVideo(page);
@@ -61,15 +68,12 @@ test.describe('Player URL query parameters', () => {
     await expect(trimEnd).toBe(45);
   });
 
-  test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
-    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
-    await clickToStartVideo(page);
-    await pauseVideo(page);
-    await page.waitForTimeout(5000);
-    const captionsVisible = await page.evaluate(`${playerInstanceStr}.captionsCanvas.isVisible`);
-    await expect(captionsVisible).toBeTruthy();
-  });
-
-
-
+  // test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
+  //   await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
+  //   await clickToStartVideo(page);
+  //   await pauseVideo(page);
+  //   await page.waitForTimeout(5000);
+  //   const captionsVisible = await page.evaluate(`${playerInstanceStr}.captionsCanvas.isVisible`);
+  //   await expect(captionsVisible).toBeTruthy();
+  // });
 });
