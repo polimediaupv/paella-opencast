@@ -103,6 +103,7 @@ export default class SocialPlugin extends PopUpButtonPlugin {
     this.player.bindEvent(Events.PAUSE, (params) => { this.onPause(params); });
     this.player.bindEvent(Events.ENDED, (params) => { this.onEndVideo(params); });
     this.player.bindEvent(Events.TIMEUPDATE, (params) => { this.onTimeUpdate(params); });
+    this.player.bindEvent(Events.TRIMMING_CHANGED, (params) => { this.onTrimmingChanged(params); });
 
     this.reloadComments();
     this.getDisplayName();
@@ -228,10 +229,15 @@ export default class SocialPlugin extends PopUpButtonPlugin {
         if (this._displayName.value) {
           const form = event.target;
           const formData = new FormData(event.target);
+          let time = this._currentTime.value;
+
+          if (this.player.videoContainer.isTrimEnabled === true) {
+            time = time + this.player.videoContainer.trimStart;
+          }
 
           this.player.data.write('timedComments', this.player.videoId, {
             operation: 'newComment',
-            time: this._currentTime.value,
+            time,
             comment: formData.get('comment'),
             isPrivate: formData.get('private')
           });
@@ -319,8 +325,28 @@ export default class SocialPlugin extends PopUpButtonPlugin {
     this._currentTime.value = Math.floor(params.currentTime);
   }
 
+  async onTrimmingChanged(_params) {
+    this.reloadComments();
+  }
+
+
   async reloadComments() {
-    this._comments.value = await this.player.data.read('timedComments', { videoId: this.player.videoId });
+    let comments = await this.player.data.read('timedComments', { videoId: this.player.videoId });
+    let filtered = comments;
+    if (this.player.videoContainer.isTrimEnabled === true) {
+      filtered = comments.filter(c => {
+        return (this.player.videoContainer.trimStart <= c.time)
+          && (c.time <= this.player.videoContainer.trimEnd);
+      });
+      filtered = filtered.map(c => {
+        return {
+          ...c,
+          time: c.time - this.player.videoContainer.trimStart
+        };
+      });
+    }
+
+    this._comments.value = filtered;
   }
 
   async getDisplayName() {
