@@ -24,7 +24,7 @@ import { clickToStartVideo, pauseVideo, playerInstanceStr } from './utils';
 
 test.describe('Player URL query parameters', () => {
 
-  test('Without query aditional query parameters', async ({ page }) => {
+  test('Without query additional query parameters', async ({ page }) => {
     await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo');
     await clickToStartVideo(page);
     await pauseVideo(page);
@@ -46,23 +46,30 @@ test.describe('Player URL query parameters', () => {
     await expect(currentTime).toBeCloseTo(20, 0);
   });
 
-  test('Check trimming param in URL: ?trimming=10s;50s', async ({ page }) => {
-    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&trimming=10s;50s');
+  // #DCE start-end params (the OC stable test video is 1min 4secs long)
+  test('Check time param in URL and seek: &start=20&end=45', async ({ page }) => {
+    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&start=20&end=45');
     await clickToStartVideo(page);
     await pauseVideo(page);
     await page.waitForTimeout(5000);
-
-    const currentTime = await page.evaluate(`${playerInstanceStr}.videoContainer.duration()`);
-    await expect(currentTime).toBeCloseTo(40, 0);
+    // Test video trim attributes
+    const trimState = await page.evaluate(`${playerInstanceStr}.videoContainer.isTrimEnabled`);
+    const trimStart = await page.evaluate(`${playerInstanceStr}.videoContainer.trimStart`);
+    const trimEnd = await page.evaluate(`${playerInstanceStr}.videoContainer.trimEnd`);
+    await expect(trimState).toBeTruthy;
+    await expect(trimStart).toBe(20);
+    await expect(trimEnd).toBe(45);
   });
 
-  // test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
-  //   await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
-  //   await clickToStartVideo(page);
-  //   await pauseVideo(page);
-  //   await page.waitForTimeout(5000);
-  //   const captionsVisible = await page.evaluate(`${playerInstanceStr}.captionsCanvas.isVisible`);
-  //   await expect(captionsVisible).toBeTruthy();
-  // });
+  test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
+    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
+    await clickToStartVideo(page);
+    await pauseVideo(page);
+    await page.waitForTimeout(5000);
+    const captionsVisible = await page.evaluate(`${playerInstanceStr}.captionsCanvas.isVisible`);
+    await expect(captionsVisible).toBeTruthy();
+  });
+
+
 
 });

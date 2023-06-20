@@ -221,32 +221,68 @@ export class PaellaOpencast extends Paella {
 
     bindEvent(paella, Events.PLAYER_LOADED, async () => {
       // Enable trimming
-      let trimmingData = await loadTrimming(paella, paella.videoId);
-      // Check for trimming param in URL: ?trimming=1m2s;2m
-      const trimming = utils.getHashParameter('trimming') || utils.getUrlParameter('trimming');
-      if (trimming) {
-        const trimmingSplit = trimming.split(';');
-        if (trimmingSplit.length == 2) {
-          const startTrimming = trimmingData.start + humanTimeToSeconds(trimmingSplit[0]);
-          const endTrimming = (trimmingData.end == 0)
-            ? trimmingData.start + humanTimeToSeconds(trimmingSplit[1])
-            : Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
-
-          if (startTrimming < endTrimming && endTrimming > 0 && startTrimming >= 0) {
-            trimmingData = {
-              start: startTrimming,
-              end: endTrimming,
-              enabled: true
-            };
-          }
-        }
+      // Retrieve video duration in case a default trim end time is needed
+      const videoDuration = paella.videoManifest?.metadata?.duration;
+      let trimmingData = undefined;
+      try {
+        // Retrieve trimming data from a data delegate
+        trimmingData = await loadTrimming(paella, paella.videoId);
+      } catch (e) {
+        paella.log.warn('Error requesting trim data from server', e);
+        // Fallback to initialize default trim data
+        trimmingData = {
+          start: 0,
+          end: videoDuration,
+          enabled: false
+        };
       }
-      await setTrimming(paella, trimmingData);
+      // Retrieve trimming data in URL param: ?trimming=1m2s;2m
+      const trimming = utils.getHashParameter('trimming') || utils.getUrlParameter('trimming');
+      // Retrieve trimming data in URL start-end params in seconds: ?start=12&end=345
+      // Allow the 'end' param to overrule the end in trimming data,
+      // Allow a 'start' or an 'end' URL parameter to be passed alone
+      const startParamVal = utils.getHashParameter('start') || utils.getUrlParameter('start');
+      const endParamVal = utils.getHashParameter('end') || utils.getUrlParameter('end');
+
+      if (trimming || start || end) {
+        let startTrimming = 0;  // default start time
+        let endTrimming = videoDuration; // raw video duration;
+        if (trimming) {
+          const trimmingSplit = trimming.split(';');
+          if (trimmingSplit.length == 2) {
+            startTrimming = trimmingData.start + humanTimeToSeconds(trimmingSplit[0]);
+            endTrimming = Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
+          }
+        } else if (startParamVal) {
+          startTrimming = trimmingData.start + Math.floor(startParamVal);
+        }
+        if (endParamVal) {
+          endTrimming = Math.min(trimmingData.start + Math.floor(endParamVal), videoDuration);
+        }
+        if (startTrimming < endTrimming && endTrimming > 0 && startTrimming >= 0) {
+          trimmingData = {
+            start: startTrimming,
+            end: endTrimming,
+            enabled: true
+          };
+        }
+        paella.log.debug(`Setting trim to ${JSON.stringify(trimmingData)}`);
+        await setTrimming(paella, trimmingData);
+      }
 
       // Check time param in URL and seek:  ?time=1m2s
       const timeString = utils.getHashParameter('time') || utils.getUrlParameter('time');
-      if (timeString) {
-        const totalTime = humanTimeToSeconds(timeString);
+      // Check t param, which is seek time in seconds, to be passed as a query or hash: #t=12002
+      const timeStringInSecs = utils.getHashParameter('t') || utils.getUrlParameter('t');
+
+      if (timeString || timeStringInSecs) {
+        let totalTime = 0;
+        if (timeString) {
+          totalTime = humanTimeToSeconds(timeString);
+        } else {
+          totalTime = Math.floor(timeStringInSecs);
+        }
+        paella.log.debug(`Setting initial seek to '${totalTime}' seconds`);
         await paella.videoContainer.setCurrentTime(totalTime);
       }
 
