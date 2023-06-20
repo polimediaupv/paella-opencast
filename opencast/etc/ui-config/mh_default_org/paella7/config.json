@@ -1,4 +1,6 @@
 {
+    "fallbackId": "ID-dual-stream-demo",
+
     "defaultLayout": "presenter-presentation-dynamic",
 
     "defaultLanguage": "en",
