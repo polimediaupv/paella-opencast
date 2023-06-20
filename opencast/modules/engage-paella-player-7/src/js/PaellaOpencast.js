@@ -228,7 +228,9 @@ export class PaellaOpencast extends Paella {
         const trimmingSplit = trimming.split(';');
         if (trimmingSplit.length == 2) {
           const startTrimming = trimmingData.start + humanTimeToSeconds(trimmingSplit[0]);
-          const endTrimming = Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
+          const endTrimming = (trimmingData.end == 0)
+            ? trimmingData.start + humanTimeToSeconds(trimmingSplit[1])
+            : Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
 
           if (startTrimming < endTrimming && endTrimming > 0 && startTrimming >= 0) {
             trimmingData = {

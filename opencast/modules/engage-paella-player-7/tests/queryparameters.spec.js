@@ -46,6 +46,16 @@ test.describe('Player URL query parameters', () => {
     await expect(currentTime).toBeCloseTo(20, 0);
   });
 
+  test('Check trimming param in URL: ?trimming=10s;50s', async ({ page }) => {
+    await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&trimming=10s;50s');
+    await clickToStartVideo(page);
+    await pauseVideo(page);
+    await page.waitForTimeout(5000);
+
+    const currentTime = await page.evaluate(`${playerInstanceStr}.videoContainer.duration()`);
+    await expect(currentTime).toBeCloseTo(40, 0);
+  });
+
   // test('Check captions param in URL: ?captions=<lang>', async ({ page }) => {
   //   await page.goto('/paella7/ui/watch.html?id=ID-dual-stream-demo&captions=en');
   //   await clickToStartVideo(page);
