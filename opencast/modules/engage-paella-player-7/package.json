@@ -6,7 +6,6 @@
   "scripts": {
     "build:ci": "webpack --mode development --env OPENCAST_SERVER_URL=https://develop.opencast.org --env OPENCAST_CONFIG_URL=/paella-opencast/config --env PUBLIC_PATH=/paella-opencast",
     "server:ci": "webpack serve --mode development --host=0.0.0.0 --env OPENCAST_SERVER_URL=https://develop.opencast.org --env OPENCAST_CONFIG_URL=/config --env PUBLIC_PATH=/",
-
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development --host=0.0.0.0",
     "eslint": "eslint --config .eslintrc.js src tests --resolve-plugins-relative-to .",
@@ -40,7 +39,7 @@
   },
   "dependencies": {
     "paella-basic-plugins": "^1.31.2",
-    "paella-core": "^1.37.2",
+    "paella-core": "^1.39.3",
     "paella-slide-plugins": "^1.8.0",
     "paella-user-tracking": "^1.8.0",
     "paella-zoom-plugin": "^1.27.0"
