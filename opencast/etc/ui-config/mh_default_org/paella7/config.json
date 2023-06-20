@@ -71,7 +71,7 @@
             "presenter/player+preview",
             "presentation/player+preview"
         ],
-        "theme": "custom_theme"
+        "theme": "dce_2_theme"
     },
 
     "cookieConsent": [
@@ -339,7 +339,44 @@
             "tabIndex": 6,
             "popUpType": "no-modal"
         },
-
+        "es.upv.paella.keyboardShortcutsHelp": {
+            "enabled": true,
+            "side": "right",
+            "order": 80,
+            "description": "Keyboard shortcuts",
+            "closeParentPopUp": true,
+            "tabIndex": 7,
+            "popUpType": "no-modal"
+        },
+        "edu.harvard.dce.paella.infoPlugin": {
+            "enabled": true,
+            "side": "right",
+            "order": 85,
+            "tabIndex": 8
+        },
+        "edu.harvard.dce.paella.infoMenu": {
+            "enabled": true,
+            "side": "right",
+            "order": 86,
+            "tabIndex": 8
+        },
+        "edu.harvard.dce.paella.socialDataTestPlugin": {
+            "enabled": true,
+            "context": [ "timedComments" ]
+        },
+        "edu.harvard.dce.paella.socialPlugin": {
+            "enabled": true,
+            "side": "right",
+            "order": 87,
+            "tabIndex": 8,
+            "timerReloadComments": 5000,
+            "queryParamDisable": "social",
+            "closeActions": {
+                "clickOutside": false,
+                "closeButton": true
+            }
+        },
+        
         "es.upv.paella.layoutSelector": {
             "enabled": true,
             "side": "right",
@@ -405,15 +442,6 @@
             "parentContainer": "settingsGroup",
             "order": 50,
             "description": "Downloads"
-        },
-        "es.upv.paella.keyboardShortcutsHelp": {
-            "enabled": true,
-            "order": 80,
-            "description": "Keyboard shortcuts",
-            "parentContainer": "settingsGroup",
-            "closeParentPopUp": true,
-            "tabIndex": 7,
-            "popUpType": "no-modal"
         },
         "org.opencast.paella.versionButton": {
             "enabled": true,
@@ -622,6 +650,10 @@
                 "2": "${metadata.series} - ${metadata.seriestitle}",
                 "3": "${metadata.presenters}"
             }
+        },
+
+        "edu.harvard.dce.paella.onboarding": {
+            "enabled": true
         }
     }
 }

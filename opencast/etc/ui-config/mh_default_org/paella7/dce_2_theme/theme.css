@@ -1,0 +1,225 @@
+/* Use roboto font */
+@font-face {
+    font-family: roboto;
+    src: url(Roboto-Regular.ttf);
+}
+
+.button-group .button-plugin-wrapper .button-description,
+.button-group-title,
+.menu-button-title,
+button {
+    font-family: roboto;
+    font-weight: 600;
+}
+
+
+
+.progress-indicator-container {
+    forced-color-adjust: none;
+}
+
+
+
+/* ********************************************************************************************** */
+:root {
+    /* sizes */
+    /* --button-fixed-width: 40px; */
+    /* --button-fixed-height: 40px; */
+    /* --playback-bar-height: var(--button-fixed-height) + 10px; */
+    /* --button-icon-size: calc(var(--button-fixed-width) / 2); */
+
+    /* colors */
+    --main-fg-color: #F9FAFB;
+    --main-bg-color: #1F2937;
+    --main-bg-color-hover: #1F2937;
+
+    /* --secondary-bg-color: rgb(32,32,32); */
+    --secondary-bg-color-hover: #1F2937;
+    --highlight-bg-color: #525252;
+    --highlight-bg-color-hover: #424242;
+    --main-bg-gradient: #1F2937;
+    /* --main-border-color: rgba(125,125,125,0.4); */
+    /* --video-container-background-color: #e4e4e4; */
+    --base-video-rect-background-color: #9CA3AF;
+
+    --button-fixed-height: 48px;
+    /* video-container-message */
+    /* --video-container-message-bkg: rgba(0, 0, 0, 0.4); */
+    /* --video-container-message-color: white; */
+
+    /* video-container */
+    /* --video-container-padding: 10px; */
+
+    --volume-slider-empty-color: #424242;
+    ;
+    --volume-slider-fill-color: #AAA;
+}
+
+
+.video-container {
+    background-color: #222;
+    background-image: linear-gradient(to bottom, #333, #111);
+}
+
+
+
+/* playback-bar style */
+.playback-bar .button-plugins button i svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--main-fg-color);
+    color: var(--main-fg-color);
+
+}
+
+.playback-bar .button-plugin-side-area {
+    line-height: 48px;
+}
+
+.playback-bar,
+.playback-bar:hover,
+.playback-bar.inline-mode {
+    background-image: linear-gradient(rgb(50, 50, 50) 0%, rgb(50, 50, 50) 35.33%, rgb(40, 40, 40) 35.33%, rgb(40, 40, 40) 70.66%, rgb(34, 34, 34) 70.66%, rgb(34, 34, 34) 100%);
+    border-top: 1px solid rgb(89, 87, 87);
+}
+
+.playback-bar .button-plugins button i {
+    height: 17px;
+}
+
+/* buttons in playbar */
+.playback-bar .button-plugins {
+    height: calc(var(--button-fixed-height) - 1px);
+    padding: 4px;
+}
+
+.playback-bar .button-plugins .button-plugin-container button {
+    border-radius: 7px;
+}
+
+.playback-bar .button-plugins .button-plugin-container div.non-interactive {
+    margin-top: -2px;
+}
+
+.playback-bar .button-plugins.left-side {
+    margin-left: 5px;
+}
+
+.playback-bar .button-plugins.right-side {
+    margin-right: 5px;
+}
+
+
+/* progress indicator style */
+.progress-indicator.top-mode {
+    height: 12px;
+    width: 100%;
+    margin-left: 0;
+}
+
+.progress-indicator-container .progress-indicator-content {
+    opacity: 1;
+}
+
+.progress-indicator .progress-indicator-content,
+.progress-indicator .progress-indicator-remaining {
+    border-radius: 20px;
+    height: 12px;
+}
+
+.progress-indicator .progress-indicator-handler {
+    background-color: white;
+    width: 16px;
+    height: 16px;
+}
+
+.progress-indicator .progress-indicator-content {
+    background-image: linear-gradient(to bottom, #ffffff, #807e7e);
+    border: 1px solid rgb(89, 87, 87);
+}
+
+.progress-indicator .progress-indicator-remaining {
+    border-radius: 5px;
+    background-image: linear-gradient(to bottom, #1f1f1f, #313131);
+    border: 1px solid #9b9b9b;
+}
+
+.progress-indicator .progress-indicator-timer {
+    color: #555;
+}
+
+
+
+.player-container button:focus-visible {
+    outline-style: none;
+    box-shadow: inset 0px 0px 8px 0px #6495ed;
+}
+
+.popup-content,
+.timeline-popup-content {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 0;
+}
+
+ul.menu-button-content li.menu-button-item button:hover {
+    background-color: #555;
+}
+
+ul.menu-button-content li.menu-button-item button.selected {
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+.frame-control-plugin-container button img {
+    border: 1px solid #555;
+}
+
+/* button area on videos */
+.video-canvas .button-area button {
+    background-color: var(--highlight-bg-color-hover);
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+/* ** */
+.button-group .button-plugin-container button[name="es.upv.paella.qualitySelector"] {
+    padding: 0;
+}
+
+
+/* This should be in paella-core */
+:root {
+    --main-outline-color: #f200f2;
+}
+
+.playback-bar {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.frame-control-plugin-container .image-list img {
+    width: 160px;
+}
+
+/* outline styles for buttons */
+.player-container button,
+.video-container .video-canvas .button-area button,
+.button-group .button-plugin-container button {
+    outline-style: none;
+}
+
+.player-container button:focus-visible,
+.video-container .video-canvas .button-area button:focus-visible,
+.button-group .button-plugin-container button:focus-visible {
+    outline-color: var(--main-outline-color);
+    outline-style: solid;
+    opacity: 1;
+}
+
+.video-canvas .button-area {
+    padding: 5px;
+    height: calc(32px + 5px);
+}

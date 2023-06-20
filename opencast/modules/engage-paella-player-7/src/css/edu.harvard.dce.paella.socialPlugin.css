@@ -1,0 +1,199 @@
+.popup-container.social-plugin-popup .popup-content {
+    opacity: 0.6;
+}
+
+.popup-container.social-plugin-popup:hover .popup-content {
+    opacity: 1;
+}
+
+.popup-container.social-plugin-popup #social-plugin-popup {
+    max-height: 80vh; 
+    display: flex;
+    flex-direction: column;
+    /* opacity: 1; */
+    color: #ffffff;
+    font-size: 14px;
+    height: 100%
+}
+
+/* ****** displayName header ****** */
+#social-plugin-popup .sp_displayName {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#social-plugin-popup .sp_displayName button {
+    cursor: pointer;
+    color: #909090;
+    font-size: 10px;
+    font-style: oblique;
+    padding-right: 10px;
+    text-align: right;
+    border: none;
+    background-color: inherit;
+    margin: 2px;
+    outline: var(--main-outline-color) none 2px
+}
+
+#social-plugin-popup .sp_displayName button:hover {
+    background-color: var(--highlight-bg-color-hover);
+}
+
+#social-plugin-popup .sp_displayName button:focus-visible {
+    outline-style: solid;
+}
+/* ^^^^^^ displayName header ^^^^^^ */
+
+
+/* ****** comments list ****** */
+#social-plugin-popup .sp_innerAnnotation {
+    flex: 2 1 auto;
+    overflow-y: auto;
+}
+#social-plugin-popup .sp_innerAnnotation .sp_timestamp_block {
+    display: flex;
+    border-radius: 4px;
+}
+#social-plugin-popup .sp_innerAnnotation .sp_timestamp_block.active {
+    background-color: #A1A1A1;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_comment_block {
+    flex: 4 5px;
+    border-radius: 4px;
+    margin: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_comment_block > div {
+    padding-left: 4px;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_comment {
+    display: flex;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_comment_data {
+    font-style: italic;
+    font-size: 0.85em;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_reply::before {
+    content: "»";
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_reply_box form {
+    display: inherit;
+    margin: 0 0 5px;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_new_reply_form {
+    width: 95%;
+}
+
+#social-plugin-popup .sp_innerAnnotation .sp_comment_text,
+#social-plugin-popup .sp_innerAnnotation .sp_reply_text {
+    flex: 2 0 210px;
+}
+#social-plugin-popup .sp_innerAnnotation .sp_comment_data {
+    flex: 1 0 140px;
+    margin-left: 5px;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+
+
+
+
+/* ****** new comment ****** */
+.center-container #social-plugin-popup .sp_new_comment {
+    width: 100%;
+    /* height: 30px; */
+    box-sizing: border-box;
+
+    display: inline-flex;
+    margin-top: 10px;
+    background-color: rgba(2, 2, 1, 0.6);
+    border-radius: 4px;
+    width:100%
+}
+.sp_timestamp {
+    flex: 0 60px;
+    margin: 4px;
+}
+.tc_current_timestamp,
+.sp_current_timestamp {
+    display: inline-flex;
+}
+.sp_new_comment_form {
+    width: 95%;
+}
+.sp_comment {
+    display: flex;
+}
+
+.sp_comment > input {
+    background-color: #eee;
+    color: black;
+}
+input.sp_reply_textarea,
+input.sp_comment_textarea {
+    margin-bottom: 0px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    font-size: 12px;
+    border-right-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+input.sp_reply_textarea:focus,
+input.sp_comment_textarea:focus {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--main-outline-color);
+}
+
+input.sp_comment_private_checkbox {
+    margin-top: 0px;
+}
+
+
+/* the scrollbar */
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar {
+    width: 8px;
+}
+
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar:horizontal {
+    height: 8px;
+}
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar:vertical {
+    width:8px;
+}
+
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar-button {
+    width: 8px;
+    height: 5px;
+}
+
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar-track {
+    background: #eee;
+    border: thin solid lightgray;
+    box-shadow: 0px 0px 3px #dfdfdf inset;
+    border-radius: 10px;
+}
+
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar-thumb {
+    background: #e4e4e4;
+    border: thin solid gray;
+    border-radius: 10px;
+}
+
+#social-plugin-popup .sp_innerAnnotation::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
