@@ -72,7 +72,13 @@ module.exports = function (env) {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env']
+              presets: ['@babel/preset-env'],
+              plugins: [
+                ['@babel/plugin-transform-react-jsx', {
+                  'pragma': 'h',
+                  'pragmaFrag': 'Fragment',
+                }]
+              ]
             }
           }
         },
@@ -106,6 +112,10 @@ module.exports = function (env) {
     },
 
     plugins: [
+      new webpack.ProvidePlugin({
+        h: ['preact', 'h'],
+        Fragment: ['preact', 'Fragment'],
+      }),
       new webpack.DefinePlugin({
         OPENCAST_SERVER_URL: JSON.stringify(env.OPENCAST_SERVER_URL),
         OPENCAST_CONFIG_URL: JSON.stringify(env.OPENCAST_CONFIG_URL),
