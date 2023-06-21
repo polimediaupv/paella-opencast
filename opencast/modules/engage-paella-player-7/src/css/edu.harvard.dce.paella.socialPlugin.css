@@ -1,12 +1,16 @@
-.popup-container.social-plugin-popup .popup-content {
+.popup-container.social-plugin-popup .popup-content.static-position {
     opacity: 0.6;
+}
+
+.popup-container.social-plugin-popup .popup-content {
+    opacity: 1;
 }
 
 .popup-container.social-plugin-popup:hover .popup-content {
     opacity: 1;
 }
 
-.popup-container.social-plugin-popup #social-plugin-popup {
+.popup-container.social-plugin-popup .popup-content #social-plugin-popup {
     max-height: 80vh; 
     display: flex;
     flex-direction: column;
@@ -14,6 +18,10 @@
     color: #ffffff;
     font-size: 14px;
     height: 100%
+}
+
+.popup-container.social-plugin-popup .popup-content.static-position #social-plugin-popup {
+    max-height: unset; 
 }
 
 /* ****** displayName header ****** */
