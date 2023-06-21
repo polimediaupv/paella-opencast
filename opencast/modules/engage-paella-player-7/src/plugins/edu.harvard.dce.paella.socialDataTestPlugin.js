@@ -259,12 +259,25 @@ export default class SocialDataPlugin extends DataPlugin {
   }
 
   async getComments(_videoId) {
-    return commentsData;
+    /* apply soft Trimming */
+    let filtered = commentsData;
+    if (this.player.videoContainer.isTrimEnabled === true) {
+      filtered = commentsData.filter(c => {
+        return (this.player.videoContainer.trimStart <= c.time)
+          && (c.time <= this.player.videoContainer.trimEnd);
+      });
+      filtered = filtered.map(c => {
+        return {
+          ...c,
+          time: c.time - this.player.videoContainer.trimStart
+        };
+      });
+    }
+    return filtered;
   }
 
   async addComment(videoId, data) {
     if (data.parentCommentId) {
-      this.player.log.info(`TODO: [${videoId}] Add reply to comment ${data.parentCommentId}: ${data.comment}`);
       const newResponse = {
         'responseId': uuidv4(),
         'isPrivate': data.isPrivate,
@@ -298,9 +311,14 @@ export default class SocialDataPlugin extends DataPlugin {
       commentsData = [...M.values()];
     }
     else {
+      /* apply soft trimming */
+      let time = data.time;
+      if (this.player.videoContainer.isTrimEnabled === true) {
+        time = time + this.player.videoContainer.trimStart;
+      }
       const newComment = {
         'commentId': uuidv4(),
-        'time': data.time,
+        'time': time,
         'length': 10,
         'isPrivate': data.isPrivate,
         'created': new Date(),

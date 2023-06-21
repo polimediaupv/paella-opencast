@@ -44,6 +44,17 @@ const commentExample = [
 ];
 */
 
+function decodeHTMLEntities(text) {
+  var textArea = document.createElement('textarea');
+  textArea.innerHTML = text;
+  return textArea.value;
+}
+function encodeHTMLEntities(text) {
+  var textArea = document.createElement('textarea');
+  textArea.innerText = text;
+  return textArea.innerHTML;
+}
+
 export default class SocialDataPlugin extends DataPlugin {
   async load() {
   }
@@ -86,30 +97,28 @@ export default class SocialDataPlugin extends DataPlugin {
     return true;
   }
   async getDisplayName(videoId) {
-    let displayName = null;
     try {
       // eslint-disable-next-line max-len
-      const requestUrl = `/annotation/property?mediaPackageId=${videoId}&type=paella/timedComments&propertyName=displayName`;
+      const requestUrl = `/annotation/property?mediaPackageId=${videoId}&type=paella/timedComments&propertyName=userName`;
       const response = await fetch(getUrlFromOpencastServer(requestUrl));
       if (response.ok) {
-        displayName = await response.text();
+        this._displayName = await response.text();
       }
     }
     catch (e) {
       this.player.log.warn('Error loading users\'s display name');
     }
-    return displayName;
+    return this._displayName || null;
   }
 
   async setDisplayName(videoId, data) {
     const { name } = data;
-    this.player.log.info(`SocialDataPlugin: Set display name as ${name}.`);
 
     const params = new URLSearchParams({
       mediaPackageId: videoId,
       propertyValue: name,
       type: 'paella/timedComments',
-      propertyName: 'displayName'
+      propertyName: 'userName'
     });
 
     const response = await fetch('/annotation/property', {
@@ -121,6 +130,7 @@ export default class SocialDataPlugin extends DataPlugin {
     });
 
     if (response.ok) {
+      this._displayName = name;
       return true;
     }
     return false;
@@ -159,8 +169,22 @@ export default class SocialDataPlugin extends DataPlugin {
     catch (e) {
       this.player.log.warn(`Error loading annotations for video ${videoId}`);
     }
-    const response = await this.transformCommentsFromAnnotations(annotations);
-    return response;
+    const comments = await this.transformCommentsFromAnnotations(annotations);
+    let filtered = comments;
+    /* apply soft Trimming */
+    if (this.player.videoContainer.isTrimEnabled === true) {
+      filtered = comments.filter(c => {
+        return (this.player.videoContainer.trimStart <= c.time)
+          && (c.time <= this.player.videoContainer.trimEnd);
+      });
+      filtered = filtered.map(c => {
+        return {
+          ...c,
+          time: c.time - this.player.videoContainer.trimStart
+        };
+      });
+    }
+    return filtered;
   }
 
   async transformCommentsFromAnnotations(annotations) {
@@ -174,8 +198,8 @@ export default class SocialDataPlugin extends DataPlugin {
       'length': ann.length,
       'isPrivate': ann.isPrivate,
       'created': new Date(ann.created),
-      'displayName': ann.value.timedComment.displayName,
-      'comment': ann.value.timedComment.value,
+      'displayName': ann.value.timedComment.userName,
+      'comment': decodeHTMLEntities(ann.value.timedComment.value),
       'responses': []
     }]));
 
@@ -191,8 +215,8 @@ export default class SocialDataPlugin extends DataPlugin {
           'responseId': reply.annotationId,
           'isPrivate': reply.isPrivate,
           'created': new Date(reply.created),
-          'displayName': reply.value.timedComment.displayName,
-          'comment': reply.value.timedComment.value,
+          'displayName': reply.value.timedComment.userName,
+          'comment': decodeHTMLEntities(reply.value.timedComment.value),
         });
       }
     }));
@@ -202,13 +226,42 @@ export default class SocialDataPlugin extends DataPlugin {
   }
 
   async addComment(videoId, data) {
-    if (data.parentCommentId) {
-      this.player.log.info(`TODO: [${videoId}] Add reply to comment ${data.parentCommentId}: ${data.comment}`);
+    /* apply soft trimming */
+    let time = data.time;
+    if (this.player.videoContainer.isTrimEnabled === true) {
+      time = time + this.player.videoContainer.trimStart;
     }
-    else {
-      // eslint-disable-next-line max-len
-      this.player.log.info(`TODO: [${videoId}] New comment time=${data.time}, private=${data.isPrivate}: ${data.comment}`);
+
+    const value = {
+      timedComment: {
+        userName: this._displayName,
+        mode: (data.parentCommentId) ? 'reply' : 'comment',
+        value: encodeHTMLEntities(data.comment),
+        parent: data.parentCommentId || undefined
+      }
+    };
+    const annotParams = {
+      episode: videoId,
+      type: 'paella/timedComments',
+      value: JSON.stringify(value),
+      'in': time,
+      'out': time + 10, // default 10 sec duration
+      isPrivate: data.isPrivate
+    };
+
+    const params = new URLSearchParams(annotParams);
+    const response = await fetch('/annotation', {
+      method: 'PUT',
+      body: params.toString(),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    });
+
+    if (response.ok) {
+      return true;
     }
+    return false;
   }
 
   async updateComment(_videoId, _data) {

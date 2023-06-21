@@ -99,9 +99,6 @@ export default class SocialPlugin extends PopUpButtonPlugin {
   async load() {
     this.icon = this.player.getCustomPluginIcon(this.name, 'buttonIcon') || ListIcon;
 
-    this.player.bindEvent(Events.PLAY, (params) => { this.onPlay(params); });
-    this.player.bindEvent(Events.PAUSE, (params) => { this.onPause(params); });
-    this.player.bindEvent(Events.ENDED, (params) => { this.onEndVideo(params); });
     this.player.bindEvent(Events.TIMEUPDATE, (params) => { this.onTimeUpdate(params); });
     this.player.bindEvent(Events.TRIMMING_CHANGED, (params) => { this.onTrimmingChanged(params); });
 
@@ -118,7 +115,7 @@ export default class SocialPlugin extends PopUpButtonPlugin {
   }
 
   get popUpType() {
-    return 'no-modal'; // "modal", "timeline" or "no-modal"
+    return 'no-modal';
   }
 
   async getContent() {
@@ -126,20 +123,9 @@ export default class SocialPlugin extends PopUpButtonPlugin {
     content.addEventListener('click', evt => evt.stopPropagation());
     content.addEventListener('keyup', evt => evt.stopPropagation());
 
-    function decodeHTMLEntities(text) {
-      var textArea = document.createElement('textarea');
-      textArea.innerHTML = text;
-      return textArea.value;
-    }
-    // function encodeHTMLEntities(text) {
-    //   var textArea = document.createElement('textarea');
-    //   textArea.innerText = text;
-    //   return textArea.innerHTML;
-    // }
-
     // eslint-disable-next-line no-unused-vars
     const SocialResponseBlock = ({ response, ...props }) => {
-      const responseText = decodeHTMLEntities(response.comment);
+      const responseText = response.comment;
       const responseDisplayName = response.displayName;
       const responseDate = new Intl.DateTimeFormat(navigator.languages, {
         dateStyle: 'medium',
@@ -171,7 +157,9 @@ export default class SocialPlugin extends PopUpButtonPlugin {
           this.player.data.write('timedComments', this.player.videoId, {
             operation: 'newComment',
             parentCommentId: formData.get('parentCommentId'),
-            comment: formData.get('comment')
+            comment: formData.get('comment'),
+            time: Number(formData.get('commentTime')),
+            isPrivate: (formData.get('private')?.toLowerCase() !== 'false')
           });
           form.reset();
           this.reloadComments();
@@ -194,7 +182,7 @@ export default class SocialPlugin extends PopUpButtonPlugin {
           <div class="sp_timestamp">{utils.secondsToTime(commentTime)}</div>
           <div class="sp_comment_block">
             <div class="sp_comment">
-              <div class="sp_comment_text">{decodeHTMLEntities(commentText)}</div>
+              <div class="sp_comment_text">{commentText}</div>
               <div class="sp_comment_data">
                 <div class="user_icon"></div>
                 <span class="user_name">{commentdisplayName}</span>
@@ -212,6 +200,9 @@ export default class SocialPlugin extends PopUpButtonPlugin {
                 <input name="private" type="hidden" class="sp_comment_private_checkbox" value="false" />
                 <input name="parentCommentId" type="hidden"
                   class="sp_comment_private_checkbox" value={commentBlock.commentId} />
+                <input name="commentTime" type="hidden"
+                  class="sp_comment_private_checkbox" value={commentTime} />
+                <input name="private" type="hidden" class="sp_comment_private_checkbox" value="false" />
               </form>
             </div>
           </div>
@@ -229,17 +220,12 @@ export default class SocialPlugin extends PopUpButtonPlugin {
         if (this._displayName.value) {
           const form = event.target;
           const formData = new FormData(event.target);
-          let time = this._currentTime.value;
-
-          if (this.player.videoContainer.isTrimEnabled === true) {
-            time = time + this.player.videoContainer.trimStart;
-          }
 
           this.player.data.write('timedComments', this.player.videoId, {
             operation: 'newComment',
-            time,
+            time: this._currentTime.value,
             comment: formData.get('comment'),
-            isPrivate: formData.get('private')
+            isPrivate: (formData.get('private')?.toLowerCase() !== 'false')
           });
           form.reset();
           this.reloadComments();
@@ -309,18 +295,6 @@ export default class SocialPlugin extends PopUpButtonPlugin {
     return content;
   }
 
-  async onPlay(_params) {
-    this.player.log.info('play');
-  }
-
-  async onPause(_params) {
-    this.player.log.info('pause');
-  }
-
-  async onEndVideo(_params) {
-    this.player.log.info('end');
-  }
-
   async onTimeUpdate(params) {
     this._currentTime.value = Math.floor(params.currentTime);
   }
@@ -329,24 +303,8 @@ export default class SocialPlugin extends PopUpButtonPlugin {
     this.reloadComments();
   }
 
-
   async reloadComments() {
-    let comments = await this.player.data.read('timedComments', { videoId: this.player.videoId });
-    let filtered = comments;
-    if (this.player.videoContainer.isTrimEnabled === true) {
-      filtered = comments.filter(c => {
-        return (this.player.videoContainer.trimStart <= c.time)
-          && (c.time <= this.player.videoContainer.trimEnd);
-      });
-      filtered = filtered.map(c => {
-        return {
-          ...c,
-          time: c.time - this.player.videoContainer.trimStart
-        };
-      });
-    }
-
-    this._comments.value = filtered;
+    this._comments.value = await this.player.data.read('timedComments', { videoId: this.player.videoId });
   }
 
   async getDisplayName() {
