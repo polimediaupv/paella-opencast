@@ -223,19 +223,8 @@ export class PaellaOpencast extends Paella {
       // Enable trimming
       // Retrieve video duration in case a default trim end time is needed
       const videoDuration = paella.videoManifest?.metadata?.duration;
-      let trimmingData = undefined;
-      try {
-        // Retrieve trimming data from a data delegate
-        trimmingData = await loadTrimming(paella, paella.videoId);
-      } catch (e) {
-        paella.log.warn('Error requesting trim data from server', e);
-        // Fallback to initialize default trim data
-        trimmingData = {
-          start: 0,
-          end: videoDuration,
-          enabled: false
-        };
-      }
+      // Retrieve trimming data from a data delegate
+      let trimmingData = await loadTrimming(paella, paella.videoId);
       // Retrieve trimming data in URL param: ?trimming=1m2s;2m
       const trimming = utils.getHashParameter('trimming') || utils.getUrlParameter('trimming');
       // Retrieve trimming data in URL start-end params in seconds: ?start=12&end=345
@@ -255,11 +244,13 @@ export class PaellaOpencast extends Paella {
               ? trimmingData.start + humanTimeToSeconds(trimmingSplit[1])
               : Math.min(trimmingData.start + humanTimeToSeconds(trimmingSplit[1]), trimmingData.end);
           }
-        } else if (startTrimVal) {
-          startTrimming = trimmingData.start + Math.floor(startTrimVal);
-        }
-        if (endTrimVal) {
-          endTrimming = Math.min(trimmingData.start + Math.floor(endTrimVal), videoDuration);
+        } else {
+          if (startTrimVal) {
+            startTrimming = trimmingData.start + Math.floor(startTrimVal);
+          }
+          if (endTrimVal) {
+            endTrimming = Math.min(trimmingData.start + Math.floor(endTrimVal), videoDuration);
+          }
         }
         if (startTrimming < endTrimming && endTrimming > 0 && startTrimming >= 0) {
           trimmingData = {
