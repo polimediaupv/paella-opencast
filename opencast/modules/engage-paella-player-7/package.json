@@ -27,7 +27,7 @@
     "eslint-plugin-header": "^3.1.1",
     "express": "^4.18.2",
     "html-linter": "^1.1.1",
-    "html-validate": "^7.15.1",
+    "html-validate": "^8.0.5",
     "http-proxy": "^1.18.1",
     "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.2",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "paella-basic-plugins": "^1.38.0",
-    "paella-core": "^1.39.3",
+    "paella-core": "^1.39.4",
     "paella-slide-plugins": "^1.8.0",
     "paella-user-tracking": "^1.8.0",
     "paella-zoom-plugin": "^1.27.0"
