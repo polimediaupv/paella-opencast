@@ -305,7 +305,7 @@ function readCaptions(potentialNewCaptions, captions) {
       let captions_match = captions_regex.exec(potentialCaption.type);
 
       if (captions_match) {
-        let captions_lang = captions_match[3];
+        let captions_lang = captions_match[3] || `unknown_${potentialCaption.id}`;
         const captions_subtype = captions_match[1];
 
         if (!captions_lang && potentialCaption.tags && potentialCaption.tags.tag) {
@@ -325,10 +325,19 @@ function readCaptions(potentialNewCaptions, captions) {
           captions_format = captions_subtype;
         }
 
+        let languages = new Intl.DisplayNames(window.navigator.languages, {type: 'language'});
+        let captions_label;
+        try {
+          captions_label = languages.of(captions_lang) || 'unknown language';
+        }
+        catch(e) {
+          captions_label = 'unknown language';
+        }
+
         captions.push({
           id: potentialCaption.id,
           lang: captions_lang,
-          text: captions_lang || 'unknown language',
+          text: captions_label,
           url: potentialCaption.url,
           format: captions_format
         });
@@ -360,7 +369,7 @@ function getCaptions(episode) {
       // backwards compatibility:
       // Catalogs flavored as 'captions/timedtext' are assumed to be dfxp
       if (currentCatalog.type == 'captions/timedtext') {
-        let captions_lang;
+        let captions_lang = `unknown_${currentCatalog.id}`;
         if (currentCatalog.tags && currentCatalog.tags.tag) {
           if (!(currentCatalog.tags.tag instanceof Array)) {
             currentCatalog.tags.tag = [currentCatalog.tags.tag];
@@ -372,7 +381,15 @@ function getCaptions(episode) {
           });
         }
 
-        let captions_label = captions_lang || 'unknown language';
+        let languages = new Intl.DisplayNames(window.navigator.languages, {type: 'language'});
+        let captions_label;
+        try {
+          captions_label = languages.of(captions_lang) || 'unknown language';
+        }
+        catch(e) {
+          captions_label = 'unknown language';
+        }
+
         captions.push({
           id: currentCatalog.id,
           lang: captions_lang,
