@@ -42,7 +42,7 @@
   "dependencies": {
     "@preact/signals": "^1.1.3",
     "paella-basic-plugins": "^1.38.0",
-    "paella-core": "^1.39.4",
+    "paella-core": "^1.39.5",
     "paella-slide-plugins": "^1.8.0",
     "paella-user-tracking": "^1.8.0",
     "paella-zoom-plugin": "^1.27.0",
