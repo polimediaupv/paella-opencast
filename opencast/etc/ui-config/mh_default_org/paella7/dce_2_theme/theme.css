@@ -210,6 +210,10 @@ ul.menu-button-content li.menu-button-item button.selected {
     .playback-bar .button-plugin-side-area {
         line-height: calc(var(--button-fixed-height) * 0.7);
     }
+
+    .volume-slider {
+        width: 60px;
+    }
 }
 
 
