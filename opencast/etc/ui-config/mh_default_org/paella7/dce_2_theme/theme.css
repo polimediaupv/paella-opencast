@@ -190,6 +190,29 @@ ul.menu-button-content li.menu-button-item button.selected {
 }
 
 
+
+/* playback bar icons size change using queries */
+.playback-bar {
+    container-name: playback-bar;
+    container-type: inline-size;
+}
+@container playback-bar (max-width: 700px) {
+    .playback-bar .button-plugins .button-plugin-container button {
+        height: calc(var(--button-fixed-height) * 0.7);
+    }
+    .playback-bar .button-plugins .button-plugin-container button.fixed-width {
+        width: calc(var(--button-fixed-width) * 0.7);
+    }
+    .playback-bar .button-plugins {
+        height: calc((var(--button-fixed-height) * 0.7) - 1px);
+        padding: 2px;
+    }
+    .playback-bar .button-plugin-side-area {
+        line-height: calc(var(--button-fixed-height) * 0.7);
+    }
+}
+
+
 /* This should be in paella-core */
 :root {
     --main-outline-color: #f200f2;
