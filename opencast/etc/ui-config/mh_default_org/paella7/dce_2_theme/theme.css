@@ -250,3 +250,16 @@ ul.menu-button-content li.menu-button-item button.selected {
     padding: 5px;
     height: calc(32px + 5px);
 }
+
+
+/* This fix the keyboardshortcutshelp plugin  */
+.keyboardshortcutshelp-plugin .row .key {
+    text-align: right;
+}
+
+.keyboardshortcutshelp-plugin .row {
+    gap: 5px;
+}
+.keyboardshortcutshelp-plugin {
+    min-width: unset;
+}
