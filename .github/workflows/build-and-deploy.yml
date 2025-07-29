@@ -30,7 +30,7 @@ jobs:
             USE_OC_SERVER_FROM_URL: true
             OC_PAELLA8_BASE_URL: '/paella-opencast'
             OC_PRESENTATION_URL: 'https://stable.opencast.org'
-            CONFIG_FOLDER: 'https://miesgre.github.io/paella-opencast/config/'
+            CONFIG_FOLDER: 'https://polimediaupv.github.io/paella-opencast/config/'
             OC_PAELLA8_URL_TEMPLATE: '/paella-opencast/watch.html?id={videoId}&ocServer={OC_PRESENTATION_URL}'
             
 
