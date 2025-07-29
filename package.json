@@ -1,0 +1,43 @@
+{
+  "name": "paella-opencast",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "homepage": "https://paellaplayer.upv.es/",
+  "packageManager": "npm@10.2.4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polimediaupv/paella-opencast"
+  },
+  "keywords": [
+    "paella",
+    "player",
+    "opencast"
+  ],
+  "scripts": {
+    "dev:engage": "turbo dev --filter=engage-paella-player...",
+    "dev:libs": "turbo dev --filter=\"./packages/*\"",
+    "build:libs": "turbo build --filter=\"./packages/*\"",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "clean:build": "turbo clean:build && rimraf .turbo coverage",
+    "clean:deps": "rimraf node_modules"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@vitest/ui": "^3.2.4",
+    "turbo": "^2.5.4",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

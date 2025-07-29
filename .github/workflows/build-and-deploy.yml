@@ -1,0 +1,59 @@
+name: Build & Deploy
+
+on: 
+  push:
+    branches: 
+      - paella8
+
+# Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: build-and-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          npm ci
+          npm run build:libs
+          npm run build -w examples/engage-paella-player
+        env:
+            USE_OC_SERVER_FROM_URL: true
+            OC_PAELLA8_BASE_URL: '/paella-opencast'
+            OC_PRESENTATION_URL: 'https://stable.opencast.org'
+            CONFIG_FOLDER: 'https://miesgre.github.io/paella-opencast/config/'
+            OC_PAELLA8_URL_TEMPLATE: '/paella-opencast/watch.html?id={videoId}&ocServer={OC_PRESENTATION_URL}'
+            
+
+      - name: Prepare artifact
+        run: |
+          mkdir -p artifact-root/config
+          cp -rv examples/engage-paella-player/dist/* artifact-root/
+          cp -rv examples/engage-paella-player/ui/config/* artifact-root/config/
+
+      - name: Upload as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: artifact-root
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

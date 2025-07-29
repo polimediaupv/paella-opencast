@@ -1,0 +1,21 @@
+{
+  "name": "opencast-component-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "clean:build": "rimraf .turbo dist",
+    "clean:deps": "rimraf node_modules"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^7.0.1"
+  },
+  "dependencies": {
+    "@asicupv/paella-opencast-component": "^2.0.0",
+    "@asicupv/paella-opencast-core": "^2.0.0"
+  }
+}

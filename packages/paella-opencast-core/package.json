@@ -1,0 +1,37 @@
+{
+  "name": "@asicupv/paella-opencast-core",
+  "version": "2.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types/paella-opencast-core.es.d.ts",
+      "import": "./dist/paella-opencast-core.es.js",
+      "require": "./dist/paella-opencast-core.cjs.js"
+    },
+    "./paella-opencast-core.css": {
+      "import": "./dist/paella-opencast-core.css",
+      "require": "./dist/paella-opencast-core.css"
+    }
+  },
+  "scripts": {
+    "dev": "tsc && vite build --watch --emptyOutDir=false",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest --run",
+    "clean:build": "rimraf .turbo dist coverage",
+    "clean:deps": "rimraf node_modules"
+  },
+  "devDependencies": {
+    "@asicupv/paella-core": "^2.8.2",
+    "jsdom": "^26.1.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.1",
+    "vite-plugin-dts": "^4.5.3"
+  },
+  "dependencies": {
+    "@asicupv/paella-opencast-skin": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@asicupv/paella-core": "^2.7.0"
+  }
+}

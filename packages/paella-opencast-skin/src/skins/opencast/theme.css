@@ -1,0 +1,187 @@
+:root {
+  /********** Global colors **********/
+  /* main foreground color */
+  --main-fg-color: #F9FAFB;
+  /* main background color */
+  --main-bg-color: #1F2937;
+  /* main background color for hover state */
+  --main-bg-color-hover: #374151;
+  /* secondary background color */
+  /* --secondary-bg-color: */
+  /* secondary background color for hover state */
+  --secondary-bg-color-hover: #202020;
+  /* highlight background color */
+  --highlight-bg-color: #3073B8;
+  /* highlight background color for hover state */
+  --highlight-bg-color-hover: #2c6fb2;
+  /* main border color */
+  /* --main-border-color: */
+  /* main outline color for input controls (focus-visible state) */
+  /* --main-outline-color: */
+  
+  /********** Specific colors **********/
+  /* button foreground color (text and icon), defaults to --main-fg-color */
+  /* --button-color: */
+  /* icon color for buttons, defaults to --button-color */
+  /* --icon-color: */
+  /* fill color for SVG icons (paella-core), defaults to --icon-color */
+  /* --icon-fill-color: */
+  /* stroke color for SVG icons, defaults to --icon-color */
+  /* --icon-stroke-color: */
+  /* button background color, defaults to transparent */
+  /* --button-background: */
+  /* button background color on hover, defaults to --highlight-bg-color */
+  /* --button-background-hover: */
+  /* button background color on active state, defaults to --highlight-bg-color-hover */
+  /* --button-background-active: */
+
+  /********** Gradients **********/
+  /* gradient used in the playback bar area */
+  --playback-bar-gradient: rgba(31, 41, 55, 0.85);
+  /* gradient used in the playback bar area on hover */
+  --playback-bar-gradient-hover: rgba(31, 41, 55, 1);
+
+
+
+  /********** Player sizes **********/
+  /* padding separating playback bar container from video container border */
+  /* --playback-bar-container-padding: */
+  /* padding separating popup wrapper from playback bar container (top padding has no effect) */
+  --popup-wrapper-padding: 5px 5px;
+  /* gap between playback bar area and popup container (flex container gap) */
+  --playback-bar-container-gap2: 0;
+  /* width of the playback bar, always centered if changed */
+  /* --playback-bar-width: */
+
+  /********** Playback bar **********/
+  /* padding of the progress indicator area */
+  --progress-indicator-padding: 4px 15px;
+  /* padding of the playback bar buttons area */
+  --playback-bar-buttons-padding: 4px 15px;
+  /* background color of the elapsed section. */
+  /* --progress-indicator-completed-bg-color:  */
+  /* background color of the remaining section. */
+  /* --progress-indicator-remaining-bg-color: rgb(96, 96, 96) */
+  
+  /********** Slide markers **********/
+  /* background color of the elapsed section. */
+  /* --slide-marker-elapsed-color: */
+  /* background color of the remaining section. */
+  /* --slide-marker-remaining-color: */
+
+  /********** Progress indicator sizes **********/
+  /* height of the progress indicator bar */
+  /* --progress-indicator-height: */
+  /* height of the slide marker when hovered; defaults to --progress-indicator-height otherwise */
+  /* --progress-indicator-slide-marker-height: */
+  /* gap size between the slide markers */
+  /* --slide-marker-gap: */
+
+  /********** Other playback bar sizes **********/
+  /* border-radius of the playback bar (can be uniform or per-corner) */
+  /* --playback-bar-border-radius: */
+  /* fixed width of buttons in the playback bar */
+  /* --button-fixed-width: var(--button-fixed-size) */
+  /* fixed height of buttons in the playback bar */
+  /* --button-fixed-height: var(--button-fixed-size) */
+  /* base size used to initialize --button-fixed-width and --button-fixed-height */
+  --button-fixed-size: 40px;
+  /* border-radius of buttons in the playback bar (applies on hover due to transparent background) */
+  /* --button-border-radius: */
+  /* size of the icons inside buttons (defaults to half of --button-fixed-width) */
+  --button-icon-size: calc(var(--button-fixed-width) / 2);
+
+  /********** Menus **********/
+  /* border-radius of the popup menu container (uniform or per-corner) */
+  /* --popup-border-radius: */
+  /* padding of the popup menu container (uniform or per-side) */
+  /* --popup-padding: */
+  /* margin of the popup menu item container (uniform, vertical/horizontal, or per-side) */
+  /* --popup-menu-margin: */
+  /* gap between menu items in the popup (flex container) */
+  /* --popup-menu-gap: */
+  /* height of the popup menu items (can be auto or fixed) */
+  /* --popup-item-height: */
+  /* border-radius of the popup menu items (uniform or per-corner) */
+  /* --popup-item-border-radius: */
+  --popup-menu-item-icon-size: 24px;
+
+  /********** Font sizes **********/
+  /* small font size */
+  /* --small-text-size: */
+  /* medium font size */
+  /* --medium-text-size: */
+  /* large font size */
+  /* --large-text-size: */
+  /* font size of the popup menu title */
+  /* --popup-title-font-size: */
+  /* font size of the popup menu items */
+  /* --popup-menu-item-font-size: */
+  /* */
+  /* --progress-indicator-font-size */
+  --player-font-family: "Roboto";
+
+
+  /********** Video canvas buttons **********/
+  /* padding of the main video canvas button container */
+  --canvas-button-container-padding: 5px 5px;
+  /* gap between buttons in each alignment group (left, center, right) */
+  /* --canvas-button-gap: */
+  /* height of the button container relative to video canvas (default: 15%) */
+  --canvas-button-height: 42px;
+  /* minimum height of canvas buttons for consistent icon visibility */
+  --canvas-button-button-min-height: 28px;
+  /* maximum height of canvas buttons to avoid oversized buttons on large screens */
+  --canvas-button-max-height: 54px;
+  /* aspect ratio of canvas buttons (controls width relative to height) */
+  /* --canvas-button-aspect-ratio: */
+  /* padding of canvas buttons (recommended in %) */
+  --canvas-button-padding: 2%;
+  /* border-radius of canvas buttons (uniform or per-corner) */
+  /* --canvas-button-border-radius: */
+  /* background color of canvas buttons (defaults to --main-bg-color) */
+  /* --canvas-button-background: */
+  /* minimum opacity when UI is visible but mouse is outside video canvas */
+  /* --canvas-button-opacity-out: */
+  /* normal opacity when mouse is over canvas container but not on button */
+  /* --canvas-button-opacity: */
+  /* maximum opacity when mouse is directly over the button */
+  /* --canvas-button-opacity-hover: */
+
+}
+
+
+.pop-up-wrapper .pop-up header.pop-up-title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--highlight-bg-color);
+}
+
+/* .playback-bar ul>li>button.dynamic-width {
+  width: auto;
+  min-width: var(--button-fixed-width);
+} */
+
+:root2 {
+  /* sizes */
+  /* --button-fixed-width: 40px; */
+/* --button-fixed-height: 40px; */
+  /* --playback-bar-height: var(--button-fixed-height) + 10px; */
+  /* --button-icon-size: calc(var(--button-fixed-width) / 2); */
+
+  /* colors */
+  /* --secondary-bg-color: rgb(32,32,32); */
+  
+  
+  --highlight-bg-color-progress-indicator: #56a0f4;
+  /* --main-bg-gradient: #1F2937; */
+  /* --main-border-color: rgba(125,125,125,0.4); */
+  --video-container-background-color: #ffffff;
+  --base-video-rect-background-color: #9CA3AF;
+
+  /* video-container-message */
+  /* --video-container-message-bkg: rgba(0, 0, 0, 0.4); */
+  /* --video-container-message-color: white; */
+
+  /* video-container */
+  /* --video-container-padding: 10px; */
+}

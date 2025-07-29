@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Examples Index - paella-opencast-player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: Consolas, monospace;
+    }
+    a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Examples Index for the &lt;paella-opencast-player&gt; Component</h1>
+
+  <h2>Example 1: Automatic loading from an Opencast server</h2>
+  <pre><code>&lt;paella-opencast-player 
+  video-id="ID-cats" 
+  opencast-presentation-url="https://stable.opencast.org/"&gt;
+&lt;/paella-opencast-player&gt;
+</code></pre>
+  <a href="search_autofetch.html">View Example 1</a>
+
+  <h2>Example 2: Manual loading via JSON </h2>
+  <pre><code>&lt;paella-opencast-player 
+  video-id="ID-cats" 
+  paella-config="{...}" 
+  opencast-episode="{...}"&gt;
+&lt;/paella-opencast-player&gt;
+</code></pre>
+
+  <h3>2.a - With data from the search module</h3>
+  <a href="search_datapass.html">View Example 2.a</a>
+
+  <h3>2.b - With data from the external API</h3>
+  <a href="api_datapass.html">View Example 2.b</a>
+
+</body>
+</html>
