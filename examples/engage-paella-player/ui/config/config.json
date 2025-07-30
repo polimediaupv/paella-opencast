@@ -400,6 +400,12 @@
             "side": "right",
             "order": 105
         },
+        "es.upv.paella.relatedDocuments": {
+            "enabled": true,
+            "side": "right",
+            "dataContext": "related.documents",
+            "order": 105
+        },
         "es.upv.paella.fullscreenButton": {
             "enabled": true,
             "side": "right",
@@ -636,7 +642,7 @@
 
         "org.opencast.paella.data.relatedDocumentsDataPlugin": {
             "enabled": true,
-            "context": ["file.content"],
+            "context": ["related.documents"],
             "docs": [
                 {
                     "title": "Summary",
