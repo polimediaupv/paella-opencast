@@ -25,10 +25,11 @@ jobs:
         run: |
           npm ci
           npm run build:libs
+          npm run build -w doc
           npm run build -w examples/engage-paella-player
         env:
             USE_OC_SERVER_FROM_URL: true
-            OC_PAELLA8_BASE_URL: '/paella-opencast'
+            OC_PAELLA8_BASE_URL: '/paella-opencast/demo'
             OC_PRESENTATION_URL: 'https://stable.opencast.org'
             CONFIG_FOLDER: 'https://polimediaupv.github.io/paella-opencast/config/'
             OC_PAELLA8_URL_TEMPLATE: '/paella-opencast/watch.html?id={videoId}&ocServer={OC_PRESENTATION_URL}'
@@ -36,9 +37,10 @@ jobs:
 
       - name: Prepare artifact
         run: |
-          mkdir -p artifact-root/config
-          cp -rv examples/engage-paella-player/dist/* artifact-root/
-          cp -rv examples/engage-paella-player/ui/config/* artifact-root/config/
+          mkdir -p artifact-root/demo/engage/config
+          cp -rv doc/dist/* artifact-root/
+          cp -rv examples/engage-paella-player/dist/* artifact-root/demo/engage/
+          cp -rv examples/engage-paella-player/ui/config/* artifact-root/demo/engage/config/
 
       - name: Upload as artifact
         uses: actions/upload-pages-artifact@v3

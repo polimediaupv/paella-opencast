@@ -1,0 +1,91 @@
+---
+---
+
+<div class="oc-server-container">
+    <input type="text" placeholder="https://stable.opencast.org" class="oc-server-input" id="ocServerInput" value="https://stable.opencast.org" />
+    <button class="go-button" id="goButton" >Go to...</button>
+</div>
+
+<style>
+    .oc-server-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    .oc-server-input {
+        display: block;
+        margin: 0;
+        flex: 1;
+        padding: 12px 16px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .oc-server-input:focus {
+        outline: none;
+        border-color: var(--sl-color-text-accent);
+        box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+        
+    }
+
+    .go-button {
+        padding: 12px 20px;
+        font-size: 16px;
+        /* background-color: #007acc;
+        color: white; */
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+        background-color: var(--sl-color-text-accent);
+        border-color: var(--sl-color-text-accent);
+        color: var(--sl-color-black);
+    }
+
+    .go-button:hover {
+        background-color: var(--sl-color-text-accent);
+    }
+
+    .go-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    .go-button:disabled:hover {
+        background-color: var(--sl-color-gray-4)
+    }
+</style>
+
+<script>
+    function isValidUrl(string: string): boolean {
+        try {
+            new URL(string);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function handleGoClick() {
+        const ocServerInput = document.getElementById('ocServerInput') as HTMLInputElement;
+        const inputValue = ocServerInput.value;
+        window.location.href = `https://polimediaupv.github.io/paella-opencast/demo/engage/?ocServer=${encodeURIComponent(inputValue)}`;
+    }
+
+    function toggleButtonState() {
+        const ocServerInput = document.getElementById('ocServerInput') as HTMLInputElement;
+        const goButton = document.getElementById('goButton') as HTMLButtonElement;
+        const inputValue = ocServerInput.value.trim();
+        goButton.disabled = inputValue === '' || !isValidUrl(inputValue);
+    }
+
+    document.getElementById('goButton')?.addEventListener('click', handleGoClick);
+    document.getElementById('ocServerInput')?.addEventListener('input', toggleButtonState);
+</script>

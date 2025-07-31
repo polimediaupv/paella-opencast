@@ -1,0 +1,87 @@
+---
+title: Paella Opencast Plugins
+description: Documentation for the paella-opencast-plugins package
+---
+import { Steps } from '@astrojs/starlight/components';
+
+The `@asicupv/paella-opencast-plugins` package provides a collection of specialized plugins that extend Paella Player functionality for optimal integration with Opencast. This package includes plugins for download management, authentication, user tracking, related data visualization, and dynamic layouts specific to Opencast content.
+
+## Installation
+
+```bash
+npm install @asicupv/paella-opencast-plugins
+```
+
+## Usage example
+
+<Steps>
+
+1. To use Opencast plugins in your application, you can import the plugins according to your needs:
+
+        ```typescript
+        import { OpencastPaellaPlayer } from '@asicupv/paella-opencast-core';
+        import { opencastPlugins } from '@asicupv/paella-opencast-plugins';
+
+        // Basic configuration with Opencast plugins
+        const config = {
+            plugins: [
+                ...opencastPlugins,
+                // Other additional plugins
+            ]
+        };
+
+        // Create the player
+        const player = new OpencastPaellaPlayer('player-container', config);
+
+        ```
+
+2. Configure the plugins you want to use in the paella player configuration.
+
+        ```json
+        {
+            "plugins": {
+                ...
+                "org.opencast.paella.loginPlugin": {
+                    "enabled": true,
+                    "side": "right",            
+                    "order": 92
+                },
+                "org.opencast.paella.editorPlugin": {
+                    "enabled": true,
+                    "side": "right",            
+                    "order": 92,
+                    "showIfAnonymous": false,
+                    "showIfCanWrite": true,
+                    "editorUrl": "/editor-ui/index.html?id={id}"
+                },
+                ... other plugin settings
+            }
+        }
+        ```
+
+</Steps>
+
+
+## Included plugins
+
+### User interface plugins
+
+- **OpencastDownloadsPlugin**: Manages multimedia content downloads based on permissions and licenses
+- **OpencastEditorPlugin**: Provides direct access to the Opencast editor
+- **OpencastEventDetailsPlugin**: Shows detailed event information
+- **OpencastLoginPlugin**: Integrated authentication system
+
+### Layout plugins
+
+- **OpencastMultiVideoDynamicLayout**: Dynamic layout that automatically adapts to the number of video streams
+
+### Data plugins
+
+- **OpencastRelatedVideosDataPlugin**: Provides related videos data
+- **OpencastRelatedDocumentsDataPlugin**: Manages related documents like summaries, FAQs,...
+
+### Tracking plugins
+
+- **OpencastMatomoUserTrackingDataPlugin**: Matomo integration for user tracking
+
+

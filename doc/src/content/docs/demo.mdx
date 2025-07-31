@@ -1,0 +1,29 @@
+---
+title: Opencast Paella Player Demo
+description: Easily integrate a opencast paella player anywhere!
+template: splash
+hero:
+  tagline: Test the demo with any public Opencast server!
+  image:
+    file: ../../assets/logo_index.webp
+  actions:
+    - text: Try with stable opencast demo server
+      link: https://polimediaupv.github.io/paella-opencast/demo/engage/?ocServer=https%3A%2F%2Fstable.opencast.org
+      icon: right-arrow
+---
+
+import Demo from '../../components/Demo.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+# Use your own server to test the demo
+
+You can test the demo with any public Opencast server, for example you can try https://stable.opencast.org or your own server.
+
+<Aside type="caution" title="Important notes">
+- Only public videos will be listed.
+- Some functionalities may not work correctly due to CORS or server configuration limitations.
+</Aside>
+
+<br />
+
+<Demo />

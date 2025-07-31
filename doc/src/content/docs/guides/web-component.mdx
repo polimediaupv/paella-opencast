@@ -1,0 +1,97 @@
+---
+title: Web component
+---
+import { Steps } from '@astrojs/starlight/components';
+import Paella from '../../../components/Paella.astro'
+
+
+With the **Web Component** you can easily embed an opencast paella player in your website.
+
+<Steps>
+
+1. Import the `opencast-paella-player` web component and the `CSS` file.
+
+
+   ```js
+   import 'opencast-paella-player';
+   // Import the CSS file if you are using any bundle tool
+   // or add them to your HTML file.
+   import 'opencast-paella-player/opencast-paella-player.css';
+   ```
+
+2. Add a  `<opencast-paella-player>`  component to your page.
+
+   ```html
+   <opencast-paella-player
+     opencast-presentation-url="https://develop.opencast.org"
+     video-id="ID-dual-stream-demo"
+   />
+   ```
+
+</Steps>
+
+## Full example
+
+```html
+// index.html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Paella player example</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        opencast-paella-player {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+    <script>
+        import 'opencast-paella-webcomponent';
+    </script>
+</head>
+<body>
+    <opencast-paella-player
+        video-id="ID-dual-stream-demo"
+        opencast-presentation-url="https://stable.opencast.org"
+    />
+</body>
+</html>	
+```
+
+
+
+<Paella
+    opencastPresentationUrl='https://stable.opencast.org'
+    videoId='ID-dual-stream-demo'
+/>
+
+## Auto fetching data
+Let the component to autofetch the necessary data using the `search API`
+
+```html
+<opencast-paella-player
+    video-id="ID-dual-stream-demo"
+    opencast-presentation-url="https://develop.opencast.org"
+/>
+```
+
+## Pass the configuration and the episode data
+
+
+```html
+<opencast-paella-player
+    video-id='ID-dual-stream-demo'
+    paella-config='...'
+    opencast-episode='...'
+/>
+```
+
+## Further reading
+
+- Read the [web component reference](/paella-opencast/reference/paella-opencast-component/)

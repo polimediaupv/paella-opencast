@@ -60,19 +60,19 @@ export const opencastPlugins = [
             enabled: false,
             side: "right"
         } satisfies ButtonPluginConfig
-    },
-    {
-        plugin: OpencastMultiVideoDynamicLayout,
-        config: {
-            enabled: false
-        } satisfies VideoLayoutConfig
-    },
+    },    
     {
         plugin: OpencastMatomoUserTrackingDataPlugin,
         config: {
             enabled: false,
             logUserId: true
         } satisfies OpencastMatomoUserTrackingDataPluginConfig
+    },
+    {
+        plugin: OpencastMultiVideoDynamicLayout,
+        config: {
+            enabled: false
+        } satisfies VideoLayoutConfig
     },
     {
         plugin: OpencastRelatedVideosDataPlugin,

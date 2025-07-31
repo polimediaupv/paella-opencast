@@ -1,0 +1,171 @@
+---
+title: Creating an Engage Paella Player
+description: Step-by-step guide to create a Paella Player for Opencast based on the engage-paella-player example.
+---
+import { Steps } from '@astrojs/starlight/components';
+
+
+This guide will show you how to create a complete Paella Player for Opencast, based on the `engage-paella-player` example included in this project.
+
+## Project Structure
+
+The engage-paella-player is a complete web application that includes:
+- A video player for Opencast content
+- Support for multiple Paella plugins
+- Theme and styling configuration
+
+## Step 1: Initial Project Setup
+
+<Steps>
+1. Create the base project
+  
+    First, create a new directory for your project and initialize (for instance using vite or whatever you prefer):
+
+    ```bash
+    npm create vite@latest my-engage-player
+    ```
+
+2. Install dependencies
+
+    Install the necessary Paella and Opencast dependencies:
+
+    ```bash
+    npm install @asicupv/paella-core \
+      @asicupv/paella-opencast-core \      
+      @asicupv/paella-basic-plugins \
+      @asicupv/paella-extra-plugins \
+      @asicupv/paella-slide-plugins \
+      @asicupv/paella-video-plugins \
+      @asicupv/paella-webgl-plugins \
+      @asicupv/paella-zoom-plugin \
+      @asicupv/paella-opencast-plugins
+    ```
+
+</Steps>
+
+
+
+## Step 2: Create the Main HTML Page (watch.html)
+
+Create the `watch.html` file in the root of your project:
+
+```html
+//watch.html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opencast engage player</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      #playerContainer {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* Fallback full screen support for iOS devices */
+      #playerContainer.paella-fallback-fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100dvw;
+        height: 100dvh;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="playerContainer"></div>
+    <script type="module" src="/src/watch.ts"></script>
+  </body>
+</html>
+```
+
+### Important HTML points:
+
+- **Player container**: The `#playerContainer` div is where the Paella player will be mounted
+- **Responsive styles**: Full screen dimensions are configured (100vw/100vh)
+- **TypeScript module**: Loads the main script `watch.ts`
+
+## Step 3: Implement the Main Logic (watch.ts)
+
+Create the `watch.ts` file or `watch.js` file if you prefer JavaScript:
+
+```typescript
+// watch.ts
+import { 
+  defaultGetVideoIdFunc, 
+  defaultLoadConfigFunc, 
+  defaultLoadVideoManifestFunc, 
+  OpencastPaellaPlayer, 
+  type OpencastInitParams 
+} from '@asicupv/paella-opencast-core';
+import { Events } from '@asicupv/paella-core';
+import { applyQueryParams } from './applyQueryParams';
+
+// Import plugins
+import { basicPlugins } from '@asicupv/paella-basic-plugins';
+import { slidePlugins } from '@asicupv/paella-slide-plugins';
+import { zoomPlugins } from '@asicupv/paella-zoom-plugin';
+import { webglPlugins } from '@asicupv/paella-webgl-plugins';
+import { videoPlugins } from '@asicupv/paella-video-plugins';
+import { extraPlugins } from '@asicupv/paella-extra-plugins';
+import { opencastPlugins } from '@asicupv/paella-opencast-plugins';
+
+// Import CSS styles
+import '@asicupv/paella-core/paella-core.css';
+import '@asicupv/paella-basic-plugins/paella-basic-plugins.css';
+import '@asicupv/paella-slide-plugins/paella-slide-plugins.css';
+import '@asicupv/paella-zoom-plugin/paella-zoom-plugin.css';
+import '@asicupv/paella-extra-plugins/paella-extra-plugins.css';
+import '@asicupv/paella-opencast-core/paella-opencast-core.css';
+
+// Environment variables configuration
+const OC_PRESENTATION_URL = '/';
+const CONFIG_FOLDER_URL = '/ui/config/paella8/';
+
+
+// Player initialization
+window.addEventListener("load", async () => {
+  const opencastInitParams: OpencastInitParams = {
+    configResourcesUrl: CONFIG_FOLDER_URL,
+    configUrl: `${CONFIG_FOLDER_URL}config.json`,
+
+    loadConfig: defaultLoadConfigFunc,
+    getVideoId: defaultGetVideoIdFunc,
+    loadVideoManifest: defaultLoadVideoManifestFunc,
+    plugins: [
+      ...basicPlugins,
+      ...slidePlugins,
+      ...zoomPlugins,
+      ...videoPlugins,
+      ...webglPlugins,
+      ...extraPlugins,
+      ...opencastPlugins
+    ],
+    opencast: {
+      presentationUrl: OC_PRESENTATION_URL,
+    }
+  };
+
+  const ocPlayer = new OpencastPaellaPlayer('playerContainer', opencastInitParams);
+
+  await ocPlayer.applyOpencastTheme();
+  await ocPlayer.loadManifest();
+  ocPlayer.log.info('Paella player loaded successfully!', 'opencast-engage-player');
+});
+```
+
+### Important points in watch.ts:
+
+- **Plugin imports**: Includes all necessary Paella plugins
+- **CSS styles**: Imports styles for each plugin
+- **Flexible configuration**: Allows configuring Opencast URLs via environment variables
+- **Event listeners**: Handles important events like manifest and player loading
+- **Title management**: Automatically updates page title with video information
+

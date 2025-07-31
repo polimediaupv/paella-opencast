@@ -29,7 +29,8 @@
   },
   "workspaces": [
     "packages/*",
-    "examples/*"
+    "examples/*",
+    "doc"
   ],
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
