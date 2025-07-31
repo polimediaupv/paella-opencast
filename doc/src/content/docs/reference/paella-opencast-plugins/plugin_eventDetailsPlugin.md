@@ -9,6 +9,8 @@ This plugin adds an information button in the player interface that opens a popu
 
 **Exported as** `OpencastEventDetailsPlugin`.
 
+![Event Details Plugin](../../../../assets/plugin_eventDetailsPlugin.webp)
+
 ## Configuration
 
 You need to enable the `org.opencast.paella.eventDetailsPlugin` plugin.

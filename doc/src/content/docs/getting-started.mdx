@@ -4,9 +4,11 @@ description: A comprehensive video player integration for Opencast, built on top
 ---
 
 import { FileTree } from '@astrojs/starlight/components';
-
+import Paella from '../../components/Paella.astro'
 
 Paella Player For Opencast is a comprehensive video player integration for Opencast, built on top of [Paella Player 8](https://paellaplayer.webs.upv.es). This project provides packages and examples to integrate Paella Player with Opencast video management systems.
+
+![Opencast Paella 8](../../assets/paella-opencast-8.webp)
 
 ## 🚀 Features
 
@@ -34,6 +36,16 @@ This project contains the following packages:
 - **`engage-paella-player`** - Complete Engage-style player implementation
 - **`opencast-component-example`** - Simple web component usage examples
 
+# Demo
+
+This video demonstrates the integration of Paella Player with Opencast, showcasing its features and capabilities.
+The video is hosted on [stable opencast demo](https://stable.opencast.org) server.
+
+<Paella
+    opencastPresentationUrl='https://stable.opencast.org'
+    videoId='ID-dual-stream-demo'
+/>
+
 ## 🛠️ Requirements
 
 - **Node.js**: >= 22.0.0
@@ -55,23 +67,6 @@ npm install
 npm run build
 ```
 
-### Using the Web Component
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <script type="module" src="path/to/paella-opencast-component.iife.js"></script>
-    <link rel="stylesheet" href="path/to/paella-opencast-component.css">
-</head>
-<body>
-    <paella-opencast-player 
-        src="https://your-opencast-server.com/api/events/event-id"
-        config="path/to/config.json">
-    </paella-opencast-player>
-</body>
-</html>
-```
 
 ### Development
 

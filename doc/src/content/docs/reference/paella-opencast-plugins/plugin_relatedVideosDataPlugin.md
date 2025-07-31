@@ -9,6 +9,8 @@ This data plugin retrieves and provides access to videos related to the current 
 
 **Exported as** `OpencastRelatedVideosDataPlugin`.
 
+![Related Videos Data Plugin](../../../../assets/plugin_relatedVideosDataPlugin.webp)
+
 ## Configuration
 
 You need to enable the `org.opencast.paella.data.relatedVideosDataPlugin` plugin and configure the search parameters.

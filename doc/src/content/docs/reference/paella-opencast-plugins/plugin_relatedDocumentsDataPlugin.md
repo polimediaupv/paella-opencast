@@ -11,6 +11,8 @@ This plugin requires the `@asicupv/paella-extra-plugins` package for related doc
 
 **Exported as** `OpencastRelatedDocumentsDataPlugin`.
 
+![Related Documents Data Plugin](../../../../assets/plugin_relatedDocumentsDataPlugin.webp)
+
 ## Configuration
 
 You need to enable the `org.opencast.paella.data.relatedDocumentsDataPlugin` plugin and configure the document sources.

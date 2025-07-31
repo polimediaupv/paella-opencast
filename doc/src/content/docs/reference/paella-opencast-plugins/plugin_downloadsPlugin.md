@@ -9,6 +9,9 @@ This plugin adds a downloads button in the player interface that allows users to
 
 **Exported as** `OpencastDownloadsPlugin`.
 
+
+![Downloads Plugin](../../../../assets/plugin_downloadsPlugin.webp) 
+
 ## Configuration
 
 You need to enable the `org.opencast.paella.downloadsPlugin` plugin.
