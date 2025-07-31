@@ -32,7 +32,7 @@ jobs:
             OC_PAELLA8_BASE_URL: '/paella-opencast/demo/engage'
             OC_PRESENTATION_URL: 'https://stable.opencast.org'
             CONFIG_FOLDER: 'https://polimediaupv.github.io/paella-opencast/demo/engage/config/'
-            OC_PAELLA8_URL_TEMPLATE: '/paella-opencast/watch.html?id={videoId}&ocServer={OC_PRESENTATION_URL}'
+            OC_PAELLA8_URL_TEMPLATE: '/paella-opencast/demo/engage/watch.html?id={videoId}&ocServer={OC_PRESENTATION_URL}'
             
 
       - name: Prepare artifact
