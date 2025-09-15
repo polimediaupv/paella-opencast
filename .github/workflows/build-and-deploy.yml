@@ -41,6 +41,7 @@ jobs:
           cp -rv doc/dist/* artifact-root/
           cp -rv examples/engage-paella-player/dist/* artifact-root/demo/engage/
           cp -rv examples/engage-paella-player/ui/config/* artifact-root/demo/engage/config/
+          sed -i 's#/ui/config/paella8/#/paella-opencast/demo/engage/config/#g' artifact-root/demo/engage/config/config.json
 
       - name: Upload as artifact
         uses: actions/upload-pages-artifact@v3
