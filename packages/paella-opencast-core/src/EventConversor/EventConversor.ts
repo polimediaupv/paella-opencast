@@ -31,7 +31,7 @@ export class EventConversor {
         this.conversionConfig = conversionConfig;
     }
 
-    getTimeLineInfo(event: Event): Manifest['metadata']["timeline"] | undefined {
+    getTimeLineInfo(event: Event): NonNullable<Manifest['metadata']>["timeline"] | undefined {
         const attachments = event.attachments ?? [];
 
         const timelineFlavors = this.conversionConfig.timelineAttachmentsFlavours ?? ["presentation/timeline+preview", "presenter/timeline+preview"];
@@ -318,7 +318,11 @@ export class EventConversor {
         const preview = this.getPreviewUrl(event);
 
         const result: Manifest = {
-            metadata: { ...metadata, preview },
+            metadata: {
+                ...metadata,
+                preview,
+                previewPortrait: preview // Opencast does not generate an image in portrait mode, we use the same image for landscape and portrait.
+            },
             streams,
             captions,
             frameList,
