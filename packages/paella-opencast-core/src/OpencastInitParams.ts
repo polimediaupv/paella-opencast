@@ -111,6 +111,11 @@ export async function defaultLoadVideoManifestFunc(_manifestUrl: string, _config
     
     const paellaEpisode = getPaellaManifestFromOpencastEvent(ocPlayer, opencastEvent, conversionConfig);
     if (paellaEpisode === null) {
+        const userName = await ocPlayer.opencastAuth.getLoggedUserName();        
+        if (userName === null) {
+            ocPlayer.log.info('User not authenticated. Redirecting to authentication...', '@asicupv/paella-opencast-core');
+            await ocPlayer.opencastAuth.auth(window.location.href);
+        }
         throw new Error('Error loading video manifest.');
     }
     return paellaEpisode;

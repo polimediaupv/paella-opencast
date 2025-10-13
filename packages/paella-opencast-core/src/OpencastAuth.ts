@@ -10,7 +10,7 @@ export interface OpencastAuth {
     canRead: () => Promise<boolean>
     canWrite: () => Promise<boolean>
 
-    auth: (redirectUrl?: string) => Promise<void>
+    auth: (redirectUrl?: string, redirectTimeoutMs?: number) => Promise<void>
 }
 
 export class OpencastAuthDefaultImpl implements OpencastAuth {
@@ -111,12 +111,13 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
         }
     }
 
-    async auth(redirectUrl?: string) {
+    async auth(redirectUrl?: string, redirectTimeoutMs?: number) {
         if (!this.#player) {
             throw new Error('OpencastAuthDefaultImpl: Player is not set');
         }
 
         redirectUrl = redirectUrl ?? window.location.href;
+        redirectTimeoutMs = redirectTimeoutMs ?? 2000;
         let authUrl: string | null = (this.#player.config as OpencastPaellaConfig).opencast?.auth ?? `${OC_PAELLA8_BASE_URL}/auth.html`;
         if (authUrl.startsWith('http') == false) {
             authUrl = this.#player.getUrlFromOpencastServer(authUrl);
@@ -125,6 +126,7 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
             const authenticationUrl = `${authUrl}?redirect=${encodeURIComponent(redirectUrl)}`;
             this.#player.log.info(`Redirecting to authentication URL: ${authenticationUrl}`, '@asicupv/paella-opencast-core');
             window.location.href = authenticationUrl;
+            await new Promise(resolve => setTimeout(resolve, redirectTimeoutMs));
         }
         else {
             throw new Error('OpencastAuthDefaultImpl: Authentication URL is not available');
