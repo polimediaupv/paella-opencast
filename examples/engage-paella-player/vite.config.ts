@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import express from 'express';
 import { resolve } from 'path';
 
-const ocProxyServer = process.env.OC_PRESENTATION_URL ?? process.env.OC_PRESENTATION_URL ?? 'https://stable.opencast.org';
+const ocProxyServer = process.env.OC_SERVER_URL ?? process.env.OC_PRESENTATION_URL ?? 'https://stable.opencast.org';
 const baseURL = process.env.OC_PAELLA8_BASE_URL || '/paella8/ui';
 
 const app = express();
