@@ -27,7 +27,7 @@ export default class OpencastEventDetailsPlugin extends TableInfoPopUpPlugin {
 
   async getHelp() {
     return {
-      title: this.player.translate('Event Details'),
+      title: this.player.translate('Event details'),
       description: this.player.translate('View detailed information about the event.')
     };
   }
@@ -64,7 +64,7 @@ export default class OpencastEventDetailsPlugin extends TableInfoPopUpPlugin {
     return {
       table: [
         {
-          category: 'Video Information',
+          category: 'Video information',
           rows: [
             {
               key: 'UID',

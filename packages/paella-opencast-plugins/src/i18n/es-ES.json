@@ -1,2 +1,30 @@
 {
+    "Show event details": "Mostrar detalles del evento",
+    "Event details": "Detalles del evento",
+    "View detailed information about the event.": "Ver información detallada sobre el evento.",
+    "Video information": "Información del vídeo",
+    "Title": "Título",
+    "UID": "UID",
+    "Subject": "Asunto",
+    "Description": "Descripción",
+    "Series": "Serie",
+    "Language": "Idioma",
+    "Start date": "Fecha de inicio",
+    "Duration": "Duración",
+    "Location": "Ubicación",
+    "People & Rights": "Personas y derechos",
+    "Presenter(s)": "Presentador(es)",
+    "Contributor(s)": "Colaborador(es)",
+    "Rights": "Derechos",
+    "License": "Licencia",
+
+    "Downloads": "Descargas",
+    "Video downloads": "Descargas de vídeo",
+    "This plugin allows users to download the video tracks / attachments of the video.": "Este plugin permite a los usuarios descargar las pistas de vídeo / adjuntos del vídeo.",
+
+    "Open video editor": "Abrir editor de vídeo",
+    "Access the video editor to modify and enhance your video content.": "Acceso al editor de vídeo para modificar y mejorar el contenido de tu vídeo.",
+
+    "Login": "Iniciar sesión",
+    "Log in to access additional features and personalized content.": "Inicia sesión para acceder a funciones adicionales y contenido personalizado."    
 }
