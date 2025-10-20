@@ -361,7 +361,7 @@ function renderResults(videos: any[]) {
           <span>&middot;</span>
           <span class="text-gray-500" title="Duration">${formatDuration(video.duration)}</span>
         </div>
-        <p class="text-gray-700  line-clamp-6">
+        <p class="text-gray-700  line-clamp-6 overflow-y-auto">
           ${video.description}
         </p>
       </div>
