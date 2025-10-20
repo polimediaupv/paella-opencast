@@ -418,7 +418,9 @@
             "enabled": true,
             "side": "right",
             "parentContainer": "settingsGroup",
-            "order": 10            
+            "order": 10,
+            "engageQueryUrl": "index.html?q=${q}",
+            "engageSeriesUrl": "index.html?series=${series}"
         },
         "es.upv.paella.qualitySelector": {
             "enabled": true,

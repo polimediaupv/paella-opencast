@@ -1,4 +1,4 @@
-import { TableInfoPopUpPlugin, type ContentTableInfo } from '@asicupv/paella-core';
+import { TableInfoPopUpPlugin, type ContentTableInfo, type PopUpButtonPluginConfig } from '@asicupv/paella-core';
 import { OpencastPaellaPlayer, secondsToTime, type Event } from '@asicupv/paella-opencast-core';
 import OpencastPaellaPluginsModule from './OpencastPaellaPluginsModule';
 
@@ -6,8 +6,15 @@ import InfoIcon from './icons/info.svg?raw';
 
 
 
+export type OpencastEventDetailsPluginConfig = PopUpButtonPluginConfig & {
+    engageQueryUrl?: string;
+    engageSeriesUrl?: string;
+};
 
-export default class OpencastEventDetailsPlugin extends TableInfoPopUpPlugin {
+const DEFAULT_ENGAGE_QUERY_URL = '/engage/ui/index.html?q=${q}';
+const DEFAULT_ENGAGE_SERIES_URL = '/engage/ui/index.html?epFrom=${series}';
+
+export default class OpencastEventDetailsPlugin extends TableInfoPopUpPlugin<OpencastEventDetailsPluginConfig> {
 
   getPluginModuleInstance() {
     return OpencastPaellaPluginsModule.Get();
@@ -47,15 +54,42 @@ export default class OpencastEventDetailsPlugin extends TableInfoPopUpPlugin {
   }
 
 
+  applyTemplate(txt: string, templateVars: Record<string, any>): string {    
+    return txt.replace(/\${[^{]*}/g, (t: string): string =>{
+      // 1. Extract the key path: removes the first two characters ("${") and the last one ("}")
+      const keyPath: string = t.substring(2, t.length - 1);
+      // 2. Split the key path into parts to handle nesting
+      const parts: string[] = keyPath.split(".");
+      // 3. Navigate the templateVars object using reduce
+      // The accumulator (a) starts as templateVars
+      const value: any = parts.reduce((accumulator: any, part: string) => {
+          // Safety check: If the accumulator is null/undefined or the property doesn't exist,
+          // we return undefined to stop navigation and prevent errors.
+          if (accumulator && accumulator.hasOwnProperty(part)) {
+              return accumulator[part];
+          }
+          // Return undefined to ensure the final value is undefined if the path is invalid.
+          return undefined;
+      }, templateVars);
+
+      // 4. Return the found value (converted to string) or the original match 't'
+      // if the value was not found (undefined or null).
+      return (value !== undefined && value !== null) ? String(value) : t;      
+    });
+  };
+
   async getContentTableInfo(): Promise<ContentTableInfo> {
     const metadata = this.player.videoManifest.metadata as Event['metadata'];
     const hasOpencastUrl = (this.player as OpencastPaellaPlayer).opencastPresentationUrl != null;
 
+    const engageQueryUrl = this.config.engageQueryUrl || DEFAULT_ENGAGE_QUERY_URL;
+    const engageSeriesUrl = this.config.engageSeriesUrl || DEFAULT_ENGAGE_SERIES_URL;
+    
     const presenters = metadata?.presenters
-      ?.map((p) => (hasOpencastUrl ? `<a href="/engage/ui/index.html?q=${p}">${p}</a>` : p))
+      ?.map((p) => (hasOpencastUrl ? `<a href="${this.applyTemplate(engageQueryUrl, { q: p })}">${p}</a>` : p))
       ?.join(', ');
     const contributors = metadata?.contributors
-      ?.map((p) => (hasOpencastUrl ? `<a href="/engage/ui/index.html?q=${p}">${p}</a>` : p))
+      ?.map((p) => (hasOpencastUrl ? `<a href="${this.applyTemplate(engageQueryUrl, { q: p })}">${p}</a>` : p))
       ?.join(', ');
     const language = metadata?.language
       ? new Intl.DisplayNames([metadata.language], { type: 'language' }).of(metadata.language) ?? ''
@@ -83,7 +117,7 @@ export default class OpencastEventDetailsPlugin extends TableInfoPopUpPlugin {
             {
               key: 'Series',
               value: hasOpencastUrl
-                ? `<a href="/engage/ui/index.html?epFrom=${metadata?.series}">${metadata?.seriesTitle ?? ''}</a>`
+                ? `<a href="${this.applyTemplate(engageSeriesUrl, { series: metadata?.series })}">${metadata?.seriesTitle ?? ''}</a>`
                 : metadata?.seriesTitle ?? '',
             },
           ],
