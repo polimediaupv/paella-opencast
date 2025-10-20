@@ -148,7 +148,7 @@ function getTimeline(video: any) {
 
 // Fectch videos with pagination and series id (sid)
 async function fetchVideos(page: number, pageSize: number, sid: string) {
-    const url = getUrlFromBase(OC_PRESENTATION_URL, `/search/episode.json?limit=${pageSize}&offset=${pageSize * (page - 1)}&sid=${sid}`)
+    const url = getUrlFromBase(OC_PRESENTATION_URL, `/search/episode.json?limit=${pageSize}&offset=${pageSize * (page - 1)}&sid=${sid}&sort=created%20desc`)
     const searchResults = await fetch(url)
         .then(response => response.json())
         .catch(error => {
