@@ -1,2 +1,30 @@
 {
+    "Show event details": "Show event details",
+    "Event details": "Event details",
+    "View detailed information about the event.": "View detailed information about the event.",
+    "Video information": "Video information",
+    "Title": "Title",
+    "UID": "UID",
+    "Subject": "Subject",
+    "Description": "Description",
+    "Series": "Series",
+    "Language": "Language",
+    "Start date": "Start date",
+    "Duration": "Duration",
+    "Location": "Location",
+    "People & Rights": "People & Rights",
+    "Presenter(s)": "Presenter(s)",
+    "Contributor(s)": "Contributor(s)",
+    "Rights": "Rights",
+    "License": "License",
+
+    "Downloads": "Downloads",
+    "Video downloads": "Video downloads",
+    "This plugin allows users to download the video tracks / attachments of the video.": "This plugin allows users to download the video tracks / attachments of the video.",
+
+    "Open video editor": "Open video editor",
+    "Access the video editor to modify and enhance your video content.": "Access the video editor to modify and enhance your video content.",
+
+    "Login": "Login",
+    "Log in to access additional features and personalized content.": "Log in to access additional features and personalized content."    
 }

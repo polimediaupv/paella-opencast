@@ -12,6 +12,23 @@
         "clickWithSpacebar": false
     },
     
+    "dictionaries": {
+        "es": {
+            "Summary": "Resumen",
+            "FAQ": "Preguntas frecuentes",
+            "Timeline": "Cronología",
+            "Study plan": "Plan de estudio",
+            "Podcast": "Podcast"
+        },
+        "ca": {
+            "Summary": "Resum",
+            "FAQ": "Preguntes freqüents",
+            "Timeline": "Cronologia",
+            "Study plan": "Pla d'estudis",
+            "Podcast": "Podcast"
+        }
+    },
+
     "buttonGroups": [
         {
             "enabled": true,
@@ -659,11 +676,11 @@
                     "content": { "flavor": "ai/timeline", "mimeType": "text/markdown" }
                 },
                 {
-                    "title": "Study Plan",
+                    "title": "Study plan",
                     "content": { "flavor": "ai/study_plan", "mimeType": "text/markdown" }
                 },
                 {
-                    "title": "Podcast Script",
+                    "title": "Podcast",
                     "content": { "flavor": "ai/podcast_script", "mimeType": "text/markdown" },
                     "media": { "flavor": "ai/podcast_audio" }
                 }

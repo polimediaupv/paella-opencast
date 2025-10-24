@@ -25,6 +25,7 @@ import '@asicupv/paella-zoom-plugin/paella-zoom-plugin.css';
 import '@asicupv/paella-extra-plugins/paella-extra-plugins.css';
 import '@asicupv/paella-ai-plugins/paella-ai-plugins.css';
 import '@asicupv/paella-opencast-core/paella-opencast-core.css';
+import defaultDictionaries from './i18n/all';
 
 const USE_OC_SERVER_FROM_URL = import.meta.env.USE_OC_SERVER_FROM_URL === 'true' || false;
 const OC_PRESENTATION_URL = getOcPresentationUrl();
@@ -73,6 +74,9 @@ window.addEventListener("load", async () => {
   };
 
   const ocPlayer = new OpencastPaellaPlayer('playerContainer', opencastInitParams);
+  // Load default dictionaries
+  Object.entries(defaultDictionaries).forEach(([lang, dict]) =>  ocPlayer.addDictionary(lang, dict));
+  
   // Update the browser tab title.
   ocPlayer.bindEvent(Events.MANIFEST_LOADED, async () => {
     ocPlayer.log.info('Player manifest loaded, updating document title.', 'engage-paella-player');

@@ -1,0 +1,30 @@
+{
+    "Show event details": "Mostrar detalls de l'esdeveniment",
+    "Event details": "Detalls de l'esdeveniment",
+    "View detailed information about the event.": "Veure informació detallada sobre l'esdeveniment.",
+    "Video information": "Informació del vídeo",
+    "Title": "Títol",
+    "UID": "UID",
+    "Subject": "Assumpte",
+    "Description": "Descripció",
+    "Series": "Sèrie",
+    "Language": "Idioma",
+    "Start date": "Data d'inici",
+    "Duration": "Duració",
+    "Location": "Ubicació",
+    "People & Rights": "Persones i drets",
+    "Presenter(s)": "Presentador(s)",
+    "Contributor(s)": "Col·laborador(s)",
+    "Rights": "Drets",
+    "License": "Llicència",
+
+    "Downloads": "Descàrregues",
+    "Video downloads": "Descàrregues de vídeo",
+    "This plugin allows users to download the video tracks / attachments of the video.": "Aquest plugin permet als usuaris descarregar les pistes de vídeo / adjunts del vídeo.",
+
+    "Open video editor": "Obrir editor de vídeo",
+    "Access the video editor to modify and enhance your video content.": "Accés a l'editor de vídeo per modificar i millorar el contingut del teu vídeo.",
+
+    "Login": "Iniciar sessió",
+    "Log in to access additional features and personalized content.": "Inicia sessió per accedir a funcions addicionals i contingut personalitzat."    
+}

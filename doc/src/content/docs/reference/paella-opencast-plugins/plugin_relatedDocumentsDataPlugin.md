@@ -36,11 +36,11 @@ You need to enable the `org.opencast.paella.data.relatedDocumentsDataPlugin` plu
                 "content": { "flavor": "ai/timeline", "mimeType": "text/markdown" }
             },
             {
-                "title": "Study Plan",
+                "title": "Study plan",
                 "content": { "flavor": "ai/study_plan", "mimeType": "text/markdown" }
             },
             {
-                "title": "Podcast Script",
+                "title": "Podcast script",
                 "content": { "flavor": "ai/podcast_script", "mimeType": "text/markdown" },
                 "media": { "flavor": "ai/podcast_audio" }
             }
