@@ -13,6 +13,10 @@
       "require": "./dist/paella-opencast-plugins.css"
     }
   },
+  "files": [
+    "dist/*",
+    "README.md"
+  ],
   "scripts": {
     "dev": "tsc && vite build --watch --emptyOutDir=false",
     "build": "tsc && vite build",
