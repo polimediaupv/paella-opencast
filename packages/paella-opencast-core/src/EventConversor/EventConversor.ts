@@ -1,6 +1,6 @@
-import { Paella, type CaptionManifestItem, type Manifest, type Frame, type Transcription, type Source, type Stream } from '@asicupv/paella-core';
+import { Paella, type Chapter, type CaptionManifestItem, type Manifest, type Frame, type Transcription, type Source, type Stream } from '@asicupv/paella-core';
 import { type Event, type MediaPackageElement, type Attachment, type Track } from '../Event';
-import { splitFlavor } from '../utils';
+import { splitFlavor, timeToSeconds } from '../utils';
 
 // const translate = (key: string): string => {
 //     return key;
@@ -10,6 +10,7 @@ export interface ConversionConfig {
     captionsBackwardsCompatibility?: boolean
     segmentPreviewAttachmentsFlavours?: string[]
     playerPreviewAttachmentsFlavours?: string[]
+    chaptersFlavours?: string[]
     timelineAttachmentsFlavours?: string[]
     tagFor360Video?: string
 
@@ -131,6 +132,68 @@ export class EventConversor {
 
         return captions;
     }
+
+    parseVTTChapters(vttContent: string): Chapter[] {    
+        const blocks = vttContent.trim().split(/\n\s*\n/);
+        const chapters: Chapter[] = [];
+
+        // Omit the 'WEBVTT' header
+        if (blocks[0] && blocks[0].trim().startsWith('WEBVTT')) {
+            blocks.shift();
+        }
+            
+        blocks.forEach(block => {
+            if (!block.trim()) return;
+
+            const lines = block.trim().split('\n');
+            
+            let startTime: string | null = null;
+            let text: string[] = [];
+            let timeLine: string | null = null;
+            let cueId: string | null = null;
+
+            // Determine if there is a cue ID or just the time line
+            if (lines.length >= 2) {
+                if (lines[0].includes('-->')) {
+                    // Case A: Time line in lines[0]
+                    timeLine = lines[0];
+                    text = lines.slice(1);
+                } else if (lines.length >= 2 && lines[1].includes('-->')) {
+                    // Case B: ID in lines[0], Time line in lines[1]
+                    cueId = lines[0].trim();
+                    timeLine = lines[1];
+                    text = lines.slice(2);
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+
+            if (timeLine) {
+                const parts = timeLine.split('-->');
+                if (parts.length >= 2) {                
+                    startTime = parts[0].trim(); 
+                }
+            }
+            
+            if (startTime) {
+                const time = timeToSeconds(startTime)
+                const textArea = document.createElement('textarea');
+                textArea.innerHTML = text.join('\n').trim();
+    
+                const chapterInfo: Chapter = {
+                    id: cueId ?? `id_${time}`,
+                    time,
+                    title: textArea.value
+                };
+                chapters.push(chapterInfo);
+            }
+        });
+
+        return chapters;
+    }
+
 
     getCaptions(event: Event): Manifest["captions"] {
         const captions: Manifest["captions"] = [];
@@ -309,13 +372,34 @@ export class EventConversor {
         return streams;
     }
 
-    commonEventToPaellaManifest(event: Event): Manifest {
+    async getChapters(event: Event): Promise<Manifest["chapters"] | undefined> {
+        const tracks = event.tracks ?? [];
+        const chatptersFlavours = this.conversionConfig.chaptersFlavours ?? ['chapters/source', 'chapters/delivery'];
+
+        const potentialChapters = chatptersFlavours
+        .map((flavor) => {
+            return tracks.find(t => t.flavor === flavor);
+        })
+        .filter(x => x != undefined);
+
+        if (potentialChapters.length === 0) {
+            return;
+        }
+        const chaptersUrl = potentialChapters[0]?.url+"oo";
+        const chaptersContent = await fetch(chaptersUrl).then(response => response.text());        
+        const chapters = this.parseVTTChapters(chaptersContent);
+                
+        return {chapterList: chapters};
+    }
+
+    async commonEventToPaellaManifest(event: Event): Promise<Manifest> {
         const metadata = this.getMetadata(event);
         const captions = this.getCaptions(event);
         const frameList = this.getFrameList(event);
         const streams = this.getStreams(event);
         const transcriptions = this.getTranscriptions(event);
         const preview = this.getPreviewUrl(event);
+        const chapters = await this.getChapters(event);
 
         const result: Manifest = {
             metadata: {
@@ -326,9 +410,9 @@ export class EventConversor {
             streams,
             captions,
             frameList,
-            transcriptions
+            transcriptions,
+            chapters
         };
-
         return result;
     }
 }

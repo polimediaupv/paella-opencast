@@ -109,7 +109,7 @@ export async function defaultLoadVideoManifestFunc(_manifestUrl: string, _config
         }
     }
     
-    const paellaEpisode = getPaellaManifestFromOpencastEvent(ocPlayer, opencastEvent, conversionConfig);
+    const paellaEpisode = await getPaellaManifestFromOpencastEvent(ocPlayer, opencastEvent, conversionConfig);
     if (paellaEpisode === null) {
         const userName = await ocPlayer.opencastAuth.getLoggedUserName();        
         if (userName === null) {
@@ -121,7 +121,7 @@ export async function defaultLoadVideoManifestFunc(_manifestUrl: string, _config
     return paellaEpisode;
 }
 
-function getPaellaManifestFromOpencastEvent(player: Paella, episode: any, config?: ConversionConfig): Manifest | null {
+async function getPaellaManifestFromOpencastEvent(player: Paella, episode: any, config?: ConversionConfig): Promise<Manifest | null> {
     // Check if the episode is a search result or an external API event        
     if (episode["search-results"]) {
         player.log.info('opencastEpisodeToManifest: convert!!!!!!!!!!!!', '@asicupv/paella-opencast-core');
@@ -130,7 +130,7 @@ function getPaellaManifestFromOpencastEvent(player: Paella, episode: any, config
     }
     if (episode?.total === 1 && episode?.result) {
         player.log.info('opencastEpisodeToManifest: Episode is an Opencast search result. Converting to paella manifest!', '@asicupv/paella-opencast-core');
-        return opencastSearchResultToPaellaManifest(player, episode.result[0], config);
+        return await opencastSearchResultToPaellaManifest(player, episode.result[0], config);
     }
     // Check if the episode is an Opencast external API event
     else if (episode.identifier && episode.publications) {

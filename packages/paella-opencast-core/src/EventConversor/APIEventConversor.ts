@@ -130,8 +130,8 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
 
 }
 
-export function opencastExternalAPIEventToPaellaManifest(paella: Paella, externalEvent: any, config: ConversionConfig = {}): Manifest {
+export async function opencastExternalAPIEventToPaellaManifest(paella: Paella, externalEvent: any, config: ConversionConfig = {}): Promise<Manifest> {
     const event: Event = opencastExternalAPIEventToOpencastPaellaEvent(externalEvent);
     const conversor = new EventConversor(paella, config);
-    return conversor.commonEventToPaellaManifest(event);
+    return await conversor.commonEventToPaellaManifest(event);
 }

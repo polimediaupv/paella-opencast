@@ -55,6 +55,30 @@ export function secondsToTime(timestamp: number): string {
             seconds.toString().padStart(2,'0');
 }
 
+export function timeToSeconds(timeString: string): number {
+    // Pattern: hh:mm:ss.msm or mm:ss.msm or ss.msm
+    const parts = timeString.split(':');
+    let seconds = 0;
+    
+    // If there are 3 parts (hh:mm:ss.msm)
+    if (parts.length === 3) {
+        seconds += parseFloat(parts[0]) * 3600; // Hours
+        seconds += parseFloat(parts[1]) * 60;   // Minutes
+        seconds += parseFloat(parts[2]);        // Seconds.milliseconds
+    } 
+    // If there are 2 parts (mm:ss.msm)
+    else if (parts.length === 2) {
+        seconds += parseFloat(parts[0]) * 60;   // Minutes
+        seconds += parseFloat(parts[1]);        // Seconds.milliseconds
+    }
+    // If there is 1 part (ss.msm)
+    else if (parts.length === 1) {
+        seconds += parseFloat(parts[0]);
+    }
+    
+    return seconds;
+}
+
 // Streams functions
 export function splitFlavor(flavor: string): string[] {
     const flavorTypes = flavor.split('/');

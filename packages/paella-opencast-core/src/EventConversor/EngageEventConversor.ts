@@ -132,8 +132,8 @@ export function opencastSearchResultToOpencastPaellaEvent(searchResult: any): Ev
     return event;
 }
 
-export function opencastSearchResultToPaellaManifest(paella: Paella, searchResult: any, config: ConversionConfig = {}): Manifest {
+export async function opencastSearchResultToPaellaManifest(paella: Paella, searchResult: any, config: ConversionConfig = {}): Promise<Manifest> {
     const event: Event = opencastSearchResultToOpencastPaellaEvent(searchResult);
     const conversor = new EventConversor(paella, config);
-    return conversor.commonEventToPaellaManifest(event);
+    return await conversor.commonEventToPaellaManifest(event);
 }
