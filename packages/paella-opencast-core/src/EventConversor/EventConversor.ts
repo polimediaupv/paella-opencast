@@ -385,7 +385,7 @@ export class EventConversor {
         if (potentialChapters.length === 0) {
             return;
         }
-        const chaptersUrl = potentialChapters[0]?.url+"oo";
+        const chaptersUrl = potentialChapters[0]?.url;
         const chaptersContent = await fetch(chaptersUrl).then(response => response.text());        
         const chapters = this.parseVTTChapters(chaptersContent);
                 
