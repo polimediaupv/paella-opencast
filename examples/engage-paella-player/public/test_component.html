@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/paella8/ui/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/paella8/ui/paella-opencast-component.iife.js"></script>
+    <link href="/paella8/ui/paella-opencast-component.css" rel="stylesheet"></link>
+    <style>
+      body {
+            margin: 0;
+      }
+      #playerContainer  {
+        width: 720px;
+        aspect-ratio: 16 / 9;
+      }
+    </style>
+    <title>Opencast engage player</title>    
+  </head>
+  <body>
+    <paella-opencast-player id="playerContainer"
+      opencast-presentation-url="https://develop.opencast.org"
+      video-id="ID-dual-stream-demo"
+    />
+  </body>
+</html>
