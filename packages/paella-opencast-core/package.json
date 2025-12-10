@@ -26,7 +26,7 @@
     "clean:deps": "rimraf node_modules"
   },
   "devDependencies": {
-    "@asicupv/paella-core": "^2.8.2",
+    "@asicupv/paella-core": "^2.11.1",
     "jsdom": "^26.1.0",
     "typescript": "^5.9.3",
     "vite": "^7.0.1",
@@ -36,6 +36,6 @@
     "@asicupv/paella-opencast-skin": "^2.0.0"
   },
   "peerDependencies": {
-    "@asicupv/paella-core": "^2.7.0"
+    "@asicupv/paella-core": "^2.11.1"
   }
 }
