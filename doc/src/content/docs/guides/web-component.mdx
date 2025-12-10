@@ -9,20 +9,20 @@ With the **Web Component** you can easily embed an opencast paella player in you
 
 <Steps>
 
-1. Import the `opencast-paella-player` web component and the `CSS` file.
+1. Import the `paella-opencast-component` web component and the `CSS` file.
 
 
    ```js
-   import 'opencast-paella-player';
+   import 'paella-opencast-component';
    // Import the CSS file if you are using any bundle tool
    // or add them to your HTML file.
-   import 'opencast-paella-player/opencast-paella-player.css';
+   import 'paella-opencast-component/paella-opencast-component.css';
    ```
 
-2. Add a  `<opencast-paella-player>`  component to your page.
+2. Add a  `<paella-opencast-component>`  component to your page.
 
    ```html
-   <opencast-paella-player
+   <paella-opencast-player
      opencast-presentation-url="https://develop.opencast.org"
      video-id="ID-dual-stream-demo"
    />
@@ -45,18 +45,18 @@ With the **Web Component** you can easily embed an opencast paella player in you
         body {
             margin: 0;
         }
-        opencast-paella-player {
+        paella-opencast-player {
             display: block;
             width: 100vw;
             height: 100vh;
         }
     </style>
     <script>
-        import 'opencast-paella-webcomponent';
+        import 'paella-opencast-component';
     </script>
 </head>
 <body>
-    <opencast-paella-player
+    <paella-opencast-player
         video-id="ID-dual-stream-demo"
         opencast-presentation-url="https://stable.opencast.org"
     />
@@ -75,7 +75,7 @@ With the **Web Component** you can easily embed an opencast paella player in you
 Let the component to autofetch the necessary data using the `search API`
 
 ```html
-<opencast-paella-player
+<paella-opencast-player
     video-id="ID-dual-stream-demo"
     opencast-presentation-url="https://develop.opencast.org"
 />
@@ -85,7 +85,7 @@ Let the component to autofetch the necessary data using the `search API`
 
 
 ```html
-<opencast-paella-player
+<paella-opencast-player
     video-id='ID-dual-stream-demo'
     paella-config='...'
     opencast-episode='...'
