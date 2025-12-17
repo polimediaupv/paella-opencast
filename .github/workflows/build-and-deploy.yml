@@ -3,7 +3,7 @@ name: Build & Deploy
 on: 
   push:
     branches: 
-      - paella8
+      - main
 
 # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
 permissions:
