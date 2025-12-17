@@ -1,6 +1,6 @@
-import { Paella, type Config, type InitParams, type Manifest } from '@asicupv/paella-core';
+import { Paella, type InitParams, type Manifest } from '@asicupv/paella-core';
 import { type OpencastAuth } from './OpencastAuth';
-import type { OpencastPaellaPlayer } from './OpencastPaellaPlayer';
+import type { OpencastPaellaConfig, OpencastPaellaPlayer } from './OpencastPaellaPlayer';
 import { ensureArray, getHashOrUrlParameter } from './utils';
 import type { ConversionConfig } from './EventConversor/EventConversor';
 import { opencastSearchResultToPaellaManifest } from './EventConversor/EngageEventConversor';
@@ -13,17 +13,17 @@ export interface OpencastInitParams extends InitParams {
         auth?: OpencastAuth | null
         // **
         videoId?: string | null
-        paellaConfig?: string | Partial<Config> | null
+        paellaConfig?: string | Partial<OpencastPaellaConfig> | null
         episode?: string | null
     }
 };
 
 
-export async function defaultLoadConfigFunc(configUrl: string, player: Paella): Promise<Config> {
+export async function defaultLoadConfigFunc(configUrl: string, player: Paella): Promise<OpencastPaellaConfig> {
     const ocPlayer = player as OpencastPaellaPlayer;
     const ocInitParams = ocPlayer.initParams as OpencastInitParams;     
 
-    let paellaConfig: Config;
+    let paellaConfig: OpencastPaellaConfig;
     if (ocInitParams.opencast?.paellaConfig) {        
         // If paellaConfig is a string, parse it as JSON.
         if (typeof ocInitParams.opencast.paellaConfig === 'string') {
@@ -38,7 +38,7 @@ export async function defaultLoadConfigFunc(configUrl: string, player: Paella): 
         // If paellaConfig is an object, use it directly.
         else if (typeof ocInitParams.opencast.paellaConfig === 'object') {
             ocPlayer.log.info('Using paella config from object', '@asicupv/paella-opencast-core');
-            paellaConfig = ocInitParams.opencast.paellaConfig as Config;
+            paellaConfig = ocInitParams.opencast.paellaConfig;
         }
         else {
             throw new Error('Error getting paella config. paellaConfig is not a string or an Config object.');
@@ -59,7 +59,7 @@ export async function defaultLoadConfigFunc(configUrl: string, player: Paella): 
 }
 
 
-export async function defaultGetVideoIdFunc(config: Config, player: Paella): Promise<string | null> {   
+export async function defaultGetVideoIdFunc(config: OpencastPaellaConfig, player: Paella): Promise<string | null> {   
     const ocPlayer = player as OpencastPaellaPlayer;
     const ocInitParams = ocPlayer.initParams as OpencastInitParams;
 
@@ -70,7 +70,7 @@ export async function defaultGetVideoIdFunc(config: Config, player: Paella): Pro
     return videoId;
 }
 
-export async function defaultLoadVideoManifestFunc(_manifestUrl: string, _config: Config, player: Paella): Promise<Manifest> {
+export async function defaultLoadVideoManifestFunc(_manifestUrl: string, _config: OpencastPaellaConfig, player: Paella): Promise<Manifest> {
     player.log.info('================== loadVideoManifest ==================', '@asicupv/paella-opencast-core');
     const ocPlayer = player as OpencastPaellaPlayer;
     const ocInitParams = ocPlayer.initParams as OpencastInitParams;
