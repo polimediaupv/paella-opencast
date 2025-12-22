@@ -1,5 +1,5 @@
 import { type Config, Paella } from '@asicupv/paella-core';
-import { theme as opencastSkin } from '@asicupv/paella-opencast-skin';
+import { theme as defaultOpencastSkin } from '@asicupv/paella-opencast-skin';
 import { type OpencastAuth, OpencastAuthDefaultImpl } from './OpencastAuth';
 import type { ConversionConfig } from './EventConversor/EventConversor';
 import type { Event } from './Event';
@@ -75,11 +75,9 @@ export class OpencastPaellaPlayer extends Paella {
     async applyOpencastTheme() {        
         let ocThemeLoaded = false;
 
-        console.log(opencastSkin)
         try {
             const paellaOpencastConfig = await this.initParams?.loadConfig!(this.initParams.configUrl!, this) as OpencastPaellaConfig;
             if (paellaOpencastConfig?.opencast?.theme) { 
-                console.log('Applying opencast theme from config', paellaOpencastConfig.opencast.theme);
                 this.log.info(`Try to load opencast theme "${paellaOpencastConfig.opencast.theme}"`, '@asicupv/paella-opencast-core');
                 const themeUrl = this.getUrlFromOpencastServer(`${this.initParams.configResourcesUrl}${paellaOpencastConfig.opencast.theme}/theme.json`);
                 if (themeUrl) {
@@ -96,7 +94,7 @@ export class OpencastPaellaPlayer extends Paella {
         if (!ocThemeLoaded) {         
             this.log.info('Loading default opencast theme', '@asicupv/paella-opencast-core');
             // Load default opencast theme
-            await this.skin.loadSkin(opencastSkin);
+            await this.skin.loadSkin(defaultOpencastSkin);
         }
     }    
 }
