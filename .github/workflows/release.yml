@@ -28,7 +28,10 @@ jobs:
         uses: changesets/action@v1
         with:
           # This expects you to have a script which does a build for your packages and calls changeset publish
+          version: npm run changeset:version
           publish: npm run changeset:publish
+          commit: "[ci] release"
+          title: "[ci] release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
