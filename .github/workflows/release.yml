@@ -10,6 +10,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   release:
     name: Release
+    if: github.repository == 'polimediaupv/paella-opencast'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
