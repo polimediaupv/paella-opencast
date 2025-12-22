@@ -12,7 +12,7 @@
     "clean:deps": "rimraf node_modules"
   },
   "devDependencies": {
-    "@asicupv/paella-opencast-component": "^2.0.2",
+    "@asicupv/paella-opencast-component": "^2.0.1",
     "@tailwindcss/vite": "^4.1.11",
     "express": "^5.1.0",
     "tailwindcss": "^4.1.11",

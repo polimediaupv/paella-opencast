@@ -25,7 +25,11 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "clean:build": "turbo clean:build && rimraf .turbo coverage",
-    "clean:deps": "rimraf node_modules"
+    "clean:deps": "rimraf node_modules",
+    "changeset:add": "changeset add",
+    "changeset:version": "changeset version",
+    "changeset:status": "changeset status",
+    "changeset:publish": "npm run build:libs && changeset publish"
   },
   "workspaces": [
     "packages/*",
@@ -33,6 +37,8 @@
     "doc"
   ],
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@testing-library/dom": "^10.4.0",
     "@vitest/ui": "^3.2.4",
     "turbo": "^2.5.4",
