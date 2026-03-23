@@ -19,12 +19,14 @@ export function ensureSingle<T>(thing: T[] | T | null | undefined): T | null | u
 }
 
 export function getUrlFromBase(base: string, path: string): string {
-    if (!base) return path
-    if (!path) return base.endsWith('/') ? base.slice(0, -1) : base;
+    if (!base) return path;    
+    if (!path) {        
+        return base === '/' ? base : base.replace(/\/+$/, '');
+    }
 
-    const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
-    const normalizedPath = path.length == 0 ? '' : (path.startsWith('/') ? path : `/${path}`);
-    return `${normalizedBase}${normalizedPath}`;
+    const normalizedBase = base.replace(/\/+$/, '');
+    const normalizedPath = path.replace(/^\/+/, '');
+    return `${normalizedBase}/${normalizedPath}`;
 }
 
 export function stringToBoolean(stringValue: string | null | undefined): boolean {
@@ -58,24 +60,28 @@ export function secondsToTime(timestamp: number): string {
 export function timeToSeconds(timeString: string): number {
     // Pattern: hh:mm:ss.msm or mm:ss.msm or ss.msm
     const parts = timeString.split(':');
-    let seconds = 0;
+    let seconds = NaN;
     
     // If there are 3 parts (hh:mm:ss.msm)
     if (parts.length === 3) {
-        seconds += parseFloat(parts[0]) * 3600; // Hours
+        seconds  = parseFloat(parts[0]) * 3600; // Hours
         seconds += parseFloat(parts[1]) * 60;   // Minutes
         seconds += parseFloat(parts[2]);        // Seconds.milliseconds
     } 
     // If there are 2 parts (mm:ss.msm)
     else if (parts.length === 2) {
-        seconds += parseFloat(parts[0]) * 60;   // Minutes
+        seconds  = parseFloat(parts[0]) * 60;   // Minutes
         seconds += parseFloat(parts[1]);        // Seconds.milliseconds
     }
     // If there is 1 part (ss.msm)
     else if (parts.length === 1) {
-        seconds += parseFloat(parts[0]);
+        seconds = parseFloat(parts[0]);
     }
     
+    
+    if (isNaN(seconds)) {
+        throw new Error(`Invalid time format: ${timeString}`);
+    }
     return seconds;
 }
 

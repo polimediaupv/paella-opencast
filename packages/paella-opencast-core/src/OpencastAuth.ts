@@ -13,9 +13,35 @@ export interface OpencastAuth {
     auth: (redirectUrl?: string, redirectTimeoutMs?: number) => Promise<void>
 }
 
+export type OpencastAuthConfig = {
+    url?: string;
+};
+
+export interface OpencastUserInfo {
+  org?: OpencastOrg
+  roles?: string[]
+  userRole?: string
+  user?: OpencastUser
+}
+
+export interface OpencastOrg {
+  id?: string
+  name?: string
+  adminRole?: string
+  anonymousRole?: string
+  properties?: Record<string, string>
+}
+
+export interface OpencastUser {
+  username?: string
+  name?: string
+  email?: string
+  provider?: string
+}
+
 export class OpencastAuthDefaultImpl implements OpencastAuth {
     #player: OpencastPaellaPlayer | null = null;
-    #userInfo: any = null;
+    #userInfo: OpencastUserInfo | null = null;
 
     get player(): OpencastPaellaPlayer | null {
         return this.#player;
@@ -29,7 +55,7 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
         this.#player = player ?? null;
     }
 
-    private async getUserInfo() {
+    private async getUserInfo(): Promise<OpencastUserInfo | null> {
         try {
             if (this.#userInfo === null) {
                 const ocPresentationUrl = this.#player?.opencastPresentationUrl;
@@ -49,25 +75,25 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
         return this.#userInfo;
     }
 
-    async getLoggedUserName(){        
+    async getLoggedUserName(): Promise<string | null> {
         const userInfo = await this.getUserInfo();
 
         if (userInfo?.userRole && (userInfo?.userRole != 'ROLE_USER_ANONYMOUS')) {
-            return userInfo?.user?.username;
+            return userInfo?.user?.username ?? null;
         }
         return null;
     }
 
-    async isAnonymous() {
+    async isAnonymous(): Promise<boolean> {
         const username = await this.getLoggedUserName();
         return (username == null);
     }
 
-    async canRead() {
+    async canRead(): Promise<boolean> {
         return true;
     }
 
-    async canWrite() {
+    async canAction(action: string): Promise<boolean> {
         try {
             const userInfo = await this.getUserInfo();
             const currentEvent = this.#player?.getEvent();
@@ -86,14 +112,14 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
 
                 canWrite = userRoles.some(function(currentRole) {
                     // If the user is an admin, they can write
-                    if (currentRole == userInfo.org.adminRole) {
+                    if (currentRole == userInfo?.org?.adminRole) {
                         return true;
                     }
                     else {
                         // Check if the user has write permissions in the ACL                        
                         return acl.some(function(currentAce) {
                             if (currentRole == currentAce.role) {
-                                if (currentAce.action == 'write') {
+                                if (currentAce.action == action) {
                                     return true;
                                 }
                             }
@@ -111,14 +137,18 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
         }
     }
 
-    async auth(redirectUrl?: string, redirectTimeoutMs?: number) {
+    async canWrite(): Promise<boolean> {
+        return this.canAction("write");
+    }
+
+    async auth(redirectUrl?: string, redirectTimeoutMs?: number): Promise<void> {
         if (!this.#player) {
-            throw new Error('OpencastAuthDefaultImpl: Player is not set');
+            throw new Error('OpencastAuth: Player is not set');
         }
 
         redirectUrl = redirectUrl ?? window.location.href;
         redirectTimeoutMs = redirectTimeoutMs ?? 2000;
-        let authUrl: string | null = (this.#player.config as OpencastPaellaConfig).opencast?.auth ?? `${OC_PAELLA8_BASE_URL}/auth.html`;
+        let authUrl: string | null = (this.#player.config as OpencastPaellaConfig).opencast?.auth?.url ?? `${OC_PAELLA8_BASE_URL}/auth.html`;
         if (authUrl.startsWith('http') == false) {
             authUrl = this.#player.getUrlFromOpencastServer(authUrl);
         }
@@ -129,7 +159,7 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
             await new Promise(resolve => setTimeout(resolve, redirectTimeoutMs));
         }
         else {
-            throw new Error('OpencastAuthDefaultImpl: Authentication URL is not available');
+            throw new Error('OpencastAuth: Authentication URL is not available');
         }
     }
 }

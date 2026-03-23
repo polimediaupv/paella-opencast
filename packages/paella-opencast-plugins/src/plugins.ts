@@ -1,4 +1,4 @@
-import { type ButtonPluginConfig, type VideoLayoutConfig } from '@asicupv/paella-core';
+import { type ButtonPluginConfig, type VideoLayoutPluginConfig } from '@asicupv/paella-core';
 import OpencastDownloadsPlugin, { type OpencastDownloadsPluginConfig } from './plugins/org.opencast.paella.downloadsPlugin';
 import OpencastEditorPlugin, { type OpencastEditorPluginConfig } from './plugins/org.opencast.paella.editorPlugin';
 import OpencastEventDetailsPlugin from './plugins/org.opencast.paella.eventDetailsPlugin';
@@ -72,7 +72,7 @@ export const opencastPlugins = [
         plugin: OpencastMultiVideoDynamicLayout,
         config: {
             enabled: false
-        } satisfies VideoLayoutConfig
+        } satisfies VideoLayoutPluginConfig
     },
     {
         plugin: OpencastRelatedVideosDataPlugin,

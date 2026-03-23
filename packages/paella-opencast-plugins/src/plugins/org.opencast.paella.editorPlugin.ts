@@ -79,8 +79,10 @@ export default class OpencastEditorPlugin extends ButtonPlugin {
     }
 
     async action() {
-        const editorUrl  = this.config.editorUrl as string;
-        window.location.href = editorUrl.replace('{id}', this.player.videoId);        
+        const editorUrl  = this.config.editorUrl;
+        if (this.player.videoId && editorUrl) {
+            window.location.href = editorUrl.replace('{id}', this.player.videoId);
+        }
     }
 }
 

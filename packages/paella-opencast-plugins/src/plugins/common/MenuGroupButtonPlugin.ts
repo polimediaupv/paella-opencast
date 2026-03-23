@@ -1,4 +1,4 @@
-import { ButtonGroupPlugin, ButtonPlugin, Paella, type MenuItem, type PluginConfig } from '@asicupv/paella-core';
+import { ButtonGroupPlugin, ButtonPlugin, Paella, type ItemData, type PluginConfig } from '@asicupv/paella-core';
 import DownloadIcon from '../icons/download.svg?raw';
 
 type MenuGroupData = {
@@ -6,7 +6,10 @@ type MenuGroupData = {
     items?: MenuGroupItem[];
 }
 
-export type MenuGroupItem = MenuItem<MenuGroupData>;
+//export type MenuGroupItem = MenuItem<MenuGroupData>;
+export type MenuGroupItem = Omit<ItemData, 'data'> & {
+    data: MenuGroupData;
+};
 
 class LinkMenuGroupButtonPlugin extends ButtonPlugin {
     private _downloadableContent?: MenuGroupItem;    
@@ -24,7 +27,7 @@ class LinkMenuGroupButtonPlugin extends ButtonPlugin {
     get stateIcon() {
 		return DownloadIcon;
 	}
-
+    
     async getAnchorUrl(): Promise<string | null> {
         const url: string | null = this._downloadableContent?.data?.url || null;
         return url;
@@ -34,7 +37,7 @@ class LinkMenuGroupButtonPlugin extends ButtonPlugin {
         return true;
     }
 
-    get anchorTarget(): string | null {
+    get anchorTarget(): string {
         return '_blank';
     }
     get anchorDownloadFilename(): string | null {
@@ -55,7 +58,7 @@ export default class MenuGroupButtonPlugin extends ButtonGroupPlugin {
         (this as any)._config = config;
     }
 
-    constructor(player: Paella, name?: string, config: PluginConfig = { }, items: MenuGroupItem[] = []) {
+    constructor(player: Paella, name: string, config: PluginConfig = { }, items: MenuGroupItem[] = []) {
         super(player, name);
         (this as any)._buttonPlugins = [];        
         this.internlConfig = config;
@@ -72,12 +75,12 @@ export default class MenuGroupButtonPlugin extends ButtonGroupPlugin {
 
         this.items.forEach((item) => {
             if (item.data?.items && item.data.items.length > 0) {
-                const groupConfig = { enabled: true, side: this.config.side, description: item.title };
+                const groupConfig = { enabled: true, side: this.config.side, description: item.title ?? undefined };
                 const group = new MenuGroupButtonPlugin(this.player, `${item.id}`, groupConfig, item.data.items);
                 (this as any)._buttonPlugins.push(group);
             }
             else {
-                const plugConfig = { enabled: true, side: this.config.side, description: item.title };
+                const plugConfig = { enabled: true, side: this.config.side, description: item.title ?? undefined };
                 const plug = new LinkMenuGroupButtonPlugin(this.player, `${item.id}`, plugConfig, item);
                 (this as any)._buttonPlugins.push(plug);
             }

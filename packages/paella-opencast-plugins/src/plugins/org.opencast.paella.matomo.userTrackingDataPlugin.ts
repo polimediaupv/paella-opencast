@@ -20,7 +20,7 @@ export default class OpencastMatomoUserTrackingDataPlugin extends MatomoUserTrac
 
      
 
-    async isEnabled() {
+    async isEnabled() {        
         const isOcPlayer = this.player instanceof OpencastPaellaPlayer;
         if (!isOcPlayer) {
             this.player.log.warn('This plugin is only available in Opencast Paella Player', `${this.getPluginModuleInstance().moduleName} [${this.name}]`);
@@ -30,11 +30,12 @@ export default class OpencastMatomoUserTrackingDataPlugin extends MatomoUserTrac
         return await super.isEnabled();
     }
 
-    async getCurrentUserId() {
-        const ocPlayer: OpencastPaellaPlayer = this.player as OpencastPaellaPlayer;        
+    async getCurrentUserId() : Promise<string | null> {     
+
+        const ocPlayer = this.player instanceof OpencastPaellaPlayer ? this.player as OpencastPaellaPlayer : null;
         try {
             if ((this.config.logUserId) && (this.opencastUserName === undefined)) {
-                this.opencastUserName = await ocPlayer.opencastAuth.getLoggedUserName();
+                this.opencastUserName = await ocPlayer?.opencastAuth.getLoggedUserName();
             }
         }
         catch (e) {
