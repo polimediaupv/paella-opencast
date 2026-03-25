@@ -28,7 +28,7 @@
   "devDependencies": {
     "@asicupv/paella-core": "^2.11.3",
     "typescript": "^6.0.2",
-    "vite": "^7.0.1",
+    "vite": "^8.0.2",
     "vite-plugin-dts": "^4.5.3"
   },
   "dependencies": {
