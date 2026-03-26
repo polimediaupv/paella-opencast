@@ -13,7 +13,7 @@ export interface OpencastAuth {
     auth: (redirectUrl?: string, redirectTimeoutMs?: number) => Promise<void>
 }
 
-export type OpencastAuthConfig = {
+export type OpencastAuthConfig = string | {
     url?: string;
 };
 
@@ -148,8 +148,11 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
 
         redirectUrl = redirectUrl ?? window.location.href;
         redirectTimeoutMs = redirectTimeoutMs ?? 2000;
-        let authUrl: string | null = (this.#player.config as OpencastPaellaConfig).opencast?.auth?.url ?? `${OC_PAELLA8_BASE_URL}/auth.html`;
-        if (authUrl.startsWith('http') == false) {
+        const authConfig = (this.#player.config as OpencastPaellaConfig).opencast?.auth;
+        let authUrl: string | null = typeof authConfig === 'string'
+            ? authConfig
+            : (authConfig?.url ?? `${OC_PAELLA8_BASE_URL}/auth.html`);
+        if (authUrl && authUrl.startsWith('http') === false) {
             authUrl = this.#player.getUrlFromOpencastServer(authUrl);
         }
         if (authUrl) {
