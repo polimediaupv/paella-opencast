@@ -152,7 +152,7 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
         let authUrl: string | null = typeof authConfig === 'string'
             ? authConfig
             : (authConfig?.url ?? `${OC_PAELLA8_BASE_URL}/auth.html`);
-        if (authUrl.startsWith('http') == false) {
+        if (authUrl && authUrl.startsWith('http') === false) {
             authUrl = this.#player.getUrlFromOpencastServer(authUrl);
         }
         if (authUrl) {
