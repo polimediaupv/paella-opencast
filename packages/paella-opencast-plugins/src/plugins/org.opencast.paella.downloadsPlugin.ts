@@ -27,7 +27,7 @@ export default class OpencastDownloadsPlugin extends MenuGroupButtonPlugin {
     _downloadableContent: MenuGroupItem[] = [];
     _eventConversor: EventConversor;
 
-    constructor(player: Paella, name?: string) {
+    constructor(player: Paella, name: string) {
         super(player, name);
         const ocConfig = player.config as OpencastPaellaConfig;        
         this._eventConversor = new EventConversor(player, ocConfig.opencast?.conversionConfig ?? {});

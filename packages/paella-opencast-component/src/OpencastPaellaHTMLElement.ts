@@ -72,7 +72,7 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
 
     private debounce(fn: () => void, delay: number) {
-        let timer: NodeJS.Timeout | undefined;
+        let timer: ReturnType<typeof setTimeout>| undefined;
         return (...args: unknown[]) => {
             clearTimeout(timer);
             timer = setTimeout(() => fn.apply<this, unknown[], void>(this, args), delay);

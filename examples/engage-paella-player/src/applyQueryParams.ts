@@ -31,7 +31,7 @@ function humanTimeToSeconds(humanTime: string): number {
 async function setTrimming(player: Paella, trimmingData: Required<TrimmingParams>): Promise<void> {
     const { start, end, enabled } = trimmingData;
     if (enabled && start > 0 && start < end ) {
-        await player.videoContainer.setTrimming(trimmingData);
+        await player.videoContainer?.setTrimming(trimmingData);
     }
 };
 
@@ -39,7 +39,7 @@ async function setTrimming(player: Paella, trimmingData: Required<TrimmingParams
 async function applyTrimmingFromQueryParams(paella: Paella): Promise<void> {
     // Enable trimming
     // Retrieve video duration in case a default trim end time is needed
-    const videoDuration = await paella.duration();    
+    const videoDuration = await paella.duration() ?? 0;    
     let trimmingData = { start: 0, end: videoDuration, enabled: false };
 
     // Retrieve trimming data in URL param: ?trimming=1m2s;2m
@@ -119,7 +119,7 @@ async function applyCaptionsFromQueryParams(paella: Paella): Promise<void> {
         const captionSelected = paella.captions[captionsIndex];
         if (captionSelected) {
             paella.log.info(`Enabling captions: ${captionSelected?.label} (${captionSelected?.language})`, 'engage-paella-player');
-            paella.captionsCanvas.enableCaptions({ index: captionsIndex });
+            paella.captionsCanvas?.enableCaptions({ index: captionsIndex });
         }
     }
 }

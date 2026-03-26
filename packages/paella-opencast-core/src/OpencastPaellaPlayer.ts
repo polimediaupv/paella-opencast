@@ -1,6 +1,6 @@
 import { type Config, Paella } from '@asicupv/paella-core';
 import { theme as defaultOpencastSkin } from '@asicupv/paella-opencast-skin';
-import { type OpencastAuth, OpencastAuthDefaultImpl } from './OpencastAuth';
+import { type OpencastAuthConfig, type OpencastAuth, OpencastAuthDefaultImpl } from './OpencastAuth';
 import type { ConversionConfig } from './EventConversor/EventConversor';
 import type { Event } from './Event';
 import type { OpencastInitParams } from './OpencastInitParams';
@@ -19,8 +19,8 @@ import '@asicupv/paella-opencast-skin/opencast-paella-skin.css'
 // import CookieConsentPlugin from './plugins/org.opencast.paella.cookieconsent';
 
 export interface OpencastPaellaConfig extends Config {
-    opencast?: {
-        auth?: string;
+    opencast?: {        
+        auth?: OpencastAuthConfig;
         conversionConfig?: ConversionConfig;
         theme?: string
     }
@@ -74,7 +74,7 @@ export class OpencastPaellaPlayer extends Paella {
 
     async applyOpencastTheme() {        
         let ocThemeLoaded = false;
-
+        
         try {
             const paellaOpencastConfig = await this.initParams?.loadConfig!(this.initParams.configUrl!, this) as OpencastPaellaConfig;
             if (paellaOpencastConfig?.opencast?.theme) { 
@@ -91,10 +91,15 @@ export class OpencastPaellaPlayer extends Paella {
             this.log.error(`Error loading Opencast theme from config`, '@asicupv/paella-opencast-core');
         }
 
-        if (!ocThemeLoaded) {         
-            this.log.info('Loading default opencast theme', '@asicupv/paella-opencast-core');
-            // Load default opencast theme
-            await this.skin.loadSkin(defaultOpencastSkin);
+        try {
+            if (!ocThemeLoaded) {         
+                this.log.info('Loading default opencast theme', '@asicupv/paella-opencast-core');
+                // Load default opencast theme            
+                await this.skin.loadSkin(defaultOpencastSkin);
+            }
+        }
+        catch (err) {
+            this.log.error('Error loading Opencast theme', '@asicupv/paella-opencast-core');
         }
     }    
 }

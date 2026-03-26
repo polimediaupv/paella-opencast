@@ -34,21 +34,29 @@ export default defineConfig({
         watch: resolve(__dirname, 'watch.html'),
         auth: resolve(__dirname, 'auth.html'),
       },
-      output: {
-        manualChunks: {
-          // 'paella-core': ['@asicupv/paella-core'],
-          'paella-opencast-core': ['@asicupv/paella-opencast-core', '@asicupv/paella-core'],          
-          'paella-plugins': [
-            '@asicupv/paella-basic-plugins',
-            '@asicupv/paella-slide-plugins',
-            '@asicupv/paella-zoom-plugin',
-            '@asicupv/paella-webgl-plugins',
-            '@asicupv/paella-video-plugins',
-            '@asicupv/paella-extra-plugins',
-            '@asicupv/paella-opencast-plugins'
-          ],
-        }
-      }
+      // output: {
+      //   manualChunks(id) {
+      //     // paella-opencast-core y paella-core
+      //     if (id.includes('@asicupv/paella-opencast-core') || id.includes('@asicupv/paella-core')) {
+      //       return 'paella-opencast-core';
+      //     }
+
+      //     // paella-plugins
+      //     const paellaPlugins = [
+      //       '@asicupv/paella-basic-plugins',
+      //       '@asicupv/paella-slide-plugins',
+      //       '@asicupv/paella-zoom-plugin',
+      //       '@asicupv/paella-webgl-plugins',
+      //       '@asicupv/paella-video-plugins',
+      //       '@asicupv/paella-extra-plugins',
+      //       '@asicupv/paella-opencast-plugins'
+      //     ];
+
+      //     if (paellaPlugins.some(plugin => id.includes(plugin))) {
+      //       return 'paella-plugins';
+      //     }
+      //   }        
+      // }
     },    
   },  
   server: {
