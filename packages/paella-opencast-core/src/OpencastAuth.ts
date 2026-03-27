@@ -77,11 +77,11 @@ export class OpencastAuthDefaultImpl implements OpencastAuth {
 
     async getLoggedUserName(): Promise<string | null> {
         const userInfo = await this.getUserInfo();
-
-        if (userInfo?.userRole && (userInfo?.userRole != 'ROLE_USER_ANONYMOUS')) {
-            return userInfo?.user?.username ?? null;
+        const isAnonymous = ((userInfo?.roles?.length == 1) && (userInfo.roles[0] == userInfo.org?.anonymousRole));
+        if (isAnonymous) {
+            return null;
         }
-        return null;
+        return userInfo?.user?.username ?? null;
     }
 
     async isAnonymous(): Promise<boolean> {
