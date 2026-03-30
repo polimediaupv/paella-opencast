@@ -1,6 +1,6 @@
 {
   "name": "@asicupv/paella-opencast-core",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "exports": {
     ".": {
@@ -32,7 +32,7 @@
     "vite-plugin-dts": "^4.5.3"
   },
   "dependencies": {
-    "@asicupv/paella-opencast-skin": "^2.0.0"
+    "@asicupv/paella-opencast-skin": "^2.0.1"
   },
   "peerDependencies": {
     "@asicupv/paella-core": "^2.11.3"
