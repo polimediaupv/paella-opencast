@@ -1,5 +1,5 @@
 ---
-"@asicupv/paella-opencast-core": minor
+"@asicupv/paella-opencast-core": patch
 ---
 
 Fixed test whether the user is authenticated in Opencast
