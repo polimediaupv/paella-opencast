@@ -2,6 +2,10 @@
   "name": "@asicupv/paella-opencast-component",
   "version": "2.0.2",
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": {
       "types": "./dist/types/paella-opencast-component.es.d.ts",

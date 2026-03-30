@@ -2,6 +2,10 @@
   "name": "@asicupv/paella-opencast-skin",
   "version": "2.0.1",
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": {
       "types": "./dist/types/paella-opencast-skin.es.d.ts",
