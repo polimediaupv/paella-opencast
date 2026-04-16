@@ -314,7 +314,7 @@ export class EventConversor {
 
         // split tracks by flavor
         const flavoredTracks = tracks
-        .filter(track => track.mimetype === 'video/mp4' || track.mimetype === 'application/x-mpegURL')
+        .filter(track => track.mimetype === 'video/mp4' || track.mimetype === 'application/x-mpegURL' || track.mimetype === 'audio/m4a')
         .reduce<Record<string, Track[]>>((acc, track) => {
             const flavor = splitFlavor(track.flavor)[0];
             acc[flavor] = acc[flavor] ? [...acc[flavor], track] : [track];
@@ -348,6 +348,9 @@ export class EventConversor {
             const hlsLiveSources = tracks
             .filter(track => track.mimetype === 'application/x-mpegURL' && track.is_live === true)
             .map(getSource);
+            const onlyAudioSources = tracks
+            .filter(track => track.mimetype === 'audio/m4a')
+            .map(getSource);
 
             const hasAudio = tracks.some(track => track.audio);
             if (hasAudio && (mainAudioFlavor === null || mainAudioFlavor === mainFlavor)) {
@@ -363,7 +366,8 @@ export class EventConversor {
                 sources: {
                     ...(mp4Sources.length > 0 && { mp4: mp4Sources }),
                     ...(hlsSources.length > 0 && { hls: hlsSources }),
-                    ...(hlsLiveSources.length > 0 && { hlsLive: hlsLiveSources })
+                    ...(hlsLiveSources.length > 0 && { hlsLive: hlsLiveSources }),
+                    ...(onlyAudioSources.length > 0 && { audio: onlyAudioSources })
                 }
             };
             return stream;
