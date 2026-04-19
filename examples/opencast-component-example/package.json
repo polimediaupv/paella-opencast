@@ -11,8 +11,8 @@
     "clean:deps": "rimraf node_modules"
   },
   "devDependencies": {
-    "typescript": "^6.0.2",
-    "vite": "^8.0.2"
+    "typescript": "^6.0.3",
+    "vite": "^8.0.8"
   },
   "dependencies": {
     "@asicupv/paella-opencast-component": "^2.0.1",
