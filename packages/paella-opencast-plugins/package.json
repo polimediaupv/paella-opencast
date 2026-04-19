@@ -30,7 +30,6 @@
     "clean:deps": "rimraf node_modules"
   },
   "devDependencies": {
-    "@asicupv/paella-ai-plugins": "^2.7.0",
     "@asicupv/paella-extra-plugins": "^2.9.0",
     "@asicupv/paella-opencast-core": "^2.0.2",
     "@asicupv/paella-user-tracking": "^2.4.1",
@@ -39,7 +38,6 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "peerDependencies": {
-    "@asicupv/paella-ai-plugins": "^2.7.0",
     "@asicupv/paella-extra-plugins": "^2.9.0",
     "@asicupv/paella-opencast-core": "^2.0.2",
     "@asicupv/paella-user-tracking": "^2.4.1"
