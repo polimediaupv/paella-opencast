@@ -24,6 +24,7 @@
     "lint": "turbo lint",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "turbo run test:e2e --filter=engage-paella-player",
     "clean:build": "turbo clean:build && rimraf .turbo coverage",
     "clean:deps": "rimraf node_modules",
     "changeset:add": "changeset add",
@@ -37,6 +38,7 @@
     "doc"
   ],
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.29.8",
     "@testing-library/dom": "^10.4.0",

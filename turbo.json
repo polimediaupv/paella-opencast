@@ -14,6 +14,11 @@
     "test": {
       "dependsOn": ["^test"]
     },
+    "test:e2e": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "outputs": ["playwright-report/**", "test-results/**"]
+    },
     "clean:build": {
       "dependsOn": ["^clean:build"],
       "cache": false

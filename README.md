@@ -76,6 +76,12 @@ npm run dev:libs
 # Start development for Engage player example
 npm run dev:engage
 
+# Run unit tests (Vitest)
+npm test
+
+# Run E2E tests (Playwright)
+npm run test:e2e
+
 ```
 
 ## 🏗️ Project Structure
