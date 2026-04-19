@@ -1,5 +1,5 @@
 {
-  "$schema": "https://turborepo.com/schema.json",
+  "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -7,12 +7,12 @@
       "outputs": ["dist/**"]
     },
     "dev": {
-      "dependsOn": ["build"],
+      "dependsOn": ["^build"],
       "persistent": true,
       "cache": false
     },
     "test": {
-      "dependsOn": ["^test"]
+      "dependsOn": []
     },
     "test:e2e": {
       "dependsOn": ["build"],
