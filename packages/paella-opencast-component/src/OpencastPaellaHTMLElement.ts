@@ -163,10 +163,11 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
         }
     }    
 
-    // disconnectedCallback(): void {
-    //     console.debug('Opencast Paella Player Component disconnected from the DOM.');
-    //     // Clean up resources here if needed
-    // }
+    disconnectedCallback(): void {
+        console.debug('Opencast Paella Player Component disconnected from the DOM.');
+        this.innerHTML = '';
+        this._paella = null;
+    }
 
     // adoptedCallback(oldDocument: Document, newDocument: Document): void {
     //     console.debug('Opencast Paella Player Component adopted from one document to another');

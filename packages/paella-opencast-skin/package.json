@@ -25,6 +25,7 @@
     "dev": "tsc && vite build --watch --emptyOutDir=false",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "test": "vitest --run",
     "clean:build": "rimraf .turbo dist",
     "clean:deps": "rimraf node_modules"
   },
