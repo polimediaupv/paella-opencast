@@ -36,7 +36,7 @@ export const createMockPlayer = () => {
         setPlaybackRate: vi.fn(() => Promise.resolve()),
         
 
-        videoId: vi.fn(() => 'test-video-id')
+        videoId: 'test-video-id'
         // videoManifest: {
         //     metadata: {}
         // },
