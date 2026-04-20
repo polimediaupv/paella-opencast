@@ -48,7 +48,7 @@ test.describe('Player URL query parameters', () => {
     const trimStart = await page.evaluate(`${playerInstanceStr}.videoContainer.trimStart`);
     const trimEnd = await page.evaluate(`${playerInstanceStr}.videoContainer.trimEnd`);
     const duration = await page.evaluate(`${playerInstanceStr}.videoContainer.duration()`);
-    await expect(trimState).toBeTruthy;
+    await expect(trimState).toBeTruthy();
     await expect(trimStart).toBe(5);
     await expect(trimEnd).toBe(20);
     await expect(duration).toBe(15);
@@ -64,7 +64,7 @@ test.describe('Player URL query parameters', () => {
     const trimStart = await page.evaluate(`${playerInstanceStr}.videoContainer.trimStart`);
     const trimEnd = await page.evaluate(`${playerInstanceStr}.videoContainer.trimEnd`);
     const duration = await page.evaluate(`${playerInstanceStr}.videoContainer.duration()`);
-    await expect(trimState).toBeTruthy;
+    await expect(trimState).toBeTruthy();
     await expect(trimStart).toBe(5);
     await expect(trimEnd).toBe(20);
     await expect(duration).toBe(15);
