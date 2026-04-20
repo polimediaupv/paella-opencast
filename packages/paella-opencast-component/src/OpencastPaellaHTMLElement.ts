@@ -48,6 +48,8 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
     private _paella: OpencastPaellaPlayer | null = null;
     private _isUpdating = false;
     private _hasPendingUpdate = false;
+    private _isMounted = false;
+    private debounceTimer: ReturnType<typeof setTimeout> | undefined;
     private debouncedUpdate: () => void;
 
 
@@ -72,13 +74,25 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
 
     private debounce(fn: () => void, delay: number) {
-        let timer: ReturnType<typeof setTimeout>| undefined;
         return (...args: unknown[]) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => fn.apply<this, unknown[], void>(this, args), delay);
+            clearTimeout(this.debounceTimer);
+            this.debounceTimer = setTimeout(() => {
+                this.debounceTimer = undefined;
+                fn.apply<this, unknown[], void>(this, args);
+            }, delay);
         };
-    }    
+    }
+
+    private cancelDebouncedUpdate() {
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = undefined;
+    }
+
     private async enqueueUpdate() {
+        if (!this._isMounted) {
+            return;
+        }
+
         if (this._isUpdating) {
             this._hasPendingUpdate = true;
             return;
@@ -86,9 +100,14 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
         this._isUpdating = true;
         do {
+            if (!this._isMounted) {
+                this._hasPendingUpdate = false;
+                break;
+            }
+
             this._hasPendingUpdate = false;
             await this.update();
-        } while (this._hasPendingUpdate);
+        } while (this._hasPendingUpdate && this._isMounted);
         this._isUpdating = false;
     }
 
@@ -97,6 +116,10 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
      * This method initializes the player, applies the theme, and loads the manifest.
      */
     private async update() {
+        if (!this._isMounted) {
+            return;
+        }
+
         const videoId = this.getAttribute('video-id');
         if (!videoId) {
             console.warn('No video-id attribute found. Opencast Paella Player Component will not be updated.');
@@ -153,6 +176,7 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
     connectedCallback(): void {
         console.debug('Opencast Paella Player Component connected to the DOM.');
+        this._isMounted = true;
         this.debouncedUpdate();
     }
 
@@ -163,10 +187,14 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
         }
     }    
 
-    // disconnectedCallback(): void {
-    //     console.debug('Opencast Paella Player Component disconnected from the DOM.');
-    //     // Clean up resources here if needed
-    // }
+    disconnectedCallback(): void {
+        console.debug('Opencast Paella Player Component disconnected from the DOM.');
+        this._isMounted = false;
+        this._hasPendingUpdate = false;
+        this.cancelDebouncedUpdate();
+        this.innerHTML = '';
+        this._paella = null;
+    }
 
     // adoptedCallback(oldDocument: Document, newDocument: Document): void {
     //     console.debug('Opencast Paella Player Component adopted from one document to another');

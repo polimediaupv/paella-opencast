@@ -1,0 +1,517 @@
+{
+  "id": "ID-dual-stream-demo",
+  "metadata": {
+    "title": "Dual-Stream Demo",
+    "subject": "Subject",
+    "description": "Description\nLine 2\nLine 3",
+    "language": "eng",
+    "rightsHolder": "rights",
+    "license": "CC-BY-SA",
+    "isPartOf": "ID-openmedia-opencast",
+    "seriesTitle": "Open Media for Opencast",
+    "creator": "Administrator",
+    "presenters": [
+      "Lars Kiesow",
+      "Presenter 2",
+      "Presenter 3"
+    ],
+    "contributors": [
+      "Contributor 1",
+      "Contributor 2",
+      "Contributor 3"
+    ],
+    "startDate": "2025-06-19T00:03:00.000Z",
+    "duration": 64000,
+    "location": "location",
+    "created": "2025-06-19T00:03:00.000Z",
+    "id": "ID-dual-stream-demo"
+  },
+  "tracks": [
+    {
+      "id": "b7ae0455-d033-4a28-a39b-dc866c558237",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/ce3279fc-ffff-4e86-9262-d55a5c3e14e3/dualstream.vtt",
+      "mimetype": "text/vtt",
+      "flavor": "captions/source+en",
+      "tags": [],
+      "checksum": "f4574d045290de640e5e02131d5a1a36 (md5)",
+      "size": 1051,
+      "is_master": false,
+      "is_live": false,
+      "duration": 0,
+      "audio": false,
+      "video": false
+    },
+    {
+      "id": "f99ab917-00be-4f0a-ad4b-7fd2497830b2",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/227ccb35-e8e6-45a9-9eae-e89908a4c59b/dualstream-presenter.mp4",
+      "mimetype": "video/mp4",
+      "flavor": "presenter/preview",
+      "tags": [
+        "atom",
+        "default",
+        "engage-download",
+        "engage-streaming",
+        "rss"
+      ],
+      "checksum": "d9d29542519291c9f9d2ea19d9dc270c (md5)",
+      "size": 9184722,
+      "is_master": false,
+      "is_live": false,
+      "duration": 64.711,
+      "audio": {},
+      "video": {
+        "framecount": 1939,
+        "bitrate": 1057856,
+        "framerate": 30,
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "id": "9bd2247c-6457-4331-a40d-6f7008187085",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/9a463446-f2f6-487b-ac3a-122ab4ba8e11/dualstream-presentation.mp4",
+      "mimetype": "video/mp4",
+      "flavor": "presentation/preview",
+      "tags": [
+        "atom",
+        "default",
+        "engage-download",
+        "engage-streaming",
+        "rss"
+      ],
+      "checksum": "b2ac76f582d7d29f7b038d19c621a5cf (md5)",
+      "size": 3691422,
+      "is_master": false,
+      "is_live": false,
+      "duration": 64.711,
+      "audio": {},
+      "video": {
+        "framecount": 1937,
+        "bitrate": 378296,
+        "framerate": 30,
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  ],
+  "attachments": [
+    {
+      "id": "f1d481b5-8684-46cf-9b84-98629c3cf2fd",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/2d1dbdeb-dc77-4a5e-80c7-e9bf8dd07ff7/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:23:716F1000",
+      "checksum": "",
+      "size": 2039
+    },
+    {
+      "id": "efb01f93-20ca-410a-81f1-45e7ffc44248",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/2e265421-533f-4b8d-840e-02c6eec883cc/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:32:340F1000",
+      "checksum": "",
+      "size": 2101
+    },
+    {
+      "id": "22be3488-9fd1-4b86-9392-95a718735c9c",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/5bd99724-f5a3-4115-8177-225e87256322/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:06:468F1000",
+      "checksum": "",
+      "size": 2546
+    },
+    {
+      "id": "73408591-f431-4614-99aa-29f04c7ea598",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/e48e3ef5-4680-4774-9347-39e45068db86/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:12:936F1000",
+      "checksum": "",
+      "size": 2553
+    },
+    {
+      "id": "0a83db01-086c-4236-97ac-132fcb6fe20d",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/bfb113ba-2ca2-44ca-beb7-0b8c795ea560/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:15:92F1000",
+      "checksum": "",
+      "size": 3117
+    },
+    {
+      "id": "d6ca019a-5f03-4a0b-a944-8e08c3b57840",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/3f1f8744-f217-4755-ada2-d311b4a6a476/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:02:156F1000",
+      "checksum": "",
+      "size": 2434
+    },
+    {
+      "id": "b46552bd-1949-45d8-aa2f-f61a692c324d",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/c34be8e4-fc47-444a-8ba3-a5f6f3f525a0/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:43:120F1000",
+      "checksum": "",
+      "size": 2141
+    },
+    {
+      "id": "d601b4c4-ebe6-4f58-b89f-b6066fff5a37",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/7d94be68-762d-42d1-9ee4-ab6741ca34b6/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:58:212F1000",
+      "checksum": "",
+      "size": 2147
+    },
+    {
+      "id": "37b507ed-b5ff-4845-92c2-c256565cc3b7",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/0e8ab5aa-512b-444e-ba07-046ed42c66f3/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:04:312F1000",
+      "checksum": "",
+      "size": 2437
+    },
+    {
+      "id": "1450271f-e659-4361-85c9-bba8cc8dad69",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/dd4ddc4d-dc3a-44c5-bd13-bcd63d328d3e/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:28:28F1000",
+      "checksum": "",
+      "size": 2050
+    },
+    {
+      "id": "4afdc667-17b7-44de-ba44-1794874b78e4",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/adf8885a-7dba-48ba-9f94-0145c5349dcd/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:34:496F1000",
+      "checksum": "",
+      "size": 999
+    },
+    {
+      "id": "3661da20-78e5-4d66-ae4f-a044aab631c6",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/b11b771f-f1eb-463d-9682-ec56247abebe/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:01:00:368F1000",
+      "checksum": "",
+      "size": 2145
+    },
+    {
+      "id": "9e6fc332-6716-470e-b751-923035d87787",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/8d603d32-469d-4e0d-9bb7-796e9a2897e9/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:30:184F1000",
+      "checksum": "",
+      "size": 2105
+    },
+    {
+      "id": "b2a620d5-daea-4d66-a63e-7e87d03b8802",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/99525b5d-dc81-4822-bf01-7424091a7489/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:45:276F1000",
+      "checksum": "",
+      "size": 2140
+    },
+    {
+      "id": "9b64da30-e64b-4d87-bfb7-ec6f008f246d",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/c947308f-d9b4-43a6-a5c3-5460f8bf0d54/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:08:624F1000",
+      "checksum": "",
+      "size": 2555
+    },
+    {
+      "id": "423601dd-15ee-46fd-a604-fbcb9ee23581",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/efcd114a-8f8b-4aac-96b8-56f8ded8ddb6/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:49:588F1000",
+      "checksum": "",
+      "size": 2143
+    },
+    {
+      "id": "1c325f0a-89ad-4f84-b22d-9d99279c1654",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/230fafc0-1be0-4d96-986c-a29f71c8a24c/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:25:872F1000",
+      "checksum": "",
+      "size": 2039
+    },
+    {
+      "id": "a7926802-d351-4abe-a763-ff1803a54bba",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/f19e4957-af6e-4f57-b82f-a9e9d1703950/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:47:432F1000",
+      "checksum": "",
+      "size": 2147
+    },
+    {
+      "id": "c9f460a0-8271-4c0e-b194-7eddb3a019fb",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/1536ae50-d325-4f87-a20b-05ee38fbe1b7/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:38:808F1000",
+      "checksum": "",
+      "size": 2143
+    },
+    {
+      "id": "48c4118e-a29d-4bf1-b550-d1159625cd1b",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/beb654fb-0f84-468a-9577-e044585cf327/episode-security.xml",
+      "mimetype": "text/xml",
+      "flavor": "security/xacml+episode",
+      "tags": [],
+      "ref": "",
+      "checksum": "",
+      "size": -1
+    },
+    {
+      "id": "4538a4a4-00e8-4eed-8dd4-5970e5a65045",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/d74261e6-b4bb-4dad-9792-01792e558504/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:40:964F1000",
+      "checksum": "",
+      "size": 2141
+    },
+    {
+      "id": "a0284c7d-dd75-459f-89d4-ca1e6b2c1cca",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/e2a41645-5728-4b33-8d81-dcd622016fb1/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:56:56F1000",
+      "checksum": "",
+      "size": 2147
+    },
+    {
+      "id": "e4d6316a-9293-4770-8e0b-9205cdd3e23b",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/1b5e4e0e-8a9b-4865-9591-743457e543f7/dualstream-presentation_1.000s-search.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/search+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201",
+      "checksum": "",
+      "size": 2453
+    },
+    {
+      "id": "16f4d790-bfb4-4363-adfd-097ec244968e",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/3553727d-cc2a-4977-8181-d7773dadde2a/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:10:780F1000",
+      "checksum": "",
+      "size": 2555
+    },
+    {
+      "id": "4a447b16-0e1c-4321-be50-1a31ae78a981",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/1ec4c681-3325-4f70-a39b-6eb58cdde7e2/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:51:744F1000",
+      "checksum": "",
+      "size": 2142
+    },
+    {
+      "id": "c8caf87e-dbb1-45c1-8db7-99d667a9f914",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/48804e5e-9651-4f5a-ab5c-f9719af78015/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:36:652F1000",
+      "checksum": "",
+      "size": 2773
+    },
+    {
+      "id": "b1358f96-f2c3-4b4b-8920-7ee41a1d36f8",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/b870e277-ba4b-4404-9e7d-b48f2f5b797f/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:17:248F1000",
+      "checksum": "",
+      "size": 1064
+    },
+    {
+      "id": "ba87d912-023d-487d-a134-805475d67d02",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/816740d5-4936-4f7a-9e41-5c7b34c9ed2e/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:53:900F1000",
+      "checksum": "",
+      "size": 2141
+    },
+    {
+      "id": "2b52cebe-8c59-44b7-a504-4a59fd9953eb",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/0acfaaab-4f7e-49f6-b573-6e084a571437/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:19:404F1000",
+      "checksum": "",
+      "size": 2050
+    },
+    {
+      "id": "30956762-56b5-4351-b6ec-f5f95b426085",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/0b356a55-99ab-4b7b-87f1-de244da5b040/dualstream-presentation_1.000s-player.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/player+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201",
+      "checksum": "",
+      "size": 26601
+    },
+    {
+      "id": "0bd12258-4c65-469a-9482-762a23caaaa4",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/830ab156-5f0a-4d77-bd22-2601938339c5/dualstream-presenter_1.000s-player.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presenter/player+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:d47b65a2-5954-498f-abac-76b29f0772ed",
+      "checksum": "",
+      "size": 34557
+    },
+    {
+      "id": "7851f3ad-b8fa-40e5-9d0e-6f47fc1abc46",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/015567ee-9d80-4c7e-9830-8014e028830d/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:01:02:524F1000",
+      "checksum": "",
+      "size": 2131
+    },
+    {
+      "id": "84c6bb5f-a81c-433a-900b-2ce5c4ffbae7",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/50134475-336b-4632-b353-c83acb6c8985/dualstream-presenter_1.000s-search.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presenter/search+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:d47b65a2-5954-498f-abac-76b29f0772ed",
+      "checksum": "",
+      "size": 2815
+    },
+    {
+      "id": "a0ff0f81-09df-4db8-9d5b-089064d00480",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/47bc65b3-81fb-46ad-9442-f1652330b36c/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:00:0F1000",
+      "checksum": "",
+      "size": 2474
+    },
+    {
+      "id": "35434800-0865-4558-956b-bce60d2f5739",
+      "url": "https://develop.opencast.org/static/mh_default_org/engage-player/ID-dual-stream-demo/165d6500-0ae3-46a9-aedf-05f71fe623f6/dualstream-presentation.jpg",
+      "mimetype": "image/jpeg",
+      "flavor": "presentation/segment+preview",
+      "tags": [
+        "engage-download"
+      ],
+      "ref": "track:0278a658-fe0b-4aaa-9b95-7486eaee2201;time=T00:00:21:560F1000",
+      "checksum": "",
+      "size": 2044
+    }
+  ]
+}

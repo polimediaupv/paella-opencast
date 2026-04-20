@@ -20,9 +20,10 @@ export default defineConfig({
             },
             external: [                
                 '@asicupv/paella-opencast-core',
-                '@asicupv/paella-user-tracking'
+                '@asicupv/paella-user-tracking',
+                '@asicupv/paella-extra-plugins'
             ]
-        }        
+        }
     },
     
     plugins: [dts({

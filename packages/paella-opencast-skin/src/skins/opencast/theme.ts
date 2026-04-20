@@ -83,6 +83,7 @@ export const theme : SkinTheme = {
         { "plugin": "es.upv.paella.playPauseButton", "identifier": "play", "icon": PlayIcon },
 
         { "plugin": "es.upv.paella.layoutSelector", "identifier": "layoutIcon", "icon": LayoutIcon },
+        { "plugin": "es.upv.paella.qualitySelector", "identifier": "settingsIcon", "icon": Settings },
 
         { "plugin": "es.upv.paella.backwardButtonPlugin", "identifier": "backwardIcon", "icon": BackwardIcon },
         { "plugin": "es.upv.paella.forwardButtonPlugin", "identifier": "forwardIcon", "icon": ForwardIcon },

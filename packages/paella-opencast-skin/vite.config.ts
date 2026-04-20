@@ -21,5 +21,8 @@ export default defineConfig({
     plugins: [dts({
         outDir: 'dist/types',
         insertTypesEntry: true
-    })]
+    })],
+    test: {
+        environment: 'jsdom'
+    }
 });
