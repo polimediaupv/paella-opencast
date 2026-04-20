@@ -97,7 +97,7 @@ export function runButtonPluginTests(getPlugin: () => ButtonPlugin, getMockPlaye
         const plugin = getPlugin();
         const mockPlayer = getMockPlayer();
         const description = plugin.getDescription();
-        expect(description).toBeDefined;
+        expect(description).toBeDefined();
         expect(mockPlayer.translate).toHaveBeenCalled();
     });
 
