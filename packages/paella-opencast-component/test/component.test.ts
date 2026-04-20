@@ -189,6 +189,7 @@ describe('OpencastPaellaHTMLElement', () => {
   test('should process exactly one pending update while first update is running', async () => {
     mockState.blockFirstLoadManifest = true;
     element.setAttribute('video-id', 'pending-video');
+    element.connectedCallback();
 
     const firstUpdate = (element as any).enqueueUpdate();
     await Promise.resolve();
@@ -219,6 +220,17 @@ describe('OpencastPaellaHTMLElement', () => {
 
     expect(element.paella).toBeNull();
     expect(element.innerHTML).toBe('');
+  });
+
+  test('should cancel a pending debounced update when disconnected', async () => {
+    element.setAttribute('video-id', 'video-pending-disconnect');
+    element.connectedCallback();
+    element.disconnectedCallback();
+
+    await flushDebounceAndMicrotasks();
+
+    expect(playerConstructorSpy).not.toHaveBeenCalled();
+    expect(element.paella).toBeNull();
   });
 
   test('should use opencast-user-canWrite attribute without calling parent auth', async () => {
