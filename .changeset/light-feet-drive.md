@@ -4,4 +4,4 @@
 "@asicupv/paella-opencast-core": patch
 ---
 
-Fix depencency issues and update
+Fix dependency issues and update
