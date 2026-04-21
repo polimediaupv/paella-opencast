@@ -1,6 +1,6 @@
 {
   "name": "@asicupv/paella-opencast-component",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "type": "module",
   "publishConfig": {
     "access": "public",
@@ -38,8 +38,8 @@
   "dependencies": {
     "@asicupv/paella-basic-plugins": "^2.6.0",
     "@asicupv/paella-extra-plugins": "^2.9.0",
-    "@asicupv/paella-opencast-core": "^2.0.2",
-    "@asicupv/paella-opencast-plugins": "^2.0.2",
+    "@asicupv/paella-opencast-core": "^2.0.3",
+    "@asicupv/paella-opencast-plugins": "^2.0.3",
     "@asicupv/paella-slide-plugins": "^2.6.0",
     "@asicupv/paella-video-plugins": "^2.5.1",
     "@asicupv/paella-webgl-plugins": "^2.4.0",

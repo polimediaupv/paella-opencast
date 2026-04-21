@@ -1,5 +1,15 @@
 # @asicupv/paella-opencast-core
 
+## 2.0.3
+
+### Patch Changes
+
+- [#86](https://github.com/polimediaupv/paella-opencast/pull/86) [`6b0c460`](https://github.com/polimediaupv/paella-opencast/commit/6b0c46064cd06395c176badb530de3307dc80861) Thanks [@miesgre](https://github.com/miesgre)! - Update paella-core to 2.12.8
+
+- [#85](https://github.com/polimediaupv/paella-opencast/pull/85) [`c009b57`](https://github.com/polimediaupv/paella-opencast/commit/c009b570f2818c45ead871713154e6a4cc3a7306) Thanks [@miesgre](https://github.com/miesgre)! - Support for audio streams in EventConversor
+
+- [#88](https://github.com/polimediaupv/paella-opencast/pull/88) [`fd99963`](https://github.com/polimediaupv/paella-opencast/commit/fd9996383a8288edaacdba1587831bec95924423) Thanks [@miesgre](https://github.com/miesgre)! - Fix dependency issues and update
+
 ## 2.0.2
 
 ### Patch Changes
