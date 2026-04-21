@@ -1,5 +1,11 @@
 # @asicupv/paella-opencast-plugins
 
+## 2.0.3
+
+### Patch Changes
+
+- [#88](https://github.com/polimediaupv/paella-opencast/pull/88) [`fd99963`](https://github.com/polimediaupv/paella-opencast/commit/fd9996383a8288edaacdba1587831bec95924423) Thanks [@miesgre](https://github.com/miesgre)! - Fix dependency issues and update
+
 ## 2.0.2
 
 ### Patch Changes
