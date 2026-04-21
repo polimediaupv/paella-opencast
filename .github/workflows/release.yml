@@ -12,6 +12,12 @@ jobs:
     name: Release
     if: github.repository == 'polimediaupv/paella-opencast'
     runs-on: ubuntu-latest
+        
+    permissions:
+      contents: write       # Required for changesets to push commits/tags
+      pull-requests: write  # Required for changesets to create the PR
+      id-token: write       # Required for GitHub to emit the OIDC token to npm
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v6
@@ -20,6 +26,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22.x
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
         run: npm ci
@@ -35,4 +42,5 @@ jobs:
           title: "[ci] release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Enable npm's provenance feature to include metadata about the build environment in the published package
+          NPM_CONFIG_PROVENANCE: true
