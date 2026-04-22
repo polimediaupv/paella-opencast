@@ -1,0 +1,42 @@
+name: Upload Engage Release Assets
+
+on:
+  push:
+    tags:
+      - 'engage-paella-player@*'
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Engage Player
+        run: |
+            npm run build:libs
+            npm run build -w examples/engage-paella-player
+
+      - name: Create Zip
+        run: |
+          cd examples/engage-paella-player/dist
+          zip -r ../../../engage-paella-player-build.zip .
+
+      - name: Upload Asset to GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: engage-paella-player-build.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
