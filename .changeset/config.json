@@ -7,7 +7,14 @@
   "access": "public",
   "baseBranch": "origin/main",
   "updateInternalDependencies": "patch",
-  "ignore": ["opencast-component-example"],
+  "ignore": [
+    "opencast-component-example",
+    "doc"
+  ],
+  "privatePackages": {
+    "version": true,
+    "tag": true 
+  },
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   }
