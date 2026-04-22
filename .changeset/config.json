@@ -13,7 +13,7 @@
   ],
   "privatePackages": {
     "version": true,
-    "tag": true 
+    "tag": true
   },
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
