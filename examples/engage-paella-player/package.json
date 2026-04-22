@@ -14,7 +14,6 @@
     "clean:deps": "rimraf node_modules"
   },
   "devDependencies": {
-    "@asicupv/paella-opencast-component": "^2.0.1",
     "@tailwindcss/vite": "^4.2.2",
     "express": "^5.2.1",
     "tailwindcss": "^4.2.2",
@@ -23,12 +22,14 @@
     "vite-plugin-static-copy": "^4.1.0"
   },
   "dependencies": {
+    "@asicupv/paella-opencast-component": "workspace:*",
+    "@asicupv/paella-opencast-skin": "workspace:*",
     "@asicupv/paella-ai-plugins": "^2.7.0",
     "@asicupv/paella-basic-plugins": "^2.6.0",
     "@asicupv/paella-embedapi": "^2.12.0",
     "@asicupv/paella-extra-plugins": "^2.9.0",
-    "@asicupv/paella-opencast-core": "^2.0.1",
-    "@asicupv/paella-opencast-plugins": "^2.0.1",
+    "@asicupv/paella-opencast-core": "workspace:*",
+    "@asicupv/paella-opencast-plugins": "workspace:*",
     "@asicupv/paella-slide-plugins": "^2.6.0",
     "@asicupv/paella-video-plugins": "^2.5.1",
     "@asicupv/paella-webgl-plugins": "^2.4.0",
