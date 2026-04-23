@@ -12,7 +12,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   reporter: process.env.CI     
     ? [['list'], ['html', { open: 'never' }], ['@estruyf/github-actions-reporter', <GitHubActionOptions>{
-        title: 'Playwirght Test Results',
+        title: 'Playwright Test Results',
         useDetails: true,
         showError: true
       }]]     
