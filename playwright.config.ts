@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
+import type { GitHubActionOptions } from '@estruyf/github-actions-reporter'
 
 const engageRoot = './examples/engage-paella-player'
 
@@ -8,7 +9,14 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: process.env.CI     
+    ? [['list'], ['html', { open: 'never' }], ['@estruyf/github-actions-reporter', <GitHubActionOptions>{
+        title: 'Playwright Test Results',
+        useDetails: true,
+        showError: true
+      }]]     
+    : [['list'], ['html', { open: 'never' }]],
+
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://127.0.0.1:7070/paella8/ui',
