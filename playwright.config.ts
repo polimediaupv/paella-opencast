@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
-import type { GitHubActionOptions } from '@estruyf/github-actions-reporter';
+import type { GitHubActionOptions } from '@estruyf/github-actions-reporter'
 
 const engageRoot = './examples/engage-paella-player'
 
