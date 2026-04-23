@@ -38,9 +38,10 @@
     "doc"
   ],
   "devDependencies": {
-    "@playwright/test": "^1.59.1",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.31.0",
+    "@estruyf/github-actions-reporter": "^1.12.0",
+    "@playwright/test": "^1.59.1",
     "@testing-library/dom": "^10.4.1",
     "@vitest/coverage-v8": "^4.1.5",
     "@vitest/ui": "^4.1.5",
