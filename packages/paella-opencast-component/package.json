@@ -36,17 +36,17 @@
   },
   "devDependencies": {
     "typescript": "^6.0.3",
-    "vite": "^8.0.9",
+    "vite": "^8.0.10",
     "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
-    "@asicupv/paella-basic-plugins": "^2.6.0",
-    "@asicupv/paella-extra-plugins": "^2.9.0",
+    "@asicupv/paella-basic-plugins": "^2.6.1",
+    "@asicupv/paella-extra-plugins": "^2.9.1",
     "@asicupv/paella-opencast-core": "^2.0.3",
     "@asicupv/paella-opencast-plugins": "^2.0.3",
-    "@asicupv/paella-slide-plugins": "^2.6.0",
-    "@asicupv/paella-video-plugins": "^2.5.1",
-    "@asicupv/paella-webgl-plugins": "^2.4.0",
-    "@asicupv/paella-zoom-plugin": "^2.5.2"
+    "@asicupv/paella-slide-plugins": "^2.6.1",
+    "@asicupv/paella-video-plugins": "^2.5.2",
+    "@asicupv/paella-webgl-plugins": "^2.4.1",
+    "@asicupv/paella-zoom-plugin": "^2.5.3"
   }
 }
