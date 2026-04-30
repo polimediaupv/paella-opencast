@@ -369,10 +369,14 @@ export class EventConversor {
                     ...(hlsLiveSources.length > 0 && { hlsLive: hlsLiveSources }),
                     ...(onlyAudioSources.length > 0 && { audio: onlyAudioSources })
                 }
-            };
+            };            
             return stream;
         });
-
+        // Remnove onlyAudioStreams if there are mp4 or hls sources
+        const hasVideoSources = streams.some(stream => stream.sources.mp4 || stream.sources.hls || stream.sources.hlsLive);
+        if (hasVideoSources) {
+            return streams.filter(stream => stream.sources.mp4 || stream.sources.hls || stream.sources.hlsLive);
+        }
         return streams;
     }
 
