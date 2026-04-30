@@ -369,7 +369,7 @@ export class EventConversor {
                     ...(hlsLiveSources.length > 0 && { hlsLive: hlsLiveSources }),
                     ...(onlyAudioSources.length > 0 && { audio: onlyAudioSources })
                 }
-            };            
+            };
             return stream;
         });
         // Remove onlyAudioStreams if there are mp4 or hls sources
