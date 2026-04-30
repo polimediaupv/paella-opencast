@@ -444,6 +444,25 @@ describe('EventConversor', () => {
                 expect(flavors).toContain('presentation');
             });
 
+            test('should remove audio-only streams when video streams exist', () => {
+                const conversor = new EventConversor(makePlayer());
+                const event: Event = {
+                    id: 'test',
+                    tracks: [
+                        { id: 't1', url: 'http://example.com/presenter.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 },
+                        { id: 't2', url: 'http://example.com/presentation.mp4', mimetype: 'video/mp4', flavor: 'presentation/delivery', tags: [], is_live: false, is_master: false, duration: 60 },
+                        { id: 't3', url: 'http://example.com/audio.m4a', mimetype: 'audio/m4a', flavor: 'audio/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
+                    ]
+                };
+                const streams = conversor.getStreams(event);
+                const flavors = streams.map(s => s.content);
+
+                expect(streams).toHaveLength(2);
+                expect(flavors).toContain('presenter');
+                expect(flavors).toContain('presentation');
+                expect(flavors).not.toContain('audio');
+            });
+
             test('should include hls sources for non-live tracks', () => {
                 const conversor = new EventConversor(makePlayer());
                 const event: Event = {
