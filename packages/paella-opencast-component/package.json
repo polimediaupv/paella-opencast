@@ -1,6 +1,6 @@
 {
   "name": "@asicupv/paella-opencast-component",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "type": "module",
   "repository": {
     "type": "git",
@@ -42,7 +42,7 @@
   "dependencies": {
     "@asicupv/paella-basic-plugins": "^2.6.1",
     "@asicupv/paella-extra-plugins": "^2.9.1",
-    "@asicupv/paella-opencast-core": "^2.0.3",
+    "@asicupv/paella-opencast-core": "^2.0.4",
     "@asicupv/paella-opencast-plugins": "^2.0.3",
     "@asicupv/paella-slide-plugins": "^2.6.1",
     "@asicupv/paella-video-plugins": "^2.5.2",
