@@ -30,7 +30,7 @@ This monorepo contains the following packages:
 
 ## 🛠️ Requirements
 
-- **Node.js**: >= 22.0.0
+- **Node.js**: >= 22.13.0
 - **npm**: >= 10.2.4
 
 ## 📖 Quick Start
