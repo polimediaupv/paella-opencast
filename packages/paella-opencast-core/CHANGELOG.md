@@ -1,5 +1,11 @@
 # @asicupv/paella-opencast-core
 
+## 2.0.4
+
+### Patch Changes
+
+- [#99](https://github.com/polimediaupv/paella-opencast/pull/99) [`c977178`](https://github.com/polimediaupv/paella-opencast/commit/c977178109cde0e9d48d8b3e81045fa06d34d702) Thanks [@miesgre](https://github.com/miesgre)! - Fix audio-only streams when mp4 or hls sources are available
+
 ## 2.0.3
 
 ### Patch Changes
