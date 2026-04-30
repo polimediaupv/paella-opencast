@@ -372,7 +372,7 @@ export class EventConversor {
             };            
             return stream;
         });
-        // Remnove onlyAudioStreams if there are mp4 or hls sources
+        // Remove onlyAudioStreams if there are mp4 or hls sources
         const hasVideoSources = streams.some(stream => stream.sources.mp4 || stream.sources.hls || stream.sources.hlsLive);
         if (hasVideoSources) {
             return streams.filter(stream => stream.sources.mp4 || stream.sources.hls || stream.sources.hlsLive);
