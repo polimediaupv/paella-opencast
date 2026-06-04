@@ -82,5 +82,19 @@ export default defineConfig({
     "import.meta.env.CONFIG_FOLDER": JSON.stringify(process.env.CONFIG_FOLDER || '/ui/config/paella8/'),    
     "import.meta.env.OC_PAELLA8_URL_TEMPLATE": JSON.stringify(process.env.OC_PAELLA8_URL_TEMPLATE),
     "import.meta.env.USE_OC_SERVER_FROM_URL": JSON.stringify(process.env.USE_OC_SERVER_FROM_URL || 'false'),
+  },
+  optimizeDeps: {
+    // Excluir dependencias locales del monorepo para usar sus source maps directamente
+    exclude: [
+      '@asicupv/paella-core',
+      '@asicupv/paella-basic-plugins',
+      '@asicupv/paella-slide-plugins',
+      '@asicupv/paella-video-plugins',
+      '@asicupv/paella-webgl-plugins',
+      '@asicupv/paella-extra-plugins',
+      '@asicupv/paella-ai-plugins',
+      '@asicupv/paella-user-tracking',
+      '@asicupv/paella-zoom-plugin',
+    ]
   }
 });
