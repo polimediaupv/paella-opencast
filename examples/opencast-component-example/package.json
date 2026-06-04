@@ -15,13 +15,7 @@
     "vite": "^8.0.14"
   },
   "dependencies": {
-    "@asicupv/paella-basic-plugins": "^2.6.2",
-    "@asicupv/paella-extra-plugins": "^2.9.2",
     "@asicupv/paella-opencast-component": "^2.0.4",
-    "@asicupv/paella-opencast-core": "^2.0.4",
-    "@asicupv/paella-slide-plugins": "^2.6.2",
-    "@asicupv/paella-video-plugins": "^2.5.3",
-    "@asicupv/paella-webgl-plugins": "^2.4.2",
-    "@asicupv/paella-zoom-plugin": "^2.5.4"
+    "@asicupv/paella-opencast-core": "^2.0.4"
   }
 }

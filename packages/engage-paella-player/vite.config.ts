@@ -84,7 +84,7 @@ export default defineConfig({
     "import.meta.env.USE_OC_SERVER_FROM_URL": JSON.stringify(process.env.USE_OC_SERVER_FROM_URL || 'false'),
   },
   optimizeDeps: {
-    // Excluir dependencias locales del monorepo para usar sus source maps directamente
+    // Exclude local dependencies from the monorepo to use their source maps directly.
     exclude: [
       '@asicupv/paella-core',
       '@asicupv/paella-basic-plugins',
