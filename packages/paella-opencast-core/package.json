@@ -37,8 +37,8 @@
   "devDependencies": {
     "@asicupv/paella-core": "^2.12.10",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14",
-    "vite-plugin-dts": "^5.0.1"
+    "vite": "^8.0.16",
+    "vite-plugin-dts": "^5.0.2"
   },
   "dependencies": {
     "@asicupv/paella-opencast-skin": "^2.0.1"
