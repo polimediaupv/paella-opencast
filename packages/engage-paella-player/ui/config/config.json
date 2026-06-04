@@ -129,7 +129,15 @@
     ],
 
     "plugins": {
-    
+       "es.upv.paella.video360Canvas": {
+            "enabled": true,
+            "maxZoom": 2,
+            "minZoom": 0.5,
+            "speedX": 0.4,
+            "speedY": 0.4,
+            "order": 0
+        },
+
         "/* layout plugins */": "*********************************************************",
         "es.upv.paella.singleVideo": {
             "enabled": true,
@@ -538,23 +546,14 @@
 
         "es.upv.paella.zoomPlugin": {
             "enabled": true,
-            "order": 0,
+            "order": 1,
             "maxZoom": 400,
             "showButtons": true,
             "target": "presenter"
         },
 
         "es.upv.paella.videoCanvas": {
-            "enabled": false,
-            "order": 2
-        },
-
-        "es.upv.paella.video360Canvas": {
             "enabled": true,
-            "maxZoom": 2,
-            "minZoom": 0.5,
-            "speedX": 0.4,
-            "speedY": 0.4,
             "order": 2
         },
 
