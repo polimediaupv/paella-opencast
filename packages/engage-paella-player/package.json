@@ -27,9 +27,9 @@
     "clean:deps": "rimraf node_modules"
   },
   "devDependencies": {
-    "@asicupv/paella-ai-plugins": "^2.8.2",
+    "@asicupv/paella-ai-plugins": "^2.8.3",
     "@asicupv/paella-basic-plugins": "^2.6.2",
-    "@asicupv/paella-embedapi": "^2.12.0",
+    "@asicupv/paella-embedapi": "^2.12.1",
     "@asicupv/paella-extra-plugins": "^2.9.2",
     "@asicupv/paella-opencast-component": "2.0.4",
     "@asicupv/paella-opencast-core": "2.0.4",
@@ -43,7 +43,7 @@
     "express": "^5.2.1",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14",
+    "vite": "^8.0.16",
     "vite-plugin-static-copy": "^4.1.0"
   }
 }
