@@ -32,7 +32,7 @@ jobs:
           npm ci
           npm run build:libs
           npm run build -w doc
-          npm run build -w packages/engage-paella-player
+          npm run build -w packages/opencast-engage-paella-player
         env:
             USE_OC_SERVER_FROM_URL: true
             OC_PAELLA8_BASE_URL: '/paella-opencast/demo/engage'
@@ -45,8 +45,8 @@ jobs:
         run: |
           mkdir -p artifact-root/demo/engage/config
           cp -rv doc/dist/* artifact-root/
-          cp -rv packages/engage-paella-player/dist/* artifact-root/demo/engage/
-          cp -rv packages/engage-paella-player/ui/config/* artifact-root/demo/engage/config/
+          cp -rv packages/opencast-engage-paella-player/dist/* artifact-root/demo/engage/
+          cp -rv packages/opencast-engage-paella-player/ui/config/* artifact-root/demo/engage/config/
           sed -i 's#/ui/config/paella8/#/paella-opencast/demo/engage/config/#g' artifact-root/demo/engage/config/config.json
 
       - name: Upload as artifact

@@ -25,7 +25,7 @@ This monorepo contains the following packages:
 
 ### Examples
 
-- **`engage-paella-player`** - Complete Engage-style player implementation
+- **`opencast-engage-paella-player`** - Complete Engage-style player implementation
 - **`opencast-component-example`** - Simple web component usage examples
 
 ## 🛠️ Requirements
@@ -94,7 +94,7 @@ paella-opencast/
 │   ├── paella-opencast-plugins/ # Opencast plugins
 │   └── paella-opencast-skin/    # Styling and themes
 └-─ examples/                    # Usage examples
-    ├── engage-paella-player/    # Engage-style player
+    ├── opencast-engage-paella-player/    # Engage-style player
     └── opencast-component-example/ # Component examples
 ```
 

@@ -79,7 +79,7 @@ window.addEventListener("load", async () => {
   
   // Update the browser tab title.
   ocPlayer.bindEvent(Events.MANIFEST_LOADED, async () => {
-    ocPlayer.log.info('Player manifest loaded, updating document title.', 'engage-paella-player');
+    ocPlayer.log.info('Player manifest loaded, updating document title.', 'opencast-engage-paella-player');
     const event = ocPlayer.getEvent();
     const videoTitle = event?.metadata?.title ?? ocPlayer.translate('Unknown video title');
     const seriesTitle = event?.metadata?.seriesTitle ?? ocPlayer.translate('No series');
@@ -87,7 +87,7 @@ window.addEventListener("load", async () => {
   });
   // Once the player is loaded, apply query parameters.
   ocPlayer.bindEvent(Events.PLAYER_LOADED, async () => {
-    ocPlayer.log.info('Player loaded, applying query params', 'engage-paella-player');
+    ocPlayer.log.info('Player loaded, applying query params', 'opencast-engage-paella-player');
     await applyQueryParams(ocPlayer);
   });
 
