@@ -88,8 +88,14 @@
         "conversionConfig": {
             "captionsBackwardsCompatibility": false,
             "segmentPreviewAttachmentsFlavours": ["presentation/segment+preview"],
-            "playerPreviewAttachmentsFlavours": ["presenter/player+preview", "presentation/player+preview"],
-            "timelineAttachmentsFlavours": ["presentation/timeline+preview", "presenter/timeline+preview"],
+            "playerPreviewAttachmentsFlavours": [
+                "presenter/player+preview",
+                "presentation/player+preview"
+            ],
+            "timelineAttachmentsFlavours": [
+                "presentation/timeline+preview",
+                "presenter/timeline+preview"
+            ],
             "chaptersFlavours": ["chapters/source", "chapters/delivery"],
             "tagFor360Video": "video360"
         },
@@ -128,32 +134,25 @@
     ],
 
     "plugins": {
-
         "/* layout plugins */": "*********************************************************",
         "es.upv.paella.singleVideo": {
             "enabled": true,
             "validContent": [
                 {
                     "id": "presenter",
-                    "content": [
-                        "presenter"
-                    ],
+                    "content": ["presenter"],
                     "icon": "present-mode-2.svg",
                     "title": "Presenter"
                 },
                 {
                     "id": "presentation",
-                    "content": [
-                        "presentation"
-                    ],
+                    "content": ["presentation"],
                     "icon": "present-mode-1.svg",
                     "title": "Presentation"
                 },
                 {
                     "id": "presenter-2",
-                    "content": [
-                        "presenter-2"
-                    ],
+                    "content": ["presenter-2"],
                     "icon": "present-mode-1.svg",
                     "title": "Presentation"
                 }
@@ -169,28 +168,19 @@
             "validContent": [
                 {
                     "id": "presenter-presentation",
-                    "content": [
-                        "presenter",
-                        "presentation"
-                    ],
+                    "content": ["presenter", "presentation"],
                     "icon": "present-mode-3.svg",
                     "title": "Presenter and presentation"
                 },
                 {
                     "id": "presenter-2-presentation",
-                    "content": [
-                        "presenter-2",
-                        "presentation"
-                    ],
+                    "content": ["presenter-2", "presentation"],
                     "icon": "present-mode-3.svg",
                     "title": "Presenter and presentation"
                 },
                 {
                     "id": "presenter-presenter-2",
-                    "content": [
-                        "presenter",
-                        "presenter-2"
-                    ],
+                    "content": ["presenter", "presenter-2"],
                     "icon": "present-mode-3.svg",
                     "title": "Presenter and presentation"
                 }
@@ -199,33 +189,24 @@
         "es.upv.paella.dualVideoDynamic": {
             "enabled": true,
             "validContent": [
-              {
-                "id": "presenter-presentation-dynamic",
-                "content": [
-                  "presenter",
-                  "presentation"
-                ],
-                "icon": "present-mode-3.svg",
-                "title": "Presenter and presentation"
-              },
-              {
-                "id": "presenter-2-presentation-dynamic",
-                "content": [
-                  "presenter-2",
-                  "presentation"
-                ],
-                "icon": "present-mode-3.svg",
-                "title": "Presenter and presentation"
-              },
-              {
-                "id": "presenter-presenter-2-dynamic",
-                "content": [
-                  "presenter",
-                  "presenter-2"
-                ],
-                "icon": "present-mode-3.svg",
-                "title": "Presenter and presentation"
-              }
+                {
+                    "id": "presenter-presentation-dynamic",
+                    "content": ["presenter", "presentation"],
+                    "icon": "present-mode-3.svg",
+                    "title": "Presenter and presentation"
+                },
+                {
+                    "id": "presenter-2-presentation-dynamic",
+                    "content": ["presenter-2", "presentation"],
+                    "icon": "present-mode-3.svg",
+                    "title": "Presenter and presentation"
+                },
+                {
+                    "id": "presenter-presenter-2-dynamic",
+                    "content": ["presenter", "presenter-2"],
+                    "icon": "present-mode-3.svg",
+                    "title": "Presenter and presentation"
+                }
             ]
         },
         "es.upv.paella.tripleVideo": {
@@ -233,21 +214,13 @@
             "validContent": [
                 {
                     "id": "presenter-presenter-2-presentation",
-                    "content": [
-                        "presenter",
-                        "presenter-2",
-                        "presentation"
-                    ],
+                    "content": ["presenter", "presenter-2", "presentation"],
                     "icon": "present-mode-4.svg",
                     "title": "Presenter and presentation"
                 },
                 {
                     "id": "presenter-2-presenter-3-presentation",
-                    "content": [
-                        "presenter-2",
-                        "presenter-3",
-                        "presentation"
-                    ],
+                    "content": ["presenter-2", "presenter-3", "presentation"],
                     "icon": "present-mode-4.svg",
                     "title": "Presenter and presentation"
                 }
@@ -364,7 +337,6 @@
             "volumeAlwaysVisible": true
         },
 
-
         "/* right toolbar buttons*/": "*********************************************************",
 
         "org.opencast.paella.loginPlugin": {
@@ -420,7 +392,6 @@
             "side": "right",
             "order": 106
         },
-
 
         "/* settings toolbox */": "*********************************************************",
         "org.opencast.paella.eventDetailsPlugin": {
@@ -493,29 +464,19 @@
             "order": 92
         },
 
-
-
         "/* slides toolbar */": "*********************************************************",
         "es.upv.paella.nextSlideNavigatorButton": {
             "enabled": true,
-            "content": [
-                "presentation"
-            ],
+            "content": ["presentation"],
             "side": "left",
             "order": 1
         },
         "es.upv.paella.prevSlideNavigatorButton": {
             "enabled": true,
-            "content": [
-                "presentation"
-            ],
+            "content": ["presentation"],
             "side": "left",
             "order": 0
         },
-
-
-
-
 
         "/* other plugins */": "*********************************************************",
         "es.upv.paella.onboarding": {
@@ -567,11 +528,7 @@
         "es.upv.paella.localStorageDataPlugin": {
             "enabled": true,
             "order": 0,
-            "context": [
-                "default",
-                "trimming",
-                "preferences"
-            ]
+            "context": ["default", "trimming", "preferences"]
         },
 
         "es.upv.paella.vttManifestCaptionsPlugin": {
@@ -584,13 +541,9 @@
             "enabled": true
         },
 
-
         "es.upv.paella.arrowSlidesNavigator": {
             "enabled": false,
-            "target": [
-                "presentation",
-                "presenter"
-            ]
+            "target": ["presentation", "presenter"]
         },
 
         "/* user event tracking plugins */": "*********************************************************",
@@ -622,24 +575,18 @@
         },
         "es.upv.paella.debug.userTrackingDataPlugin": {
             "enabled": false,
-            "context": [
-                "userTracking"
-            ]
+            "context": ["userTracking"]
         },
         "es.upv.paella.analytics.userTrackingDataPlugin": {
             "enabled": false,
             "trackingId": "configure_your_tracking_id_here",
             "domain": "",
             "category": true,
-            "context": [
-                "userTracking"
-            ]
+            "context": ["userTracking"]
         },
         "org.opencast.paella.matomo.userTrackingDataPlugin": {
             "enabled": false,
-            "context": [
-                "userTracking"
-            ],
+            "context": ["userTracking"],
             "server": "//matomo.server.com/",
             "siteId": "1",
             "trackerUrl": {

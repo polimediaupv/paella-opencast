@@ -54,16 +54,17 @@ npm run build:libs
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-    <script type="module" src="path/to/paella-opencast-component.js"></script>
-    <link rel="stylesheet" href="path/to/paella-opencast-component.css">
-</head>
-<body>
-    <paella-opencast-player 
-        src="https://your-opencast-server.com/api/events/event-id"
-        config="path/to/config.json">
-    </paella-opencast-player>
-</body>
+    <head>
+        <script type="module" src="path/to/paella-opencast-component.js"></script>
+        <link rel="stylesheet" href="path/to/paella-opencast-component.css" />
+    </head>
+    <body>
+        <paella-opencast-player
+            src="https://your-opencast-server.com/api/events/event-id"
+            config="path/to/config.json"
+        >
+        </paella-opencast-player>
+    </body>
 </html>
 ```
 
@@ -132,7 +133,6 @@ paella-opencast/
 - **Bug Reports**: [GitHub Issues](https://github.com/polimediaupv/paella-opencast/issues)
 - **Feature Requests**: [GitHub Discussions](https://github.com/polimediaupv/paella-opencast/discussions)
 - **Documentation**: [Paella Player 8 Website](https://paellaplayer.webs.upv.es/)
-
 
 ---
 

@@ -17,10 +17,7 @@
                             "ref": "track:c9fa0216-93b9-409b-a005-79d249863ae4",
                             "mimetype": "text/vtt",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "lang:es"
-                                ]
+                                "tag": ["engage-download", "lang:es"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/a6fee09a-6793-4161-b068-cd495466171d/144880_PRESENTER__1_.vtt",
                             "size": 91646.0,
@@ -37,10 +34,7 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/02b4078a-119c-4f4d-be2e-f30acce3bbe7/144713.3077791d-4848-4c71-b3a2-3aec789c8e28_2.m3u8",
                             "size": 181500.0,
@@ -80,13 +74,10 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "video/mp4",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/4daf571b-a92b-42c5-b20e-1f93bb157a78/144713.3077791d-4848-4c71-b3a2-3aec789c8e28-0-1080p.mp4",
-                            "size": 3.02135951E8,
+                            "size": 3.02135951e8,
                             "checksum": {
                                 "type": "md5",
                                 "$": "06e7c8f2abd19a408db7116edb43ce3c"
@@ -123,13 +114,10 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "video/mp4",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/73b1a7f7-70e1-426b-9869-573c6edc13f3/144713.3077791d-4848-4c71-b3a2-3aec789c8e28-2-480p.mp4",
-                            "size": 2.28260706E8,
+                            "size": 2.28260706e8,
                             "checksum": {
                                 "type": "md5",
                                 "$": "3c66ff5f7034c2f9badb149c48052a7f"
@@ -166,10 +154,7 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/470d230a-1f00-4111-b450-e314fdba3c3b/144713.3077791d-4848-4c71-b3a2-3aec789c8e28_1.m3u8",
                             "size": 181659.0,
@@ -209,13 +194,10 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "video/mp4",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/bcac51f6-f9b5-4da1-a7e6-0d8b4d050efe/144713.3077791d-4848-4c71-b3a2-3aec789c8e28-1-720p.mp4",
-                            "size": 3.21093021E8,
+                            "size": 3.21093021e8,
                             "checksum": {
                                 "type": "md5",
                                 "$": "b68e8bd29a08fd6aa88bb89ad43e182b"
@@ -252,10 +234,7 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/33437b4f-4c41-47c6-8f42-f3ffaba466bf/144713.3077791d-4848-4c71-b3a2-3aec789c8e28_0.m3u8",
                             "size": 182805.0,
@@ -295,10 +274,7 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/3187615e-36c3-4846-bf95-f8a28a1df107/3077791d-4848-4c71-b3a2-3aec789c8e28.m3u8",
                             "size": 438.0,
@@ -384,13 +360,10 @@
                             "ref": "track:44720d6e-40e0-4b5c-acde-aef9424f295e",
                             "mimetype": "audio/m4a",
                             "tags": {
-                                "tag": [
-                                    "default",
-                                    "engage-download"
-                                ]
+                                "tag": ["default", "engage-download"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/9b998735-1552-4a4e-a290-431761459a9a/PRESENTER__1_.m4a",
-                            "size": 6.3591037E7,
+                            "size": 6.3591037e7,
                             "checksum": {
                                 "type": "md5",
                                 "$": "3a233063f43b2c2bcc57054a57290219"
@@ -416,13 +389,10 @@
                             "ref": "track:a657ee03-72ac-478d-83bf-e777ce1b7f15",
                             "mimetype": "audio/m4a",
                             "tags": {
-                                "tag": [
-                                    "default",
-                                    "engage-download"
-                                ]
+                                "tag": ["default", "engage-download"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/eeee30c8-4014-4e8e-9b53-7a9d2e4bbfec/PRESENTER__1_.m4a",
-                            "size": 8.8696502E7,
+                            "size": 8.8696502e7,
                             "checksum": {
                                 "type": "md5",
                                 "$": "4c28aa7e7ee391fd7d74cad3f1558277"
@@ -448,13 +418,10 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "video/mp4",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/5162b9f0-9bf5-4310-b480-d2c24343b739/144712.382d33f2-7f71-4b21-ae09-7b6778ef5e0d-1-720p.mp4",
-                            "size": 6.72940498E8,
+                            "size": 6.72940498e8,
                             "checksum": {
                                 "type": "md5",
                                 "$": "aa2f112bcb4001c1178296472b4bc4ce"
@@ -491,10 +458,7 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/36b351d6-3a5d-4eed-9fb2-0225854fe9fd/144712.382d33f2-7f71-4b21-ae09-7b6778ef5e0d_1.m3u8",
                             "size": 181619.0,
@@ -534,10 +498,7 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/6357af5b-732f-4e81-bc50-0fa789e8d917/144712.382d33f2-7f71-4b21-ae09-7b6778ef5e0d_2.m3u8",
                             "size": 181509.0,
@@ -577,10 +538,7 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/b888d4e1-d0c7-41da-aec2-0dd7b595b53b/144712.382d33f2-7f71-4b21-ae09-7b6778ef5e0d_0.m3u8",
                             "size": 182934.0,
@@ -620,13 +578,10 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "video/mp4",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/ba175b53-ca46-4bbe-b808-ee2779653d46/144712.382d33f2-7f71-4b21-ae09-7b6778ef5e0d-2-480p.mp4",
-                            "size": 4.16997921E8,
+                            "size": 4.16997921e8,
                             "checksum": {
                                 "type": "md5",
                                 "$": "fa34b3e120d216d8842fcc05833d92f8"
@@ -663,13 +618,10 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "video/mp4",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/f06e5b72-cbff-4a8b-ab46-4923d0be81ba/144712.382d33f2-7f71-4b21-ae09-7b6778ef5e0d-0-1080p.mp4",
-                            "size": 9.00206615E8,
+                            "size": 9.00206615e8,
                             "checksum": {
                                 "type": "md5",
                                 "$": "842e1553c4a7a213d19554a0ae1957d2"
@@ -706,10 +658,7 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/29e562cb-232f-44eb-9890-ab36f159b55c/382d33f2-7f71-4b21-ae09-7b6778ef5e0d.m3u8",
                             "size": 440.0,
@@ -796,13 +745,10 @@
                             "transport": "HLS",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://streaming-dev.videoapuntes.upv.es/videoapuntes-engage-dev13/smil:engage-player_057172b7-f54d-4735-90f8-839182b426a8_presentation.smil/playlist.m3u8",
-                            "size": 3.02135951E8,
+                            "size": 3.02135951e8,
                             "duration": 7080104.0,
                             "live": false,
                             "master": false,
@@ -815,13 +761,10 @@
                             "transport": "DASH",
                             "mimetype": "application/dash+xml",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://streaming-dev.videoapuntes.upv.es/videoapuntes-engage-dev13/smil:engage-player_057172b7-f54d-4735-90f8-839182b426a8_presentation.smil/manifest_mpm4sav_mvlist.mpd",
-                            "size": 3.02135951E8,
+                            "size": 3.02135951e8,
                             "duration": 7080104.0,
                             "live": false,
                             "master": false,
@@ -834,13 +777,10 @@
                             "transport": "HLS",
                             "mimetype": "application/x-mpegURL",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://streaming-dev.videoapuntes.upv.es/videoapuntes-engage-dev13/smil:engage-player_057172b7-f54d-4735-90f8-839182b426a8_presenter.smil/playlist.m3u8",
-                            "size": 6.72940498E8,
+                            "size": 6.72940498e8,
                             "duration": 7070141.0,
                             "live": false,
                             "master": false,
@@ -853,13 +793,10 @@
                             "transport": "DASH",
                             "mimetype": "application/dash+xml",
                             "tags": {
-                                "tag": [
-                                    "engage-download",
-                                    "engage-streaming"
-                                ]
+                                "tag": ["engage-download", "engage-streaming"]
                             },
                             "url": "https://streaming-dev.videoapuntes.upv.es/videoapuntes-engage-dev13/smil:engage-player_057172b7-f54d-4735-90f8-839182b426a8_presenter.smil/manifest_mpm4sav_mvlist.mpd",
-                            "size": 6.72940498E8,
+                            "size": 6.72940498e8,
                             "duration": 7070141.0,
                             "live": false,
                             "master": false,
@@ -1123,10 +1060,7 @@
                             "ref": "track:6b7fd7c8-3e6b-4532-af80-23a77834fe3e",
                             "mimetype": "image/jpeg",
                             "tags": {
-                                "tag": [
-                                    "atom",
-                                    "rss"
-                                ]
+                                "tag": ["atom", "rss"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/af719fb1-8669-422c-94ad-34cc238715c6/382d33f2-7f71-4b21-ae09-7b6778ef5e0d_3.000s-feed.jpg",
                             "size": 1814.0
@@ -1137,10 +1071,7 @@
                             "ref": "track:61592df8-23bc-4b76-9112-bfd4096b96c9",
                             "mimetype": "image/jpeg",
                             "tags": {
-                                "tag": [
-                                    "atom",
-                                    "rss"
-                                ]
+                                "tag": ["atom", "rss"]
                             },
                             "url": "https://engage-dev.videoapuntes.upv.es/static/mh_default_org/engage-player/057172b7-f54d-4735-90f8-839182b426a8/6c31fe7a-b9b1-4809-b760-5e293cad2136/3077791d-4848-4c71-b3a2-3aec789c8e28_3.000s-feed.jpg",
                             "size": 1341.0
@@ -1424,21 +1355,11 @@
             ],
             "type": "Episode",
             "dc": {
-                "extent": [
-                    "PT1H58M0.324S"
-                ],
-                "created": [
-                    "2023-10-30T10:31:05.620Z"
-                ],
-                "publisher": [
-                    "Miguel Escrivá Gregori"
-                ],
-                "language": [
-                    "spa"
-                ],
-                "title": [
-                    "test 13a7d12b-7724-4a33-b5de-0e73fb92af20"
-                ],
+                "extent": ["PT1H58M0.324S"],
+                "created": ["2023-10-30T10:31:05.620Z"],
+                "publisher": ["Miguel Escrivá Gregori"],
+                "language": ["spa"],
+                "title": ["test 13a7d12b-7724-4a33-b5de-0e73fb92af20"],
                 "temporal": [
                     "start\u003d2023-10-30T10:31:05Z; end\u003d2023-10-30T10:31:05Z; scheme\u003dW3C-DTF;"
                 ]

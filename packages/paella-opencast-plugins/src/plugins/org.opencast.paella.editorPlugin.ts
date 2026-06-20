@@ -9,7 +9,6 @@ export type OpencastEditorPluginConfig = ButtonPluginConfig & {
     showIfCanWrite?: boolean;
 };
 
-
 export default class OpencastEditorPlugin extends ButtonPlugin {
     getPluginModuleInstance() {
         return OpencastPaellaPluginsModule.Get();
@@ -20,8 +19,8 @@ export default class OpencastEditorPlugin extends ButtonPlugin {
     }
 
     get config(): OpencastEditorPluginConfig {
-        return super.config as OpencastEditorPluginConfig;
-    }    
+        return super.config;
+    }
 
     getAriaLabel() {
         return this.player.translate('Open video editor');
@@ -34,7 +33,9 @@ export default class OpencastEditorPlugin extends ButtonPlugin {
     async getHelp() {
         return {
             title: this.player.translate('Open video editor'),
-            description: this.player.translate('Access the video editor to modify and enhance your video content.')
+            description: this.player.translate(
+                'Access the video editor to modify and enhance your video content.',
+            ),
         };
     }
 
@@ -42,47 +43,47 @@ export default class OpencastEditorPlugin extends ButtonPlugin {
         this.icon = this.player.getCustomPluginIcon(this.name, 'buttonIcon') || LeadPencilIcon;
     }
 
-    async isEnabled() {        
+    async isEnabled() {
         const isOcPlayer = this.player instanceof OpencastPaellaPlayer;
         if (!isOcPlayer) {
-            this.player.log.warn('This plugin is only available in Opencast Paella Player', `${this.getPluginModuleInstance().moduleName} [${this.name}]`);
+            this.player.log.warn(
+                'This plugin is only available in Opencast Paella Player',
+                `${this.getPluginModuleInstance().moduleName} [${this.name}]`,
+            );
             return false;
         }
         try {
             if (!(await super.isEnabled())) {
                 return false;
-            }
-            else {
+            } else {
                 if (this.config.editorUrl) {
-                    const ocPlayer: OpencastPaellaPlayer = this.player as OpencastPaellaPlayer;
+                    const ocPlayer: OpencastPaellaPlayer = this.player;
                     const isAnonymous = await ocPlayer.opencastAuth.isAnonymous();
                     if (isAnonymous) {
-                        return (this.config.showIfAnonymous === true);
-                    }
-                    else if (this.config.showIfCanWrite === true) {
-                        const canWrite =  await ocPlayer.opencastAuth.canWrite();
+                        return this.config.showIfAnonymous === true;
+                    } else if (this.config.showIfCanWrite === true) {
+                        const canWrite = await ocPlayer.opencastAuth.canWrite();
                         return canWrite;
-                    }
-                    else {
+                    } else {
                         return true;
                     }
-                }
-                else {
-                    this.player.log.warn(`Missing 'editorUrl' property in '${this.name}' plugin. Plugin disabled!`, `${this.getPluginModuleInstance().moduleName} [${this.name}]`)
+                } else {
+                    this.player.log.warn(
+                        `Missing 'editorUrl' property in '${this.name}' plugin. Plugin disabled!`,
+                        `${this.getPluginModuleInstance().moduleName} [${this.name}]`,
+                    );
                 }
                 return false;
             }
-        }
-        catch (_e) {
+        } catch (_e) {
             return false;
         }
     }
 
     async action() {
-        const editorUrl  = this.config.editorUrl;
+        const editorUrl = this.config.editorUrl;
         if (this.player.videoId && editorUrl) {
             window.location.href = editorUrl.replace('{id}', this.player.videoId);
         }
     }
 }
-

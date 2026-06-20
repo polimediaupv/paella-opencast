@@ -1,27 +1,32 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["src/**", "!dist/**"],
-      "outputs": ["dist/**"]
-    },
-    "dev": {
-      "dependsOn": ["^build"],
-      "persistent": true,
-      "cache": false
-    },
-    "test": {
-      "dependsOn": []
-    },
-    "test:e2e": {
-      "dependsOn": ["build"],
-      "cache": false,
-      "outputs": ["playwright-report/**", "test-results/**"]
-    },
-    "clean:build": {
-      "dependsOn": ["^clean:build"],
-      "cache": false
+    "$schema": "https://turbo.build/schema.json",
+    "tasks": {
+        "build": {
+            "dependsOn": ["^build"],
+            "inputs": ["src/**", "!dist/**"],
+            "outputs": ["dist/**"]
+        },
+        "dev": {
+            "dependsOn": ["^build"],
+            "persistent": true,
+            "cache": false
+        },
+        "test": {
+            "dependsOn": []
+        },
+        "test:e2e": {
+            "dependsOn": ["build"],
+            "cache": false,
+            "outputs": ["playwright-report/**", "test-results/**"]
+        },
+        "clean:build": {
+            "dependsOn": ["^clean:build"],
+            "cache": false
+        },
+        "lint": {
+            "dependsOn": [],
+            "inputs": ["src/**/*.ts"],
+            "outputs": []
+        }
     }
-  }
 }

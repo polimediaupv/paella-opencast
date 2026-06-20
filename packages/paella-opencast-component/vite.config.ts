@@ -11,23 +11,24 @@ export default defineConfig({
             entry: './src/index.ts',
             formats: ['es', 'cjs', 'iife'],
             name: 'PaellaOpencastComponent',
-            fileName: (format) => `paella-opencast-component.${format}.js`
+            fileName: (format) => `paella-opencast-component.${format}.js`,
         },
         rollupOptions: {
             output: {
-                inlineDynamicImports: true,                
+                inlineDynamicImports: true,
                 assetFileNames: 'paella-opencast-component.[ext]',
-                chunkFileNames: "[name].[format].js"
-            }
+                chunkFileNames: '[name].[format].js',
+            },
         },
-        
     },
-    
-    plugins: [dts({
-        outDir: 'dist/types',
-        insertTypesEntry: true
-    })],
+
+    plugins: [
+        dts({
+            outDir: 'dist/types',
+            insertTypesEntry: true,
+        }),
+    ],
     test: {
-        environment: 'jsdom'        
-    }
+        environment: 'jsdom',
+    },
 });

@@ -23,7 +23,9 @@ export default class OpencastLoginPlugin extends ButtonPlugin {
     async getHelp() {
         return {
             title: this.player.translate('Login'),
-            description: this.player.translate('Log in to access additional features and personalized content.')
+            description: this.player.translate(
+                'Log in to access additional features and personalized content.',
+            ),
         };
     }
 
@@ -34,27 +36,27 @@ export default class OpencastLoginPlugin extends ButtonPlugin {
     async isEnabled() {
         const isOcPlayer = this.player instanceof OpencastPaellaPlayer;
         if (!isOcPlayer) {
-            this.player.log.warn('This plugin is only available in Opencast Paella Player', `${this.getPluginModuleInstance().moduleName} [${this.name}]`);
+            this.player.log.warn(
+                'This plugin is only available in Opencast Paella Player',
+                `${this.getPluginModuleInstance().moduleName} [${this.name}]`,
+            );
             return false;
         }
-        const ocPlayer: OpencastPaellaPlayer = this.player as OpencastPaellaPlayer;
+        const ocPlayer: OpencastPaellaPlayer = this.player;
         try {
             if (!(await super.isEnabled())) {
                 return false;
-            }
-            else {
+            } else {
                 const isAnonymous = await ocPlayer.opencastAuth.isAnonymous();
                 return isAnonymous;
             }
-        }
-        catch (_e) {
+        } catch (_e) {
             return false;
         }
     }
 
-    async action() {        
+    async action() {
         const ocPlayer: OpencastPaellaPlayer = this.player as OpencastPaellaPlayer;
         await ocPlayer.opencastAuth.auth();
     }
 }
-

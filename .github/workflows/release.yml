@@ -1,106 +1,106 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  release:
-    name: Release
-    if: github.repository == 'polimediaupv/paella-opencast'
-    runs-on: ubuntu-latest
-        
-    permissions:
-      contents: write       # Required for changesets to push commits/tags
-      pull-requests: write  # Required for changesets to create the PR
-      id-token: write       # Required for GitHub to emit the OIDC token to npm
+    release:
+        name: Release
+        if: github.repository == 'polimediaupv/paella-opencast'
+        runs-on: ubuntu-latest
 
-    outputs:
-      published: ${{ steps.changesets.outputs.published }}
-      engage_released: ${{ steps.check_tag.outputs.is_released }}
-      engage_tag: ${{ steps.check_tag.outputs.tag_name }}
-    
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
+        permissions:
+            contents: write # Required for changesets to push commits/tags
+            pull-requests: write # Required for changesets to create the PR
+            id-token: write # Required for GitHub to emit the OIDC token to npm
 
-      - name: Setup Node.js 24.x
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24.x
-          registry-url: 'https://registry.npmjs.org'
+        outputs:
+            published: ${{ steps.changesets.outputs.published }}
+            engage_released: ${{ steps.check_tag.outputs.is_released }}
+            engage_tag: ${{ steps.check_tag.outputs.tag_name }}
 
-      - name: Install Dependencies
-        run: npm ci
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          # This expects you to have a script which does a build for your packages and calls changeset publish
-          version: npm run changeset:version
-          publish: npm run changeset:publish
-          commit: "[ci] release"
-          title: "[ci] release"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Enable npm's provenance feature to include metadata about the build environment in the published package
-          NPM_CONFIG_PROVENANCE: true
+            - name: Setup Node.js 24.x
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24.x
+                  registry-url: 'https://registry.npmjs.org'
 
-      - name: Check if Engage Player was tagged
-        id: check_tag
-        # _if: steps.changesets.outputs.published == 'true'
-        run: |
-          if git tag --points-at HEAD | grep -q "@asicupv/opencast-engage-paella-player@"; then
-            echo "is_released=true" >> $GITHUB_OUTPUT
-            TAG_NAME=$(git tag --points-at HEAD | grep "@asicupv/opencast-engage-paella-player@" | head -n 1)
-            echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
-            echo "Engage Player tagged for release: $TAG_NAME"
-          else
-            echo "No Engage Player tag found for this release."
-            echo "is_released=false" >> $GITHUB_OUTPUT
-          fi
-  
-  publish-asset:    
-    name: Publish Asset    
-    runs-on: ubuntu-latest
-    needs: release    
-    if: needs.release.outputs.engage_released == 'true'
+            - name: Install Dependencies
+              run: npm ci
 
-    permissions:
-      contents: write
+            - name: Create Release Pull Request or Publish to npm
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  # This expects you to have a script which does a build for your packages and calls changeset publish
+                  version: npm run changeset:version
+                  publish: npm run changeset:publish
+                  commit: '[ci] release'
+                  title: '[ci] release'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  # Enable npm's provenance feature to include metadata about the build environment in the published package
+                  NPM_CONFIG_PROVENANCE: true
 
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v6
+            - name: Check if Engage Player was tagged
+              id: check_tag
+              # _if: steps.changesets.outputs.published == 'true'
+              run: |
+                  if git tag --points-at HEAD | grep -q "@asicupv/opencast-engage-paella-player@"; then
+                    echo "is_released=true" >> $GITHUB_OUTPUT
+                    TAG_NAME=$(git tag --points-at HEAD | grep "@asicupv/opencast-engage-paella-player@" | head -n 1)
+                    echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+                    echo "Engage Player tagged for release: $TAG_NAME"
+                  else
+                    echo "No Engage Player tag found for this release."
+                    echo "is_released=false" >> $GITHUB_OUTPUT
+                  fi
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24.x
-          cache: 'npm'
+    publish-asset:
+        name: Publish Asset
+        runs-on: ubuntu-latest
+        needs: release
+        if: needs.release.outputs.engage_released == 'true'
 
-      - name: Install Dependencies
-        run: npm ci
+        permissions:
+            contents: write
 
-      - name: Build Engage Player
-        run: |
-            npm run build:libs
-            npm run build -w packages/opencast-engage-paella-player
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v6
 
-      - name: Create Zip
-        run: |
-          cd packages/opencast-engage-paella-player
-          zip -r ../../opencast-engage-paella-player-build.zip dist/ ui/
-      - name: Upload Asset to GitHub Release
-        uses: softprops/action-gh-release@v3
-        with:          
-          tag_name: ${{ needs.release.outputs.engage_tag }}
-          files: opencast-engage-paella-player-build.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24.x
+                  cache: 'npm'
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Build Engage Player
+              run: |
+                  npm run build:libs
+                  npm run build -w packages/opencast-engage-paella-player
+
+            - name: Create Zip
+              run: |
+                  cd packages/opencast-engage-paella-player
+                  zip -r ../../opencast-engage-paella-player-build.zip dist/ ui/
+            - name: Upload Asset to GitHub Release
+              uses: softprops/action-gh-release@v3
+              with:
+                  tag_name: ${{ needs.release.outputs.engage_tag }}
+                  files: opencast-engage-paella-player-build.zip
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

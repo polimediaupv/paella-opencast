@@ -21,7 +21,10 @@ export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
     }
 
     async load() {
-        this.player.log.debug('Multi video layout loaded', `${this.getPluginModuleInstance().moduleName} [${this.name}]`);
+        this.player.log.debug(
+            'Multi video layout loaded',
+            `${this.getPluginModuleInstance().moduleName} [${this.name}]`,
+        );
     }
 
     getValidStreams(streamData: Stream[]) {
@@ -37,22 +40,22 @@ export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
     getLayoutStructure(streamData: Stream[]): LayoutStructure {
         if (!this._currentVideos) {
             const size = 100 / streamData.length;
-            this._currentVideos = streamData.map(d => {
+            this._currentVideos = streamData.map((d) => {
                 return {
                     content: d.content,
                     visible: true,
                     rect: [],
-                    size
+                    size,
                 };
             });
         }
 
         return {
             id: this.identifier,
-            name: { es: "Múltiples streams con posición dinámica" },
+            name: { es: 'Múltiples streams con posición dinámica' },
             buttons: [],
             hidden: false,
-            videos: this._currentVideos
+            videos: this._currentVideos,
         };
     }
 }

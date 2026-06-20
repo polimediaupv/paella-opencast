@@ -1,12 +1,17 @@
-
-import { type Attachment, type Catalog, type Event, type MediaPackageElementChecksum, type Metadata, type Track } from '../Event';
+import {
+    type Attachment,
+    type Catalog,
+    type Event,
+    type MediaPackageElementChecksum,
+    type Metadata,
+    type Track,
+} from '../Event';
 import { EventConversor, type ConversionConfig } from '../EventConversor/EventConversor';
 import { Paella, type Manifest } from '@asicupv/paella-core';
 
-
 export function parseChecksum(input?: string): MediaPackageElementChecksum | undefined {
-    const match = input?.match(/^([a-fA-F0-9]+) \(([^)]+)\)$/);    
-    if ((match != null) && (match.length != undefined) && (match.length >= 3)) {
+    const match = input?.match(/^([a-fA-F0-9]+) \(([^)]+)\)$/);
+    if (match != null && match.length != undefined && match.length >= 3) {
         const [, value, type] = match;
         return { type, value };
     }
@@ -18,7 +23,7 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
     if (!externalEvent) {
         throw new Error('Invalid external event data');
     }
-    
+
     const metadata: Metadata = {
         title: externalEvent?.title,
         subject: externalEvent?.subjects?.[0],
@@ -36,8 +41,8 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
         location: externalEvent?.location,
         source: externalEvent?.source,
         created: new Date(externalEvent?.created as string),
-        publisher: "TODO: publisher",
-        id: externalEvent?.identifier
+        publisher: 'TODO: publisher',
+        id: externalEvent?.identifier,
     };
 
     // const acl = externalEvent?.acl?.map((acl: any) => {
@@ -49,7 +54,9 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
     //     return a;
     // });
 
-    const publication = externalEvent?.publications?.filter((x: any) => x?.channel === 'engage-player')?.[0];
+    const publication = externalEvent?.publications?.filter(
+        (x: any) => x?.channel === 'engage-player',
+    )?.[0];
 
     const tracks: Track[] = publication?.media?.map((track: any) => {
         const t: Track = {
@@ -64,15 +71,17 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
             is_master: track?.is_master_playlist,
             is_live: track?.is_live,
             duration: (track?.duration ?? 0) / 1000,
-            audio: track?.has_audio && {
-                // id: track.audio?.id,
-                // device: track.audio?.device,
-                // encoder: track.audio?.encoder,
-                // framecount: track.audio?.framecount,
-                // channels: track.audio?.channels,
-                // samplingrate: track.audio?.samplingrate,
-                // bitrate: track.audio?.bitrate
-            },
+            audio:
+                track?.has_audio &&
+                {
+                    // id: track.audio?.id,
+                    // device: track.audio?.device,
+                    // encoder: track.audio?.encoder,
+                    // framecount: track.audio?.framecount,
+                    // channels: track.audio?.channels,
+                    // samplingrate: track.audio?.samplingrate,
+                    // bitrate: track.audio?.bitrate
+                },
             video: track.has_video && {
                 // id: track.video.id,
                 // device: track.video.device,
@@ -81,8 +90,8 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
                 bitrate: track.bitrate,
                 framerate: track.framerate,
                 width: track.width,
-                height: track.height
-            }
+                height: track.height,
+            },
         };
         return t;
     });
@@ -96,7 +105,7 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
             tags: attachment?.tags,
             ref: attachment?.ref,
             checksum: parseChecksum(attachment?.checksum),
-            size: attachment?.size
+            size: attachment?.size,
         };
         return a;
     });
@@ -110,7 +119,7 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
             tags: catalog?.tags,
             ref: catalog?.ref,
             checksum: parseChecksum(catalog?.checksum),
-            size: catalog?.size < 0 ? undefined : catalog?.size
+            size: catalog?.size < 0 ? undefined : catalog?.size,
         };
         return c;
     });
@@ -122,15 +131,18 @@ export function opencastExternalAPIEventToOpencastPaellaEvent(externalEvent: any
         metadata,
         tracks,
         attachments,
-        catalogs
+        catalogs,
         // segments
     };
 
     return event;
-
 }
 
-export async function opencastExternalAPIEventToPaellaManifest(paella: Paella, externalEvent: any, config: ConversionConfig = {}): Promise<Manifest> {
+export async function opencastExternalAPIEventToPaellaManifest(
+    paella: Paella,
+    externalEvent: any,
+    config: ConversionConfig = {},
+): Promise<Manifest> {
     const event: Event = opencastExternalAPIEventToOpencastPaellaEvent(externalEvent);
     const conversor = new EventConversor(paella, config);
     return await conversor.commonEventToPaellaManifest(event);
