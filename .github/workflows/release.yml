@@ -56,9 +56,9 @@ jobs:
         id: check_tag
         # _if: steps.changesets.outputs.published == 'true'
         run: |
-          if git tag --points-at HEAD | grep -q "@asicupv/engage-paella-player@"; then
+          if git tag --points-at HEAD | grep -q "@asicupv/opencast-engage-paella-player@"; then
             echo "is_released=true" >> $GITHUB_OUTPUT
-            TAG_NAME=$(git tag --points-at HEAD | grep "@asicupv/engage-paella-player@" | head -n 1)
+            TAG_NAME=$(git tag --points-at HEAD | grep "@asicupv/opencast-engage-paella-player@" | head -n 1)
             echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
             echo "Engage Player tagged for release: $TAG_NAME"
           else
@@ -91,16 +91,16 @@ jobs:
       - name: Build Engage Player
         run: |
             npm run build:libs
-            npm run build -w packages/engage-paella-player
+            npm run build -w packages/opencast-engage-paella-player
 
       - name: Create Zip
         run: |
-          cd packages/engage-paella-player
-          zip -r ../../engage-paella-player-build.zip dist/ ui/
+          cd packages/opencast-engage-paella-player
+          zip -r ../../opencast-engage-paella-player-build.zip dist/ ui/
       - name: Upload Asset to GitHub Release
         uses: softprops/action-gh-release@v3
         with:          
           tag_name: ${{ needs.release.outputs.engage_tag }}
-          files: engage-paella-player-build.zip
+          files: opencast-engage-paella-player-build.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

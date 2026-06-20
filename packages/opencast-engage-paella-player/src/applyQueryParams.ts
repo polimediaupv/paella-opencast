@@ -77,7 +77,7 @@ async function applyTrimmingFromQueryParams(paella: Paella): Promise<void> {
                 enabled: true
             };
         }
-        paella.log.debug(`Setting trim to ${JSON.stringify(trimmingData)}`, 'engage-paella-player');
+        paella.log.debug(`Setting trim to ${JSON.stringify(trimmingData)}`, 'opencast-engage-paella-player');
         await setTrimming(paella, trimmingData);
     }
 }
@@ -97,7 +97,7 @@ async function applyInitialSeekFromQueryParams(paella: Paella): Promise<void> {
         else if (timeStringInSecs) {
             totalTime = Math.floor(parseInt(timeStringInSecs));
         }
-        paella.log.debug(`Setting initial seek to '${totalTime}' seconds`, 'engage-paella-player');
+        paella.log.debug(`Setting initial seek to '${totalTime}' seconds`, 'opencast-engage-paella-player');
         await paella.setCurrentTime(totalTime);
     }
 }
@@ -118,7 +118,7 @@ async function applyCaptionsFromQueryParams(paella: Paella): Promise<void> {
         }
         const captionSelected = paella.captions[captionsIndex];
         if (captionSelected) {
-            paella.log.info(`Enabling captions: ${captionSelected?.label} (${captionSelected?.language})`, 'engage-paella-player');
+            paella.log.info(`Enabling captions: ${captionSelected?.label} (${captionSelected?.language})`, 'opencast-engage-paella-player');
             paella.captionsCanvas?.enableCaptions({ index: captionsIndex });
         }
     }

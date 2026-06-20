@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 import type { GitHubActionOptions } from '@estruyf/github-actions-reporter'
 
-const engageRoot = './packages/engage-paella-player'
+const engageRoot = './packages/opencast-engage-paella-player'
 
 export default defineConfig({
   testDir: `${engageRoot}/e2e`,
@@ -24,7 +24,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'npm run dev --workspace=@asicupv/engage-paella-player -- --host 127.0.0.1 --strictPort',
+    command: 'npm run dev --workspace=@asicupv/opencast-engage-paella-player -- --host 127.0.0.1 --strictPort',
     
     url: 'http://127.0.0.1:7070/paella8/ui/',
     reuseExistingServer: !process.env.CI,

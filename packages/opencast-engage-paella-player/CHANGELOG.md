@@ -1,4 +1,4 @@
-# @asicupv/engage-paella-player
+# @asicupv/opencast-engage-paella-player
 
 ## 8.0.3
 

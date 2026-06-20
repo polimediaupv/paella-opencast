@@ -17,14 +17,14 @@
     "opencast"
   ],
   "scripts": {
-    "dev:engage": "turbo dev --filter=@asicupv/engage-paella-player...",
+    "dev:engage": "turbo dev --filter=@asicupv/opencast-engage-paella-player...",
     "dev:libs": "turbo dev --filter=\"./packages/*\"",
     "build:libs": "turbo build --filter=\"./packages/*\"",
     "build": "turbo build",
     "lint": "turbo lint",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "turbo run test:e2e --filter=@asicupv/engage-paella-player",
+    "test:e2e": "turbo run test:e2e --filter=@asicupv/opencast-engage-paella-player",
     "clean:build": "turbo clean:build && rimraf .turbo coverage",
     "clean:deps": "rimraf node_modules",
     "changeset:add": "changeset add",
