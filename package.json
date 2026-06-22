@@ -48,7 +48,7 @@
         "@testing-library/dom": "^10.4.1",
         "@vitest/coverage-v8": "^4.1.9",
         "@vitest/ui": "^4.1.8",
-        "eslint": "^9.28.0",
+        "eslint": "^10.5.0",
         "eslint-config-prettier": "^10.1.5",
         "jsdom": "^29.1.1",
         "playwright": "^1.60.0",
