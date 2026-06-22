@@ -1,52 +1,54 @@
 {
-  "name": "@asicupv/paella-opencast-component",
-  "version": "2.0.4",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/polimediaupv/paella-opencast"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/types/paella-opencast-component.es.d.ts",
-      "import": "./dist/paella-opencast-component.es.js",
-      "require": "./dist/paella-opencast-component.cjs.js"
+    "name": "@asicupv/paella-opencast-component",
+    "version": "2.0.4",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/polimediaupv/paella-opencast"
     },
-    "./paella-opencast-component.css": {
-      "import": "./dist/paella-opencast-component.css",
-      "require": "./dist/paella-opencast-component.css"
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/",
+        "provenance": true
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/types/paella-opencast-component.es.d.ts",
+            "import": "./dist/paella-opencast-component.es.js",
+            "require": "./dist/paella-opencast-component.cjs.js"
+        },
+        "./paella-opencast-component.css": {
+            "import": "./dist/paella-opencast-component.css",
+            "require": "./dist/paella-opencast-component.css"
+        }
+    },
+    "files": [
+        "dist/*",
+        "README.md"
+    ],
+    "scripts": {
+        "dev": "tsc && vite build --watch",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint src/",
+        "lint:fix": "eslint --fix src/",
+        "test": "vitest --run",
+        "clean:build": "rimraf .turbo dist coverage",
+        "clean:deps": "rimraf node_modules"
+    },
+    "devDependencies": {
+        "typescript": "^6.0.3",
+        "vite": "^8.0.16",
+        "vite-plugin-dts": "^5.0.2"
+    },
+    "dependencies": {
+        "@asicupv/paella-basic-plugins": "^2.6.2",
+        "@asicupv/paella-extra-plugins": "^2.9.2",
+        "@asicupv/paella-opencast-core": "^2.0.4",
+        "@asicupv/paella-opencast-plugins": "^2.0.4",
+        "@asicupv/paella-slide-plugins": "^2.6.2",
+        "@asicupv/paella-video-plugins": "^2.5.3",
+        "@asicupv/paella-webgl-plugins": "^2.4.2",
+        "@asicupv/paella-zoom-plugin": "^2.5.4"
     }
-  },
-  "files": [
-    "dist/*",
-    "README.md"
-  ],
-  "scripts": {
-    "dev": "tsc && vite build --watch",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "vitest --run",
-    "clean:build": "rimraf .turbo dist coverage",
-    "clean:deps": "rimraf node_modules"
-  },
-  "devDependencies": {
-    "typescript": "^6.0.3",
-    "vite": "^8.0.16",
-    "vite-plugin-dts": "^5.0.2"
-  },
-  "dependencies": {
-    "@asicupv/paella-basic-plugins": "^2.6.2",
-    "@asicupv/paella-extra-plugins": "^2.9.2",
-    "@asicupv/paella-opencast-core": "^2.0.4",
-    "@asicupv/paella-opencast-plugins": "^2.0.4",
-    "@asicupv/paella-slide-plugins": "^2.6.2",
-    "@asicupv/paella-video-plugins": "^2.5.3",
-    "@asicupv/paella-webgl-plugins": "^2.4.2",
-    "@asicupv/paella-zoom-plugin": "^2.5.4"
-  }
 }

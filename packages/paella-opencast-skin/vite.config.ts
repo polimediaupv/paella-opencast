@@ -10,19 +10,21 @@ export default defineConfig({
         lib: {
             entry: './src/index.ts',
             formats: ['es', 'cjs'],
-            fileName: (format) => `paella-opencast-skin.${format}.js`
-        },                
-        rollupOptions: {            
+            fileName: (format) => `paella-opencast-skin.${format}.js`,
+        },
+        rollupOptions: {
             output: {
-                assetFileNames: 'paella-opencast-skin.[ext]'
-            }
-        }
+                assetFileNames: 'paella-opencast-skin.[ext]',
+            },
+        },
     },
-    plugins: [dts({
-        outDir: 'dist/types',
-        insertTypesEntry: true
-    })],
+    plugins: [
+        dts({
+            outDir: 'dist/types',
+            insertTypesEntry: true,
+        }),
+    ],
     test: {
-        environment: 'jsdom'
-    }
+        environment: 'jsdom',
+    },
 });

@@ -1,0 +1,12 @@
+dist
+node_modules
+.turbo
+doc
+coverage
+playwright-report
+test-results
+*.local
+package-lock.json
+.changeset
+.agents
+.atl

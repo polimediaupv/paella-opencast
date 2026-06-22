@@ -11,18 +11,10 @@
                 "series": "ID-openmedia-opencast",
                 "seriestitle": "Open Media for Opencast",
                 "creators": {
-                    "creator": [
-                        "Lars Kiesow",
-                        "Presenter 2",
-                        "Presenter 3"
-                    ]
+                    "creator": ["Lars Kiesow", "Presenter 2", "Presenter 3"]
                 },
                 "contributors": {
-                    "contributor": [
-                        "Contributor 1",
-                        "Contributor 2",
-                        "Contributor 3"
-                    ]
+                    "contributor": ["Contributor 1", "Contributor 2", "Contributor 3"]
                 },
                 "subjects": {
                     "subject": "Subject"
@@ -613,52 +605,20 @@
             ],
             "type": "Episode",
             "dc": {
-                "rightsHolder": [
-                    "rights"
-                ],
-                "extent": [
-                    "PT1M4.700S"
-                ],
-                "identifier": [
-                    "ID-dual-stream-demo"
-                ],
-                "creator": [
-                    "Lars Kiesow",
-                    "Presenter 2",
-                    "Presenter 3"
-                ],
-                "created": [
-                    "2025-06-19T00:03:00.000Z"
-                ],
-                "subject": [
-                    "Subject"
-                ],
-                "description": [
-                    "Description\nLine 2\nLine 3"
-                ],
-                "language": [
-                    "eng"
-                ],
-                "source": [
-                    "source"
-                ],
-                "isPartOf": [
-                    "ID-openmedia-opencast"
-                ],
-                "title": [
-                    "Dual-Stream Demo"
-                ],
-                "license": [
-                    "CC-BY-SA"
-                ],
-                "contributor": [
-                    "Contributor 1",
-                    "Contributor 2",
-                    "Contributor 3"
-                ],
-                "spatial": [
-                    "location"
-                ],
+                "rightsHolder": ["rights"],
+                "extent": ["PT1M4.700S"],
+                "identifier": ["ID-dual-stream-demo"],
+                "creator": ["Lars Kiesow", "Presenter 2", "Presenter 3"],
+                "created": ["2025-06-19T00:03:00.000Z"],
+                "subject": ["Subject"],
+                "description": ["Description\nLine 2\nLine 3"],
+                "language": ["eng"],
+                "source": ["source"],
+                "isPartOf": ["ID-openmedia-opencast"],
+                "title": ["Dual-Stream Demo"],
+                "license": ["CC-BY-SA"],
+                "contributor": ["Contributor 1", "Contributor 2", "Contributor 3"],
+                "spatial": ["location"],
                 "temporal": [
                     "start\u003d2025-06-19T00:03:00Z; end\u003d2025-06-19T00:04:04Z; scheme\u003dW3C-DTF;"
                 ]

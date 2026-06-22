@@ -1,6 +1,6 @@
-import { OpencastPaellaPlayer } from "@asicupv/paella-opencast-core";
+import { OpencastPaellaPlayer } from '@asicupv/paella-opencast-core';
 import { Paella } from '@asicupv/paella-core';
-import { vi } from "vitest";
+import { vi } from 'vitest';
 
 export const createMockPlayer = () => {
     const mockPlayer = {
@@ -9,14 +9,14 @@ export const createMockPlayer = () => {
             log: vi.fn(),
             info: vi.fn(),
             warn: vi.fn(),
-            error: vi.fn()
+            error: vi.fn(),
         },
         getCustomPluginIcon: vi.fn(),
         translate: vi.fn((key: string) => key),
         captionsCanvas: {
             captions: vi.fn(() => []),
             disableCaptions: vi.fn(() => Promise.resolve()),
-            enableCaptions: vi.fn(() => Promise.resolve()),            
+            enableCaptions: vi.fn(() => Promise.resolve()),
         },
         config: vi.fn(() => Promise.resolve({})),
         paused: vi.fn(() => Promise.resolve(false)),
@@ -34,9 +34,8 @@ export const createMockPlayer = () => {
         getUrlFromOpencastServer: vi.fn(),
         playbackRate: vi.fn(() => Promise.resolve(1)),
         setPlaybackRate: vi.fn(() => Promise.resolve()),
-        
 
-        videoId: 'test-video-id'
+        videoId: 'test-video-id',
         // videoManifest: {
         //     metadata: {}
         // },
@@ -46,15 +45,14 @@ export const createMockPlayer = () => {
     return mockPlayer;
 };
 
-
 export const createMockOCPlayer = () => {
     const mockPlayer = createMockPlayer();
 
-        // Mock del opencast auth
+    // Mock del opencast auth
     const mockOpencastAuth = {
-      isAnonymous: vi.fn(),
-      canWrite: vi.fn(),
-      auth: vi.fn()
+        isAnonymous: vi.fn(),
+        canWrite: vi.fn(),
+        auth: vi.fn(),
     };
 
     const mockOcPlayer = {

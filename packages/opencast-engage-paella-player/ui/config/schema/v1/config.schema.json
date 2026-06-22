@@ -66,19 +66,13 @@
                     "description": "Indicates the container where the progress indicator will be displayed: over progress indicator or beside the buttons",
                     "type": "string",
                     "default": "progressIndicator",
-                    "enum": [
-                        "progressIndicator",
-                        "buttonArea"
-                    ]
+                    "enum": ["progressIndicator", "buttonArea"]
                 },
                 "side": {
                     "descriptions": "Used to configure whether the progress indicator will be displayed on the left or the right side of the container selected in 'parentContainer' property.",
                     "type": "string",
                     "default": "left",
-                    "enum": [
-                        "left",
-                        "right"
-                    ]
+                    "enum": ["left", "right"]
                 },
                 "visible": {
                     "description": "Allows you to hide the progress indicator",
@@ -209,20 +203,12 @@
                         "landscapeVerticalAlignment": {
                             "description": "defines the vertical alignment of videos when they are in landscape format.",
                             "type": "string",
-                            "enum": [
-                                "align-bottom",
-                                "align-center",
-                                "align-top"
-                            ]
+                            "enum": ["align-bottom", "align-center", "align-top"]
                         },
                         "portraitHorizontalAlignment": {
                             "description": "defines the horizontal alignment of videos when they are in portrait format.",
                             "type": "string",
-                            "enum": [
-                                "align-left",
-                                "align-center",
-                                "align-right"
-                            ]
+                            "enum": ["align-left", "align-center", "align-right"]
                         }
                     }
                 }

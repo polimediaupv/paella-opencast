@@ -1,4 +1,10 @@
-import { OpencastAuthDefaultImpl, stringToBoolean, OpencastPaellaPlayer, type OpencastInitParams, opencastInitParamsDefaultImpl } from '@asicupv/paella-opencast-core';
+import {
+    OpencastAuthDefaultImpl,
+    stringToBoolean,
+    OpencastPaellaPlayer,
+    type OpencastInitParams,
+    opencastInitParamsDefaultImpl,
+} from '@asicupv/paella-opencast-core';
 import { basicPlugins } from '@asicupv/paella-basic-plugins';
 import { slidePlugins } from '@asicupv/paella-slide-plugins';
 import { zoomPlugins } from '@asicupv/paella-zoom-plugin';
@@ -7,7 +13,6 @@ import { videoPlugins } from '@asicupv/paella-video-plugins';
 import { extraPlugins } from '@asicupv/paella-extra-plugins';
 // import { aiToolsPlugins } from '@asicupv/paella-ai-plugins';
 import { opencastPlugins } from '@asicupv/paella-opencast-plugins';
-
 
 import '@asicupv/paella-core/paella-core.css';
 import '@asicupv/paella-basic-plugins/paella-basic-plugins.css';
@@ -22,7 +27,6 @@ import '@asicupv/paella-opencast-core/paella-opencast-core.css';
 
 import './css/OpencastPaellaHTMLElement.css';
 
-
 class OpencastPaellaHTMLElementAuthImpl extends OpencastAuthDefaultImpl {
     readonly #elem: OpencastPaellaHTMLElement;
 
@@ -31,16 +35,14 @@ class OpencastPaellaHTMLElementAuthImpl extends OpencastAuthDefaultImpl {
         this.#elem = elem;
     }
 
-    async getLoggedUserName() {        
-        return this.#elem.getAttribute('opencast-user-name') ?? await super.getLoggedUserName();
+    async getLoggedUserName() {
+        return this.#elem.getAttribute('opencast-user-name') ?? (await super.getLoggedUserName());
     }
 
     async canWrite() {
         const att = this.#elem.getAttribute('opencast-user-canWrite');
 
-        return (att !== null)
-            ? stringToBoolean(att)
-            : super.canWrite();
+        return att !== null ? stringToBoolean(att) : super.canWrite();
     }
 }
 
@@ -52,7 +54,6 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
     private debounceTimer: ReturnType<typeof setTimeout> | undefined;
     private debouncedUpdate: () => void;
 
-
     static get observedAttributes() {
         return [
             'video-id', // Required
@@ -61,24 +62,25 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
             'paella-config', // If not defined, it will be fetched ${opencast-presentation-url}${paella-resources-url}config.json
             'opencast-episode', // If not defined, it will be fetched using the search API: ${opencast-presentation-url}/search/episode.json?id=${video-id}
             'opencast-user-name', // If not defined, it will be fetched from: ${opencast-presentation-url}/info/me.json
-            'opencast-user-canWrite' // If not defined, it will be fetched using the serach API: ${opencast-presentation-url}/search/episode.json?id=${video-id} or series API ${opencast-presentation-url}/series/${series}/acl.json
+            'opencast-user-canWrite', // If not defined, it will be fetched using the serach API: ${opencast-presentation-url}/search/episode.json?id=${video-id} or series API ${opencast-presentation-url}/series/${series}/acl.json
         ];
     }
 
-    get paella() { return this._paella; }
+    get paella() {
+        return this._paella;
+    }
 
     constructor() {
         super();
         this.debouncedUpdate = this.debounce(() => this.enqueueUpdate(), 50);
     }
 
-
-    private debounce(fn: () => void, delay: number) {
+    private debounce(fn: () => void | Promise<void>, delay: number) {
         return (...args: unknown[]) => {
             clearTimeout(this.debounceTimer);
             this.debounceTimer = setTimeout(() => {
                 this.debounceTimer = undefined;
-                fn.apply<this, unknown[], void>(this, args);
+                void fn.apply(this, args as []);
             }, delay);
         };
     }
@@ -100,6 +102,7 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
         this._isUpdating = true;
         do {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- _isMounted can change during await
             if (!this._isMounted) {
                 this._hasPendingUpdate = false;
                 break;
@@ -107,6 +110,7 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
             this._hasPendingUpdate = false;
             await this.update();
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- _hasPendingUpdate and _isMounted change during await
         } while (this._hasPendingUpdate && this._isMounted);
         this._isUpdating = false;
     }
@@ -122,12 +126,15 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
         const videoId = this.getAttribute('video-id');
         if (!videoId) {
-            console.warn('No video-id attribute found. Opencast Paella Player Component will not be updated.');
+            console.warn(
+                'No video-id attribute found. Opencast Paella Player Component will not be updated.',
+            );
             return;
         }
 
         console.debug(`Updating Opencast Paella Player Component...`);
-        const configResourcesUrl = this.getAttribute('paella-resources-url') ?? '/ui/config/paella8/';
+        const configResourcesUrl =
+            this.getAttribute('paella-resources-url') ?? '/ui/config/paella8/';
         const ocPresentationUrl = this.getAttribute('opencast-presentation-url') ?? null;
         // const paellaSkinUrl = this.getAttribute('paella-skin-url') ?? (
         //     (ocPresentationUrl != null)
@@ -150,7 +157,7 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
                     ...webglPlugins,
                     ...extraPlugins,
                     // ...aiToolsPlugins,
-                    ...opencastPlugins
+                    ...opencastPlugins,
                 ],
                 opencast: {
                     presentationUrl: ocPresentationUrl,
@@ -158,8 +165,7 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
                     episode: this.getAttribute('opencast-episode'),
                     paellaConfig: this.getAttribute('paella-config'),
                     auth,
-
-                }
+                },
             };
 
             this._paella = new OpencastPaellaPlayer(this, initParams);
@@ -167,10 +173,9 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
 
             await this._paella.applyOpencastTheme();
             await this._paella.loadManifest();
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error);
-        }   
+        }
         console.debug(`[END] Updating Opencast Paella Player Component...`);
     }
 
@@ -180,12 +185,12 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
         this.debouncedUpdate();
     }
 
-    async attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         if (oldValue !== newValue) {
             console.debug(`Attribute ${name} has changed from ${oldValue} to ${newValue}.`);
             this.debouncedUpdate();
         }
-    }    
+    }
 
     disconnectedCallback(): void {
         console.debug('Opencast Paella Player Component disconnected from the DOM.');
@@ -200,5 +205,4 @@ export class OpencastPaellaHTMLElement extends HTMLElement {
     //     console.debug('Opencast Paella Player Component adopted from one document to another');
     //     // Optionally re-initialize context if needed
     // }
-
 }

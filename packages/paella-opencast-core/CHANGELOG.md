@@ -33,4 +33,4 @@
 - [#80](https://github.com/polimediaupv/paella-opencast/pull/80) [`7ac4d04`](https://github.com/polimediaupv/paella-opencast/commit/7ac4d04e4389b99d83a6d26243e37964c97b6718) Thanks [@wsmirnow](https://github.com/wsmirnow)! - Fixed test whether the user is authenticated in Opencast
 
 - Updated dependencies [[`54448fe`](https://github.com/polimediaupv/paella-opencast/commit/54448fedd4d446c7787ed84813533ef6e93ccc5d)]:
-  - @asicupv/paella-opencast-skin@2.0.1
+    - @asicupv/paella-opencast-skin@2.0.1

@@ -1,11 +1,18 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import { opencastSearchResultToOpencastPaellaEvent, opencastSearchResultToPaellaManifest } from '../src/EventConversor/EngageEventConversor';
-import { opencastExternalAPIEventToOpencastPaellaEvent, opencastExternalAPIEventToPaellaManifest, parseChecksum } from '../src/EventConversor/APIEventConversor';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import {
+    opencastSearchResultToOpencastPaellaEvent,
+    opencastSearchResultToPaellaManifest,
+} from '../src/EventConversor/EngageEventConversor';
+import {
+    opencastExternalAPIEventToOpencastPaellaEvent,
+    opencastExternalAPIEventToPaellaManifest,
+    parseChecksum,
+} from '../src/EventConversor/APIEventConversor';
 import { EventConversor } from '../src/EventConversor/EventConversor';
-import data from './mock/episodes/dual.json'
+import data from './mock/episodes/dual.json';
 import externalEvent from './mock/episodes/api.json';
-import {commonEvent} from './mock/episodes/common';
-import {Event, MediaPackageElement, Track} from '../src/Event';
+import { commonEvent } from './mock/episodes/common';
+import { Event, MediaPackageElement, Track } from '../src/Event';
 import { OpencastPaellaPlayer } from '../src';
 
 describe('EventConversor', () => {
@@ -20,7 +27,7 @@ describe('EventConversor', () => {
     describe('opencastSearchResultToOpencastPaellaEvent', () => {
         test('should correctly convert Opencast search result to Paella event format', async () => {
             const elem: HTMLElement = document.createElement('div');
-            const ocPlayer = new OpencastPaellaPlayer(elem, {});            
+            const ocPlayer = new OpencastPaellaPlayer(elem, {});
             const conversion = opencastSearchResultToOpencastPaellaEvent(data.result[0]);
 
             expect(conversion.tracks).toMatchObject(commonEvent.tracks);
@@ -30,7 +37,7 @@ describe('EventConversor', () => {
 
         test('should handle search result with missing metadata gracefully', () => {
             const elem: HTMLElement = document.createElement('div');
-            const ocPlayer = new OpencastPaellaPlayer(elem, {});            
+            const ocPlayer = new OpencastPaellaPlayer(elem, {});
 
             const minimalSearchResult = {
                 mediapackage: {
@@ -38,8 +45,8 @@ describe('EventConversor', () => {
                     title: 'Test Title',
                     media: { track: [] },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
             const conversion = opencastSearchResultToOpencastPaellaEvent(minimalSearchResult);
@@ -57,7 +64,7 @@ describe('EventConversor', () => {
             const searchResultWithTrack = {
                 mediapackage: {
                     id: 'test-id',
-                    media: { 
+                    media: {
                         track: {
                             id: 'track-1',
                             url: 'http://example.com/video.mp4',
@@ -67,14 +74,14 @@ describe('EventConversor', () => {
                                 resolution: '1920x1080',
                                 id: 'video-1',
                                 framerate: 30,
-                                bitrate: 5000
+                                bitrate: 5000,
                             },
-                            tags: { tag: [] }
-                        }
+                            tags: { tag: [] },
+                        },
                     },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
             const conversion = opencastSearchResultToOpencastPaellaEvent(searchResultWithTrack);
@@ -93,21 +100,23 @@ describe('EventConversor', () => {
             const searchResultWithBadResolution = {
                 mediapackage: {
                     id: 'test-id',
-                    media: { 
+                    media: {
                         track: {
                             id: 'track-1',
                             video: {
-                                resolution: 'invalid-resolution'
+                                resolution: 'invalid-resolution',
                             },
-                            tags: { tag: [] }
-                        }
+                            tags: { tag: [] },
+                        },
                     },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
-            const conversion = opencastSearchResultToOpencastPaellaEvent(searchResultWithBadResolution);
+            const conversion = opencastSearchResultToOpencastPaellaEvent(
+                searchResultWithBadResolution,
+            );
 
             expect(conversion.tracks).toBeDefined();
             expect(conversion.tracks).toHaveLength(1);
@@ -126,8 +135,8 @@ describe('EventConversor', () => {
                     duration: 120000, // 2 minutes in milliseconds
                     media: { track: [] },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
             const conversion = opencastSearchResultToOpencastPaellaEvent(searchResultWithDuration);
@@ -142,21 +151,27 @@ describe('EventConversor', () => {
                 mediapackage: {
                     id: 'test-id',
                     creators: {
-                        creator: ['John Doe', 'Jane Smith']
+                        creator: ['John Doe', 'Jane Smith'],
                     },
                     contributors: {
-                        contributor: ['Contributor 1', 'Contributor 2', 'Contributor 3']
+                        contributor: ['Contributor 1', 'Contributor 2', 'Contributor 3'],
                     },
                     media: { track: [] },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
-            const conversion = opencastSearchResultToOpencastPaellaEvent(searchResultWithMultiplePeople);
+            const conversion = opencastSearchResultToOpencastPaellaEvent(
+                searchResultWithMultiplePeople,
+            );
 
             expect(conversion.metadata?.presenters).toEqual(['John Doe', 'Jane Smith']);
-            expect(conversion.metadata?.contributors).toEqual(['Contributor 1', 'Contributor 2', 'Contributor 3']);
+            expect(conversion.metadata?.contributors).toEqual([
+                'Contributor 1',
+                'Contributor 2',
+                'Contributor 3',
+            ]);
         });
 
         test('should parse checksums correctly', () => {
@@ -165,19 +180,19 @@ describe('EventConversor', () => {
             const searchResultWithChecksum = {
                 mediapackage: {
                     id: 'test-id',
-                    media: { 
+                    media: {
                         track: {
                             id: 'track-1',
                             checksum: {
                                 type: 'md5',
-                                $: 'abc123def456'
+                                $: 'abc123def456',
                             },
-                            tags: { tag: [] }
-                        }
+                            tags: { tag: [] },
+                        },
                     },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
             const conversion = opencastSearchResultToOpencastPaellaEvent(searchResultWithChecksum);
@@ -205,7 +220,7 @@ describe('EventConversor', () => {
                 expect(elem1.checksum?.type).toBe(elem2.checksum?.type);
                 expect(elem1.checksum?.value).toBe(elem2.checksum?.value);
                 expect(elem1.size).toBe(elem2.size);
-            }
+            };
 
             expect(conversion.metadata).toMatchObject(commonEvent.metadata);
             conversion.tracks?.forEach((track: Track, index: number) => {
@@ -219,7 +234,7 @@ describe('EventConversor', () => {
             const minimalExternalEvent = {
                 identifier: 'test-id',
                 title: 'Test Title',
-                media: []
+                media: [],
             };
 
             const conversion = opencastExternalAPIEventToOpencastPaellaEvent(minimalExternalEvent);
@@ -236,7 +251,7 @@ describe('EventConversor', () => {
                 identifier: 'test-id',
                 title: null,
                 description: undefined,
-                media: null
+                media: null,
             };
 
             const conversion = opencastExternalAPIEventToOpencastPaellaEvent(eventWithNulls);
@@ -260,14 +275,14 @@ describe('EventConversor', () => {
                                 id: 'track-1',
                                 url: 'http://example.com/video.mp4',
                                 mimetype: 'video/mp4',
-                                flavor: 'presenter/delivery'
-                            }
-                        ]
-                    }
-                ]
+                                flavor: 'presenter/delivery',
+                            },
+                        ],
+                    },
+                ],
             };
 
-            const conversion = opencastExternalAPIEventToOpencastPaellaEvent( eventWithPublications);
+            const conversion = opencastExternalAPIEventToOpencastPaellaEvent(eventWithPublications);
 
             expect(conversion.tracks?.[0]?.url).toBe('http://example.com/video.mp4');
             expect(conversion.tracks?.[0]?.flavor).toBe('presenter/delivery');
@@ -281,16 +296,17 @@ describe('EventConversor', () => {
                 publications: [
                     {
                         channel: 'engage-player',
-                        media: [{ id: 'track-1', url: 'http://engage.com/video.mp4' }]
+                        media: [{ id: 'track-1', url: 'http://engage.com/video.mp4' }],
                     },
                     {
                         channel: 'api',
-                        media: [{ id: 'track-2', url: 'http://api.com/video.mp4' }]
-                    }
-                ]
+                        media: [{ id: 'track-2', url: 'http://api.com/video.mp4' }],
+                    },
+                ],
             };
 
-            const conversion = opencastExternalAPIEventToOpencastPaellaEvent(eventWithMultipleChannels);
+            const conversion =
+                opencastExternalAPIEventToOpencastPaellaEvent(eventWithMultipleChannels);
 
             expect(conversion.tracks?.length).toBeGreaterThan(0);
         });
@@ -301,14 +317,16 @@ describe('EventConversor', () => {
             const eventWithDates = {
                 identifier: 'test-id',
                 start: '2023-01-01T10:00:00Z',
-                created: '2023-01-01T09:00:00Z'
+                created: '2023-01-01T09:00:00Z',
             };
 
             const conversion = opencastExternalAPIEventToOpencastPaellaEvent(eventWithDates);
 
             expect(conversion.metadata?.startDate).toBeInstanceOf(Date);
             expect(conversion.metadata?.created).toBeInstanceOf(Date);
-            expect(conversion.metadata?.startDate?.getTime()).toBe(new Date('2023-01-01T10:00:00Z').getTime());
+            expect(conversion.metadata?.startDate?.getTime()).toBe(
+                new Date('2023-01-01T10:00:00Z').getTime(),
+            );
         });
 
         test('should handle invalid date formats gracefully', () => {
@@ -317,7 +335,7 @@ describe('EventConversor', () => {
             const eventWithInvalidDates = {
                 identifier: 'test-id',
                 start: 'invalid-date',
-                created: null
+                created: null,
             };
 
             const conversion = opencastExternalAPIEventToOpencastPaellaEvent(eventWithInvalidDates);
@@ -344,7 +362,6 @@ describe('EventConversor', () => {
             const elem: HTMLElement = document.createElement('div');
             const ocPlayer = new OpencastPaellaPlayer(elem, {});
             expect(() => opencastExternalAPIEventToOpencastPaellaEvent(null)).toThrow();
-            
         });
 
         test('should handle undefined input for external API converter', () => {
@@ -370,13 +387,13 @@ describe('EventConversor', () => {
             const searchResultWithArrays = {
                 dc: {
                     subject: ['Subject 1', 'Subject 2'],
-                    description: ['Description 1', 'Description 2']
+                    description: ['Description 1', 'Description 2'],
                 },
                 mediapackage: {
                     media: { track: [] },
                     attachments: { attachment: [] },
-                    metadata: { catalog: [] }
-                }
+                    metadata: { catalog: [] },
+                },
             };
 
             const conversion = opencastSearchResultToOpencastPaellaEvent(searchResultWithArrays);
@@ -433,13 +450,31 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/presenter.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 },
-                        { id: 't2', url: 'http://example.com/presentation.mp4', mimetype: 'video/mp4', flavor: 'presentation/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/presentation.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presentation/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
                 expect(streams).toHaveLength(2);
-                const flavors = streams.map(s => s.content);
+                const flavors = streams.map((s) => s.content);
                 expect(flavors).toContain('presenter');
                 expect(flavors).toContain('presentation');
             });
@@ -449,13 +484,40 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/presenter.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 },
-                        { id: 't2', url: 'http://example.com/presentation.mp4', mimetype: 'video/mp4', flavor: 'presentation/delivery', tags: [], is_live: false, is_master: false, duration: 60 },
-                        { id: 't3', url: 'http://example.com/audio.m4a', mimetype: 'audio/m4a', flavor: 'audio/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/presentation.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presentation/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't3',
+                            url: 'http://example.com/audio.m4a',
+                            mimetype: 'audio/m4a',
+                            flavor: 'audio/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
-                const flavors = streams.map(s => s.content);
+                const flavors = streams.map((s) => s.content);
 
                 expect(streams).toHaveLength(2);
                 expect(flavors).toContain('presenter');
@@ -468,8 +530,17 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/presenter.m3u8', mimetype: 'application/x-mpegURL', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
                 expect(streams).toHaveLength(1);
@@ -482,8 +553,17 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/live.m3u8', mimetype: 'application/x-mpegURL', flavor: 'presenter/delivery', tags: [], is_live: true, is_master: false, duration: 0 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/live.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: true,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
                 expect(streams[0].sources.hlsLive).toBeDefined();
@@ -495,13 +575,32 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/presenter.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60, audio: { id: 'a1', channels: 2, samplingrate: 44100, bitrate: 128000 } },
-                        { id: 't2', url: 'http://example.com/presentation.mp4', mimetype: 'video/mp4', flavor: 'presentation/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                            audio: { id: 'a1', channels: 2, samplingrate: 44100, bitrate: 128000 },
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/presentation.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presentation/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
-                const presenterStream = streams.find(s => s.content === 'presenter');
-                const presentationStream = streams.find(s => s.content === 'presentation');
+                const presenterStream = streams.find((s) => s.content === 'presenter');
+                const presentationStream = streams.find((s) => s.content === 'presentation');
                 expect(presenterStream?.role).toBe('mainAudio');
                 expect(presentationStream?.role).toBeUndefined();
             });
@@ -511,8 +610,17 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/360.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: ['video360'], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/360.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: ['video360'],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
                 expect(streams[0].canvas).toContain('video360');
@@ -523,8 +631,17 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/sub.vtt', mimetype: 'text/vtt', flavor: 'captions/source+en', tags: [], is_live: false, is_master: false, duration: 0 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/sub.vtt',
+                            mimetype: 'text/vtt',
+                            flavor: 'captions/source+en',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const streams = conversor.getStreams(event);
                 expect(streams).toHaveLength(0);
@@ -589,8 +706,17 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/video.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/video.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const chapters = await conversor.getChapters(event);
                 expect(chapters).toBeUndefined();
@@ -598,14 +724,26 @@ describe('EventConversor', () => {
 
             test('should fetch and parse VTT chapters when chapter track exists', async () => {
                 const vttContent = `WEBVTT\n\n00:00:00.000 --> 00:00:10.000\nChapter One\n\n00:00:10.000 --> 00:00:20.000\nChapter Two`;
-                vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ text: () => Promise.resolve(vttContent) })));
+                vi.stubGlobal(
+                    'fetch',
+                    vi.fn(() => Promise.resolve({ text: () => Promise.resolve(vttContent) })),
+                );
 
                 const conversor = new EventConversor(makePlayer());
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 'ch1', url: 'http://example.com/chapters.vtt', mimetype: 'text/vtt', flavor: 'chapters/source', tags: [], is_live: false, is_master: false, duration: 0 }
-                    ]
+                        {
+                            id: 'ch1',
+                            url: 'http://example.com/chapters.vtt',
+                            mimetype: 'text/vtt',
+                            flavor: 'chapters/source',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const chapters = await conversor.getChapters(event);
                 expect(chapters).toBeDefined();
@@ -615,15 +753,28 @@ describe('EventConversor', () => {
 
             test('should use custom chaptersFlavours from config', async () => {
                 const vttContent = `WEBVTT\n\n00:00:05.000 --> 00:00:15.000\nCustom Chapter`;
-                const fetchSpy = vi.fn(() => Promise.resolve({ text: () => Promise.resolve(vttContent) }));
+                const fetchSpy = vi.fn(() =>
+                    Promise.resolve({ text: () => Promise.resolve(vttContent) }),
+                );
                 vi.stubGlobal('fetch', fetchSpy);
 
-                const conversor = new EventConversor(makePlayer(), { chaptersFlavours: ['custom/chapters'] });
+                const conversor = new EventConversor(makePlayer(), {
+                    chaptersFlavours: ['custom/chapters'],
+                });
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 'ch1', url: 'http://example.com/custom-chapters.vtt', mimetype: 'text/vtt', flavor: 'custom/chapters', tags: [], is_live: false, is_master: false, duration: 0 }
-                    ]
+                        {
+                            id: 'ch1',
+                            url: 'http://example.com/custom-chapters.vtt',
+                            mimetype: 'text/vtt',
+                            flavor: 'custom/chapters',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const chapters = await conversor.getChapters(event);
                 expect(chapters?.chapterList).toHaveLength(1);
@@ -644,9 +795,23 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'f1', url: 'http://example.com/frame0.jpg', mimetype: 'image/jpeg', flavor: 'presentation/segment+preview', tags: [], ref: 'track:abc#time=T00:00:00' },
-                        { id: 'f2', url: 'http://example.com/frame30.jpg', mimetype: 'image/jpeg', flavor: 'presentation/segment+preview', tags: [], ref: 'track:abc#time=T00:00:30' }
-                    ]
+                        {
+                            id: 'f1',
+                            url: 'http://example.com/frame0.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presentation/segment+preview',
+                            tags: [],
+                            ref: 'track:abc#time=T00:00:00',
+                        },
+                        {
+                            id: 'f2',
+                            url: 'http://example.com/frame30.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presentation/segment+preview',
+                            tags: [],
+                            ref: 'track:abc#time=T00:00:30',
+                        },
+                    ],
                 };
                 const frameList = conversor.getFrameList(event);
                 expect(frameList).toBeDefined();
@@ -660,9 +825,23 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'f2', url: 'http://example.com/frame60.jpg', mimetype: 'image/jpeg', flavor: 'presentation/segment+preview', tags: [], ref: 'track:abc#time=T00:01:00' },
-                        { id: 'f1', url: 'http://example.com/frame0.jpg', mimetype: 'image/jpeg', flavor: 'presentation/segment+preview', tags: [], ref: 'track:abc#time=T00:00:00' }
-                    ]
+                        {
+                            id: 'f2',
+                            url: 'http://example.com/frame60.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presentation/segment+preview',
+                            tags: [],
+                            ref: 'track:abc#time=T00:01:00',
+                        },
+                        {
+                            id: 'f1',
+                            url: 'http://example.com/frame0.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presentation/segment+preview',
+                            tags: [],
+                            ref: 'track:abc#time=T00:00:00',
+                        },
+                    ],
                 };
                 const frameList = conversor.getFrameList(event);
                 expect(frameList?.frames[0].time).toBe(0);
@@ -670,12 +849,21 @@ describe('EventConversor', () => {
             });
 
             test('should use custom segmentPreviewAttachmentsFlavours from config', () => {
-                const conversor = new EventConversor(makePlayer(), { segmentPreviewAttachmentsFlavours: ['custom/segment+preview'] });
+                const conversor = new EventConversor(makePlayer(), {
+                    segmentPreviewAttachmentsFlavours: ['custom/segment+preview'],
+                });
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'f1', url: 'http://example.com/frame0.jpg', mimetype: 'image/jpeg', flavor: 'custom/segment+preview', tags: [], ref: 'track:abc#time=T00:00:05' }
-                    ]
+                        {
+                            id: 'f1',
+                            url: 'http://example.com/frame0.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'custom/segment+preview',
+                            tags: [],
+                            ref: 'track:abc#time=T00:00:05',
+                        },
+                    ],
                 };
                 const frameList = conversor.getFrameList(event);
                 expect(frameList?.frames).toHaveLength(1);
@@ -697,11 +885,14 @@ describe('EventConversor', () => {
                     id: 'test',
                     attachments: [
                         {
-                            id: 'tl1', url: 'http://example.com/timeline.jpg', mimetype: 'image/jpeg',
-                            flavor: 'presentation/timeline+preview', tags: [],
-                            additionalProperties: { imageSizeX: '5', imageSizeY: '8' }
-                        }
-                    ]
+                            id: 'tl1',
+                            url: 'http://example.com/timeline.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presentation/timeline+preview',
+                            tags: [],
+                            additionalProperties: { imageSizeX: '5', imageSizeY: '8' },
+                        },
+                    ],
                 };
                 const info = conversor.getTimeLineInfo(event);
                 expect(info).toBeDefined();
@@ -715,8 +906,14 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'tl1', url: 'http://example.com/timeline.jpg', mimetype: 'image/jpeg', flavor: 'presenter/timeline+preview', tags: [] }
-                    ]
+                        {
+                            id: 'tl1',
+                            url: 'http://example.com/timeline.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presenter/timeline+preview',
+                            tags: [],
+                        },
+                    ],
                 };
                 const info = conversor.getTimeLineInfo(event);
                 expect(info?.rows).toBe(10);
@@ -737,7 +934,18 @@ describe('EventConversor', () => {
                 const conversor = new EventConversor(makePlayer(), { hideTimeLineOnLive: true });
                 const event: Event = {
                     id: 'test',
-                    tracks: [{ id: 't1', url: 'http://example.com/live.m3u8', mimetype: 'application/x-mpegURL', flavor: 'presenter/delivery', tags: [], is_live: true, is_master: false, duration: 0 }]
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/live.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: true,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const metadata = conversor.getMetadata(event);
                 expect(metadata?.visibleTimeLine).toBe(false);
@@ -747,7 +955,18 @@ describe('EventConversor', () => {
                 const conversor = new EventConversor(makePlayer());
                 const event: Event = {
                     id: 'test',
-                    tracks: [{ id: 't1', url: 'http://example.com/live.m3u8', mimetype: 'application/x-mpegURL', flavor: 'presenter/delivery', tags: [], is_live: true, is_master: false, duration: 0 }]
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/live.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: true,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const metadata = conversor.getMetadata(event);
                 expect(metadata?.visibleTimeLine).toBe(true);
@@ -757,7 +976,7 @@ describe('EventConversor', () => {
                 const conversor = new EventConversor(makePlayer());
                 const event: Event = {
                     id: 'test',
-                    metadata: { title: 'My Video', duration: 120, series: 'series-1' }
+                    metadata: { title: 'My Video', duration: 120, series: 'series-1' },
                 };
                 const metadata = conversor.getMetadata(event);
                 expect(metadata?.title).toBe('My Video');
@@ -773,8 +992,17 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 'cap1', url: 'http://example.com/en.vtt', mimetype: 'text/vtt', flavor: 'captions/vtt+en', tags: [], is_live: false, is_master: false, duration: 0 }
-                    ]
+                        {
+                            id: 'cap1',
+                            url: 'http://example.com/en.vtt',
+                            mimetype: 'text/vtt',
+                            flavor: 'captions/vtt+en',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 0,
+                        },
+                    ],
                 };
                 const captions = conversor.getCaptions(event);
                 expect(captions).toHaveLength(1);
@@ -787,21 +1015,38 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     tracks: [
-                        { id: 't1', url: 'http://example.com/video.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
-                    ]
+                        {
+                            id: 't1',
+                            url: 'http://example.com/video.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
                 };
                 const captions = conversor.getCaptions(event);
                 expect(captions).toHaveLength(0);
             });
 
             test('should include attachments captions when captionsBackwardsCompatibility is true', () => {
-                const conversor = new EventConversor(makePlayer(), { captionsBackwardsCompatibility: true });
+                const conversor = new EventConversor(makePlayer(), {
+                    captionsBackwardsCompatibility: true,
+                });
                 const event: Event = {
                     id: 'test',
                     tracks: [],
                     attachments: [
-                        { id: 'cap1', url: 'http://example.com/es.vtt', mimetype: 'text/vtt', flavor: 'captions/vtt+es', tags: [] }
-                    ]
+                        {
+                            id: 'cap1',
+                            url: 'http://example.com/es.vtt',
+                            mimetype: 'text/vtt',
+                            flavor: 'captions/vtt+es',
+                            tags: [],
+                        },
+                    ],
                 };
                 const captions = conversor.getCaptions(event);
                 expect(captions).toHaveLength(1);
@@ -809,13 +1054,21 @@ describe('EventConversor', () => {
             });
 
             test('should NOT include attachment captions when captionsBackwardsCompatibility is false', () => {
-                const conversor = new EventConversor(makePlayer(), { captionsBackwardsCompatibility: false });
+                const conversor = new EventConversor(makePlayer(), {
+                    captionsBackwardsCompatibility: false,
+                });
                 const event: Event = {
                     id: 'test',
                     tracks: [],
                     attachments: [
-                        { id: 'cap1', url: 'http://example.com/es.vtt', mimetype: 'text/vtt', flavor: 'captions/vtt+es', tags: [] }
-                    ]
+                        {
+                            id: 'cap1',
+                            url: 'http://example.com/es.vtt',
+                            mimetype: 'text/vtt',
+                            flavor: 'captions/vtt+es',
+                            tags: [],
+                        },
+                    ],
                 };
                 const captions = conversor.getCaptions(event);
                 expect(captions).toHaveLength(0);
@@ -829,7 +1082,13 @@ describe('EventConversor', () => {
                 vi.spyOn(player, 'translate').mockImplementation((key: string) => key);
                 const conversor = new EventConversor(player);
                 const elements: MediaPackageElement[] = [
-                    { id: 'c1', url: 'http://example.com/es.vtt', mimetype: 'text/vtt', flavor: 'captions/vtt', tags: ['lang:es'] }
+                    {
+                        id: 'c1',
+                        url: 'http://example.com/es.vtt',
+                        mimetype: 'text/vtt',
+                        flavor: 'captions/vtt',
+                        tags: ['lang:es'],
+                    },
                 ];
                 const captions = conversor.processCaptionsFromMpElements(elements);
                 expect(captions).toHaveLength(1);
@@ -842,7 +1101,13 @@ describe('EventConversor', () => {
                 vi.spyOn(player, 'translate').mockImplementation((key: string) => `(${key})`);
                 const conversor = new EventConversor(player);
                 const elements: MediaPackageElement[] = [
-                    { id: 'c1', url: 'http://example.com/auto.vtt', mimetype: 'text/vtt', flavor: 'captions/vtt+en', tags: ['generator-type:auto'] }
+                    {
+                        id: 'c1',
+                        url: 'http://example.com/auto.vtt',
+                        mimetype: 'text/vtt',
+                        flavor: 'captions/vtt+en',
+                        tags: ['generator-type:auto'],
+                    },
                 ];
                 const captions = conversor.processCaptionsFromMpElements(elements);
                 expect(captions[0].text).toContain('(automatically generated)');
@@ -853,7 +1118,13 @@ describe('EventConversor', () => {
                 vi.spyOn(player, 'translate').mockImplementation((key: string) => key);
                 const conversor = new EventConversor(player);
                 const elements: MediaPackageElement[] = [
-                    { id: 'c1', url: 'http://example.com/cc.vtt', mimetype: 'text/vtt', flavor: 'captions/vtt+en', tags: ['type:closed-caption'] }
+                    {
+                        id: 'c1',
+                        url: 'http://example.com/cc.vtt',
+                        mimetype: 'text/vtt',
+                        flavor: 'captions/vtt+en',
+                        tags: ['type:closed-caption'],
+                    },
                 ];
                 const captions = conversor.processCaptionsFromMpElements(elements);
                 expect(captions[0].text).toMatch(/^\[CC\]/);
@@ -862,7 +1133,13 @@ describe('EventConversor', () => {
             test('should handle DFXP XML format', () => {
                 const conversor = new EventConversor(makePlayer());
                 const elements: MediaPackageElement[] = [
-                    { id: 'c1', url: 'http://example.com/captions.xml', mimetype: 'text/xml', flavor: 'captions/dfxp+en', tags: [] }
+                    {
+                        id: 'c1',
+                        url: 'http://example.com/captions.xml',
+                        mimetype: 'text/xml',
+                        flavor: 'captions/dfxp+en',
+                        tags: [],
+                    },
                 ];
                 const captions = conversor.processCaptionsFromMpElements(elements);
                 expect(captions).toHaveLength(1);
@@ -872,7 +1149,13 @@ describe('EventConversor', () => {
             test('should ignore elements with non-captions flavor', () => {
                 const conversor = new EventConversor(makePlayer());
                 const elements: MediaPackageElement[] = [
-                    { id: 'a1', url: 'http://example.com/image.jpg', mimetype: 'image/jpeg', flavor: 'presenter/player+preview', tags: [] }
+                    {
+                        id: 'a1',
+                        url: 'http://example.com/image.jpg',
+                        mimetype: 'image/jpeg',
+                        flavor: 'presenter/player+preview',
+                        tags: [],
+                    },
                 ];
                 const captions = conversor.processCaptionsFromMpElements(elements);
                 expect(captions).toHaveLength(0);
@@ -881,7 +1164,13 @@ describe('EventConversor', () => {
             test('should silently skip elements that cause errors', () => {
                 const conversor = new EventConversor(makePlayer());
                 const elements: MediaPackageElement[] = [
-                    { id: 'bad', url: null as any, mimetype: 'text/vtt', flavor: 'captions/vtt+en', tags: [] }
+                    {
+                        id: 'bad',
+                        url: null as any,
+                        mimetype: 'text/vtt',
+                        flavor: 'captions/vtt+en',
+                        tags: [],
+                    },
                 ];
                 expect(() => conversor.processCaptionsFromMpElements(elements)).not.toThrow();
             });
@@ -900,9 +1189,21 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     segments: [
-                        { index: 0, preview: 'http://example.com/thumb.jpg', text: 'Hello world', time: 0, duration: 5000 },
-                        { index: 1, preview: 'http://example.com/thumb2.jpg', text: 'Second segment', time: 5000, duration: 3000 }
-                    ]
+                        {
+                            index: 0,
+                            preview: 'http://example.com/thumb.jpg',
+                            text: 'Hello world',
+                            time: 0,
+                            duration: 5000,
+                        },
+                        {
+                            index: 1,
+                            preview: 'http://example.com/thumb2.jpg',
+                            text: 'Second segment',
+                            time: 5000,
+                            duration: 3000,
+                        },
+                    ],
                 };
                 const transcriptions = conversor.getTranscriptions(event);
                 expect(transcriptions).toHaveLength(2);
@@ -918,8 +1219,14 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'p1', url: 'http://example.com/preview.jpg', mimetype: 'image/jpeg', flavor: 'presenter/player+preview', tags: [] }
-                    ]
+                        {
+                            id: 'p1',
+                            url: 'http://example.com/preview.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presenter/player+preview',
+                            tags: [],
+                        },
+                    ],
                 };
                 expect(conversor.getPreviewUrl(event)).toBe('http://example.com/preview.jpg');
             });
@@ -929,10 +1236,18 @@ describe('EventConversor', () => {
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'p1', url: 'http://example.com/presentation-preview.jpg', mimetype: 'image/jpeg', flavor: 'presentation/player+preview', tags: [] }
-                    ]
+                        {
+                            id: 'p1',
+                            url: 'http://example.com/presentation-preview.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presentation/player+preview',
+                            tags: [],
+                        },
+                    ],
                 };
-                expect(conversor.getPreviewUrl(event)).toBe('http://example.com/presentation-preview.jpg');
+                expect(conversor.getPreviewUrl(event)).toBe(
+                    'http://example.com/presentation-preview.jpg',
+                );
             });
 
             test('should return undefined when no preview attachments exist', () => {
@@ -942,12 +1257,20 @@ describe('EventConversor', () => {
             });
 
             test('should use custom playerPreviewAttachmentsFlavours from config', () => {
-                const conversor = new EventConversor(makePlayer(), { playerPreviewAttachmentsFlavours: ['custom/preview'] });
+                const conversor = new EventConversor(makePlayer(), {
+                    playerPreviewAttachmentsFlavours: ['custom/preview'],
+                });
                 const event: Event = {
                     id: 'test',
                     attachments: [
-                        { id: 'p1', url: 'http://example.com/custom.jpg', mimetype: 'image/jpeg', flavor: 'custom/preview', tags: [] }
-                    ]
+                        {
+                            id: 'p1',
+                            url: 'http://example.com/custom.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'custom/preview',
+                            tags: [],
+                        },
+                    ],
                 };
                 expect(conversor.getPreviewUrl(event)).toBe('http://example.com/custom.jpg');
             });
@@ -956,17 +1279,35 @@ describe('EventConversor', () => {
         // ── commonEventToPaellaManifest ────────────────────────────────────
         describe('commonEventToPaellaManifest', () => {
             test('should build a complete manifest from a real mock event', async () => {
-                vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ text: () => Promise.resolve('') })));
+                vi.stubGlobal(
+                    'fetch',
+                    vi.fn(() => Promise.resolve({ text: () => Promise.resolve('') })),
+                );
                 const conversor = new EventConversor(makePlayer());
                 const event: Event = {
                     id: 'test',
                     metadata: { title: 'Test', duration: 60 },
                     tracks: [
-                        { id: 't1', url: 'http://example.com/presenter.mp4', mimetype: 'video/mp4', flavor: 'presenter/delivery', tags: [], is_live: false, is_master: false, duration: 60 }
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
                     ],
                     attachments: [
-                        { id: 'p1', url: 'http://example.com/preview.jpg', mimetype: 'image/jpeg', flavor: 'presenter/player+preview', tags: [] }
-                    ]
+                        {
+                            id: 'p1',
+                            url: 'http://example.com/preview.jpg',
+                            mimetype: 'image/jpeg',
+                            flavor: 'presenter/player+preview',
+                            tags: [],
+                        },
+                    ],
                 };
                 const manifest = await conversor.commonEventToPaellaManifest(event);
                 expect(manifest.streams).toHaveLength(1);
@@ -985,7 +1326,10 @@ describe('EventConversor', () => {
     // ─────────────────────────────────────────────────────────────────────────
     describe('opencastSearchResultToPaellaManifest', () => {
         test('should produce a manifest with streams and metadata from dual.json', async () => {
-            vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ text: () => Promise.resolve('') })));
+            vi.stubGlobal(
+                'fetch',
+                vi.fn(() => Promise.resolve({ text: () => Promise.resolve('') })),
+            );
             const elem = document.createElement('div');
             const ocPlayer = new OpencastPaellaPlayer(elem, {});
             const manifest = await opencastSearchResultToPaellaManifest(ocPlayer, data.result[0]);
@@ -998,10 +1342,16 @@ describe('EventConversor', () => {
 
     describe('opencastExternalAPIEventToPaellaManifest', () => {
         test('should produce a manifest with streams and metadata from api.json', async () => {
-            vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ text: () => Promise.resolve('') })));
+            vi.stubGlobal(
+                'fetch',
+                vi.fn(() => Promise.resolve({ text: () => Promise.resolve('') })),
+            );
             const elem = document.createElement('div');
             const ocPlayer = new OpencastPaellaPlayer(elem, {});
-            const manifest = await opencastExternalAPIEventToPaellaManifest(ocPlayer, externalEvent);
+            const manifest = await opencastExternalAPIEventToPaellaManifest(
+                ocPlayer,
+                externalEvent,
+            );
             expect(Array.isArray(manifest.streams)).toBe(true);
             expect(manifest.streams.length).toBeGreaterThan(0);
             expect(manifest.metadata).toBeDefined();

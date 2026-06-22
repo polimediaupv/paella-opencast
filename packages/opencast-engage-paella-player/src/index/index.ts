@@ -1,10 +1,8 @@
 import './styles.css';
 
-
 const resultsContainer = document.getElementById('results')!;
 const loadingIndicator = document.getElementById('loading')!;
 const pagination = document.getElementById('pagination')!;
-
 
 // Global variables for pagination and results
 let currentPage: number = 1;
@@ -13,23 +11,23 @@ let currentSeries: string | null = null;
 let filteredResults = [];
 let totalVideos: number = 0;
 
-
 const USE_OC_SERVER_FROM_URL = import.meta.env.USE_OC_SERVER_FROM_URL === 'true' || false;
 const OC_PRESENTATION_URL = getOcPresentationUrl();
-const OC_PAELLA8_URL_TEMPLATE = import.meta.env.OC_PAELLA8_URL_TEMPLATE || getUrlFromBase(OC_PRESENTATION_URL, '/play/{videoId}');
-
+const OC_PAELLA8_URL_TEMPLATE =
+    import.meta.env.OC_PAELLA8_URL_TEMPLATE ||
+    getUrlFromBase(OC_PRESENTATION_URL, '/play/{videoId}');
 
 function getOcPresentationUrl(): string {
     let url = import.meta.env.OC_PRESENTATION_URL || '/';
-    
-    if (USE_OC_SERVER_FROM_URL) {    
+
+    if (USE_OC_SERVER_FROM_URL) {
         const params = new URLSearchParams(window.location.search);
         const ocServerUrl = params.get('ocServer');
         if (ocServerUrl) {
             url = ocServerUrl;
         }
     }
-    
+
     return url;
 }
 
@@ -41,45 +39,37 @@ function formatString(base: string, params: Record<string, string>): string {
     }
     return formatted;
 }
- 
 
 // Utility to get URL from base and path
 function getUrlFromBase(base: string, path: string): string {
-    if (!base) return path
+    if (!base) return path;
     if (!path) return base.endsWith('/') ? base.slice(0, -1) : base;
 
     const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
-    const normalizedPath = path.length == 0 ? '' : (path.startsWith('/') ? path : `/${path}`);
+    const normalizedPath = path.length == 0 ? '' : path.startsWith('/') ? path : `/${path}`;
     return `${normalizedBase}${normalizedPath}`;
 }
 
 // Utility to read query parameters
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
-    let pageSize = parseInt(params.get('pageSize') ?? '10') || 10;
-    let page = parseInt(params.get('page') ?? '1') || 1;
-    let series = params.get('series') || "";
+    const pageSize = parseInt(params.get('pageSize') ?? '10') || 10;
+    const page = parseInt(params.get('page') ?? '1') || 1;
+    const series = params.get('series') || '';
     return {
         pageSize,
         page,
-        series
+        series,
     };
 }
 // Utility functions to ensure array or single value
 function ensureArray(thing: any) {
-    return thing
-        ? (Array.isArray(thing)
-            ? thing
-            : [thing])
-        : [];
+    return thing ? (Array.isArray(thing) ? thing : [thing]) : [];
 }
 // Ensure single value from array or single item
 function ensureSingle(thing: any) {
-    return (Array.isArray(thing)
-        ? thing[0]
-        : thing);
+    return Array.isArray(thing) ? thing[0] : thing;
 }
-
 
 // Simulate series info
 // function getSeriesInfo(series: string ) {
@@ -88,16 +78,13 @@ function ensureSingle(thing: any) {
 //     return { title: `Series: ${series}` };
 // }
 
-
-
-
 async function fetchDescription(video: any, _i: number): Promise<string> {
     let descp = ensureSingle(video?.dc?.description) as string | undefined;
     if (!descp) {
-        const attch = getAttachment(video, ["ai/summary"]);
+        const attch = getAttachment(video, ['ai/summary']);
         if (attch) {
             const summary = await fetch(attch.url)
-                .then(response => response.text())
+                .then((response) => response.text())
                 .catch(() => null);
             if (summary) {
                 descp = summary;
@@ -112,28 +99,29 @@ function getAttachment(video: any, types: string[]) {
     if (!video || !video.mediapackage || !video.mediapackage.attachments) return null;
     const attachments = ensureArray(video.mediapackage.attachments.attachment);
     for (const type of types) {
-        const attachment = attachments.find(a => a.type === type);
+        const attachment = attachments.find((a) => a.type === type);
         if (attachment) return attachment;
     }
     return null;
 }
 
-
 function getTimeline(video: any) {
-    let timeline = "";
-    let grid = "10x10";
+    let timeline = '';
+    let grid = '10x10';
 
-    const attch = getAttachment(video, ["presentation/timeline+preview", "presenter/timeline+preview"]);
+    const attch = getAttachment(video, [
+        'presentation/timeline+preview',
+        'presenter/timeline+preview',
+    ]);
     if (attch != null) {
         timeline = attch.url;
         let isX = 10;
         let isY = 10;
         attch.additionalProperties.property.forEach((p: any) => {
-            if (p.name === "imageSizeX") {
-                isX = p.value
-            }
-            else if (p.name === "imageSizeY") {
-                isY = p.value
+            if (p.name === 'imageSizeX') {
+                isX = p.value;
+            } else if (p.name === 'imageSizeY') {
+                isY = p.value;
             }
         });
 
@@ -142,20 +130,22 @@ function getTimeline(video: any) {
 
     return {
         timeline: timeline,
-        grid: grid
+        grid: grid,
     };
 }
 
 // Fectch videos with pagination and series id (sid)
 async function fetchVideos(page: number, pageSize: number, sid: string) {
-    const url = getUrlFromBase(OC_PRESENTATION_URL, `/search/episode.json?limit=${pageSize}&offset=${pageSize * (page - 1)}&sid=${sid}&sort=created%20desc`)
+    const url = getUrlFromBase(
+        OC_PRESENTATION_URL,
+        `/search/episode.json?limit=${pageSize}&offset=${pageSize * (page - 1)}&sid=${sid}&sort=created%20desc`,
+    );
     const searchResults = await fetch(url)
-        .then(response => response.json())
-        .catch(error => {
-            console.error("Error fetching search results:", error);
+        .then((response) => response.json())
+        .catch((error) => {
+            console.error('Error fetching search results:', error);
             return { total: 0, result: [] };
         });
-
 
     const total = searchResults.total ?? 0;
     const results = [];
@@ -164,40 +154,40 @@ async function fetchVideos(page: number, pageSize: number, sid: string) {
             const video = searchResults.result[i];
             const description = await fetchDescription(video, i);
             const { timeline, grid } = getTimeline(video);
-            const preview = getAttachment(video, ["presentation/search+preview", "presenter/search+preview"])?.url;
-            
-            
+            const preview = getAttachment(video, [
+                'presentation/search+preview',
+                'presenter/search+preview',
+            ])?.url;
+
             const playerUrl = formatString(OC_PAELLA8_URL_TEMPLATE, {
                 videoId: video?.mediapackage?.id ?? video?.id,
-                OC_PRESENTATION_URL: OC_PRESENTATION_URL
+                OC_PRESENTATION_URL: OC_PRESENTATION_URL,
             });
-                        
+
             results.push({
                 url: playerUrl,
                 title: video.mediapackage.title,
                 author: ensureArray(video?.mediapackage?.creators?.creator).join(', '),
                 date: video?.mediapackage?.start
                     ? new Date(video.mediapackage.start).toLocaleString(undefined, {
-                        dateStyle: 'medium',
-                        timeStyle: 'short'
-                    })
-                    : "",
+                          dateStyle: 'medium',
+                          timeStyle: 'short',
+                      })
+                    : '',
                 description,
                 preview,
                 timeline,
                 grid,
-                duration: (video?.mediapackage?.duration ?? 0) / 1000
+                duration: (video?.mediapackage?.duration ?? 0) / 1000,
             });
         }
     }
 
     return {
         results,
-        total
+        total,
     };
 }
-
-
 
 function renderSkeletons(count: number) {
     const skeletons = [];
@@ -214,7 +204,7 @@ function renderSkeletons(count: number) {
                     </div>
                 `);
     }
-    const loadingSkeletons = document.getElementById('loading-skeletons')
+    const loadingSkeletons = document.getElementById('loading-skeletons');
     if (loadingSkeletons) {
         loadingSkeletons.innerHTML = skeletons.join('');
     }
@@ -267,13 +257,9 @@ function renderPagination(totalPages: number) {
             (i >= end - 2 && i < end)
         ) {
             addPageButton(i + 1);
-        } else if (
-            i === start + 2 && pageIdx > 5
-        ) {
+        } else if (i === start + 2 && pageIdx > 5) {
             addEllipsis();
-        } else if (
-            i === end - 3 && pageIdx < totalPages - 6
-        ) {
+        } else if (i === end - 3 && pageIdx < totalPages - 6) {
             addEllipsis();
         }
     }
@@ -308,10 +294,9 @@ function renderPagination(totalPages: number) {
     const info = document.getElementById('pagination-info');
     if (info) {
         if (totalVideos === 0) {
-            info.textContent = "No results";
-        }
-        else {
-            const from = totalVideos === 0 ? 0 : ((currentPage - 1) * pageSize) + 1;
+            info.textContent = 'No results';
+        } else {
+            const from = totalVideos === 0 ? 0 : (currentPage - 1) * pageSize + 1;
             const to = Math.min(currentPage * pageSize, totalVideos);
             info.textContent = `Showing results ${from} to ${to} of ${totalVideos}`;
         }
@@ -333,7 +318,7 @@ function formatDuration(seconds: number): string {
 
 function renderResults(videos: any[]) {
     resultsContainer.innerHTML = '';
-    videos.forEach(video => {
+    videos.forEach((video) => {
         const hasTimeline = !!video.timeline;
 
         const result = document.createElement('a');
@@ -374,12 +359,14 @@ function renderResults(videos: any[]) {
         resultsContainer?.appendChild(result);
     });
 
-    setTimeout(() => applyTimelineHover(), 100);
+    setTimeout(() => {
+        applyTimelineHover();
+    }, 100);
 }
 
 function applyTimelineHover() {
     document.querySelectorAll<HTMLElement>('.group').forEach((group) => {
-        const hasTimeline = !!group.dataset.timeline && group.dataset.timeline !== "";
+        const hasTimeline = !!group.dataset.timeline && group.dataset.timeline !== '';
         const previewContainer = group.querySelector<HTMLElement>('.preview-container');
         const preview = group.querySelector<HTMLElement>('.preview');
         const timeline = group.querySelector<HTMLElement>('.timeline-sprite');
@@ -400,13 +387,13 @@ function applyTimelineHover() {
 
         if (hasTimeline) {
             const timelineUrl = group.dataset.timeline;
-            const [cols, rows] = group.dataset.grid?.split('x').map(n => parseInt(n))  || [10, 10];
+            const [cols, rows] = group.dataset.grid?.split('x').map((n) => parseInt(n)) || [10, 10];
             if (!preview || !timeline || !timelineUrl || !cols || !rows) return;
 
             timeline.style.backgroundImage = `url('${timelineUrl}')`;
             timeline.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
 
-            previewContainer?.addEventListener('mousemove', e => {
+            previewContainer?.addEventListener('mousemove', (e) => {
                 const bounds = preview.getBoundingClientRect();
                 const x = e.clientX - bounds.left;
                 const frameIndex = Math.floor((x / bounds.width) * (cols * rows));
@@ -422,7 +409,7 @@ function applyTimelineHover() {
                 if (progressBar) {
                     const percent = Math.max(0, Math.min(1, x / bounds.width));
                     progressBar.style.width = `${percent * 100}%`;
-                    progressBar.style.opacity = "1";
+                    progressBar.style.opacity = '1';
                 }
             });
 
@@ -432,8 +419,8 @@ function applyTimelineHover() {
                 timeline.classList.remove('tilted');
                 // Hide progress bar
                 if (progressBar) {
-                    progressBar.style.width = "0";
-                    progressBar.style.opacity = "0";
+                    progressBar.style.width = '0';
+                    progressBar.style.opacity = '0';
                 }
             });
         }
@@ -448,9 +435,9 @@ async function loadPage(page: number = 1) {
         // Read query parameters every time (in case they change)
         const params = getQueryParams();
         pageSize = params.pageSize;
-        currentPage = typeof page === "number" ? page : params.page;
+        currentPage = typeof page === 'number' ? page : params.page;
         currentSeries = params.series;
-        
+
         const search = await fetchVideos(currentPage, pageSize, currentSeries);
         filteredResults = search.results;
         totalVideos = search.total;

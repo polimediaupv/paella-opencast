@@ -1,6 +1,5 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { Event, OpencastAuthDefaultImpl, OpencastPaellaPlayer } from '../src';
-
 
 describe('OpencastAuth', () => {
     beforeEach(() => {
@@ -13,9 +12,9 @@ describe('OpencastAuth', () => {
 
     test('should initialize with default values when no player is provided', async () => {
         const auth = new OpencastAuthDefaultImpl();
-        
+
         expect(auth).toBeDefined();
-        expect(auth.player).toBeNull();        
+        expect(auth.player).toBeNull();
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
         expect(await auth.canWrite()).toBe(false);
@@ -25,19 +24,19 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {});
         const auth = new OpencastAuthDefaultImpl();
-        
+
         expect(auth.player).toBeNull();
-        
+
         auth.player = ocPlayer;
-        
+
         expect(auth.player).toBe(ocPlayer);
     });
 
     test('should initialize with player when provided in constructor', async () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {});
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(auth.player).toBe(ocPlayer);
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
@@ -48,41 +47,42 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "org": {
-                "anonymousRole": "ROLE_ANONYMOUS",
-                "name": "Opencast Project",
-                "adminRole": "ROLE_ADMIN",
-                "id": "mh_default_org",
-                "properties": {
-                    "org.opencastproject.admin.help.documentation.url": "https://docs.opencast.org",
-                    "org.opencastproject.oaipmh.server.hosturl": "",
-                    "org.opencastproject.admin.mediamodule.url": "/engage/ui",
-                    "org.opencastproject.admin.help.restdocs.url": "/rest_docs.html"
-                }
+            org: {
+                anonymousRole: 'ROLE_ANONYMOUS',
+                name: 'Opencast Project',
+                adminRole: 'ROLE_ADMIN',
+                id: 'mh_default_org',
+                properties: {
+                    'org.opencastproject.admin.help.documentation.url': 'https://docs.opencast.org',
+                    'org.opencastproject.oaipmh.server.hosturl': '',
+                    'org.opencastproject.admin.mediamodule.url': '/engage/ui',
+                    'org.opencastproject.admin.help.restdocs.url': '/rest_docs.html',
+                },
             },
-            "roles": [
-                "ROLE_ANONYMOUS"
-            ],
-            "userRole": "ROLE_USER_ANONYMOUS",
-            "user": {
-                "username": "anonymous"
-            }
+            roles: ['ROLE_ANONYMOUS'],
+            userRole: 'ROLE_USER_ANONYMOUS',
+            user: {
+                username: 'anonymous',
+            },
         };
 
         // Mock de fetch
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(auth.player).toBe(ocPlayer);
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
@@ -93,49 +93,52 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "org": {
-                "anonymousRole": "ROLE_ANONYMOUS",
-                "name": "Opencast Project",
-                "adminRole": "ROLE_ADMIN",
-                "id": "mh_default_org",
-                "properties": {
-                    "org.opencastproject.admin.help.documentation.url": "https://docs.opencast.org",
-                    "org.opencastproject.oaipmh.server.hosturl": "",
-                    "org.opencastproject.admin.mediamodule.url": "/engage/ui",
-                    "org.opencastproject.admin.help.restdocs.url": "/rest_docs.html"
-                }
+            org: {
+                anonymousRole: 'ROLE_ANONYMOUS',
+                name: 'Opencast Project',
+                adminRole: 'ROLE_ADMIN',
+                id: 'mh_default_org',
+                properties: {
+                    'org.opencastproject.admin.help.documentation.url': 'https://docs.opencast.org',
+                    'org.opencastproject.oaipmh.server.hosturl': '',
+                    'org.opencastproject.admin.mediamodule.url': '/engage/ui',
+                    'org.opencastproject.admin.help.restdocs.url': '/rest_docs.html',
+                },
             },
-            "roles": [
-                "ROLE_USER",
-                "ROLE_GROUP_MH_DEFAULT_ORG_SYSTEM_ADMINS",
-                "ROLE_ADMIN",
-                "ROLE_SUDO",
-                "ROLE_USER_ADMIN",
-                "ROLE_ANONYMOUS",
-                "ROLE_OAUTH_USER"
+            roles: [
+                'ROLE_USER',
+                'ROLE_GROUP_MH_DEFAULT_ORG_SYSTEM_ADMINS',
+                'ROLE_ADMIN',
+                'ROLE_SUDO',
+                'ROLE_USER_ADMIN',
+                'ROLE_ANONYMOUS',
+                'ROLE_OAUTH_USER',
             ],
-            "userRole": "ROLE_USER_ADMIN",
-            "user": {
-                "provider": "opencast",
-                "name": "Administrator",
-                "username": "admin"
-            }
+            userRole: 'ROLE_USER_ADMIN',
+            user: {
+                provider: 'opencast',
+                name: 'Administrator',
+                username: 'admin',
+            },
         };
 
         // Mock de fetch
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(auth.player).toBe(ocPlayer);
         expect(await auth.getLoggedUserName()).toBe('admin');
         expect(await auth.isAnonymous()).toBe(false);
@@ -146,37 +149,37 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "org": {
-                "anonymousRole": "ROLE_ANONYMOUS",
-                "name": "Opencast Project",
-                "adminRole": "ROLE_ADMIN",
-                "id": "mh_default_org"
+            org: {
+                anonymousRole: 'ROLE_ANONYMOUS',
+                name: 'Opencast Project',
+                adminRole: 'ROLE_ADMIN',
+                id: 'mh_default_org',
             },
-            "roles": [
-                "ROLE_USER",
-                "ROLE_ANONYMOUS"
-            ],
-            "userRole": "ROLE_USER",
-            "user": {
-                "provider": "opencast",
-                "name": "John Doe",
-                "username": "johndoe"
-            }
+            roles: ['ROLE_USER', 'ROLE_ANONYMOUS'],
+            userRole: 'ROLE_USER',
+            user: {
+                provider: 'opencast',
+                name: 'John Doe',
+                username: 'johndoe',
+            },
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(await auth.getLoggedUserName()).toBe('johndoe');
         expect(await auth.isAnonymous()).toBe(false);
         expect(await auth.canWrite()).toBe(false);
@@ -186,26 +189,27 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         // Mock fetch to reject
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.reject(new Error('Network error'))
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() => Promise.reject(new Error('Network error'))),
+        );
 
         // Mock log.error
         const logErrorSpy = vi.spyOn(ocPlayer.log, 'error').mockImplementation(() => {});
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
         expect(await auth.canWrite()).toBe(false);
         expect(logErrorSpy).toHaveBeenCalledWith(
             expect.stringContaining('Error fetching user info'),
-            '@asicupv/paella-opencast-core'
+            '@asicupv/paella-opencast-core',
         );
     });
 
@@ -213,21 +217,24 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         // Mock fetch to return invalid JSON
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.reject(new Error('Invalid JSON'))
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.reject(new Error('Invalid JSON')),
+                }),
+            ),
+        );
 
         const logErrorSpy = vi.spyOn(ocPlayer.log, 'error').mockImplementation(() => {});
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
         expect(logErrorSpy).toHaveBeenCalled();
@@ -240,8 +247,8 @@ describe('OpencastAuth', () => {
         const fetchSpy = vi.fn();
         vi.stubGlobal('fetch', fetchSpy);
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
         expect(fetchSpy).not.toHaveBeenCalled();
@@ -251,31 +258,31 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "userRole": "ROLE_USER",
-            "user": {
-                "username": "testuser"
-            }
+            userRole: 'ROLE_USER',
+            user: {
+                username: 'testuser',
+            },
         };
 
         const fetchSpy = vi.fn(() =>
             Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
+                json: () => Promise.resolve(fakeData),
+            }),
         );
         vi.stubGlobal('fetch', fetchSpy);
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         // First call
         const username1 = await auth.getLoggedUserName();
         expect(username1).toBe('testuser');
         expect(fetchSpy).toHaveBeenCalledTimes(1);
-        
+
         // Second call should use cached data
         const username2 = await auth.getLoggedUserName();
         expect(username2).toBe('testuser');
@@ -286,58 +293,63 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "userRole": "ROLE_USER"
+            userRole: 'ROLE_USER',
             // Missing user object
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         expect(await auth.getLoggedUserName()).toBeNull();
         expect(await auth.isAnonymous()).toBe(true);
     });
-
 
     test('should log info message when fetching user data', async () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "userRole": "ROLE_USER",
-            "user": {
-                "username": "testuser"
-            }
+            userRole: 'ROLE_USER',
+            user: {
+                username: 'testuser',
+            },
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
         const logInfoSpy = vi.spyOn(ocPlayer.log, 'info').mockImplementation(() => {});
 
-        const auth = new OpencastAuthDefaultImpl(ocPlayer);        
-        
+        const auth = new OpencastAuthDefaultImpl(ocPlayer);
+
         await auth.getLoggedUserName();
-        
+
         expect(logInfoSpy).toHaveBeenCalledWith(
             expect.stringContaining('Fetching opencast user from'),
-            '@asicupv/paella-opencast-core'
+            '@asicupv/paella-opencast-core',
         );
     });
 
@@ -345,33 +357,36 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "roles": ["ROLE_USER", "ROLE_WRITER"],
-            "org": {
-                "adminRole": "ROLE_ADMIN"
+            roles: ['ROLE_USER', 'ROLE_WRITER'],
+            org: {
+                adminRole: 'ROLE_ADMIN',
             },
-            "user": {
-                "username": "writer"
-            }
+            user: {
+                username: 'writer',
+            },
         };
 
         const fakeEvent: Event = {
-            id: "event-123",
+            id: 'event-123',
             acl: [
-                { role: "ROLE_WRITER", action: "write", allow: false },
-                { role: "ROLE_USER", action: "read", allow: false }
-            ]
+                { role: 'ROLE_WRITER', action: 'write', allow: false },
+                { role: 'ROLE_USER', action: 'read', allow: false },
+            ],
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
         vi.spyOn(ocPlayer, 'getEvent').mockReturnValue(fakeEvent);
 
@@ -384,33 +399,36 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "roles": ["ROLE_USER"],
-            "org": {
-                "adminRole": "ROLE_ADMIN"
+            roles: ['ROLE_USER'],
+            org: {
+                adminRole: 'ROLE_ADMIN',
             },
-            "user": {
-                "username": "reader"
-            }
+            user: {
+                username: 'reader',
+            },
         };
 
         const fakeEvent: Event = {
-            id: "event-123",
+            id: 'event-123',
             acl: [
-                { role: "ROLE_WRITER", action: "write", allow: false },
-                { role: "ROLE_USER", action: "read", allow: false }
-            ]
+                { role: 'ROLE_WRITER', action: 'write', allow: false },
+                { role: 'ROLE_USER', action: 'read', allow: false },
+            ],
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
         vi.spyOn(ocPlayer, 'getEvent').mockReturnValue(fakeEvent);
 
@@ -423,33 +441,36 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
-            "roles": ["ROLE_ADMIN"],
-            "org": {
-                "adminRole": "ROLE_ADMIN"
+            roles: ['ROLE_ADMIN'],
+            org: {
+                adminRole: 'ROLE_ADMIN',
             },
-            "user": {
-                "username": "admin"
-            }
+            user: {
+                username: 'admin',
+            },
         };
 
         const fakeEvent: Event = {
-            id: "event-123",
+            id: 'event-123',
             acl: [
-                { role: "ROLE_WRITER", action: "write", allow: false },
-                { role: "ROLE_USER", action: "read", allow: false }
-            ]
+                { role: 'ROLE_WRITER', action: 'write', allow: false },
+                { role: 'ROLE_USER', action: 'read', allow: false },
+            ],
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
         vi.spyOn(ocPlayer, 'getEvent').mockReturnValue(fakeEvent);
 
@@ -465,8 +486,8 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
         const authWithPlayer = new OpencastAuthDefaultImpl(ocPlayer);
         await expect(authWithPlayer.canRead()).resolves.toBe(true);
@@ -476,33 +497,36 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const fakeData = {
             roles: ['ROLE_USER'],
             org: {
-                adminRole: 'ROLE_ADMIN'
+                adminRole: 'ROLE_ADMIN',
             },
             user: {
-                username: 'reader-writer'
-            }
+                username: 'reader-writer',
+            },
         };
 
         const fakeEvent: Event = {
             id: 'event-123',
             acl: [
                 { role: 'ROLE_USER', action: 'read', allow: false },
-                { role: 'ROLE_USER', action: 'write', allow: false }
-            ]
+                { role: 'ROLE_USER', action: 'write', allow: false },
+            ],
         };
 
-        vi.stubGlobal('fetch', vi.fn(() =>
-            Promise.resolve({
-                json: () => Promise.resolve(fakeData)
-            })
-        ));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() =>
+                Promise.resolve({
+                    json: () => Promise.resolve(fakeData),
+                }),
+            ),
+        );
 
         vi.spyOn(ocPlayer, 'getEvent').mockReturnValue(fakeEvent);
 
@@ -514,14 +538,14 @@ describe('OpencastAuth', () => {
     test('should throw an error when call auth without player initialized', async () => {
         const auth = new OpencastAuthDefaultImpl();
         await expect(auth.auth()).rejects.toThrow('OpencastAuth: Player is not set');
-    })
+    });
 
     test('should use absolute auth URL directly when authUrl starts with http', async () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
         const auth = new OpencastAuthDefaultImpl(ocPlayer);
 
@@ -531,14 +555,16 @@ describe('OpencastAuth', () => {
 
         Object.defineProperty(ocPlayer as any, 'config', {
             configurable: true,
-            get: () => ({ opencast: { auth: { url: 'https://auth.example.org/auth.html' } } })
+            get: () => ({ opencast: { auth: { url: 'https://auth.example.org/auth.html' } } }),
         });
 
         const redirectUrl = 'https://example.org/return';
         await auth.auth(redirectUrl, 0);
 
         expect(getUrlSpy).not.toHaveBeenCalledWith('https://auth.example.org/auth.html');
-        expect((window.location as any).href).toBe(`https://auth.example.org/auth.html?redirect=${encodeURIComponent(redirectUrl)}`);
+        expect((window.location as any).href).toBe(
+            `https://auth.example.org/auth.html?redirect=${encodeURIComponent(redirectUrl)}`,
+        );
 
         Object.defineProperty(window, 'location', { writable: true, value: originalLocation });
     });
@@ -547,23 +573,28 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
         const auth = new OpencastAuthDefaultImpl(ocPlayer);
 
         const currentUrl = 'https://site.example.org/watch?id=video-1';
         const originalLocation = window.location;
-        Object.defineProperty(window, 'location', { writable: true, value: { href: currentUrl } as any });
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: { href: currentUrl } as any,
+        });
 
         Object.defineProperty(ocPlayer as any, 'config', {
             configurable: true,
-            get: () => ({ opencast: { auth: { url: 'https://auth.example.org/auth.html' } } })
+            get: () => ({ opencast: { auth: { url: 'https://auth.example.org/auth.html' } } }),
         });
 
         await auth.auth(undefined, 0);
 
-        expect((window.location as any).href).toBe(`https://auth.example.org/auth.html?redirect=${encodeURIComponent(currentUrl)}`);
+        expect((window.location as any).href).toBe(
+            `https://auth.example.org/auth.html?redirect=${encodeURIComponent(currentUrl)}`,
+        );
         Object.defineProperty(window, 'location', { writable: true, value: originalLocation });
     });
 
@@ -571,8 +602,8 @@ describe('OpencastAuth', () => {
         const elem: HTMLElement = document.createElement('div');
         const ocPlayer = new OpencastPaellaPlayer(elem, {
             opencast: {
-                presentationUrl: '/'
-            }
+                presentationUrl: '/',
+            },
         });
 
         const auth = new OpencastAuthDefaultImpl(ocPlayer);
@@ -585,19 +616,22 @@ describe('OpencastAuth', () => {
         // Ensure player config exists so auth URL can be resolved
         Object.defineProperty(ocPlayer as any, 'config', {
             configurable: true,
-            get: () => ({ opencast: { auth: { url: '/paella8/ui/auth.html' } } })
+            get: () => ({ opencast: { auth: { url: '/paella8/ui/auth.html' } } }),
         });
 
         const redirectUrl = 'https://example.org/return';
         await auth.auth(redirectUrl, 0);
 
-        expect((window.location as any).href).toBe(`/paella8/ui/auth.html?redirect=${encodeURIComponent(redirectUrl)}`);
+        expect((window.location as any).href).toBe(
+            `/paella8/ui/auth.html?redirect=${encodeURIComponent(redirectUrl)}`,
+        );
         expect(logInfoSpy).toHaveBeenCalledWith(
-            expect.stringContaining(`/paella8/ui/auth.html?redirect=${encodeURIComponent(redirectUrl)}`),
-            '@asicupv/paella-opencast-core'
+            expect.stringContaining(
+                `/paella8/ui/auth.html?redirect=${encodeURIComponent(redirectUrl)}`,
+            ),
+            '@asicupv/paella-opencast-core',
         );
 
         Object.defineProperty(window, 'location', { writable: true, value: originalLocation });
-    })
-
+    });
 });

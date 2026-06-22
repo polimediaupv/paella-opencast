@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
-
 export default defineConfig({
     resolve: { alias: { src: resolve('src/') } },
     build: {
@@ -12,25 +11,27 @@ export default defineConfig({
             entry: './src/index.ts',
             formats: ['es'],
             name: 'paella-opencast-plugins',
-            fileName: (format) => `paella-opencast-plugins.${format}.js`
+            fileName: (format) => `paella-opencast-plugins.${format}.js`,
         },
         rollupOptions: {
             output: {
-                assetFileNames: 'paella-opencast-plugins.[ext]'
+                assetFileNames: 'paella-opencast-plugins.[ext]',
             },
-            external: [                
+            external: [
                 '@asicupv/paella-opencast-core',
                 '@asicupv/paella-user-tracking',
-                '@asicupv/paella-extra-plugins'
-            ]
-        }
+                '@asicupv/paella-extra-plugins',
+            ],
+        },
     },
-    
-    plugins: [dts({
-        outDir: 'dist/types',
-        insertTypesEntry: true
-    })],
+
+    plugins: [
+        dts({
+            outDir: 'dist/types',
+            insertTypesEntry: true,
+        }),
+    ],
     test: {
-        environment: 'jsdom'
-    }
+        environment: 'jsdom',
+    },
 });

@@ -1,6 +1,6 @@
 import type { SkinTheme } from '@asicupv/paella-core';
 
-import "@fontsource/roboto/400.css";
+import '@fontsource/roboto/400.css';
 
 import FullScreenIcon from './icons/fullscreen-icon.svg?raw';
 import FullScreenExitIcon from './icons/fullscreen-exit.svg?raw';
@@ -57,45 +57,101 @@ import ThemeCSS from './theme.css?raw';
 //             }
 //         }
 //     },
-export const theme : SkinTheme = {
-    "styleSheets": [ ThemeCSS ],
-    "configOverrides" : {
-        "buttonGroups": [
+export const theme: SkinTheme = {
+    styleSheets: [ThemeCSS],
+    configOverrides: {
+        buttonGroups: [
             {
-                "groupName": "settingsGroup",
-                "icon": Settings,
-            }
+                groupName: 'settingsGroup',
+                icon: Settings,
+            },
         ],
     },
-    "icons": [
-        { "plugin": "es.upv.paella.fullscreenButton", "identifier": "fullscreenIcon", "icon": FullScreenIcon },
-        { "plugin": "es.upv.paella.fullscreenButton", "identifier": "windowedIcon", "icon": FullScreenExitIcon },
+    icons: [
+        {
+            plugin: 'es.upv.paella.fullscreenButton',
+            identifier: 'fullscreenIcon',
+            icon: FullScreenIcon,
+        },
+        {
+            plugin: 'es.upv.paella.fullscreenButton',
+            identifier: 'windowedIcon',
+            icon: FullScreenExitIcon,
+        },
 
-        { "plugin": "es.upv.paella.volumeButtonPlugin", "identifier": "volumeHighIcon", "icon": VolumeHighIcon },
-        { "plugin": "es.upv.paella.volumeButtonPlugin", "identifier": "volumeMidIcon", "icon": VolumeMidIcon },
-        { "plugin": "es.upv.paella.volumeButtonPlugin", "identifier": "volumeLowIcon", "icon": VolumeLowIcon },
-        { "plugin": "es.upv.paella.volumeButtonPlugin", "identifier": "volumeMuteIcon", "icon": VolumeMuteIcon },
+        {
+            plugin: 'es.upv.paella.volumeButtonPlugin',
+            identifier: 'volumeHighIcon',
+            icon: VolumeHighIcon,
+        },
+        {
+            plugin: 'es.upv.paella.volumeButtonPlugin',
+            identifier: 'volumeMidIcon',
+            icon: VolumeMidIcon,
+        },
+        {
+            plugin: 'es.upv.paella.volumeButtonPlugin',
+            identifier: 'volumeLowIcon',
+            icon: VolumeLowIcon,
+        },
+        {
+            plugin: 'es.upv.paella.volumeButtonPlugin',
+            identifier: 'volumeMuteIcon',
+            icon: VolumeMuteIcon,
+        },
 
-        { "plugin": "es.upv.paella.dualVideoDynamic", "identifier": "iconMaximize", "icon": MaximizeIcon },
-        { "plugin": "es.upv.paella.dualVideoDynamic", "identifier": "iconMimimize", "icon": MinimizeIcon },
-        { "plugin": "es.upv.paella.dualVideoDynamic", "identifier": "iconClose", "icon": CloseIcon },
+        {
+            plugin: 'es.upv.paella.dualVideoDynamic',
+            identifier: 'iconMaximize',
+            icon: MaximizeIcon,
+        },
+        {
+            plugin: 'es.upv.paella.dualVideoDynamic',
+            identifier: 'iconMimimize',
+            icon: MinimizeIcon,
+        },
+        { plugin: 'es.upv.paella.dualVideoDynamic', identifier: 'iconClose', icon: CloseIcon },
 
-        { "plugin": "es.upv.paella.playPauseButton", "identifier": "play", "icon": PlayIcon },
+        { plugin: 'es.upv.paella.playPauseButton', identifier: 'play', icon: PlayIcon },
 
-        { "plugin": "es.upv.paella.layoutSelector", "identifier": "layoutIcon", "icon": LayoutIcon },
-        { "plugin": "es.upv.paella.qualitySelector", "identifier": "settingsIcon", "icon": Settings },
+        { plugin: 'es.upv.paella.layoutSelector', identifier: 'layoutIcon', icon: LayoutIcon },
+        { plugin: 'es.upv.paella.qualitySelector', identifier: 'settingsIcon', icon: Settings },
 
-        { "plugin": "es.upv.paella.backwardButtonPlugin", "identifier": "backwardIcon", "icon": BackwardIcon },
-        { "plugin": "es.upv.paella.forwardButtonPlugin", "identifier": "forwardIcon", "icon": ForwardIcon },
+        {
+            plugin: 'es.upv.paella.backwardButtonPlugin',
+            identifier: 'backwardIcon',
+            icon: BackwardIcon,
+        },
+        {
+            plugin: 'es.upv.paella.forwardButtonPlugin',
+            identifier: 'forwardIcon',
+            icon: ForwardIcon,
+        },
 
-        { "plugin": "es.upv.paella.captionsSelectorPlugin", "identifier": "captionsIcon", "icon": CaptionsIcon },
+        {
+            plugin: 'es.upv.paella.captionsSelectorPlugin',
+            identifier: 'captionsIcon',
+            icon: CaptionsIcon,
+        },
 
-        { "plugin": "es.upv.paella.frameControlButtonPlugin", "identifier": "photoIcon", "icon": PhotoIcon },
+        {
+            plugin: 'es.upv.paella.frameControlButtonPlugin',
+            identifier: 'photoIcon',
+            icon: PhotoIcon,
+        },
 
-        { "plugin": "es.upv.paella.nextSlideNavigatorButton", "identifier": "arrowRightIcon", "icon": ArrowRightIcon },
-        { "plugin": "es.upv.paella.prevSlideNavigatorButton", "identifier": "arrowLeftIcon", "icon": ArrowLeftIcon },
+        {
+            plugin: 'es.upv.paella.nextSlideNavigatorButton',
+            identifier: 'arrowRightIcon',
+            icon: ArrowRightIcon,
+        },
+        {
+            plugin: 'es.upv.paella.prevSlideNavigatorButton',
+            identifier: 'arrowLeftIcon',
+            icon: ArrowLeftIcon,
+        },
 
-        { "plugin": "@asicupv/paella-core", "identifier": "playPreview", "icon": CirclePlayIcon },
-        { "plugin": "@asicupv/paella-core", "identifier": "LoaderIcon", "icon": LoaderCircleIcon }
-    ]
-}
+        { plugin: '@asicupv/paella-core', identifier: 'playPreview', icon: CirclePlayIcon },
+        { plugin: '@asicupv/paella-core', identifier: 'LoaderIcon', icon: LoaderCircleIcon },
+    ],
+};

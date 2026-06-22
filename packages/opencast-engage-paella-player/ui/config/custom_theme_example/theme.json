@@ -1,7 +1,5 @@
 {
-    "styleSheets": [
-        "theme.css"        
-    ],
+    "styleSheets": ["theme.css"],
     "configOverrides": {},
     "icons": []
 }

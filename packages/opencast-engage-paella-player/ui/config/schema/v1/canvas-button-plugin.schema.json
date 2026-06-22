@@ -22,10 +22,7 @@
         "side": {
             "description": "Affects the side on the horizontal axis that the button is placed. It only affects iun case the 'parentContainer' is the playback or the video container.",
             "type": "string",
-            "enum": [
-                "left",
-                "right"
-            ]
+            "enum": ["left", "right"]
         }
     }
 }

@@ -1,8 +1,7 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { runPluginOnlyInOpencastTests, runDataPluginTests } from './utils/buttonPluginTests';
 import { createMockOCPlayer } from './__mocks__/mockPlayer';
 import RelatedVideosDataPlugin from '../src/plugins/org.opencast.paella.data.relatedVideosDataPlugin';
-
 
 describe('RelatedVideosDataPlugin', () => {
     let plugin: RelatedVideosDataPlugin;
@@ -11,7 +10,7 @@ describe('RelatedVideosDataPlugin', () => {
     const setConfig = (config: any) => {
         Object.defineProperty(plugin as any, 'config', {
             configurable: true,
-            get: () => config
+            get: () => config,
         });
     };
 
@@ -24,10 +23,16 @@ describe('RelatedVideosDataPlugin', () => {
         vi.unstubAllGlobals();
     });
 
-    runPluginOnlyInOpencastTests(() => plugin, () => mockOcPlayer);
+    runPluginOnlyInOpencastTests(
+        () => plugin,
+        () => mockOcPlayer,
+    );
 
     describe('shoud pass DataPlugin Tests', () => {
-        runDataPluginTests(() => plugin, () => mockOcPlayer);
+        runDataPluginTests(
+            () => plugin,
+            () => mockOcPlayer,
+        );
     });
 
     test('should have correct plugin name', () => {
@@ -39,8 +44,8 @@ describe('RelatedVideosDataPlugin', () => {
             mockOcPlayer.getEvent.mockReturnValue({
                 id: 'event-1',
                 metadata: {
-                    series: null
-                }
+                    series: null,
+                },
             });
 
             const getEventsSpy = vi.spyOn(plugin, 'getCommonEventsFromSearchAPI');
@@ -51,7 +56,7 @@ describe('RelatedVideosDataPlugin', () => {
                 total: 0,
                 skip: 0,
                 limit: 0,
-                items: []
+                items: [],
             });
         });
 
@@ -61,8 +66,8 @@ describe('RelatedVideosDataPlugin', () => {
             mockOcPlayer.getEvent.mockReturnValue({
                 id: 'event-1',
                 metadata: {
-                    series: 'series-1'
-                }
+                    series: 'series-1',
+                },
             });
 
             vi.spyOn(plugin, 'getCommonEventsFromSearchAPI').mockResolvedValue([
@@ -71,21 +76,27 @@ describe('RelatedVideosDataPlugin', () => {
                     metadata: {
                         title: 'Related 1',
                         presenters: ['A', 'B'],
-                        duration: 120
+                        duration: 120,
                     },
                     attachments: [
-                        { id: 'a1', url: 'http://example.com/preview-1.jpg', flavor: 'presenter/player+preview', mimetype: 'image/jpeg', tags: [] }
-                    ]
+                        {
+                            id: 'a1',
+                            url: 'http://example.com/preview-1.jpg',
+                            flavor: 'presenter/player+preview',
+                            mimetype: 'image/jpeg',
+                            tags: [],
+                        },
+                    ],
                 },
                 {
                     id: 'rel-2',
                     metadata: {
                         title: 'Related 2',
                         presenters: ['C'],
-                        duration: 90
+                        duration: 90,
                     },
-                    attachments: []
-                }
+                    attachments: [],
+                },
             ] as any);
 
             const result = await plugin.read('relatedVideos', 'ignored');
@@ -98,14 +109,14 @@ describe('RelatedVideosDataPlugin', () => {
                 title: 'Related 1',
                 presenter: 'A, B',
                 previewUrl: 'http://example.com/preview-1.jpg',
-                url: '?id=rel-1'
+                url: '?id=rel-1',
             });
             expect(result.items[1]).toMatchObject({
                 id: 'rel-2',
                 title: 'Related 2',
                 presenter: 'C',
                 previewUrl: '',
-                url: '?id=rel-2'
+                url: '?id=rel-2',
             });
         });
 
@@ -115,23 +126,25 @@ describe('RelatedVideosDataPlugin', () => {
             mockOcPlayer.getEvent.mockReturnValue({
                 id: 'event-1',
                 metadata: {
-                    series: 'series-limit'
-                }
+                    series: 'series-limit',
+                },
             });
 
-            const getEventsSpy = vi.spyOn(plugin, 'getCommonEventsFromSearchAPI').mockResolvedValue([] as any);
+            const getEventsSpy = vi
+                .spyOn(plugin, 'getCommonEventsFromSearchAPI')
+                .mockResolvedValue([] as any);
 
             const result = await plugin.read('relatedVideos', 'ignored');
 
             expect(getEventsSpy).toHaveBeenCalledWith({
                 series: 'series-limit',
-                limit: 7
+                limit: 7,
             });
             expect(result).toEqual({
                 total: 0,
                 skip: 0,
                 limit: 7,
-                items: []
+                items: [],
             });
         });
 
@@ -141,11 +154,13 @@ describe('RelatedVideosDataPlugin', () => {
             mockOcPlayer.getEvent.mockReturnValue({
                 id: 'event-1',
                 metadata: {
-                    series: 'series-1'
-                }
+                    series: 'series-1',
+                },
             });
 
-            vi.spyOn(plugin, 'getCommonEventsFromSearchAPI').mockRejectedValue(new Error('fetch failed'));
+            vi.spyOn(plugin, 'getCommonEventsFromSearchAPI').mockRejectedValue(
+                new Error('fetch failed'),
+            );
 
             const result = await plugin.read('relatedVideos', 'ignored');
 
@@ -153,7 +168,7 @@ describe('RelatedVideosDataPlugin', () => {
                 total: 0,
                 skip: 0,
                 limit: 0,
-                items: []
+                items: [],
             });
         });
 
@@ -167,7 +182,7 @@ describe('RelatedVideosDataPlugin', () => {
                 total: 0,
                 skip: 0,
                 limit: 0,
-                items: []
+                items: [],
             });
         });
     });
@@ -181,30 +196,34 @@ describe('RelatedVideosDataPlugin', () => {
             expect(events).toEqual([]);
             expect(mockOcPlayer.log.warn).toHaveBeenCalledWith(
                 'Opencast server URL not set',
-                expect.stringContaining('[org.opencast.paella.data.relatedVideosDataPlugin]')
+                expect.stringContaining('[org.opencast.paella.data.relatedVideosDataPlugin]'),
             );
         });
 
         test('should parse legacy search-results format', async () => {
             mockOcPlayer.getUrlFromOpencastServer.mockReturnValue('http://example.com/search');
-            vi.stubGlobal('fetch', vi.fn(() =>
-                Promise.resolve({
-                    json: () => Promise.resolve({
-                        'search-results': {
-                            total: 1,
-                            result: {
-                                mediapackage: {
-                                    id: 'legacy-1',
-                                    title: 'Legacy Event',
-                                    media: { track: [] },
-                                    attachments: { attachment: [] },
-                                    metadata: { catalog: [] }
-                                }
-                            }
-                        }
-                    })
-                })
-            ));
+            vi.stubGlobal(
+                'fetch',
+                vi.fn(() =>
+                    Promise.resolve({
+                        json: () =>
+                            Promise.resolve({
+                                'search-results': {
+                                    total: 1,
+                                    result: {
+                                        mediapackage: {
+                                            id: 'legacy-1',
+                                            title: 'Legacy Event',
+                                            media: { track: [] },
+                                            attachments: { attachment: [] },
+                                            metadata: { catalog: [] },
+                                        },
+                                    },
+                                },
+                            }),
+                    }),
+                ),
+            );
 
             const events = await plugin.getCommonEventsFromSearchAPI({ series: 's1', limit: 3 });
 
@@ -215,24 +234,28 @@ describe('RelatedVideosDataPlugin', () => {
 
         test('should parse new result format (OC >= 16)', async () => {
             mockOcPlayer.getUrlFromOpencastServer.mockReturnValue('http://example.com/search');
-            vi.stubGlobal('fetch', vi.fn(() =>
-                Promise.resolve({
-                    json: () => Promise.resolve({
-                        total: 1,
-                        result: [
-                            {
-                                mediapackage: {
-                                    id: 'new-1',
-                                    title: 'New Event',
-                                    media: { track: [] },
-                                    attachments: { attachment: [] },
-                                    metadata: { catalog: [] }
-                                }
-                            }
-                        ]
-                    })
-                })
-            ));
+            vi.stubGlobal(
+                'fetch',
+                vi.fn(() =>
+                    Promise.resolve({
+                        json: () =>
+                            Promise.resolve({
+                                total: 1,
+                                result: [
+                                    {
+                                        mediapackage: {
+                                            id: 'new-1',
+                                            title: 'New Event',
+                                            media: { track: [] },
+                                            attachments: { attachment: [] },
+                                            metadata: { catalog: [] },
+                                        },
+                                    },
+                                ],
+                            }),
+                    }),
+                ),
+            );
 
             const events = await plugin.getCommonEventsFromSearchAPI({ series: 's1', limit: 3 });
 
@@ -243,14 +266,18 @@ describe('RelatedVideosDataPlugin', () => {
 
         test('should return [] when total is 0 in new format', async () => {
             mockOcPlayer.getUrlFromOpencastServer.mockReturnValue('http://example.com/search');
-            vi.stubGlobal('fetch', vi.fn(() =>
-                Promise.resolve({
-                    json: () => Promise.resolve({
-                        total: 0,
-                        result: []
-                    })
-                })
-            ));
+            vi.stubGlobal(
+                'fetch',
+                vi.fn(() =>
+                    Promise.resolve({
+                        json: () =>
+                            Promise.resolve({
+                                total: 0,
+                                result: [],
+                            }),
+                    }),
+                ),
+            );
 
             const events = await plugin.getCommonEventsFromSearchAPI({ series: 's1', limit: 3 });
             expect(events).toEqual([]);
@@ -258,20 +285,24 @@ describe('RelatedVideosDataPlugin', () => {
 
         test('should return [] and log error on unrecognized format', async () => {
             mockOcPlayer.getUrlFromOpencastServer.mockReturnValue('http://example.com/search');
-            vi.stubGlobal('fetch', vi.fn(() =>
-                Promise.resolve({
-                    json: () => Promise.resolve({
-                        foo: 'bar'
-                    })
-                })
-            ));
+            vi.stubGlobal(
+                'fetch',
+                vi.fn(() =>
+                    Promise.resolve({
+                        json: () =>
+                            Promise.resolve({
+                                foo: 'bar',
+                            }),
+                    }),
+                ),
+            );
 
             const events = await plugin.getCommonEventsFromSearchAPI({ series: 's1', limit: 3 });
 
             expect(events).toEqual([]);
             expect(mockOcPlayer.log.error).toHaveBeenCalledWith(
                 'Opencast format not recognized. Cannot convert!',
-                expect.stringContaining('[org.opencast.paella.data.relatedVideosDataPlugin]')
+                expect.stringContaining('[org.opencast.paella.data.relatedVideosDataPlugin]'),
             );
         });
     });
@@ -281,8 +312,14 @@ describe('RelatedVideosDataPlugin', () => {
             const preview = plugin.getPreview({
                 id: 'ev-1',
                 attachments: [
-                    { id: 'a1', flavor: 'presenter/player+preview', url: 'http://example.com/presenter.jpg', mimetype: 'image/jpeg', tags: [] }
-                ]
+                    {
+                        id: 'a1',
+                        flavor: 'presenter/player+preview',
+                        url: 'http://example.com/presenter.jpg',
+                        mimetype: 'image/jpeg',
+                        tags: [],
+                    },
+                ],
             } as any);
 
             expect(preview).toBe('http://example.com/presenter.jpg');
@@ -292,8 +329,14 @@ describe('RelatedVideosDataPlugin', () => {
             const preview = plugin.getPreview({
                 id: 'ev-1',
                 attachments: [
-                    { id: 'a1', flavor: 'security/xacml+episode', url: 'http://example.com/no-preview.xml', mimetype: 'text/xml', tags: [] }
-                ]
+                    {
+                        id: 'a1',
+                        flavor: 'security/xacml+episode',
+                        url: 'http://example.com/no-preview.xml',
+                        mimetype: 'text/xml',
+                        tags: [],
+                    },
+                ],
             } as any);
 
             expect(preview).toBe('');
@@ -305,12 +348,17 @@ describe('RelatedVideosDataPlugin', () => {
             const preview = plugin.getPreview({
                 id: 'ev-1',
                 attachments: [
-                    { id: 'a1', flavor: 'custom/preview', url: 'http://example.com/custom.jpg', mimetype: 'image/jpeg', tags: [] }
-                ]
+                    {
+                        id: 'a1',
+                        flavor: 'custom/preview',
+                        url: 'http://example.com/custom.jpg',
+                        mimetype: 'image/jpeg',
+                        tags: [],
+                    },
+                ],
             } as any);
 
             expect(preview).toBe('http://example.com/custom.jpg');
         });
     });
-
 });
