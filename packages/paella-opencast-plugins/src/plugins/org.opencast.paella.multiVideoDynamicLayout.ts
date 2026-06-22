@@ -1,8 +1,8 @@
-import { VideoLayout, type Stream, type LayoutStructure } from '@asicupv/paella-core';
+import { VideoLayout, type Stream, type LayoutStructure, type LegacyLayoutVideo } from '@asicupv/paella-core';
 import OpencastPaellaPluginsModule from './OpencastPaellaPluginsModule';
 
-export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
-    _currentVideos: LayoutStructure['videos'] | undefined = undefined;
+export default class OpencastMultiVideoDynamicLayout extends VideoLayout {    
+    _currentVideos: LegacyLayoutVideo[] | undefined = undefined;
 
     getPluginModuleInstance() {
         return OpencastPaellaPluginsModule.Get();
@@ -35,8 +35,9 @@ export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
     }
 
     getLayoutStructure(streamData: Stream[]): LayoutStructure {
-        if (!this._currentVideos) {
-            const size = 100 / streamData.length;
+        const size = 100 / streamData.length;
+        
+        if (this._currentVideos  == null) {
             this._currentVideos = streamData.map(d => {
                 return {
                     content: d.content,
@@ -48,6 +49,7 @@ export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
         }
 
         return {
+            type: "legacy",
             id: this.identifier,
             name: { es: "Múltiples streams con posición dinámica" },
             buttons: [],

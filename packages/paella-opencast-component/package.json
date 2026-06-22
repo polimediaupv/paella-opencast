@@ -40,13 +40,13 @@
     "vite-plugin-dts": "^5.0.2"
   },
   "dependencies": {
-    "@asicupv/paella-basic-plugins": "^2.6.2",
-    "@asicupv/paella-extra-plugins": "^2.9.2",
+    "@asicupv/paella-basic-plugins": "^3.0.0-beta.0",
+    "@asicupv/paella-extra-plugins": "^3.0.0-beta.0",
     "@asicupv/paella-opencast-core": "^2.0.4",
     "@asicupv/paella-opencast-plugins": "^2.0.4",
-    "@asicupv/paella-slide-plugins": "^2.6.2",
-    "@asicupv/paella-video-plugins": "^2.5.3",
-    "@asicupv/paella-webgl-plugins": "^2.4.2",
-    "@asicupv/paella-zoom-plugin": "^2.5.4"
+    "@asicupv/paella-slide-plugins": "^3.0.0-beta.0",
+    "@asicupv/paella-video-plugins": "^3.0.0-beta.0",
+    "@asicupv/paella-webgl-plugins": "^3.0.0-beta.0",
+    "@asicupv/paella-zoom-plugin": "^3.0.0-beta.0"
   }
 }
