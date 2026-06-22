@@ -18,6 +18,6 @@
     },
     "dependencies": {
         "@asicupv/paella-opencast-component": "^2.0.4",
-        "@asicupv/paella-opencast-core": "^2.0.4"
+        "@asicupv/paella-opencast-core": "^2.0.5"
     }
 }
