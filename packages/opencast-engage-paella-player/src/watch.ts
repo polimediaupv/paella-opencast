@@ -12,6 +12,7 @@ import { webglPlugins } from '@asicupv/paella-webgl-plugins';
 import { videoPlugins } from '@asicupv/paella-video-plugins';
 import { extraPlugins } from '@asicupv/paella-extra-plugins';
 import{ opencastPlugins } from '@asicupv/paella-opencast-plugins';
+import { aiToolsPlugins } from '@asicupv/paella-ai-plugins';
 
 // const { opencastPlugins } = await import('@asicupv/paella-opencast-plugins');
 
@@ -65,6 +66,7 @@ window.addEventListener("load", async () => {
       ...videoPlugins,
       ...webglPlugins,
       ...extraPlugins,
+      ...aiToolsPlugins,
       ...opencastPlugins
     ],
     opencast: {

@@ -367,6 +367,18 @@
 
         "/* right toolbar buttons*/": "*********************************************************",
 
+
+        
+
+        "es.upv.paella.transcriptInteractiveAreaPlugin": {
+            "enabled": true
+        },
+        "es.upv.paella.ai.realTimeCaptions": {
+            "enabled": true,
+            "side": "right",
+            "order": 93
+        },
+
         "org.opencast.paella.loginPlugin": {
             "enabled": true,
             "side": "right",
@@ -423,11 +435,20 @@
 
 
         "/* settings toolbox */": "*********************************************************",
+        "es.upv.paella.audioEnhancement": {            
+            "enabled": true            
+        },
+        "es.upv.paella.audioEnhancementButton": {
+            "enabled": true,
+            "side": "right",
+            "parentContainer": "settingsGroup",
+            "order": 100
+        },
         "org.opencast.paella.eventDetailsPlugin": {
             "enabled": true,
             "side": "right",
             "parentContainer": "settingsGroup",
-            "order": 10,
+            "order": 12,
             "engageQueryUrl": "/engage/ui/index.html?q=${q}",
             "engageSeriesUrl": "/engage/ui/index.html?epFrom=${series}",
             "_p8_engageQueryUrl": "index.html?q=${q}",

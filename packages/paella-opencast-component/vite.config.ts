@@ -15,7 +15,7 @@ export default defineConfig({
         },
         rollupOptions: {
             output: {
-                inlineDynamicImports: true,                
+                codeSplitting: false,              
                 assetFileNames: 'paella-opencast-component.[ext]',
                 chunkFileNames: "[name].[format].js"
             }
