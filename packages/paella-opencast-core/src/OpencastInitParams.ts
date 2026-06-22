@@ -34,8 +34,8 @@ export async function defaultLoadConfigFunc(
                     '@asicupv/paella-opencast-core',
                 );
                 paellaConfig = JSON.parse(ocInitParams.opencast?.paellaConfig);
-            } catch (err: any) {
-                throw new Error(`Error parsing paella config: ${err}`);
+            } catch (err) {
+                throw new Error(`Error parsing paella config: ${err}`, { cause: err });
             }
         }
         // If paellaConfig is an object, use it directly.
@@ -92,7 +92,7 @@ export async function defaultLoadVideoManifestFunc(
     const ocInitParams = ocPlayer.initParams as OpencastInitParams;
     const conversionConfig = {};
 
-    let opencastEvent = null;
+    let opencastEvent;
     // Load episode from attribute. Will autodiscover is it is a serarch API or an External API response.
     if (ocInitParams.opencast?.episode) {
         player.log.info(
@@ -101,8 +101,8 @@ export async function defaultLoadVideoManifestFunc(
         );
         try {
             opencastEvent = JSON.parse(ocInitParams.opencast.episode);
-        } catch (err: any) {
-            throw new Error(`Error parsing opencast episode: ${err}`);
+        } catch (err) {
+            throw new Error(`Error parsing opencast episode: ${err}`, { cause: err });
         }
     }
     // Load episode from videoId. Will autodiscover if it is a serarch API or an External API response.

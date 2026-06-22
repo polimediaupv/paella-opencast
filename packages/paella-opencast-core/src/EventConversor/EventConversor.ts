@@ -173,8 +173,8 @@ export class EventConversor {
             const lines = block.trim().split('\n');
 
             let startTime: string | null = null;
-            let text: string[] = [];
-            let timeLine: string | null = null;
+            let text: string[];
+            let timeLine: string;
             let cueId: string | null = null;
 
             // Determine if there is a cue ID or just the time line
