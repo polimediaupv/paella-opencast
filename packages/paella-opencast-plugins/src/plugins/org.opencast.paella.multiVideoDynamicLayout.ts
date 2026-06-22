@@ -1,7 +1,12 @@
-import { VideoLayout, type Stream, type LayoutStructure, type LegacyLayoutVideo } from '@asicupv/paella-core';
+import {
+    VideoLayout,
+    type Stream,
+    type LayoutStructure,
+    type LegacyLayoutVideo,
+} from '@asicupv/paella-core';
 import OpencastPaellaPluginsModule from './OpencastPaellaPluginsModule';
 
-export default class OpencastMultiVideoDynamicLayout extends VideoLayout {    
+export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
     _currentVideos: LegacyLayoutVideo[] | undefined = undefined;
 
     getPluginModuleInstance() {
@@ -21,7 +26,10 @@ export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
     }
 
     async load() {
-        this.player.log.debug('Multi video layout loaded', `${this.getPluginModuleInstance().moduleName} [${this.name}]`);
+        this.player.log.debug(
+            'Multi video layout loaded',
+            `${this.getPluginModuleInstance().moduleName} [${this.name}]`,
+        );
     }
 
     getValidStreams(streamData: Stream[]) {
@@ -36,25 +44,25 @@ export default class OpencastMultiVideoDynamicLayout extends VideoLayout {
 
     getLayoutStructure(streamData: Stream[]): LayoutStructure {
         const size = 100 / streamData.length;
-        
-        if (this._currentVideos  == null) {
-            this._currentVideos = streamData.map(d => {
+
+        if (this._currentVideos == null) {
+            this._currentVideos = streamData.map((d) => {
                 return {
                     content: d.content,
                     visible: true,
                     rect: [],
-                    size
+                    size,
                 };
             });
         }
 
         return {
-            type: "legacy",
+            type: 'legacy',
             id: this.identifier,
-            name: { es: "Múltiples streams con posición dinámica" },
+            name: { es: 'Múltiples streams con posición dinámica' },
             buttons: [],
             hidden: false,
-            videos: this._currentVideos
+            videos: this._currentVideos,
         };
     }
 }

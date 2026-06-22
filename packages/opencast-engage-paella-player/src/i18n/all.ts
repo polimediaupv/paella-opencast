@@ -3,9 +3,7 @@ import enUS from './en-US.json';
 import esES from './es-ES.json';
 import caES from './ca-ES.json';
 
-
 const defaultDictionaries: Record<string, Dictionary> = {};
-
 
 defaultDictionaries['en-US'] = enUS;
 defaultDictionaries['en'] = enUS;

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* 3D tilt effect for the preview container (not the image) */
 .preview-container {

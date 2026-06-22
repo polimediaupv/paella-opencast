@@ -43,10 +43,7 @@
         "side": {
             "description": "Affects the side on the horizontal axis that the button is placed. It only affects iun case the 'parentContainer' is the playback or the video container.",
             "type": "string",
-            "enum": [
-                "left",
-                "right"
-            ]
+            "enum": ["left", "right"]
         },
         "closePopUps": {
             "description": "Indicates whether to close any pop-up that is currently open when the button is clicked.",
@@ -61,11 +58,7 @@
         "popUpType": {
             "description": "paella-core >= 1.20. Defines the type of pop up that the button will display.",
             "type": "string",
-            "enum": [
-                "modal",
-                "no-modal",
-                "timeline"
-            ],
+            "enum": ["modal", "no-modal", "timeline"],
             "default": "modal"
         },
         "menuTitle": {

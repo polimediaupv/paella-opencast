@@ -38,9 +38,7 @@
             "admin.shortcut.editor.play_ending_of_current_segment": "n"
         }
     },
-    "roles": [
-        "ROLE_ANONYMOUS"
-    ],
+    "roles": ["ROLE_ANONYMOUS"],
     "userRole": "ROLE_USER_ANONYMOUS",
     "user": {
         "username": "anonymous"

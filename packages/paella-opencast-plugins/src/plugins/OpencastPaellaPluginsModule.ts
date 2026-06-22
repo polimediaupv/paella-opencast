@@ -1,6 +1,6 @@
-import { PluginModule } from "@asicupv/paella-core";
-import packageData from "../../package.json";
-import defaultDictionaries from "../i18n/all";
+import { PluginModule } from '@asicupv/paella-core';
+import packageData from '../../package.json';
+import defaultDictionaries from '../i18n/all';
 
 let g_pluginModule: PluginModule | null = null;
 
@@ -11,7 +11,7 @@ export default class OpencastPaellaPluginsModule extends PluginModule {
         }
         return g_pluginModule;
     }
-    
+
     get moduleName() {
         return packageData.name;
     }

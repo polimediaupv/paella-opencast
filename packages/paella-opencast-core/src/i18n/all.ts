@@ -6,9 +6,7 @@ import esES from './es-ES.json';
 import frFR from './fr-FR.json';
 import itIT from './it-IT.json';
 
-
 const defaultDictionaries: Record<string, Dictionary> = {};
-
 
 defaultDictionaries['ca-ES'] = caES;
 defaultDictionaries['ca'] = caES;

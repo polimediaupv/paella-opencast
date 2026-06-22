@@ -1,46 +1,48 @@
 {
-  "name": "@asicupv/paella-opencast-skin",
-  "version": "2.0.1",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/polimediaupv/paella-opencast"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/types/paella-opencast-skin.es.d.ts",
-      "import": "./dist/paella-opencast-skin.es.js",
-      "require": "./dist/paella-opencast-skin.cjs.js"
+    "name": "@asicupv/paella-opencast-skin",
+    "version": "2.0.1",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/polimediaupv/paella-opencast"
     },
-    "./opencast-paella-skin.css": {
-      "import": "./dist/paella-opencast-skin.css",
-      "require": "./dist/paella-opencast-skin.css"
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/",
+        "provenance": true
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/types/paella-opencast-skin.es.d.ts",
+            "import": "./dist/paella-opencast-skin.es.js",
+            "require": "./dist/paella-opencast-skin.cjs.js"
+        },
+        "./opencast-paella-skin.css": {
+            "import": "./dist/paella-opencast-skin.css",
+            "require": "./dist/paella-opencast-skin.css"
+        }
+    },
+    "files": [
+        "dist/*",
+        "README.md"
+    ],
+    "scripts": {
+        "dev": "tsc && vite build --watch --emptyOutDir=false",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "test": "vitest --run",
+        "lint": "eslint src/",
+        "lint:fix": "eslint --fix src/",
+        "clean:build": "rimraf .turbo dist",
+        "clean:deps": "rimraf node_modules"
+    },
+    "devDependencies": {
+        "@asicupv/paella-core": "^3.0.0-beta.0",
+        "typescript": "^6.0.3",
+        "vite": "^8.0.16",
+        "vite-plugin-dts": "^5.0.2"
+    },
+    "dependencies": {
+        "@fontsource/roboto": "^5.2.10"
     }
-  },
-  "files": [
-    "dist/*",
-    "README.md"
-  ],
-  "scripts": {
-    "dev": "tsc && vite build --watch --emptyOutDir=false",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "vitest --run",
-    "clean:build": "rimraf .turbo dist",
-    "clean:deps": "rimraf node_modules"
-  },
-  "devDependencies": {
-    "@asicupv/paella-core": "^3.0.0-beta.0",
-    "typescript": "^6.0.3",
-    "vite": "^8.0.16",
-    "vite-plugin-dts": "^5.0.2"
-  },
-  "dependencies": {
-    "@fontsource/roboto": "^5.2.10"
-  }
 }

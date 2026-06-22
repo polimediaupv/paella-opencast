@@ -1,8 +1,12 @@
-
-import { defaultGetVideoIdFunc, defaultLoadConfigFunc, defaultLoadVideoManifestFunc, OpencastPaellaPlayer, type OpencastInitParams } from '@asicupv/paella-opencast-core';
+import {
+    defaultGetVideoIdFunc,
+    defaultLoadConfigFunc,
+    defaultLoadVideoManifestFunc,
+    OpencastPaellaPlayer,
+    type OpencastInitParams,
+} from '@asicupv/paella-opencast-core';
 import { Events } from '@asicupv/paella-core';
 import { applyQueryParams } from './applyQueryParams';
-
 
 // Importing plugins
 import { basicPlugins } from '@asicupv/paella-basic-plugins';
@@ -11,7 +15,7 @@ import { zoomPlugins } from '@asicupv/paella-zoom-plugin';
 import { webglPlugins } from '@asicupv/paella-webgl-plugins';
 import { videoPlugins } from '@asicupv/paella-video-plugins';
 import { extraPlugins } from '@asicupv/paella-extra-plugins';
-import{ opencastPlugins } from '@asicupv/paella-opencast-plugins';
+import { opencastPlugins } from '@asicupv/paella-opencast-plugins';
 import { aiToolsPlugins } from '@asicupv/paella-ai-plugins';
 
 // const { opencastPlugins } = await import('@asicupv/paella-opencast-plugins');
@@ -33,68 +37,70 @@ const OC_PRESENTATION_URL = getOcPresentationUrl();
 // const OC_PAELLA8_BASE_URL = import.meta.env.OC_PAELLA8_BASE_URL || '/paella8/ui/';
 const CONFIG_FOLDER_URL = import.meta.env.CONFIG_FOLDER || '/ui/config/paella8/';
 
-
 function getOcPresentationUrl(): string {
     let url = import.meta.env.OC_PRESENTATION_URL || '/';
-    
-    if (USE_OC_SERVER_FROM_URL) {    
+
+    if (USE_OC_SERVER_FROM_URL) {
         const params = new URLSearchParams(window.location.search);
         const ocServerUrl = params.get('ocServer');
         if (ocServerUrl) {
             url = ocServerUrl;
         }
     }
-    
+
     return url;
 }
 
+window.addEventListener('load', async () => {
+    // try {
+    const opencastInitParams: OpencastInitParams = {
+        configResourcesUrl: CONFIG_FOLDER_URL,
+        configUrl: `${CONFIG_FOLDER_URL}config.json`,
 
+        loadConfig: defaultLoadConfigFunc,
+        getVideoId: defaultGetVideoIdFunc,
+        loadVideoManifest: defaultLoadVideoManifestFunc,
+        plugins: [
+            ...basicPlugins,
+            ...slidePlugins,
+            ...zoomPlugins,
+            ...videoPlugins,
+            ...webglPlugins,
+            ...extraPlugins,
+            ...aiToolsPlugins,
+            ...opencastPlugins,
+        ],
+        opencast: {
+            presentationUrl: OC_PRESENTATION_URL,
+            // auth:
+        },
+    };
 
-window.addEventListener("load", async () => {
-  // try {        
-  const opencastInitParams: OpencastInitParams = {
-    configResourcesUrl: CONFIG_FOLDER_URL,
-    configUrl: `${CONFIG_FOLDER_URL}config.json`,
+    const ocPlayer = new OpencastPaellaPlayer('playerContainer', opencastInitParams);
+    // Load default dictionaries
+    Object.entries(defaultDictionaries).forEach(([lang, dict]) => {
+        ocPlayer.addDictionary(lang, dict);
+    });
 
-    loadConfig: defaultLoadConfigFunc,
-    getVideoId: defaultGetVideoIdFunc,
-    loadVideoManifest: defaultLoadVideoManifestFunc,
-    plugins: [
-      ...basicPlugins,
-      ...slidePlugins,
-      ...zoomPlugins,
-      ...videoPlugins,
-      ...webglPlugins,
-      ...extraPlugins,
-      ...aiToolsPlugins,
-      ...opencastPlugins
-    ],
-    opencast: {
-      presentationUrl: OC_PRESENTATION_URL,
-      // auth:
-    }
-  };
+    // Update the browser tab title.
+    ocPlayer.bindEvent(Events.MANIFEST_LOADED, async () => {
+        ocPlayer.log.info(
+            'Player manifest loaded, updating document title.',
+            'opencast-engage-paella-player',
+        );
+        const event = ocPlayer.getEvent();
+        const videoTitle = event?.metadata?.title ?? ocPlayer.translate('Unknown video title');
+        const seriesTitle = event?.metadata?.seriesTitle ?? ocPlayer.translate('No series');
+        document.title = `${videoTitle} - ${seriesTitle} | Opencast`;
+    });
+    // Once the player is loaded, apply query parameters.
+    ocPlayer.bindEvent(Events.PLAYER_LOADED, async () => {
+        ocPlayer.log.info('Player loaded, applying query params', 'opencast-engage-paella-player');
+        await applyQueryParams(ocPlayer);
+    });
 
-  const ocPlayer = new OpencastPaellaPlayer('playerContainer', opencastInitParams);
-  // Load default dictionaries
-  Object.entries(defaultDictionaries).forEach(([lang, dict]) =>  ocPlayer.addDictionary(lang, dict));
-  
-  // Update the browser tab title.
-  ocPlayer.bindEvent(Events.MANIFEST_LOADED, async () => {
-    ocPlayer.log.info('Player manifest loaded, updating document title.', 'opencast-engage-paella-player');
-    const event = ocPlayer.getEvent();
-    const videoTitle = event?.metadata?.title ?? ocPlayer.translate('Unknown video title');
-    const seriesTitle = event?.metadata?.seriesTitle ?? ocPlayer.translate('No series');
-    document.title = `${videoTitle} - ${seriesTitle} | Opencast`;
-  });
-  // Once the player is loaded, apply query parameters.
-  ocPlayer.bindEvent(Events.PLAYER_LOADED, async () => {
-    ocPlayer.log.info('Player loaded, applying query params', 'opencast-engage-paella-player');
-    await applyQueryParams(ocPlayer);
-  });
-
-  await ocPlayer.applyOpencastTheme();
-  await ocPlayer.loadManifest();
-  ocPlayer.log.info('Paella player loaded successfully!', 'opencast-engage-player');
-  // window.ocPlayer = ocPlayer;
+    await ocPlayer.applyOpencastTheme();
+    await ocPlayer.loadManifest();
+    ocPlayer.log.info('Paella player loaded successfully!', 'opencast-engage-player');
+    // window.ocPlayer = ocPlayer;
 });
