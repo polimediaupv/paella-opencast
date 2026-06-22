@@ -18,8 +18,8 @@ function paellaVideoIdToUrl(id: string): string {
         const videoUrl = `${scriptUrl.protocol}//${scriptUrl.host}/play/${id}`;
 
         return videoUrl;
-    } catch (e) {
-        throw new Error(`Error constructing video URL: ${e}`);
+    } catch (err) {
+        throw new Error(`Error constructing video URL: ${err}`, { cause: err });
     }
 }
 
