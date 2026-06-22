@@ -24,9 +24,10 @@
             "cache": false
         },
         "lint": {
-            "dependsOn": [],
+            "dependsOn": ["build"],
             "inputs": ["src/**/*.ts"],
-            "outputs": []
+            "outputs": [],
+            "cache": false
         }
     }
 }
