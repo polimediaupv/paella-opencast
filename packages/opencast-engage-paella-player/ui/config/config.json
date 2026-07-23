@@ -641,6 +641,10 @@
             "enabled": true
         },
 
+        "org.opencast.paella.basicStatisticsPlugin": {
+            "enabled": true
+        },
+
         "es.upv.paella.embedapi": {
             "enabled": true
         }
