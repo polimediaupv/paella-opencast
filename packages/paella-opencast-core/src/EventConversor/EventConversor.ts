@@ -144,7 +144,7 @@ export class EventConversor {
                             id: mpElement.id,
                             format: captions_format,
                             url: mpElement.url,
-                            lang: captions_lang ?? this.paella.translate('Unknown language'),
+                            lang: captions_lang || 'und',
                             text: captions_description,
                         };
                         captions.push(c);
