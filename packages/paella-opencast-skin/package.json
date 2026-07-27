@@ -37,7 +37,7 @@
         "clean:deps": "rimraf node_modules"
     },
     "devDependencies": {
-        "typescript": "^7.0.2",
+        "typescript": "^6.0.3",
         "vite": "^8.1.5",
         "vite-plugin-dts": "^5.0.3"
     },
