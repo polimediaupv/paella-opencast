@@ -1,6 +1,6 @@
 {
     "name": "@asicupv/opencast-engage-paella-player",
-    "version": "8.0.3",
+    "version": "8.0.4",
     "type": "module",
     "repository": {
         "type": "git",
@@ -30,8 +30,8 @@
     },
     "devDependencies": {
         "@asicupv/paella-opencast-component": "2.0.4",
-        "@asicupv/paella-opencast-core": "2.0.4",
-        "@asicupv/paella-opencast-plugins": "2.0.4",
+        "@asicupv/paella-opencast-core": "2.0.5",
+        "@asicupv/paella-opencast-plugins": "2.0.5",
         "@asicupv/paella-opencast-skin": "2.0.1",
         "@asicupv/paella-ai-plugins": "^2.8.3",
         "@asicupv/paella-basic-plugins": "^2.6.2",

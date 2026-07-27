@@ -1,5 +1,15 @@
 # @asicupv/opencast-engage-paella-player
 
+## 8.0.4
+
+### Patch Changes
+
+- [#126](https://github.com/polimediaupv/paella-opencast/pull/126) [`83b4cc3`](https://github.com/polimediaupv/paella-opencast/commit/83b4cc3c2b8cd837017a7dba84686bf75af8921c) Thanks [@miesgre](https://github.com/miesgre)! - Changes in config file. Change the priority of some plugins to ensure the zoom works correctly.
+
+- [#119](https://github.com/polimediaupv/paella-opencast/pull/119) [`fde0fa0`](https://github.com/polimediaupv/paella-opencast/commit/fde0fa05ce0b7985b3e5a19c2bdab06120e076f0) Thanks [@miesgre](https://github.com/miesgre)! - Fix the destination of the paella-opencast-component files
+
+- [#126](https://github.com/polimediaupv/paella-opencast/pull/126) [`2812fb8`](https://github.com/polimediaupv/paella-opencast/commit/2812fb8a704342c8579f38108870020d23a371f1) Thanks [@miesgre](https://github.com/miesgre)! - Update paella dependencies
+
 ## 8.0.3
 
 ### Patch Changes
