@@ -16,6 +16,7 @@ import { webglPlugins } from '@asicupv/paella-webgl-plugins';
 import { videoPlugins } from '@asicupv/paella-video-plugins';
 import { extraPlugins } from '@asicupv/paella-extra-plugins';
 import { opencastPlugins } from '@asicupv/paella-opencast-plugins';
+import { userTrackingPlugins } from '@asicupv/paella-user-tracking';
 
 // const { opencastPlugins } = await import('@asicupv/paella-opencast-plugins');
 
@@ -67,6 +68,7 @@ window.addEventListener('load', async () => {
             ...webglPlugins,
             ...extraPlugins,
             ...opencastPlugins,
+            ...userTrackingPlugins,
         ],
         opencast: {
             presentationUrl: OC_PRESENTATION_URL,
