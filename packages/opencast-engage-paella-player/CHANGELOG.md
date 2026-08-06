@@ -1,5 +1,11 @@
 # @asicupv/opencast-engage-paella-player
 
+## 8.0.6
+
+### Patch Changes
+
+- [#159](https://github.com/polimediaupv/paella-opencast/pull/159) [`40e67fc`](https://github.com/polimediaupv/paella-opencast/commit/40e67fc4620d63d8efb631f62cd9371982f7ef87) Thanks [@snoesberger](https://github.com/snoesberger)! - Import userTrackingPlugins to track player events again
+
 ## 8.0.5
 
 ### Patch Changes
