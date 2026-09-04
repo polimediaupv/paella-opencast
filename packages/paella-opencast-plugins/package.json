@@ -39,10 +39,10 @@
     "devDependencies": {
         "@asicupv/paella-extra-plugins": "^2.9.2",
         "@asicupv/paella-opencast-core": "^2.0.6",
-        "@asicupv/paella-user-tracking": "^2.4.3",
+        "@asicupv/paella-user-tracking": "^2.4.4",
         "typescript": "^6.0.3",
-        "vite": "^8.1.5",
-        "vite-plugin-dts": "^5.0.3"
+        "vite": "^8.2.2",
+        "vite-plugin-dts": "^5.1.0"
     },
     "peerDependencies": {
         "@asicupv/paella-extra-plugins": "^2.9.0",
