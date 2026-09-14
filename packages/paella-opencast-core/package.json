@@ -37,10 +37,10 @@
         "clean:deps": "rimraf node_modules"
     },
     "devDependencies": {
-        "@asicupv/paella-core": "^2.12.11",
-        "typescript": "^6.0.3",
-        "vite": "^8.1.5",
-        "vite-plugin-dts": "^5.0.3"
+        "@asicupv/paella-core": "^2.12.14",
+        "typescript": "^7.0.2",
+        "vite": "^8.3.0",
+        "vite-plugin-dts": "^5.1.0"
     },
     "dependencies": {
         "@asicupv/paella-opencast-skin": "^2.0.2"
