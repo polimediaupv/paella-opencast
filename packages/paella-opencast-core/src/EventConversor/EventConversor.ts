@@ -127,7 +127,7 @@ export class EventConversor {
                         captions_format = captions_subtype;
                     }
 
-                    let captions_description = this.paella.translate('Undefined caption');
+                    let captions_description = this.paella.translate('Unknown language');
                     if (captions_lang) {
                         const languageNames = new Intl.DisplayNames([window.navigator.language], {
                             type: 'language',
@@ -144,7 +144,7 @@ export class EventConversor {
                             id: mpElement.id,
                             format: captions_format,
                             url: mpElement.url,
-                            lang: captions_lang,
+                            lang: captions_lang || 'und',
                             text: captions_description,
                         };
                         captions.push(c);

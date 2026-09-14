@@ -11,12 +11,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.40.0",
-    "astro": "^6.4.4",
-    "sharp": "^0.35.2",
+    "@astrojs/starlight": "^0.41.5",
+    "astro": "^7.1.5",
+    "sharp": "^0.35.3",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@asicupv/paella-opencast-component": "^2.0.4"
+    "@asicupv/paella-opencast-component": "^2.0.5"
   }
 }

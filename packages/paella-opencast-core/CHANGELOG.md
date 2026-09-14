@@ -1,5 +1,24 @@
 # @asicupv/paella-opencast-core
 
+## 2.0.6
+
+### Patch Changes
+
+- [#156](https://github.com/polimediaupv/paella-opencast/pull/156) [`e87533d`](https://github.com/polimediaupv/paella-opencast/commit/e87533d6696dbe711f581772b009afdd8987e3c9) Thanks [@miesgre](https://github.com/miesgre)! - Update paella dependencies
+
+- [#154](https://github.com/polimediaupv/paella-opencast/pull/154) [`5ba848a`](https://github.com/polimediaupv/paella-opencast/commit/5ba848a39642a947b598a012a928d976e49f2c68) Thanks [@miesgre](https://github.com/miesgre)! - Handle selection of subtitles without language tag (Fix [#153](https://github.com/polimediaupv/paella-opencast/issues/153))
+
+- Updated dependencies [[`e87533d`](https://github.com/polimediaupv/paella-opencast/commit/e87533d6696dbe711f581772b009afdd8987e3c9)]:
+    - @asicupv/paella-opencast-skin@2.0.2
+
+## 2.0.5
+
+### Patch Changes
+
+- [#138](https://github.com/polimediaupv/paella-opencast/pull/138) [`ecb60a4`](https://github.com/polimediaupv/paella-opencast/commit/ecb60a472cc05703b122175e99a8eef627cc95bf) Thanks [@miesgre](https://github.com/miesgre)! - Update @asicupv/paella-core to version 2.12.11 (Fixes an XSS security vulnerability)
+
+- [#126](https://github.com/polimediaupv/paella-opencast/pull/126) [`2812fb8`](https://github.com/polimediaupv/paella-opencast/commit/2812fb8a704342c8579f38108870020d23a371f1) Thanks [@miesgre](https://github.com/miesgre)! - Update paella dependencies
+
 ## 2.0.4
 
 ### Patch Changes

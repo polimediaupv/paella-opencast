@@ -1174,6 +1174,42 @@ describe('EventConversor', () => {
                 ];
                 expect(() => conversor.processCaptionsFromMpElements(elements)).not.toThrow();
             });
+
+            test('should fall back to lang "und" when no language tag is present', () => {
+                const player = makePlayer();
+                vi.spyOn(player, 'translate').mockImplementation((key: string) => key);
+                const conversor = new EventConversor(player);
+                const elements: MediaPackageElement[] = [
+                    {
+                        id: 'c1',
+                        url: 'http://example.com/nolang.vtt',
+                        mimetype: 'text/vtt',
+                        flavor: 'captions/vtt',
+                    },
+                ];
+                const captions = conversor.processCaptionsFromMpElements(elements);
+                expect(captions).toHaveLength(1);
+                expect(captions[0].lang).toBe('und');
+                expect(captions[0].text).toBe('Unknown language');
+                expect(captions[0].format).toBe('vtt');
+            });
+
+            test('should prefer lang: tag over +lang suffix in flavor', () => {
+                const player = makePlayer();
+                vi.spyOn(player, 'translate').mockImplementation((key: string) => key);
+                const conversor = new EventConversor(player);
+                const elements: MediaPackageElement[] = [
+                    {
+                        id: 'c1',
+                        url: 'http://example.com/mixed.vtt',
+                        mimetype: 'text/vtt',
+                        flavor: 'captions/vtt+en',
+                        tags: ['lang:es'],
+                    },
+                ];
+                const captions = conversor.processCaptionsFromMpElements(elements);
+                expect(captions[0].lang).toBe('es');
+            });
         });
 
         // ── getTranscriptions ──────────────────────────────────────────────
