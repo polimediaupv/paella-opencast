@@ -661,6 +661,27 @@
 
         "es.upv.paella.embedapi": {
             "enabled": true
+        },
+
+
+        "es.upv.paella.ai.agentChat": {
+            "enabled": true,
+            "dataContext": "agentchat.captions",
+            "settings": {
+                "modelType": "openai",
+                "baseURL": "/ai-proxy/v1",
+                "apiKey": "dummy",
+                "modelName": "big-pickle"
+            }
+        },
+        "es.upv.paella.ai.agentchat.data": {
+            "enabled": true,
+            "context": ["agentchat.captions"]
+        },
+        "es.upv.paella.ai.agentChatButton": {
+            "enabled": true,
+            "side": "right",
+            "order": 105
         }
     }
 }
