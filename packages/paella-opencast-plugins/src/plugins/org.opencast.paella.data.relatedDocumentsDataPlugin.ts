@@ -1,5 +1,5 @@
 import { DataPlugin, type DataPluginConfig } from '@asicupv/paella-core';
-import { OpencastPaellaPlayer, type Event } from '@asicupv/paella-opencast-core';
+import { OpencastPaellaPlayer } from '@asicupv/paella-opencast-core';
 import type { RelatedDocument, RelatedDocuments } from '@asicupv/paella-extra-plugins';
 import OpencastPaellaPluginsModule from './OpencastPaellaPluginsModule';
 
