@@ -34,14 +34,9 @@ describe('RelatedDocuments', () => {
 
     describe('read', () => {
         test('should return empty list and log error when docs config is missing', async () => {
-            Object.defineProperty(mockOcPlayer, 'metadata', {
-                configurable: true,
-                get: () => ({
-                    ocEvent: {
-                        attachments: [],
-                        tracks: [],
-                    },
-                }),
+            mockOcPlayer.getEvent.mockReturnValue({
+                attachments: [],
+                tracks: [],
             });
 
             Object.defineProperty(plugin as any, 'config', {
@@ -59,30 +54,25 @@ describe('RelatedDocuments', () => {
         });
 
         test('should return content and media when configured docs match event attachments/tracks', async () => {
-            Object.defineProperty(mockOcPlayer, 'metadata', {
-                configurable: true,
-                get: () => ({
-                    ocEvent: {
-                        attachments: [
-                            {
-                                id: 'att-1',
-                                flavor: 'dublincore/episode',
-                                url: 'http://example.com/episode.txt',
-                                mimetype: 'text/plain',
-                                tags: [],
-                            },
-                        ],
-                        tracks: [
-                            {
-                                id: 'trk-1',
-                                flavor: 'presenter/delivery',
-                                url: 'http://example.com/video.mp4',
-                                mimetype: 'video/mp4',
-                                tags: [],
-                            },
-                        ],
+            mockOcPlayer.getEvent.mockReturnValue({
+                attachments: [
+                    {
+                        id: 'att-1',
+                        flavor: 'dublincore/episode',
+                        url: 'http://example.com/episode.txt',
+                        mimetype: 'text/plain',
+                        tags: [],
                     },
-                }),
+                ],
+                tracks: [
+                    {
+                        id: 'trk-1',
+                        flavor: 'presenter/delivery',
+                        url: 'http://example.com/video.mp4',
+                        mimetype: 'video/mp4',
+                        tags: [],
+                    },
+                ],
             });
 
             Object.defineProperty(plugin as any, 'config', {
@@ -141,22 +131,17 @@ describe('RelatedDocuments', () => {
         });
 
         test('should not include content when attachment fetch fails with non-ok response', async () => {
-            Object.defineProperty(mockOcPlayer, 'metadata', {
-                configurable: true,
-                get: () => ({
-                    ocEvent: {
-                        attachments: [
-                            {
-                                id: 'att-1',
-                                flavor: 'dublincore/episode',
-                                url: 'http://example.com/episode.txt',
-                                mimetype: 'text/plain',
-                                tags: [],
-                            },
-                        ],
-                        tracks: [],
+            mockOcPlayer.getEvent.mockReturnValue({
+                attachments: [
+                    {
+                        id: 'att-1',
+                        flavor: 'dublincore/episode',
+                        url: 'http://example.com/episode.txt',
+                        mimetype: 'text/plain',
+                        tags: [],
                     },
-                }),
+                ],
+                tracks: [],
             });
 
             Object.defineProperty(plugin as any, 'config', {
@@ -188,30 +173,25 @@ describe('RelatedDocuments', () => {
         });
 
         test('should include both content and media when same doc matches attachment and track', async () => {
-            Object.defineProperty(mockOcPlayer, 'metadata', {
-                configurable: true,
-                get: () => ({
-                    ocEvent: {
-                        attachments: [
-                            {
-                                id: 'att-1',
-                                flavor: 'notes/source',
-                                url: 'http://example.com/notes.txt',
-                                mimetype: 'text/plain',
-                                tags: [],
-                            },
-                        ],
-                        tracks: [
-                            {
-                                id: 'trk-1',
-                                flavor: 'video/source',
-                                url: 'http://example.com/video.mp4',
-                                mimetype: 'video/mp4',
-                                tags: [],
-                            },
-                        ],
+            mockOcPlayer.getEvent.mockReturnValue({
+                attachments: [
+                    {
+                        id: 'att-1',
+                        flavor: 'notes/source',
+                        url: 'http://example.com/notes.txt',
+                        mimetype: 'text/plain',
+                        tags: [],
                     },
-                }),
+                ],
+                tracks: [
+                    {
+                        id: 'trk-1',
+                        flavor: 'video/source',
+                        url: 'http://example.com/video.mp4',
+                        mimetype: 'video/mp4',
+                        tags: [],
+                    },
+                ],
             });
 
             Object.defineProperty(plugin as any, 'config', {
