@@ -1,5 +1,5 @@
 import { DataPlugin, type DataPluginConfig } from '@asicupv/paella-core';
-import { OpencastPaellaPlayer, type Event } from '@asicupv/paella-opencast-core';
+import { OpencastPaellaPlayer } from '@asicupv/paella-opencast-core';
 import type { RelatedDocument, RelatedDocuments } from '@asicupv/paella-extra-plugins';
 import OpencastPaellaPluginsModule from './OpencastPaellaPluginsModule';
 
@@ -48,7 +48,7 @@ export default class OpencastRelatedDocumentsDataPlugin extends DataPlugin<
 
     async read(_context: string, _key: string): Promise<RelatedDocuments> {
         const ocPlayer = this.player as OpencastPaellaPlayer;
-        const ocEvent = (await ocPlayer.metadata.ocEvent) as Event;
+        const ocEvent = ocPlayer.getEvent();
         const attachments = ocEvent?.attachments || [];
         const tracks = ocEvent?.tracks || [];
 

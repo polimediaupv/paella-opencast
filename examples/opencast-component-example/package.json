@@ -14,10 +14,10 @@
     },
     "devDependencies": {
         "typescript": "^6.0.3",
-        "vite": "^8.1.5"
+        "vite": "^8.3.0"
     },
     "dependencies": {
         "@asicupv/paella-opencast-component": "^2.0.5",
-        "@asicupv/paella-opencast-core": "^2.0.6"
+        "@asicupv/paella-opencast-core": "^2.0.7"
     }
 }

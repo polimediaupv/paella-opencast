@@ -1,6 +1,6 @@
 {
     "name": "@asicupv/paella-opencast-plugins",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "type": "module",
     "repository": {
         "type": "git",
@@ -38,15 +38,15 @@
     },
     "devDependencies": {
         "@asicupv/paella-extra-plugins": "^3.0.0-beta.0",
-        "@asicupv/paella-opencast-core": "^2.0.4",
+        "@asicupv/paella-opencast-core": "^2.0.7",
         "@asicupv/paella-user-tracking": "^3.0.0-beta.0",
         "typescript": "^6.0.3",
-        "vite": "^8.1.5",
-        "vite-plugin-dts": "^5.0.3"
+        "vite": "^8.3.0",
+        "vite-plugin-dts": "^5.1.0"
     },
     "peerDependencies": {
         "@asicupv/paella-extra-plugins": "^3.0.0-beta.0",
-        "@asicupv/paella-opencast-core": "^2.0.4",
+        "@asicupv/paella-opencast-core": "^2.0.7",
         "@asicupv/paella-user-tracking": "^3.0.0-beta.0"
     }
 }
