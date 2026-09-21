@@ -48,7 +48,7 @@ export default class OpencastRelatedDocumentsDataPlugin extends DataPlugin<
 
     async read(_context: string, _key: string): Promise<RelatedDocuments> {
         const ocPlayer = this.player as OpencastPaellaPlayer;
-        const ocEvent = (await ocPlayer.metadata.ocEvent) as Event;
+        const ocEvent = ocPlayer.getEvent();
         const attachments = ocEvent?.attachments || [];
         const tracks = ocEvent?.tracks || [];
 
