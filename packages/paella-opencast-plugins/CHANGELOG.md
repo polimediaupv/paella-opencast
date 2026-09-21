@@ -1,5 +1,11 @@
 # @asicupv/paella-opencast-plugins
 
+## 2.0.8
+
+### Patch Changes
+
+- [#187](https://github.com/polimediaupv/paella-opencast/pull/187) [`e48263a`](https://github.com/polimediaupv/paella-opencast/commit/e48263a017c9f40378620a9da5a2aebc534a3734) Thanks [@miesgre](https://github.com/miesgre)! - Fix: Change the way the event is obtained in the related documents plugin.
+
 ## 2.0.7
 
 ### Patch Changes
