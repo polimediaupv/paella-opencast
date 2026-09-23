@@ -17,6 +17,7 @@ import OpencastRelatedVideosDataPlugin, {
 import OpencastRelatedDocumentsDataPlugin, {
     type OpencastRelatedDocumentsDataPluginConfig,
 } from './plugins/org.opencast.paella.data.relatedDocumentsDataPlugin';
+import OpencastBasicStatisticsPlugin from './plugins/org.opencast.paella.basicStatistics';
 
 export const opencastPlugins = [
     {
@@ -93,6 +94,12 @@ export const opencastPlugins = [
                 'presentation/player+preview',
             ],
         } satisfies OpencastRelatedVideosDataPluginConfig,
+    },
+    {
+        plugin: OpencastBasicStatisticsPlugin,
+        config: {
+            enabled: true,
+        }
     },
     {
         plugin: OpencastRelatedDocumentsDataPlugin,
