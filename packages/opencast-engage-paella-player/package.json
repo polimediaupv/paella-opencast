@@ -29,7 +29,7 @@
         "clean:deps": "rimraf node_modules"
     },
     "devDependencies": {
-        "@asicupv/paella-ai-plugins": "^3.0.0-beta.1",
+        "@asicupv/paella-ai-plugins": "^3.0.0-beta.2",
         "@asicupv/paella-basic-plugins": "^3.0.0-beta.0",
         "@asicupv/paella-embedapi": "^3.0.0-beta.0",
         "@asicupv/paella-extra-plugins": "^3.0.0-beta.0",
