@@ -36,7 +36,7 @@
         "@asicupv/paella-ai-plugins": "^2.8.3",
         "@asicupv/paella-basic-plugins": "^2.6.2",
         "@asicupv/paella-embedapi": "^2.12.1",
-        "@asicupv/paella-extra-plugins": "^2.9.2",
+        "@asicupv/paella-extra-plugins": "^2.9.3",
         "@asicupv/paella-slide-plugins": "^2.6.2",
         "@asicupv/paella-video-plugins": "^2.5.3",
         "@asicupv/paella-webgl-plugins": "^2.4.2",
