@@ -5,4 +5,4 @@
 '@asicupv/paella-opencast-core': patch
 ---
 
-Update to last paella player
+Update to the latest Paella Player
