@@ -25,6 +25,8 @@ jobs:
             - run: npm ci
             - name: Lint
               run: npm run lint
+            - name: Format
+              run: npm run format:check
             - run: npm run build --if-present
             # Run the tests
             - run: npm test

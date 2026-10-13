@@ -932,9 +932,7 @@ describe('EventConversor', () => {
                 const presenterHls = presenterStream?.sources.hls ?? [];
                 const presentationHls = presentationStream?.sources.hls ?? [];
                 expect(presenterHls[0].src).toBe('http://example.com/presenter_master.m3u8');
-                expect(presentationHls[0].src).toBe(
-                    'http://example.com/presentation_master.m3u8',
-                );
+                expect(presentationHls[0].src).toBe('http://example.com/presentation_master.m3u8');
             });
         });
 
