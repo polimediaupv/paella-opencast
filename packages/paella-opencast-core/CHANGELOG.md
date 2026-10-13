@@ -1,5 +1,13 @@
 # @asicupv/paella-opencast-core
 
+## 2.0.8
+
+### Patch Changes
+
+- [#196](https://github.com/polimediaupv/paella-opencast/pull/196) [`d755531`](https://github.com/polimediaupv/paella-opencast/commit/d755531325202da464ef86531cee9d4b154e7978) Thanks [@miesgre](https://github.com/miesgre)! - Update to the latest Paella Player
+
+- [#195](https://github.com/polimediaupv/paella-opencast/pull/195) [`1494808`](https://github.com/polimediaupv/paella-opencast/commit/1494808d6d99bdd41479d2e34637d47fc2a1073f) Thanks [@miesgre](https://github.com/miesgre)! - Fix: Prefer the HLS master playlist as the first HLS source in the converted manifest, so alternative audio renditions defined in the master are discovered by the player.
+
 ## 2.0.7
 
 ### Patch Changes
