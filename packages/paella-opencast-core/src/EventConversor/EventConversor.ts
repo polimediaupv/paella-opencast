@@ -377,6 +377,11 @@ export class EventConversor {
                     (track) =>
                         track.mimetype === 'application/x-mpegURL' && track.is_live === false,
                 )
+                .sort(
+                    (a, b) =>
+                        Number(b.is_master === true) -
+                        Number(a.is_master === true),
+                )
                 .map(getSource);
             // getHlsLiveSources(tracks, config);
             const hlsLiveSources = tracks
