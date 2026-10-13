@@ -47,6 +47,7 @@ jobs:
                   publish-script: npm run changeset:publish
                   commit-message: '[ci] release'
                   pr-title: '[ci] release'
+                  push-with-git-cli: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   # Enable npm's provenance feature to include metadata about the build environment in the published package
