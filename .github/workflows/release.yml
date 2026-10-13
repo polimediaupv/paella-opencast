@@ -40,13 +40,14 @@ jobs:
 
             - name: Create Release Pull Request or Publish to npm
               id: changesets
-              uses: changesets/action@v1
+              uses: changesets/action@v2
               with:
                   # This expects you to have a script which does a build for your packages and calls changeset publish
-                  version: npm run changeset:version
-                  publish: npm run changeset:publish
-                  commit: '[ci] release'
-                  title: '[ci] release'
+                  version-script: npm run changeset:version
+                  publish-script: npm run changeset:publish
+                  commit-message: '[ci] release'
+                  pr-title: '[ci] release'
+                  push-with-git-cli: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   # Enable npm's provenance feature to include metadata about the build environment in the published package
