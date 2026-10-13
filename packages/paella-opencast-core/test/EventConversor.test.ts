@@ -646,6 +646,296 @@ describe('EventConversor', () => {
                 const streams = conversor.getStreams(event);
                 expect(streams).toHaveLength(0);
             });
+
+            test('should place the HLS master playlist first in hls sources', () => {
+                const conversor = new EventConversor(makePlayer());
+                const event: Event = {
+                    id: 'test',
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/variant_1.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/variant_0.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't3',
+                            url: 'http://example.com/variant_2.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't4',
+                            url: 'http://example.com/audio_et.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't5',
+                            url: 'http://example.com/presenter_master.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: true,
+                            duration: 60,
+                        },
+                    ],
+                };
+                const streams = conversor.getStreams(event);
+                expect(streams).toHaveLength(1);
+                const hls = streams[0].sources.hls ?? [];
+                expect(hls).toHaveLength(5);
+                expect(hls[0].src).toBe('http://example.com/presenter_master.m3u8');
+                expect(hls.map((source) => source.src)).toEqual([
+                    'http://example.com/presenter_master.m3u8',
+                    'http://example.com/variant_1.m3u8',
+                    'http://example.com/variant_0.m3u8',
+                    'http://example.com/variant_2.m3u8',
+                    'http://example.com/audio_et.m3u8',
+                ]);
+            });
+
+            test('should preserve hls source order when no track is marked as master', () => {
+                const conversor = new EventConversor(makePlayer());
+                const event: Event = {
+                    id: 'test',
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/first.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/second.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't3',
+                            url: 'http://example.com/third.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
+                };
+                const streams = conversor.getStreams(event);
+                const hls = streams[0].sources.hls ?? [];
+                expect(hls.map((source) => source.src)).toEqual([
+                    'http://example.com/first.m3u8',
+                    'http://example.com/second.m3u8',
+                    'http://example.com/third.m3u8',
+                ]);
+            });
+
+            test('should keep hls order unchanged when master is already first', () => {
+                const conversor = new EventConversor(makePlayer());
+                const event: Event = {
+                    id: 'test',
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter_master.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: true,
+                            duration: 60,
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/variant_1.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't3',
+                            url: 'http://example.com/variant_2.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
+                };
+                const streams = conversor.getStreams(event);
+                const hls = streams[0].sources.hls ?? [];
+                expect(hls.map((source) => source.src)).toEqual([
+                    'http://example.com/presenter_master.m3u8',
+                    'http://example.com/variant_1.m3u8',
+                    'http://example.com/variant_2.m3u8',
+                ]);
+            });
+
+            test('should not alter mp4 source order when an hls master is present', () => {
+                const conversor = new EventConversor(makePlayer());
+                const event: Event = {
+                    id: 'test',
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/presenter_360.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                            video: { width: 640, height: 360 },
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/presenter_1080.mp4',
+                            mimetype: 'video/mp4',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                            video: { width: 1920, height: 1080 },
+                        },
+                        {
+                            id: 't3',
+                            url: 'http://example.com/variant_1.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't4',
+                            url: 'http://example.com/presenter_master.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: true,
+                            duration: 60,
+                        },
+                        {
+                            id: 't5',
+                            url: 'http://example.com/variant_2.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                    ],
+                };
+                const streams = conversor.getStreams(event);
+                const mp4 = streams[0].sources.mp4 ?? [];
+                expect(mp4.map((source) => source.src)).toEqual([
+                    'http://example.com/presenter_360.mp4',
+                    'http://example.com/presenter_1080.mp4',
+                ]);
+                const hls = streams[0].sources.hls ?? [];
+                expect(hls[0].src).toBe('http://example.com/presenter_master.m3u8');
+            });
+
+            test('should keep presenter and presentation streams separated with per-flavor master-first hls ordering', () => {
+                const conversor = new EventConversor(makePlayer());
+                const event: Event = {
+                    id: 'test',
+                    tracks: [
+                        {
+                            id: 't1',
+                            url: 'http://example.com/variant_p.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't2',
+                            url: 'http://example.com/presenter_master.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presenter/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: true,
+                            duration: 60,
+                        },
+                        {
+                            id: 't3',
+                            url: 'http://example.com/variant_s.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presentation/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: false,
+                            duration: 60,
+                        },
+                        {
+                            id: 't4',
+                            url: 'http://example.com/presentation_master.m3u8',
+                            mimetype: 'application/x-mpegURL',
+                            flavor: 'presentation/delivery',
+                            tags: [],
+                            is_live: false,
+                            is_master: true,
+                            duration: 60,
+                        },
+                    ],
+                };
+                const streams = conversor.getStreams(event);
+                expect(streams).toHaveLength(2);
+                const presenterStream = streams.find((s) => s.content === 'presenter');
+                const presentationStream = streams.find((s) => s.content === 'presentation');
+                const presenterHls = presenterStream?.sources.hls ?? [];
+                const presentationHls = presentationStream?.sources.hls ?? [];
+                expect(presenterHls[0].src).toBe('http://example.com/presenter_master.m3u8');
+                expect(presentationHls[0].src).toBe(
+                    'http://example.com/presentation_master.m3u8',
+                );
+            });
         });
 
         // ── parseVTTChapters ───────────────────────────────────────────────
