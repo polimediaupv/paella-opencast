@@ -54,7 +54,7 @@
         "jsdom": "^30.0.1",
         "playwright": "^1.62.1",
         "prettier": "^3.9.8",
-        "turbo": "^2.10.13",
+        "turbo": "^2.11.8",
         "typescript-eslint": "^8.65.0",
         "vitest": "^5.0.4"
     },
