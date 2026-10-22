@@ -17,7 +17,7 @@
         "vite": "^8.3.0"
     },
     "dependencies": {
-        "@asicupv/paella-opencast-component": "^2.0.5",
-        "@asicupv/paella-opencast-core": "^2.0.7"
+        "@asicupv/paella-opencast-component": "^2.0.6",
+        "@asicupv/paella-opencast-core": "^2.0.8"
     }
 }
