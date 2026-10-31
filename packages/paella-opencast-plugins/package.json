@@ -41,7 +41,7 @@
         "@asicupv/paella-opencast-core": "^2.0.7",
         "@asicupv/paella-user-tracking": "^2.4.4",
         "typescript": "^6.0.3",
-        "vite": "^8.3.0",
+        "vite": "^8.3.5",
         "vite-plugin-dts": "^5.1.0"
     },
     "peerDependencies": {
