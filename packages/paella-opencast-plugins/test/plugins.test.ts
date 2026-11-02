@@ -7,6 +7,7 @@ import {
     OpencastLoginPlugin,
     OpencastMultiVideoDynamicLayout,
     OpencastMatomoUserTrackingDataPlugin,
+    OpencastBasicStatisticsPlugin,
 } from '../src/index';
 
 describe('Plugins', () => {
@@ -34,6 +35,7 @@ describe('Plugins', () => {
         expect(OpencastLoginPlugin).toBeDefined();
         expect(OpencastMultiVideoDynamicLayout).toBeDefined();
         expect(OpencastMatomoUserTrackingDataPlugin).toBeDefined();
+        expect(OpencastBasicStatisticsPlugin).toBeDefined();
     });
 
     test('should have all plugins with function constructors', () => {
@@ -44,6 +46,7 @@ describe('Plugins', () => {
             OpencastLoginPlugin,
             OpencastMultiVideoDynamicLayout,
             OpencastMatomoUserTrackingDataPlugin,
+            OpencastBasicStatisticsPlugin,
         ];
 
         pluginClasses.forEach((PluginClass) => {
@@ -53,6 +56,6 @@ describe('Plugins', () => {
     });
 
     test('should have correct number of plugins', () => {
-        expect(opencastPlugins).toHaveLength(8);
+        expect(opencastPlugins).toHaveLength(9);
     });
 });
