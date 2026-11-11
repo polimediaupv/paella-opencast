@@ -1,5 +1,17 @@
 # @asicupv/paella-opencast-plugins
 
+## 2.1.0
+
+### Minor Changes
+
+- [#163](https://github.com/polimediaupv/paella-opencast/pull/163) [`ce73b1a`](https://github.com/polimediaupv/paella-opencast/commit/ce73b1a2e60a4cfa49dd6fdc3daaede45bc15f6b) Thanks [@Arnei](https://github.com/Arnei)! - Adds Opencast Basic Statistics Plugin
+
+### Patch Changes
+
+- [#196](https://github.com/polimediaupv/paella-opencast/pull/196) [`d755531`](https://github.com/polimediaupv/paella-opencast/commit/d755531325202da464ef86531cee9d4b154e7978) Thanks [@miesgre](https://github.com/miesgre)! - Update to the latest Paella Player
+
+- [#187](https://github.com/polimediaupv/paella-opencast/pull/187) [`e48263a`](https://github.com/polimediaupv/paella-opencast/commit/e48263a017c9f40378620a9da5a2aebc534a3734) Thanks [@miesgre](https://github.com/miesgre)! - Fix: Change the way the event is obtained in the related documents plugin.
+
 ## 2.0.7
 
 ### Patch Changes
