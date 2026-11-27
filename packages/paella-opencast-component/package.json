@@ -38,12 +38,12 @@
     },
     "devDependencies": {
         "typescript": "^6.0.3",
-        "vite": "^8.3.5",
+        "vite": "^8.3.8",
         "vite-plugin-dts": "^5.1.0"
     },
     "dependencies": {
         "@asicupv/paella-basic-plugins": "^2.6.2",
-        "@asicupv/paella-extra-plugins": "^2.9.3",
+        "@asicupv/paella-extra-plugins": "^2.9.4",
         "@asicupv/paella-opencast-core": "^2.0.8",
         "@asicupv/paella-opencast-plugins": "^2.1.0",
         "@asicupv/paella-slide-plugins": "^2.6.2",
